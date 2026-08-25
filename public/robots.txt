@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block AI crawlers from scraping client proprietary data if it existed, but explicitly allow them to read the AEO page
+Allow: /llm-context.html
+
+# Prevent crawling of useless tracking parameters to preserve crawl budget
+Disallow: /*?gclid=
+Disallow: /*?fbclid=
+Disallow: /*?utm_
+
+Sitemap: https://astrivix.com/sitemap.xml

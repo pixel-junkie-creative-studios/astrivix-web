@@ -1,0 +1,277 @@
+import React, { useRef, useEffect, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Stars, Sphere, useTexture, useGLTF } from '@react-three/drei';
+import { useScroll } from 'framer-motion';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
+import * as THREE from 'three';
+
+const CameraController = ({ scrollYProgress }) => {
+  useFrame(({ camera }) => {
+    // As scrollYProgress goes 0 -> 1, camera Z moves from 0 to -100
+    camera.position.z = -scrollYProgress.get() * 100;
+  });
+  return null;
+};
+
+const DetailedEarth = ({ position }) => {
+  const earthRef = useRef();
+  const cloudsRef = useRef();
+
+  const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
+    '/assets/planets/earth.jpg',
+    '/assets/planets/earth_normal.jpg',
+    '/assets/planets/earth_specular.jpg',
+    '/assets/planets/earth_clouds.png'
+  ]);
+
+  useFrame((state, delta) => {
+    // Significantly increased rotation speed so it's noticeably spinning
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.25;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.3;
+  });
+
+  return (
+    <group position={position}>
+      <Sphere ref={earthRef} args={[5, 128, 128]}>
+        <meshStandardMaterial map={colorMap} normalMap={normalMap} roughnessMap={specularMap} roughness={0.7} metalness={0.0} />
+      </Sphere>
+      <Sphere ref={cloudsRef} args={[5.05, 128, 128]}>
+        <meshStandardMaterial map={cloudsMap} transparent={true} opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
+      </Sphere>
+    </group>
+  );
+};
+
+const DetailedMoon = ({ position }) => {
+  const moonRef = useRef();
+  const colorMap = useTexture('/assets/planets/moon.jpg');
+
+  useFrame((state, delta) => {
+    // Visibly rotating
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.15;
+  });
+
+  return (
+    <group position={position}>
+      <Sphere ref={moonRef} args={[2, 128, 128]}>
+        <meshStandardMaterial map={colorMap} bumpMap={colorMap} bumpScale={0.15} roughness={1.0} metalness={0.0} />
+      </Sphere>
+    </group>
+  );
+};
+
+const RealisticMars = ({ position }) => {
+  const marsRef = useRef();
+  const atmosRef = useRef();
+  
+  // Using Venus texture as a high-res rocky base, tinted red for Mars
+  const rockyMap = useTexture('/assets/planets/venus.jpg');
+  const normalMap = useTexture('/assets/planets/earth_normal.jpg');
+
+  useFrame((state, delta) => {
+    // Fast rotation for Mars
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.3;
+    if (atmosRef.current) atmosRef.current.rotation.y -= delta * 0.35;
+  });
+
+  return (
+    <group position={position}>
+      <Sphere ref={marsRef} args={[4, 128, 128]}>
+        <meshStandardMaterial 
+          map={rockyMap} 
+          color="#ff4400" 
+          normalMap={normalMap} 
+          normalScale={[4, 4]} 
+          roughness={0.9} 
+          metalness={0.0}
+        />
+      </Sphere>
+      {/* Glowing Martian Atmosphere */}
+      <Sphere ref={atmosRef} args={[4.2, 64, 64]}>
+        <meshStandardMaterial color="#ff2200" transparent opacity={0.25} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
+      </Sphere>
+    </group>
+  );
+};
+
+const RealisticJupiterRinged = ({ position }) => {
+  const planetRef = useRef();
+  const ringRef = useRef();
+  const atmosRef = useRef();
+  
+  const jupiterMap = useTexture('/assets/planets/jupiter.jpg');
+  const ringMap = useTexture('/assets/planets/saturn_ring.png');
+
+  useFrame((state, delta) => {
+    // Visibly rotating gas giant
+    if (planetRef.current) planetRef.current.rotation.y += delta * 0.25;
+    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.1;
+  });
+
+  return (
+    <group position={position} rotation={[0.4, 0, -0.2]}>
+      <Sphere ref={planetRef} args={[6, 128, 128]}>
+        <meshStandardMaterial map={jupiterMap} roughness={1.0} metalness={0.0} />
+      </Sphere>
+      {/* Outer Atmospheric Glow */}
+      <Sphere ref={atmosRef} args={[6.35, 64, 64]}>
+        <meshStandardMaterial color="#faedcd" transparent opacity={0.15} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
+      </Sphere>
+      <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[7.5, 14, 256]} />
+        <meshStandardMaterial map={ringMap} transparent opacity={0.9} side={THREE.DoubleSide} alphaTest={0.01} />
+      </mesh>
+    </group>
+  );
+};
+
+const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
+  const pivotRef = useRef();
+  // Using the massive 36MB realistic satellite model
+  const { scene } = useGLTF('/assets/planets/satellite.glb');
+
+  useFrame((state, delta) => {
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
+  });
+
+  return (
+    <group ref={pivotRef}>
+      <group position={[orbitRadius, yOffset, 0]}>
+        {/* Scaled up the satellite and adjusted orbit so it hovers cleanly */}
+        <primitive object={scene} scale={0.22} rotation={[0.5, Math.PI / 2, 0]} />
+      </group>
+    </group>
+  );
+};
+
+const Comet = () => {
+  const cometRef = useRef();
+  const [active, setActive] = useState(false);
+  const progress = useRef(0);
+
+  // Load the real, high-quality particle textures we just downloaded
+  const [cometMap, coreMap] = useTexture([
+    '/assets/planets/trace_01.png',
+    '/assets/planets/circle_05.png'
+  ]);
+
+  useEffect(() => {
+    const trigger = () => {
+      progress.current = 0;
+      setActive(true);
+    };
+    window.addEventListener('make-a-wish', trigger);
+    return () => window.removeEventListener('make-a-wish', trigger);
+  }, []);
+
+  useFrame((state, delta) => {
+    if (active && cometRef.current) {
+      progress.current += delta * 0.4;
+      if (progress.current > 1) {
+        setActive(false);
+      } else {
+        const start = new THREE.Vector3(150, 100, -200);
+        const end = new THREE.Vector3(-150, -60, -50);
+        cometRef.current.position.lerpVectors(start, end, progress.current);
+        cometRef.current.lookAt(end);
+      }
+    }
+  });
+
+  if (!active) return null;
+
+  return (
+    <group ref={cometRef}>
+      {/* Genuine Particle Core (Billboarded Sprite) */}
+      <sprite scale={[6, 6, 1]}>
+        <spriteMaterial map={coreMap} color="#ffffff" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} />
+      </sprite>
+      
+      {/* Genuine Particle Core Glow (Billboarded Sprite) */}
+      <sprite scale={[12, 12, 1]}>
+        <spriteMaterial map={coreMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} opacity={0.8} />
+      </sprite>
+
+      {/* Tapered Volumetric Tail (Perfect 3D shape, strictly behind the core) */}
+      {/* Position Z=20 pushes the center 20 units back. Height is 40, so it spans from Z=0 to Z=40 */}
+      <mesh position={[0, 0, 20]} rotation={[Math.PI / 2, 0, 0]}>
+        <cylinderGeometry args={[2.5, 0.1, 40, 16, 1, true]} />
+        <meshBasicMaterial map={cometMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
+      </mesh>
+    </group>
+  );
+};
+
+const Planets = () => {
+  return (
+    <>
+      <Comet />
+      <DetailedEarth position={[-15, 5, -30]} />
+      {/* Restored moon position as requested */}
+      <DetailedMoon position={[15, -2, -70]} />
+      <RealisticMars position={[35, 15, -120]} />
+      
+      {/* High Quality Satellite orbiting the Earth - Pushed further out so it doesn't clip */}
+      <group position={[-15, 5, -30]}>
+        <HighResSatellite orbitRadius={12} speed={0.1} yOffset={6} />
+      </group>
+    </>
+  );
+};
+
+const InteractiveStars = () => {
+  const groupRef = useRef();
+  const mouse = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      // Normalize to -1 to 1
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  useFrame(() => {
+    if (groupRef.current) {
+      // Very subtle cursor tracking for the stars
+      const targetX = (mouse.current.y * Math.PI) / 10;
+      const targetY = (mouse.current.x * Math.PI) / 10;
+      
+      // Much slower, slighter interpolation
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.05;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.05;
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
+    </group>
+  );
+};
+
+export default function SpaceScene() {
+  const { scrollYProgress } = useScroll();
+
+  return (
+    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#0a1128] dark:bg-[#020202] transition-colors duration-500">
+      <Canvas camera={{ position: [0, 0, 0], fov: 60 }} dpr={[1, 1.5]} gl={{ antialias: false, powerPreference: "high-performance" }}>
+        {/* Cinematic Lighting Rig */}
+        <ambientLight intensity={0.1} />
+        <directionalLight position={[150, 100, 50]} intensity={4.5} color="#ffffff" castShadow />
+        <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#4d79ff" />
+        
+        <InteractiveStars />
+        <Planets />
+        <CameraController scrollYProgress={scrollYProgress} />
+        
+        {/* Cinematic Post Processing */}
+        <EffectComposer disableNormalPass>
+          <Bloom luminanceThreshold={0.1} mipmapBlur intensity={2.5} />
+        </EffectComposer>
+      </Canvas>
+    </div>
+  );
+}
