@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import DownloadVault from '../components/ui/DownloadVault';
+import MagneticCursor from '../components/MagneticCursor';
 
 const portfolioItems = [
   { id: 1, title: 'Nova Protocol', category: 'Blockchain / Web3', image: '/assets/portfolio1.jpg', span: 'col-span-1 md:col-span-2 row-span-2' },
@@ -12,6 +13,7 @@ const portfolioItems = [
 export default function PortfolioShowcase() {
   return (
     <div className="min-h-screen bg-[#050505] text-white w-full max-w-[100vw] overflow-x-hidden selection:bg-white selection:text-black font-sans">
+      <MagneticCursor />
       
       {/* Aesthetic Background */}
       <div className="fixed inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(40,40,40,0.4),rgba(0,0,0,1))] mix-blend-screen" />

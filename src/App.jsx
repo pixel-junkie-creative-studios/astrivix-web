@@ -11,6 +11,11 @@ const About = lazy(() => import('./pages/About'));
 const Careers = lazy(() => import('./pages/Careers'));
 const Contact = lazy(() => import('./pages/Contact'));
 const PortfolioShowcase = lazy(() => import('./pages/PortfolioShowcase'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+
+import Preloader from './components/Preloader';
 
 function App() {
   useEffect(() => {
@@ -20,10 +25,10 @@ function App() {
     }
     window.scrollTo(0, 0);
 
-    // Ultra-Smooth 120Hz Lenis Config
+    // Ultra-Smooth 120Hz Lenis Config (Butter smooth for '9000000 FPS' feel)
     const lenis = new Lenis({
-      lerp: 0.05,
-      wheelMultiplier: 1.2,
+      lerp: 0.07,
+      wheelMultiplier: 1.0,
       smoothWheel: true,
       syncTouch: true,
     });
@@ -39,6 +44,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Preloader />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={
@@ -59,6 +65,22 @@ function App() {
           <Route path="contact" element={
             <Suspense fallback={null}>
               <Contact />
+            </Suspense>
+          } />
+          <Route path="privacy" element={
+            <Suspense fallback={null}>
+              <Privacy />
+            </Suspense>
+          } />
+          <Route path="terms" element={
+            <Suspense fallback={null}>
+              <Terms />
+            </Suspense>
+          } />
+          {/* Catch-all route for Custom 404 */}
+          <Route path="*" element={
+            <Suspense fallback={null}>
+              <NotFound />
             </Suspense>
           } />
         </Route>

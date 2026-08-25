@@ -1,102 +1,128 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
 
 export default function MagneticCursor() {
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isTextHover, setIsTextHover] = useState(false);
-  
-  // Spring physics for the outer ring (fast, liquid trailing)
-  const cursorX = useSpring(0, { stiffness: 1200, damping: 30, mass: 0.1 });
-  const cursorY = useSpring(0, { stiffness: 1200, damping: 30, mass: 0.1 });
-  
-  // Spring physics for the inner dot (instantaneous 1000hz tracking)
-  const dotX = useSpring(0, { stiffness: 3000, damping: 20, mass: 0.01 });
-  const dotY = useSpring(0, { stiffness: 3000, damping: 20, mass: 0.01 });
+  const cursorRef = useRef(null);
+  const dotRef = useRef(null);
+  const requestRef = useRef(null);
+
+  // Use refs for mutable state to completely bypass React re-renders (ZERO LAG)
+  const mouse = useRef({ x: 0, y: 0 });
+  const ring = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const mouseMove = (e) => {
-      // Outer ring centered (40px / 2 = 20)
-      cursorX.set(e.clientX - 20);
-      cursorY.set(e.clientY - 20);
-      // Inner dot centered (8px / 2 = 4)
-      dotX.set(e.clientX - 4);
-      dotY.set(e.clientY - 4);
-
-      // Ultra-fast hover detection (No DOM Reflows/Layout Thrashing)
-      const target = e.target;
-      if (!target) {
-        setIsHovering(false);
-        setIsTextHover(false);
-        return;
+    // Force instant update of the dot
+    const onMouseMove = (e) => {
+      mouse.current.x = e.clientX;
+      mouse.current.y = e.clientY;
+      
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
 
-      if (target.closest('input, textarea') || target.style?.cursor === 'text') {
-        setIsTextHover(true);
-        setIsHovering(false);
-      } else if (
-        target.closest('a, button, .interactive') ||
-        target.style?.cursor === 'pointer' ||
-        target.style?.cursor === 'grab'
-      ) {
-        setIsHovering(true);
-        setIsTextHover(false);
-      } else {
-        setIsHovering(false);
-        setIsTextHover(false);
+      const target = e.target;
+      if (target) {
+        if (target.closest('a, button, input, textarea, .interactive') || target.style?.cursor === 'pointer') {
+          if (cursorRef.current) cursorRef.current.classList.add('hovering');
+          if (dotRef.current) dotRef.current.classList.add('hovering');
+        } else {
+          if (cursorRef.current) cursorRef.current.classList.remove('hovering');
+          if (dotRef.current) dotRef.current.classList.remove('hovering');
+        }
       }
     };
 
-    const mouseDown = () => setIsClicking(true);
-    const mouseUp = () => setIsClicking(false);
+    const onMouseDown = () => {
+      if (cursorRef.current) cursorRef.current.classList.add('clicking');
+    };
+    
+    const onMouseUp = () => {
+      if (cursorRef.current) cursorRef.current.classList.remove('clicking');
+    };
 
-    window.addEventListener('mousemove', mouseMove, { passive: true });
-    window.addEventListener('mousedown', mouseDown, { passive: true });
-    window.addEventListener('mouseup', mouseUp, { passive: true });
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
+    window.addEventListener('mouseup', onMouseUp, { passive: true });
+
+    // Smooth trailing animation loop for the outer ring using raw GPU acceleration
+    const render = () => {
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.2;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.2;
+      
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0)`;
+      }
+      
+      requestRef.current = requestAnimationFrame(render);
+    };
+    requestRef.current = requestAnimationFrame(render);
 
     // Hide system cursor globally
-    const styleTag = document.createElement('style');
-    styleTag.innerHTML = `* { cursor: none !important; }`;
-    document.head.appendChild(styleTag);
+    document.body.style.cursor = 'none';
+    const style = document.createElement('style');
+    style.innerHTML = `* { cursor: none !important; }`;
+    document.head.appendChild(style);
 
     return () => {
-      window.removeEventListener('mousemove', mouseMove);
-      window.removeEventListener('mousedown', mouseDown);
-      window.removeEventListener('mouseup', mouseUp);
-      document.head.removeChild(styleTag);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+      cancelAnimationFrame(requestRef.current);
+      document.body.style.cursor = 'auto';
+      document.head.removeChild(style);
     };
-  }, [cursorX, cursorY, dotX, dotY]);
+  }, []);
 
   return (
     <>
-      {/* Outer Reactive Ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 pointer-events-none z-[9999] rounded-full border border-white/40 bg-white/5 flex items-center justify-center shadow-sm"
-        style={{
-          x: cursorX,
-          y: cursorY,
-        }}
-        animate={{
-          scale: isClicking ? 0.8 : isTextHover ? 0.5 : 1,
-          backgroundColor: isHovering ? "rgba(255,255,255,0.2)" : isTextHover ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.05)",
-          borderWidth: isHovering || isTextHover ? "0px" : "1px"
-        }}
-        transition={{ duration: 0.15, ease: "easeOut" }}
-      />
-      
-      {/* Inner Precision Dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 pointer-events-none z-[10000] rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-        style={{
-          x: dotX,
-          y: dotY,
-        }}
-        animate={{
-          scale: (isHovering || isTextHover) ? 0 : isClicking ? 0.5 : 1,
-          opacity: (isHovering || isTextHover) ? 0 : 1
-        }}
-        transition={{ duration: 0.1 }}
-      />
+      <style>{`
+        .custom-cursor-ring {
+          position: fixed;
+          top: -16px;
+          left: -16px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.8);
+          pointer-events: none;
+          z-index: 9999;
+          mix-blend-mode: difference;
+          transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), top 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+          will-change: transform;
+        }
+        .custom-cursor-ring.hovering {
+          width: 56px;
+          height: 56px;
+          top: -28px;
+          left: -28px;
+          background-color: rgba(255, 255, 255, 0.15);
+          border-color: transparent;
+        }
+        .custom-cursor-ring.clicking {
+          width: 20px;
+          height: 20px;
+          top: -10px;
+          left: -10px;
+        }
+        .custom-cursor-dot {
+          position: fixed;
+          top: -4px;
+          left: -4px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: white;
+          pointer-events: none;
+          z-index: 10000;
+          mix-blend-mode: difference;
+          transition: opacity 0.2s, transform 0.1s;
+          will-change: transform;
+        }
+        .custom-cursor-dot.hovering {
+          opacity: 0;
+        }
+      `}</style>
+      <div ref={cursorRef} className="custom-cursor-ring" />
+      <div ref={dotRef} className="custom-cursor-dot" />
     </>
   );
 }

@@ -6,21 +6,15 @@ export default defineConfig({
   plugins: [react()],
   assetsInclude: ['**/*.glb'],
   build: {
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        passes: 2
-      },
-    },
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
-          framer: ['framer-motion', '@studio-freight/lenis'],
-        },
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('three') || id.includes('@react-three')) return 'three';
+            if (id.includes('framer-motion') || id.includes('lenis')) return 'framer';
+            return 'vendor';
+          }
+        }
       },
     },
   },

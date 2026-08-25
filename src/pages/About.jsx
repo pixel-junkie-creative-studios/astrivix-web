@@ -53,7 +53,6 @@ export default function About() {
             whileHover={{ scale: 1.02, y: -5 }}
             className="md:col-span-2 bg-gradient-to-br from-[#111] to-[#050505] backdrop-blur-3xl rounded-[2.5rem] p-10 flex flex-col justify-center border-t border-l border-white/10 border-b border-r border-black/80 shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),0_20px_40px_rgba(0,0,0,0.8)] hover:shadow-[inset_0_2px_20px_rgba(255,255,255,0.15),0_30px_60px_rgba(0,0,0,1)] transition-all duration-500 group relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay pointer-events-none"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             
             {/* Subtle light sweep on hover */}
