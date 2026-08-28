@@ -8,7 +8,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="py-24 min-h-[75vh] flex flex-col justify-center">
+    <div className="pt-24 pb-40 min-h-[75vh] flex flex-col justify-center">
       <motion.div 
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
         className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12"

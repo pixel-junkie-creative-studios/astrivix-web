@@ -11,8 +11,10 @@
   scrollbar-width: none;
 }
 
-body {
+html, body, #root {
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
   background-color: #000;
 }
 @tailwind utilities;
