@@ -11,7 +11,7 @@ export default function Contact() {
     <div className="pt-24 pb-40 min-h-[75vh] flex flex-col justify-center">
       <motion.div 
         initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-        className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12"
+        className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"
       >
         {/* Left Column: Direct Comms */}
         <div className="flex flex-col justify-center">
@@ -58,7 +58,7 @@ export default function Contact() {
                 <label className="text-[10px] tracking-widest uppercase text-white/50 font-bold ml-2">Name</label>
                 <input 
                   type="text" 
-                  className="w-full bg-black/20 backdrop-blur-md shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.05)] border border-white/5 rounded-xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-black/30 focus:border-white/10 transition-all"
+                  className="w-full bg-[#111116] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-white/30 focus:outline-none transition-all placeholder:text-white/20"
                   placeholder="John Doe"
                 />
               </div>
@@ -66,7 +66,7 @@ export default function Contact() {
                 <label className="text-[10px] tracking-widest uppercase text-white/50 font-bold ml-2">Company</label>
                 <input 
                   type="text" 
-                  className="w-full bg-black/20 backdrop-blur-md shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.05)] border border-white/5 rounded-xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-black/30 focus:border-white/10 transition-all"
+                  className="w-full bg-[#111116] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-white/30 focus:outline-none transition-all placeholder:text-white/20"
                   placeholder="Acme Corp"
                 />
               </div>
@@ -76,7 +76,7 @@ export default function Contact() {
               <label className="text-[10px] tracking-widest uppercase text-white/50 font-bold ml-2">Email</label>
               <input 
                 type="email" 
-                className="w-full bg-black/20 backdrop-blur-md shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.05)] border border-white/5 rounded-xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-black/30 focus:border-white/10 transition-all"
+                className="w-full bg-[#111116] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-white/30 focus:outline-none transition-all placeholder:text-white/20"
                 placeholder="john@example.com"
               />
             </div>
@@ -85,7 +85,7 @@ export default function Contact() {
               <label className="text-[10px] tracking-widest uppercase text-white/50 font-bold ml-2">Message</label>
               <textarea 
                 rows="4"
-                className="w-full bg-black/20 backdrop-blur-md shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),0_1px_0_rgba(255,255,255,0.05)] border border-white/5 rounded-xl px-6 py-4 text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-black/30 focus:border-white/10 transition-all resize-none"
+                className="w-full bg-[#111116] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-white/30 focus:outline-none transition-all resize-none placeholder:text-white/20"
                 placeholder="How can we help you?"
               ></textarea>
             </div>

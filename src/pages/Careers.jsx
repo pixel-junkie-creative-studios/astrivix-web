@@ -13,7 +13,7 @@ export default function Careers() {
       <div className="max-w-5xl mx-auto px-6 lg:px-8 w-full">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-          className="bg-white/5 backdrop-blur-xl shadow-liquid-glass p-8 md:p-12 rounded-[2.5rem] border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
+          className="bg-white/5 backdrop-blur-xl shadow-liquid-glass p-8 md:p-12 rounded-[2.5rem] border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           {/* Left Column: Text */}
@@ -36,7 +36,7 @@ export default function Careers() {
           </div>
 
           {/* Right Column: 3D Lanyard */}
-          <div className="relative h-[400px] w-full flex justify-center items-center z-10">
+          <div className="relative h-[260px] lg:h-[450px] w-full flex justify-center items-center z-10 mt-6 lg:mt-0">
             <Lanyard position={[0, 2, 18]} gravity={[0, -40, 0]} transparent={true} />
           </div>
         </motion.div>

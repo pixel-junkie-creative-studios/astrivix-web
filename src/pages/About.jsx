@@ -44,7 +44,7 @@ export default function About() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 auto-rows-[minmax(280px,auto)]"
         >
           
           {/* Cell 1: Main Headline (Spans 2 columns) */}
@@ -58,7 +58,7 @@ export default function About() {
             {/* Subtle light sweep on hover */}
             <div className="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-45deg] group-hover:left-[200%] transition-all duration-1000 ease-in-out"></div>
 
-            <h2 className="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-white drop-shadow-2xl z-10">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black leading-[1.2] md:leading-[1.1] tracking-tight text-white drop-shadow-2xl z-10">
               We engineer <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-300 to-gray-600 drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">digital perfection.</span>
             </h2>

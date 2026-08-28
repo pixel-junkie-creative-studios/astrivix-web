@@ -42,7 +42,7 @@ export const FloatingNav = ({ navItems, className }) => {
       animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "flex w-[92vw] md:w-auto max-w-[1440px] fixed top-4 md:top-8 inset-x-0 mx-auto bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] z-[5000] px-4 md:px-6 py-2 md:py-3 items-center justify-between md:justify-center space-x-0 md:space-x-8 border border-white/10 transition-all duration-500",
+        "flex max-w-[92vw] md:max-w-fit fixed top-4 md:top-8 inset-x-0 mx-auto bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.1)] z-[5000] px-4 md:px-6 py-2 md:py-3 items-center justify-between md:justify-center space-x-0 md:space-x-8 border border-white/10 transition-all duration-500",
         className
       )}
     >
@@ -53,7 +53,7 @@ export const FloatingNav = ({ navItems, className }) => {
           loop 
           muted 
           playsInline 
-          className="h-10 w-10 md:h-12 md:w-12 object-contain hover:scale-110 transition-transform duration-300 mix-blend-screen"
+          className="h-10 w-10 md:h-12 md:w-12 object-contain hover:scale-110 transition-transform duration-300"
         />
       </a>
 

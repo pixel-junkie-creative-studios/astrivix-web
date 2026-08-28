@@ -1,5 +1,4 @@
 import React from 'react';
-import ScrollStack, { ScrollStackItem } from '../components/ui/ScrollStack';
 
 const services = [
   { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Identity', color: '#ff4d4d', desc: 'Crafting unique brand identities that resonate and leave a lasting impression.' },
@@ -35,52 +34,50 @@ export default function Services() {
         </div>
       </div>
 
-      <div className="relative w-full z-10">
-        <ScrollStack
-          useWindowScroll={true}
-          itemDistance={100}
-          itemStackDistance={30}
-          stackPosition="20%"
-          baseScale={0.9}
-        >
+      <div className="relative w-full z-10 max-w-6xl mx-auto px-4 md:px-8 pb-32">
+        <div className="flex flex-col gap-0">
           {services.map((service, index) => (
-            <ScrollStackItem key={service.id} itemClassName="!h-[60vh] md:!h-[50vh] !p-0 !bg-transparent border-0 shadow-none w-full max-w-[90vw] md:max-w-6xl mx-auto">
+            <div 
+              key={service.id} 
+              className="sticky w-full"
+              style={{ top: `calc(10vh + ${index * 1.5}rem)` }}
+            >
               <div 
-                className="relative flex flex-col justify-between w-full h-full p-6 md:p-12 rounded-[2rem] border border-white/5 shadow-[0_-20px_50px_rgba(0,0,0,0.8)] overflow-hidden bg-[#050505]"
+                className="relative flex flex-col justify-between w-full h-[60vh] md:h-[50vh] p-8 md:p-14 rounded-[2rem] border border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0a] transition-all duration-500 mb-24"
               >
                 {/* Card Background gradient */}
                 <div 
-                  className="absolute inset-0 opacity-20"
-                  style={{ background: `radial-gradient(circle at top right, ${service.color}, transparent 70%)` }}
+                  className="absolute inset-0 opacity-15"
+                  style={{ background: `radial-gradient(circle at top right, ${service.color}, transparent 60%)` }}
                 />
                 
                 <div className="relative z-10 flex justify-between items-start w-full">
-                  <span className="text-2xl md:text-4xl font-mono tracking-widest font-black text-white/30">
+                  <span className="text-4xl md:text-5xl font-mono tracking-widest font-black text-white/20">
                     {service.id}
                   </span>
-                  <span className="text-xs md:text-sm font-bold tracking-[0.2em] uppercase text-white/50 bg-white/5 px-4 py-2 rounded-full border border-white/5">
+                  <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/50 bg-white/5 px-5 py-2.5 rounded-full border border-white/10 backdrop-blur-md">
                     {service.category}
                   </span>
                 </div>
 
                 <div className="relative z-10 mt-auto flex flex-col gap-4 md:gap-6">
-                  <h4 className="text-3xl sm:text-4xl md:text-6xl lg:text-[5rem] font-black tracking-tighter uppercase text-white leading-[1] md:leading-[0.9]">
+                  <h4 className="text-4xl sm:text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tighter uppercase text-white leading-[0.9]">
                     {service.title}
                   </h4>
-                  <p className="text-lg md:text-xl text-white/60 max-w-2xl leading-relaxed font-medium">
+                  <p className="text-base md:text-lg text-white/60 max-w-2xl leading-relaxed font-medium">
                     {service.desc}
                   </p>
                 </div>
                 
                 {/* Aesthetic glowing line */}
                 <div 
-                  className="absolute bottom-0 left-0 h-1 w-full"
+                  className="absolute bottom-0 left-0 h-1.5 w-full opacity-70"
                   style={{ background: `linear-gradient(90deg, ${service.color}, transparent)` }}
                 />
               </div>
-            </ScrollStackItem>
+            </div>
           ))}
-        </ScrollStack>
+        </div>
       </div>
     </div>
   );
