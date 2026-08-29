@@ -14,7 +14,7 @@ export default function FinancialConsultingSubsite() {
           <span>← Back to Astrivix</span>
         </a>
         <span className="text-xs font-mono tracking-widest text-white/40 uppercase hidden sm:inline-block">
-          Astrivix Financial Consulting Subsystem
+          Tax Evasion & Wall Street Secrets
         </span>
       </div>
 
@@ -22,8 +22,8 @@ export default function FinancialConsultingSubsite() {
       {isLoading && (
         <div className="absolute inset-0 bg-[#050505] z-[9999] flex flex-col items-center justify-center gap-4">
           <div className="w-12 h-12 rounded-full border-2 border-emerald-500/20 border-t-emerald-500 animate-spin" />
-          <span className="text-xs font-mono tracking-[0.3em] uppercase text-white/50 animate-pulse">
-            Loading Financial Consulting Subsystem...
+          <span className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 animate-pulse">
+            LAUNDERING UNTAXED PROFIT...
           </span>
         </div>
       )}
