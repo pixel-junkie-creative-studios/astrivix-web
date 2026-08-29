@@ -120,7 +120,7 @@ export default function Services() {
       ref={sectionRef}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative z-10 w-full bg-transparent min-h-screen flex flex-col justify-center items-center py-16 overflow-hidden"
+      className="relative z-10 w-full bg-transparent py-10 md:py-16 flex flex-col items-center overflow-hidden"
     >
       {/* Header section */}
       <div className="text-center mb-6 md:mb-10 z-30 pointer-events-none">
