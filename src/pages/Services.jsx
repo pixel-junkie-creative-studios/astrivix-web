@@ -21,7 +21,7 @@ export default function Services() {
   const isLockedRef = useRef(false);
   const hasFlippedRef = useRef(false);
 
-  // Native OS-Level Scroll Lock & Wheel Trap Controller
+  // Clean Wheel Interceptor Engine
   useEffect(() => {
     const handleWheel = (e) => {
       const el = sectionRef.current;
@@ -31,43 +31,25 @@ export default function Services() {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Lock into Services when top is aligned (within 160px of top of screen)
-      const isAtHeader = rect.top <= 160 && rect.bottom >= window.innerHeight * 0.3;
+      // Lock into Services ONLY when section is aligned near top of viewport
+      const isCentered = rect.top <= 80 && rect.top >= -80;
 
-      if (isAtHeader && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
+      if (isCentered && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
         isLockedRef.current = true;
-        hasFlippedRef.current = false;
-        document.body.style.overflow = 'hidden';
-        if (window.lenis) window.lenis.stop();
-        window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
       }
 
-      // WHILE LOCKED ON CARDS 01 THROUGH 08: PHYSICAL OS OVERFLOW HIDDEN LOCK
       if (isLockedRef.current) {
         e.preventDefault();
-        e.stopPropagation();
 
-        document.body.style.overflow = 'hidden';
-        if (window.lenis) window.lenis.stop();
-        if (Math.abs(rect.top) > 5 && activeIndex < services.length - 1) {
-          window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
-        }
-
-        // Release back UP to Hero ONLY if user scrolled forward first, came back to 01, and scrolls UP strongly
-        if (isScrollingUp && activeIndex === 0 && e.deltaY < -25 && hasFlippedRef.current) {
+        // Release UP to Hero ONLY when on card 01 and scrolling UP strongly
+        if (isScrollingUp && activeIndex === 0 && e.deltaY < -20) {
           isLockedRef.current = false;
-          hasFlippedRef.current = false;
-          document.body.style.overflow = 'auto';
-          if (window.lenis) window.lenis.start();
           return;
         }
 
-        // If at Card 09 and scrolling DOWN strongly, release OS lock & allow page scroll DOWN into About Us
-        if (isScrollingDown && activeIndex === services.length - 1 && e.deltaY > 15) {
+        // Release DOWN to About Us ONLY when on card 09 and scrolling DOWN strongly
+        if (isScrollingDown && activeIndex === services.length - 1 && e.deltaY > 20) {
           isLockedRef.current = false;
-          hasFlippedRef.current = false;
-          document.body.style.overflow = 'auto';
-          if (window.lenis) window.lenis.start();
           return;
         }
 
@@ -77,16 +59,12 @@ export default function Services() {
           isCooldownRef.current = true;
 
           if (isScrollingDown) {
-            hasFlippedRef.current = true;
             setDirection(1);
             setActiveIndex((prev) => {
               const next = Math.min(services.length - 1, prev + 1);
               if (next === services.length - 1) {
                 setTimeout(() => {
                   isLockedRef.current = false;
-                  hasFlippedRef.current = false;
-                  document.body.style.overflow = 'auto';
-                  if (window.lenis) window.lenis.start();
                 }, 300);
               }
               return next;
@@ -106,8 +84,6 @@ export default function Services() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      document.body.style.overflow = 'auto';
-      if (window.lenis) window.lenis.start();
     };
   }, [activeIndex]);
 
