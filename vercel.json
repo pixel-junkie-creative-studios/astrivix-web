@@ -50,6 +50,18 @@
   ],
   "rewrites": [
     {
+      "source": "/financial-consulting",
+      "destination": "/"
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/"
+    },
+    {
+      "source": "/portfolio-showcase",
+      "destination": "/"
+    },
+    {
       "source": "/api(/.*)?",
       "destination": {
         "type": "service",
