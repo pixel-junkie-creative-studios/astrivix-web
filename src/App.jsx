@@ -18,6 +18,8 @@ const PortfolioShowcase = lazy(() => import('./pages/PortfolioShowcase'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
+const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
 
 import Preloader from './components/Preloader';
 
@@ -98,7 +100,22 @@ function App() {
           } />
         </Route>
         
-        {/* ISOLATED PREVIEW ROUTE */}
+        {/* ISOLATED FULL-SCREEN SUBSITE ROUTES */}
+        <Route path="/portfolio" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <PortfolioSubsite />
+          </Suspense>
+        } />
+        <Route path="/portfolio-showcase" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <PortfolioSubsite />
+          </Suspense>
+        } />
+        <Route path="/financial-consulting" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <FinancialConsultingSubsite />
+          </Suspense>
+        } />
         <Route path="/portfolio-preview" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
             <PortfolioShowcase />
