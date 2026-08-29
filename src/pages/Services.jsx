@@ -21,7 +21,7 @@ export default function Services() {
   const isLockedRef = useRef(false);
   const hasFlippedRef = useRef(false);
 
-  // Clean Wheel Interceptor Engine
+  // Clean Wheel Interceptor Engine (Zero-Drift Landing Page Lock)
   useEffect(() => {
     const handleWheel = (e) => {
       const el = sectionRef.current;
@@ -31,24 +31,19 @@ export default function Services() {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Lock into Services ONLY when section is aligned near top of viewport
-      const isCentered = rect.top <= 80 && rect.top >= -80;
+      // Lock into Services when section top is near top of viewport
+      const isInZone = rect.top <= 250 && rect.bottom >= window.innerHeight * 0.2;
 
-      if (isCentered && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
+      if (isInZone && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
         isLockedRef.current = true;
       }
 
       if (isLockedRef.current) {
+        // UNCONDITIONAL PREVENT DEFAULT: IMPOSSIBLE TO GO BACK TO LANDING PAGE
         e.preventDefault();
 
-        // Release UP to Hero ONLY when on card 01 and scrolling UP strongly
-        if (isScrollingUp && activeIndex === 0 && e.deltaY < -20) {
-          isLockedRef.current = false;
-          return;
-        }
-
-        // Release DOWN to About Us ONLY when on card 09 and scrolling DOWN strongly
-        if (isScrollingDown && activeIndex === services.length - 1 && e.deltaY > 20) {
+        // Release DOWN to About Us ONLY when on card 09 and user scrolls DOWN strongly
+        if (isScrollingDown && activeIndex === services.length - 1 && e.deltaY > 25) {
           isLockedRef.current = false;
           return;
         }
@@ -65,11 +60,11 @@ export default function Services() {
               if (next === services.length - 1) {
                 setTimeout(() => {
                   isLockedRef.current = false;
-                }, 300);
+                }, 400);
               }
               return next;
             });
-          } else {
+          } else if (isScrollingUp) {
             setDirection(-1);
             setActiveIndex((prev) => Math.max(0, prev - 1));
           }
