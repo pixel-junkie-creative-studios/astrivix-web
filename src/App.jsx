@@ -37,6 +37,8 @@ function App() {
       syncTouch: true,
     });
 
+    window.lenis = lenis;
+
     // Synchronize Lenis with GSAP ScrollTrigger for hardware-perfect pinning
     lenis.on('scroll', ScrollTrigger.update);
 
