@@ -165,9 +165,9 @@ export default function Services() {
                   </p>
                 </div>
 
-                {/* Card Footer: Progress Indicators */}
+                {/* Card Footer: Scroll Hint & Indicators */}
                 <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     {services.map((s, idx) => (
                       <div 
                         key={s.id}
@@ -175,14 +175,19 @@ export default function Services() {
                           setDirection(idx > activeIndex ? 1 : -1);
                           setActiveIndex(idx);
                         }}
-                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === activeIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
+                        className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
                       />
                     ))}
                   </div>
 
-                  <span className="text-xs font-mono font-bold text-white/60">
-                    {activeService.id} / 09
-                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] md:text-xs font-mono font-bold text-white/50 uppercase tracking-widest hidden sm:inline-block">
+                      Scroll to flip
+                    </span>
+                    <span className="text-xs md:text-sm font-mono font-black text-white/90 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                      {activeService.id} / 09
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
