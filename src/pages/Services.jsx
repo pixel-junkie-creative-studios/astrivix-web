@@ -29,9 +29,9 @@ export default function Services() {
       ScrollTrigger.create({
         trigger: triggerRef.current,
         pin: stageRef.current,
-        start: "top top+=80",
-        end: "+=3600",
-        scrub: 0.5,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.3,
         onUpdate: (self) => {
           const progress = self.progress;
           const newIndex = Math.min(
@@ -83,8 +83,8 @@ export default function Services() {
   };
 
   return (
-    // GSAP ScrollTrigger Trigger Container
-    <div id="services" ref={triggerRef} className="relative z-10 w-full bg-transparent">
+    // GSAP ScrollTrigger Trigger Container: 450vh scroll track for hardware pin locking
+    <div id="services" ref={triggerRef} className="relative z-10 w-full h-[450vh] bg-transparent">
       
       {/* GSAP Pinned Stage */}
       <div 

@@ -25,21 +25,32 @@ function App() {
     }
     window.scrollTo(0, 0);
 
-    // Ultra-Smooth 120Hz Lenis Config (Butter smooth for '9000000 FPS' feel)
+    // Ultra-Smooth 120Hz Lenis Config connected to GSAP ScrollTrigger
     const lenis = new Lenis({
-      lerp: 0.07,
+      lerp: 0.08,
       wheelMultiplier: 1.0,
       smoothWheel: true,
       syncTouch: true,
     });
-    
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    // Synchronize Lenis with GSAP ScrollTrigger for hardware-perfect pinning
+    const { gsap } = await import('gsap');
+    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+    gsap.registerPlugin(ScrollTrigger);
+
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const updateGSAP = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(updateGSAP);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(updateGSAP);
+      lenis.destroy();
+    };
   }, []);
 
   return (
