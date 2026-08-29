@@ -26,20 +26,30 @@ export default function Services() {
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      // Activate when top of Services section is aligned with top portion of viewport
-      const isInFocus = rect.top >= -80 && rect.top <= window.innerHeight * 0.45;
+      // Active whenever Services is anywhere in the central viewport
+      const isInViewport = rect.top <= window.innerHeight * 0.8 && rect.bottom >= window.innerHeight * 0.2;
 
-      if (!isInFocus) return;
+      if (!isInViewport) return;
 
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Allow natural window scroll at boundaries
-      if (isScrollingUp && activeIndex === 0) return;
+      // Allow natural window scroll UP only when at Card 01 AND scrolling UP
+      if (isScrollingUp && activeIndex === 0 && rect.top >= 0) return;
+
+      // Allow natural window scroll DOWN only when at Card 09 AND scrolling DOWN
       if (isScrollingDown && activeIndex === services.length - 1) return;
 
-      // STRICTLY BLOCK WINDOW SCROLLING WHILE IN THE CARD DECK
+      // STRICTLY BLOCK ALL WINDOW SCROLLING WHILE ON CARDS 01 THROUGH 08
       e.preventDefault();
+
+      // Automatically re-center section if it drifted slightly
+      if (Math.abs(rect.top) > 5 && activeIndex < services.length - 1) {
+        window.scrollTo({
+          top: window.scrollY + rect.top,
+          behavior: 'instant'
+        });
+      }
 
       if (isCooldownRef.current) return;
 
@@ -55,7 +65,7 @@ export default function Services() {
 
         setTimeout(() => {
           isCooldownRef.current = false;
-        }, 400);
+        }, 350);
       }
     };
 
