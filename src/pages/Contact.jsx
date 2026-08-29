@@ -8,17 +8,17 @@ export default function Contact() {
   };
 
   return (
-    <div className="pt-24 pb-40 min-h-[75vh] flex flex-col justify-center">
+    <div className="pt-16 sm:pt-24 pb-24 md:pb-40 min-h-[75vh] flex flex-col justify-center px-4 sm:px-6">
       <motion.div 
-        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
-        className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"
+        initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
+        className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
       >
         {/* Left Column: Direct Comms */}
         <div className="flex flex-col justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-6 tracking-tight">
             Contact Us.
           </h1>
-          <p className="text-white/60 mb-12 max-w-md text-sm leading-relaxed">
+          <p className="text-white/60 mb-8 sm:mb-12 max-w-md text-xs sm:text-sm leading-relaxed">
             Get in touch to discuss your next project. We are ready to help you build resilient digital infrastructure.
           </p>
           
