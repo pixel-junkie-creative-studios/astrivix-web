@@ -58,6 +58,22 @@
       "destination": "https://astrivix-consultancy.vercel.app/$1"
     },
     {
+      "source": "/portfolio",
+      "destination": "https://astrivix-portfolio.vercel.app"
+    },
+    {
+      "source": "/portfolio/(.*)",
+      "destination": "https://astrivix-portfolio.vercel.app/$1"
+    },
+    {
+      "source": "/portfolio-showcase",
+      "destination": "https://astrivix-portfolio.vercel.app"
+    },
+    {
+      "source": "/portfolio-showcase/(.*)",
+      "destination": "https://astrivix-portfolio.vercel.app/$1"
+    },
+    {
       "source": "/api(/.*)?",
       "destination": {
         "type": "service",

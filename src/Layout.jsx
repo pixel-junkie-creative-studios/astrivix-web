@@ -15,7 +15,7 @@ export default function Layout() {
   const navItems = [
     { name: "Services", link: "#services" },
     { name: "Financial Consulting", link: "/financial-consulting" },
-    { name: "Portfolio", link: "https://www.astrivix.in/portfolio-showcase" },
+    { name: "Portfolio", link: "/portfolio" },
     { name: "About", link: "#about" },
     { name: "Careers", link: "#careers" },
   ];
