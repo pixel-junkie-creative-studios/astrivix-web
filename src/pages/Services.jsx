@@ -30,60 +30,63 @@ export default function Services() {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Lock into Services when top is aligned (within 80px of top of screen)
-      const isAtHeader = rect.top <= 80 && rect.top >= -80;
+      // Section is active if it's anywhere in the central viewport
+      const isInViewport = rect.top <= window.innerHeight * 0.75 && rect.bottom >= window.innerHeight * 0.25;
 
-      if (isAtHeader && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
-        isLockedRef.current = true;
-        if (window.lenis) window.lenis.stop();
+      if (!isInViewport) {
+        isLockedRef.current = false;
+        return;
+      }
+
+      // If at Card 01 and scrolling UP past top, release lock & allow page scroll UP to Hero
+      if (isScrollingUp && activeIndex === 0 && rect.top >= 0) {
+        isLockedRef.current = false;
+        if (window.lenis) window.lenis.start();
+        return;
+      }
+
+      // If at Card 09 and scrolling DOWN, release lock & allow page scroll DOWN to About Us
+      if (isScrollingDown && activeIndex === services.length - 1) {
+        isLockedRef.current = false;
+        if (window.lenis) window.lenis.start();
+        return;
+      }
+
+      // ALWAYS LOCK & PREVENT PAGE SCROLLING ON CARDS 01 THROUGH 08
+      e.preventDefault();
+      isLockedRef.current = true;
+      if (window.lenis) window.lenis.stop();
+
+      // Instant snap to top:0 so the stage never drifts
+      if (Math.abs(rect.top) > 5 && activeIndex < services.length - 1) {
         window.scrollTo({ top: window.scrollY + rect.top, behavior: 'instant' });
       }
 
-      // While locked on cards 01 through 08: PAUSE DOWNWARD PAGE SCROLL 100%
-      if (isLockedRef.current) {
-        e.preventDefault();
+      if (isCooldownRef.current) return;
 
-        // If at Card 01 and scrolling UP, release lock & resume page scroll UP
-        if (isScrollingUp && activeIndex === 0) {
-          isLockedRef.current = false;
-          if (window.lenis) window.lenis.start();
-          return;
+      if (Math.abs(e.deltaY) > 8) {
+        isCooldownRef.current = true;
+
+        if (isScrollingDown) {
+          setDirection(1);
+          setActiveIndex((prev) => {
+            const next = Math.min(services.length - 1, prev + 1);
+            if (next === services.length - 1) {
+              setTimeout(() => {
+                isLockedRef.current = false;
+                if (window.lenis) window.lenis.start();
+              }, 300);
+            }
+            return next;
+          });
+        } else {
+          setDirection(-1);
+          setActiveIndex((prev) => Math.max(0, prev - 1));
         }
 
-        // If at Card 09 and scrolling DOWN, release lock & resume page scroll DOWN
-        if (isScrollingDown && activeIndex === services.length - 1) {
-          isLockedRef.current = false;
-          if (window.lenis) window.lenis.start();
-          return;
-        }
-
-        if (isCooldownRef.current) return;
-
-        if (Math.abs(e.deltaY) > 10) {
-          isCooldownRef.current = true;
-
-          if (isScrollingDown) {
-            setDirection(1);
-            setActiveIndex((prev) => {
-              const next = Math.min(services.length - 1, prev + 1);
-              // When reaching last card, unlock Lenis so next scroll down moves page to About Us
-              if (next === services.length - 1) {
-                setTimeout(() => {
-                  isLockedRef.current = false;
-                  if (window.lenis) window.lenis.start();
-                }, 300);
-              }
-              return next;
-            });
-          } else {
-            setDirection(-1);
-            setActiveIndex((prev) => Math.max(0, prev - 1));
-          }
-
-          setTimeout(() => {
-            isCooldownRef.current = false;
-          }, 350);
-        }
+        setTimeout(() => {
+          isCooldownRef.current = false;
+        }, 320);
       }
     };
 
