@@ -5,17 +5,17 @@ export default function MagneticCursor() {
   const dotRef = useRef(null);
   const requestRef = useRef(null);
 
-  // Disable custom cursor on mobile / touch devices for maximum performance
+  // Disable custom cursor on mobile / touch devices for maximum mobile FPS
   if (typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches)) {
     return null;
   }
 
-  // Use refs for mutable state to completely bypass React re-renders (ZERO LAG)
-  const mouse = useRef({ x: 0, y: 0 });
-  const ring = useRef({ x: 0, y: 0 });
+  // Use refs for mutable state to completely bypass React re-renders (ZERO LAG, 240Hz+)
+  const mouse = useRef({ x: -100, y: -100 });
+  const ring = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Force instant update of the dot
+    // Hardware-instant 1-to-1 tracking for the inner dot
     const onMouseMove = (e) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
@@ -48,10 +48,10 @@ export default function MagneticCursor() {
     window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('mouseup', onMouseUp, { passive: true });
 
-    // Smooth trailing animation loop for the outer ring using raw GPU acceleration
+    // Hyper-speed 240Hz ring interpolation (lerp = 0.65 for ultra-snappy instant response)
     const render = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.45;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.45;
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.65;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.65;
       
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0)`;
@@ -61,7 +61,7 @@ export default function MagneticCursor() {
     };
     requestRef.current = requestAnimationFrame(render);
 
-    // Hide system cursor globally
+    // Global cursor override
     document.body.style.cursor = 'none';
     const style = document.createElement('style');
     style.innerHTML = `* { cursor: none !important; }`;
@@ -82,31 +82,33 @@ export default function MagneticCursor() {
       <style>{`
         .custom-cursor-ring {
           position: fixed;
-          top: -16px;
-          left: -16px;
-          width: 32px;
-          height: 32px;
+          top: -18px;
+          left: -18px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
-          border: 1px solid rgba(255, 255, 255, 0.8);
+          border: 1.5px solid rgba(255, 255, 255, 0.85);
+          box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
           pointer-events: none;
-          z-index: 9999;
+          z-index: 99999;
           mix-blend-mode: difference;
-          transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), top 0.2s cubic-bezier(0.16, 1, 0.3, 1), left 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
+          transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1), height 0.15s cubic-bezier(0.16, 1, 0.3, 1), top 0.15s cubic-bezier(0.16, 1, 0.3, 1), left 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s;
           will-change: transform;
         }
         .custom-cursor-ring.hovering {
-          width: 56px;
-          height: 56px;
-          top: -28px;
-          left: -28px;
-          background-color: rgba(255, 255, 255, 0.15);
-          border-color: transparent;
+          width: 64px;
+          height: 64px;
+          top: -32px;
+          left: -32px;
+          background-color: rgba(255, 255, 255, 0.18);
+          border-color: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
         }
         .custom-cursor-ring.clicking {
-          width: 20px;
-          height: 20px;
-          top: -10px;
-          left: -10px;
+          width: 22px;
+          height: 22px;
+          top: -11px;
+          left: -11px;
         }
         .custom-cursor-dot {
           position: fixed;
@@ -115,11 +117,12 @@ export default function MagneticCursor() {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background-color: white;
+          background-color: #ffffff;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
           pointer-events: none;
-          z-index: 10000;
+          z-index: 100000;
           mix-blend-mode: difference;
-          transition: opacity 0.15s ease-out;
+          transition: opacity 0.12s ease-out;
           will-change: transform;
         }
         .custom-cursor-dot.hovering {
@@ -131,3 +134,4 @@ export default function MagneticCursor() {
     </>
   );
 }
+
