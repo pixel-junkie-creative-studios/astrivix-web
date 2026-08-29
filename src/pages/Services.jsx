@@ -26,21 +26,22 @@ export default function Services() {
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
-      // Active whenever Services is anywhere in the central viewport
-      const isInViewport = rect.top <= window.innerHeight * 0.8 && rect.bottom >= window.innerHeight * 0.2;
-
-      if (!isInViewport) return;
-
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Allow natural window scroll UP only when at Card 01 AND scrolling UP
+      // 1. Only activate card flipping when user has scrolled fully down to Services section (rect.top <= 50)
+      if (isScrollingDown && rect.top > 50) return;
+
+      // 2. If section has scrolled off-screen above/below, allow normal scroll
+      if (rect.bottom < 100 || rect.top > window.innerHeight - 100) return;
+
+      // 3. Allow natural window scroll UP only when at Card 01 AND scrolling UP
       if (isScrollingUp && activeIndex === 0 && rect.top >= 0) return;
 
-      // Allow natural window scroll DOWN only when at Card 09 AND scrolling DOWN
+      // 4. Allow natural window scroll DOWN only when at Card 09 AND scrolling DOWN
       if (isScrollingDown && activeIndex === services.length - 1) return;
 
-      // STRICTLY BLOCK ALL WINDOW SCROLLING WHILE ON CARDS 01 THROUGH 08
+      // STRICTLY BLOCK ALL WINDOW SCROLLING WHILE IN THE CARD DECK (CARDS 01 - 08)
       e.preventDefault();
 
       // Automatically re-center section if it drifted slightly
