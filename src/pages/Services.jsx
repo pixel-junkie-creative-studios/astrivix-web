@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 
 const services = [
-  { id: '01', title: 'Branding & Identity', category: 'Strategy & Identity', color: '#2563eb', desc: 'Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' },
-  { id: '02', title: 'Publishing Excellence', category: 'Creative & Editorial', color: '#1d4ed8', desc: 'Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' },
-  { id: '03', title: 'Ad Campaigns & Marketing', category: 'Growth & Outreach', color: '#2563eb', desc: 'Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' },
-  { id: '04', title: 'Graphic & Visual Communication', category: 'Visual Identity', color: '#1e40af', desc: 'Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s.' },
-  { id: '05', title: 'Enterprise Web Dev', category: 'Engineering & Scale', color: '#2563eb', desc: 'Building robust, scalable, and high-performance web applications tailored to modern digital ecosystems.' },
-  { id: '06', title: 'Mobile App Engineering', category: 'Native & PWA', color: '#1d4ed8', desc: 'Designing seamless mobile experiences for iOS and Android platforms with fluid motion and top performance.' },
-  { id: '07', title: 'Conversion Optimization', category: 'UX/UI & Analytics', color: '#2563eb', desc: 'Turning visitors into loyal customers through expert UX/UI methodologies and data-driven design.' },
-  { id: '08', title: 'Motion & Video Production', category: 'Creative Production', color: '#1e40af', desc: 'Bringing brand stories to life with cinematic video production, 3D motion graphics, and visual effects.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Identity', color: '#ff4d4d', desc: 'Crafting unique brand identities that resonate and leave a lasting impression.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Engineering & Scale', color: '#4d79ff', desc: 'Building robust, scalable, and high-performance web applications.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native & PWA', color: '#4dff88', desc: 'Designing seamless mobile experiences for iOS and Android platforms.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Growth, SEO, AEO & More', color: '#ff4dff', desc: 'Driving growth through data-driven marketing and SEO dominance.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'UX/UI & Analytics', color: '#ffff4d', desc: 'Turning visitors into loyal customers through expert UI/UX methodologies.' },
+  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Visual Identity', color: '#ff884d', desc: 'Creating visually stunning interfaces that elevate your digital presence.' },
+  { id: '07', title: 'MOTION & VIDEO', category: 'Creative Production', color: '#4dffff', desc: 'Bringing ideas to life with cinematic video production and motion graphics.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategy & Growth', color: '#b34dff', desc: 'Providing strategic insights to scale operations and maximize revenue.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Management & Scaling', color: '#4dffb3', desc: 'Expert financial management to ensure sustainable and profitable scaling.' }
 ];
 
 export default function Services() {
-  const [[page, direction], setPage] = useState([0, 0]);
+  const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
 
-  const activeIndex = (page % services.length + services.length) % services.length;
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end end']
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const newIndex = Math.min(
+      services.length - 1,
+      Math.max(0, Math.floor(latest * services.length))
+    );
+    if (newIndex !== activeIndex) {
+      setDirection(newIndex > activeIndex ? 1 : -1);
+      setActiveIndex(newIndex);
+    }
+  });
+
   const prevIndex = (activeIndex - 1 + services.length) % services.length;
   const nextIndex = (activeIndex + 1) % services.length;
-
-  const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
-  };
 
   const activeService = services[activeIndex];
   const prevService = services[prevIndex];
@@ -30,9 +44,9 @@ export default function Services() {
   // 3D Card Flip Variants
   const cardVariants = {
     enter: (dir) => ({
-      x: dir > 0 ? 300 : -300,
-      rotateY: dir > 0 ? 45 : -45,
-      scale: 0.85,
+      x: dir > 0 ? 280 : -280,
+      rotateY: dir > 0 ? 40 : -40,
+      scale: 0.88,
       opacity: 0,
     }),
     center: {
@@ -44,140 +58,191 @@ export default function Services() {
     },
     exit: (dir) => ({
       zIndex: 0,
-      x: dir < 0 ? 300 : -300,
-      rotateY: dir < 0 ? 45 : -45,
-      scale: 0.85,
+      x: dir < 0 ? 280 : -280,
+      rotateY: dir < 0 ? 40 : -40,
+      scale: 0.88,
       opacity: 0,
     }),
   };
 
   return (
-    <div id="services" className="relative z-10 w-full bg-transparent pt-24 pb-32 min-h-screen overflow-hidden flex flex-col items-center justify-center">
+    <div id="services" ref={containerRef} className="relative z-10 w-full bg-transparent h-[380vh]">
       
-      {/* Header section */}
-      <div className="text-center mb-10 md:mb-16 z-20">
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white mb-2">
-          What We Do
-        </h2>
-        <div className="w-24 h-1 bg-blue-600 mx-auto rounded-full mt-3 shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
-      </div>
+      {/* Sticky Fullscreen Stage */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden pt-12 pb-8">
+        
+        {/* Header section */}
+        <div className="text-center mb-6 md:mb-10 z-30 pointer-events-none">
+          <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
+            <span className="w-8 h-px bg-white/20"></span>
+            What We Do
+            <span className="w-8 h-px bg-white/20"></span>
+          </h2>
+          <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
+            OUR SERVICES
+          </h3>
+          <p className="text-xs md:text-sm text-white/50 font-mono mt-2 uppercase tracking-widest">
+            Scroll down to explore capabilities
+          </p>
+        </div>
 
-      {/* 3D Card Deck Carousel Stage */}
-      <div 
-        className="relative w-full max-w-6xl mx-auto px-4 flex items-center justify-center min-h-[460px] md:min-h-[520px]"
-        style={{ perspective: '1200px' }}
-      >
-        {/* LEFT PEEK CARD */}
+        {/* 3D Card Deck Stage */}
         <div 
-          onClick={() => paginate(-1)}
-          className="hidden sm:flex absolute left-4 lg:left-12 z-10 w-[240px] md:w-[300px] h-[360px] md:h-[420px] rounded-3xl bg-gradient-to-br from-blue-700 to-indigo-950 p-6 flex-col justify-between cursor-pointer opacity-50 hover:opacity-80 transition-all duration-300 transform -rotate-y-12 scale-90 border border-white/10 shadow-2xl"
-          style={{ transform: 'rotateY(25deg) translateZ(-60px)' }}
+          className="relative w-full max-w-6xl mx-auto px-4 flex items-center justify-center h-[420px] md:h-[480px]"
+          style={{ perspective: '1200px' }}
         >
-          <div className="text-6xl md:text-8xl font-black text-white/90">
-            {prevService.id}
+          {/* LEFT PEEK CARD */}
+          <div 
+            onClick={() => {
+              setDirection(-1);
+              setActiveIndex(prevIndex);
+            }}
+            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+            style={{ 
+              transform: 'rotateY(25deg) translateZ(-60px)',
+              background: `radial-gradient(circle at top left, ${prevService.color}25, #09090e 70%)`
+            }}
+          >
+            <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
+              {prevService.id}
+            </div>
+            <div>
+              <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
+                {prevService.category}
+              </div>
+              <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
+                {prevService.title}
+              </div>
+            </div>
           </div>
-          <div className="text-xl md:text-2xl font-bold text-white/80 line-clamp-2">
-            {prevService.title}
+
+          {/* ACTIVE CENTER CARD WITH 3D FLIP */}
+          <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <motion.div
+                key={activeIndex}
+                custom={direction}
+                variants={cardVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  duration: 0.55,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                style={{ 
+                  transformStyle: 'preserve-3d',
+                  background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
+                }}
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden bg-[#0a0a0f]"
+              >
+                {/* Accent Line Header */}
+                <div 
+                  className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"
+                  style={{ background: `linear-gradient(90deg, ${activeService.color}, transparent)` }}
+                />
+
+                {/* Card Header: Number & Category */}
+                <div className="flex justify-between items-start w-full pt-2">
+                  <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white/90">
+                    {activeService.id}
+                  </span>
+                  <span 
+                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/20 backdrop-blur-md"
+                    style={{ backgroundColor: `${activeService.color}30` }}
+                  >
+                    {activeService.category}
+                  </span>
+                </div>
+
+                {/* Card Body: Title & Description */}
+                <div className="my-auto pt-2">
+                  <h4 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-4">
+                    {activeService.title}
+                  </h4>
+                  <p className="text-white/70 text-sm md:text-base leading-relaxed font-medium">
+                    {activeService.desc}
+                  </p>
+                </div>
+
+                {/* Card Footer: Progress Indicators */}
+                <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
+                  <div className="flex items-center gap-1.5">
+                    {services.map((s, idx) => (
+                      <div 
+                        key={s.id}
+                        onClick={() => {
+                          setDirection(idx > activeIndex ? 1 : -1);
+                          setActiveIndex(idx);
+                        }}
+                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === activeIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
+                      />
+                    ))}
+                  </div>
+
+                  <span className="text-xs font-mono font-bold text-white/60">
+                    {activeService.id} / 09
+                  </span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* RIGHT PEEK CARD */}
+          <div 
+            onClick={() => {
+              setDirection(1);
+              setActiveIndex(nextIndex);
+            }}
+            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+            style={{ 
+              transform: 'rotateY(-25deg) translateZ(-60px)',
+              background: `radial-gradient(circle at top right, ${nextService.color}25, #09090e 70%)`
+            }}
+          >
+            <div className="text-xs font-bold tracking-widest text-white/40 uppercase">
+              Next Service
+            </div>
+            <div>
+              <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
+                {nextService.category}
+              </div>
+              <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
+                {nextService.title}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ACTIVE CENTER CARD WITH 3D FLIP */}
-        <div className="relative z-20 w-full max-w-[340px] sm:max-w-[420px] md:max-w-[460px] h-[440px] md:h-[480px]">
-          <AnimatePresence initial={false} custom={direction} mode="popLayout">
-            <motion.div
-              key={page}
-              custom={direction}
-              variants={cardVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                duration: 0.55,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              style={{ transformStyle: 'preserve-3d' }}
-              className="absolute inset-0 w-full h-full rounded-[2.5rem] bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-950 p-8 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_20px_60px_rgba(29,78,216,0.45)] backdrop-blur-xl overflow-hidden"
-            >
-              {/* Card Header: Number or Title */}
-              <div className="flex justify-between items-start w-full">
-                <div className="text-5xl md:text-6xl font-black text-white/90 tracking-tighter">
-                  {activeService.id}
-                </div>
-                <div className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white/70 bg-white/10 px-4 py-2 rounded-full border border-white/20">
-                  {activeService.category}
-                </div>
-              </div>
-
-              {/* Card Body: Main Title & Description */}
-              <div className="my-auto pt-4">
-                <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-[1.05] mb-4 drop-shadow-md">
-                  {activeService.title}
-                </h3>
-                <p className="text-white/80 text-sm md:text-base leading-relaxed line-clamp-4 font-normal">
-                  {activeService.desc}
-                </p>
-              </div>
-
-              {/* Card Footer: Interactive Flip Trigger Button */}
-              <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
-                <div className="flex gap-1.5">
-                  {services.map((_, idx) => (
-                    <div 
-                      key={idx}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${idx === activeIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/30'}`}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={() => paginate(1)}
-                  className="relative group flex items-center gap-2 bg-blue-500/80 hover:bg-blue-400 text-white font-bold text-xs md:text-sm uppercase tracking-wider px-5 py-3 rounded-full border border-white/30 shadow-[0_0_20px_rgba(59,130,246,0.6)] hover:shadow-[0_0_30px_rgba(59,130,246,0.9)] transition-all duration-300 active:scale-95"
-                >
-                  <span>Click here</span>
-                  <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </button>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+        {/* Mobile Controls */}
+        <div className="flex sm:hidden items-center justify-center gap-6 mt-6 z-30">
+          <button
+            onClick={() => {
+              setDirection(-1);
+              setActiveIndex(prevIndex);
+            }}
+            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
+          >
+            ←
+          </button>
+          <span className="text-xs font-mono font-bold text-white/70">
+            {activeService.id} / 09
+          </span>
+          <button
+            onClick={() => {
+              setDirection(1);
+              setActiveIndex(nextIndex);
+            }}
+            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
+          >
+            →
+          </button>
         </div>
 
-        {/* RIGHT PEEK CARD */}
-        <div 
-          onClick={() => paginate(1)}
-          className="hidden sm:flex absolute right-4 lg:right-12 z-10 w-[240px] md:w-[300px] h-[360px] md:h-[420px] rounded-3xl bg-gradient-to-br from-blue-700 to-indigo-950 p-6 flex-col justify-between cursor-pointer opacity-50 hover:opacity-80 transition-all duration-300 transform rotate-y-12 scale-90 border border-white/10 shadow-2xl"
-          style={{ transform: 'rotateY(-25deg) translateZ(-60px)' }}
-        >
-          <div className="text-sm font-bold tracking-widest text-white/50 uppercase">
-            Next Up
-          </div>
-          <div className="text-xl md:text-2xl font-bold text-white/80 line-clamp-2">
-            {nextService.title}
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Controls */}
-      <div className="flex sm:hidden items-center justify-center gap-6 mt-8 z-30">
-        <button
-          onClick={() => paginate(-1)}
-          className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95"
-        >
-          ←
-        </button>
-        <span className="text-sm font-mono font-bold text-white/60">
-          {activeIndex + 1} / {services.length}
-        </span>
-        <button
-          onClick={() => paginate(1)}
-          className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95"
-        >
-          →
-        </button>
       </div>
 
     </div>
   );
 }
+
 
