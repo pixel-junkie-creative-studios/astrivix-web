@@ -406,8 +406,21 @@ const ParticleText = ({
   ]);
 
   return (
-    <div ref={containerRef} className={`particle-text ${className}`} style={style} aria-label={text}>
-      <canvas ref={canvasRef} className="particle-text__canvas" aria-hidden="true" />
+    <div ref={containerRef} className={`particle-text relative flex items-center justify-center ${className}`} style={style} aria-label={text}>
+      {/* High-Definition Crisp Text Backbone for 100% Instant Legibility */}
+      <div 
+        aria-hidden="true" 
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none text-white font-black tracking-tighter text-center uppercase drop-shadow-[0_0_25px_rgba(255,255,255,0.4)] opacity-90"
+        style={{
+          fontSize: typeof fontSize === 'number' ? `${fontSize}px` : fontSize,
+          fontWeight: fontWeight,
+          fontFamily: fontFamily === 'inherit' ? 'sans-serif' : fontFamily
+        }}
+      >
+        {text}
+      </div>
+
+      <canvas ref={canvasRef} className="particle-text__canvas relative z-10" aria-hidden="true" />
       <span className="particle-text__sr">{text}</span>
     </div>
   );

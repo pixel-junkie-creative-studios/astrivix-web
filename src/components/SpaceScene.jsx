@@ -260,8 +260,8 @@ export default function SpaceScene() {
     <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#0a1128] dark:bg-[#020202] transition-colors duration-500">
       <Canvas 
         camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
-        dpr={isMobile ? 1 : [1, 1.5]} 
-        gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
+        dpr={[1, 2]} 
+        gl={{ antialias: true, powerPreference: "high-performance" }}
       >
         {/* Cinematic Lighting Rig */}
         <ambientLight intensity={0.1} />
