@@ -40,11 +40,23 @@
         {
           "key": "X-Permitted-Cross-Domain-Policies",
           "value": "none"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
         }
       ]
     }
   ],
   "rewrites": [
+    {
+      "source": "/financial-consulting",
+      "destination": "https://astrivix-consultancy.vercel.app"
+    },
+    {
+      "source": "/financial-consulting/(.*)",
+      "destination": "https://astrivix-consultancy.vercel.app/$1"
+    },
     {
       "source": "/api(/.*)?",
       "destination": {
