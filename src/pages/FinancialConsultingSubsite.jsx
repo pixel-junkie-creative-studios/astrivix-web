@@ -6,16 +6,13 @@ export default function FinancialConsultingSubsite() {
   return (
     <div className="w-full h-screen bg-[#050505] overflow-hidden relative z-[9999]">
       {/* Top Header Bar */}
-      <div className="absolute top-0 inset-x-0 h-12 bg-black/80 backdrop-blur-xl border-b border-white/10 z-[10000] flex items-center justify-between px-6">
+      <div className="absolute top-0 inset-x-0 h-12 bg-black/80 backdrop-blur-xl border-b border-white/10 z-[10000] flex items-center px-6">
         <a 
           href="/" 
           className="text-xs font-mono font-bold tracking-widest text-white/70 hover:text-white uppercase flex items-center gap-2 transition-colors"
         >
           <span>← Back to Astrivix</span>
         </a>
-        <span className="text-xs font-mono tracking-widest text-white/40 uppercase hidden sm:inline-block">
-          Tax Evasion & Wall Street Secrets
-        </span>
       </div>
 
       {/* Loading Spinner */}
