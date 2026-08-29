@@ -20,7 +20,7 @@ export default function Services() {
   const isCooldownRef = useRef(false);
   const isLockedRef = useRef(false);
 
-  // Discrete Wheel Lock Controller
+  // Unbreakable Wheel Lock & Lenis Freeze Controller
   useEffect(() => {
     const handleWheel = (e) => {
       const el = sectionRef.current;
@@ -30,26 +30,36 @@ export default function Services() {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Lock into Services when top is aligned
-      const isAtHeader = rect.top <= 120 && rect.bottom >= window.innerHeight * 0.3;
+      // Lock into Services when top is aligned (within 150px of top of screen)
+      const isAtHeader = rect.top <= 150 && rect.bottom >= window.innerHeight * 0.3;
 
       if (isAtHeader && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
         isLockedRef.current = true;
+        if (window.lenis) window.lenis.stop();
+        window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
       }
 
-      // While locked on cards 01 through 08: PAUSE DOWNWARD PAGE SCROLL 100%
+      // WHILE LOCKED ON CARDS 01 THROUGH 08: FREEZE DOWNWARD PAGE SCROLL 100%
       if (isLockedRef.current) {
         e.preventDefault();
+        e.stopPropagation();
+
+        if (window.lenis) window.lenis.stop();
+        if (Math.abs(rect.top) > 5 && activeIndex < services.length - 1) {
+          window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
+        }
 
         // If at Card 01 and scrolling UP, release lock & allow page scroll UP
         if (isScrollingUp && activeIndex === 0) {
           isLockedRef.current = false;
+          if (window.lenis) window.lenis.start();
           return;
         }
 
         // If at Card 09 and scrolling DOWN, release lock & allow page scroll DOWN
         if (isScrollingDown && activeIndex === services.length - 1) {
           isLockedRef.current = false;
+          if (window.lenis) window.lenis.start();
           return;
         }
 
@@ -65,6 +75,7 @@ export default function Services() {
               if (next === services.length - 1) {
                 setTimeout(() => {
                   isLockedRef.current = false;
+                  if (window.lenis) window.lenis.start();
                 }, 300);
               }
               return next;
@@ -84,6 +95,7 @@ export default function Services() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);
+      if (window.lenis) window.lenis.start();
     };
   }, [activeIndex]);
 
