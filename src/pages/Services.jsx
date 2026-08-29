@@ -30,10 +30,10 @@ export default function Services() {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=4500', // 4500px scroll distance dedicated to 9 cards
+        end: '+=1800', // 1800px total scroll distance (exactly 1 scroll per card)
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: 0.5,
+        scrub: 0.1,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,
