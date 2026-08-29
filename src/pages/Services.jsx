@@ -19,6 +19,7 @@ export default function Services() {
   const [direction, setDirection] = useState(1);
   const isCooldownRef = useRef(false);
   const isLockedRef = useRef(false);
+  const hasFlippedRef = useRef(false);
 
   // Native OS-Level Scroll Lock & Wheel Trap Controller
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function Services() {
 
       if (isAtHeader && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
         isLockedRef.current = true;
+        hasFlippedRef.current = false;
         document.body.style.overflow = 'hidden';
         if (window.lenis) window.lenis.stop();
         window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
@@ -51,17 +53,19 @@ export default function Services() {
           window.scrollTo({ top: el.offsetTop, behavior: 'instant' });
         }
 
-        // If at Card 01 and scrolling UP, release OS lock & allow page scroll UP
-        if (isScrollingUp && activeIndex === 0) {
+        // Release back UP to Hero ONLY if user scrolled forward first, came back to 01, and scrolls UP strongly
+        if (isScrollingUp && activeIndex === 0 && e.deltaY < -25 && hasFlippedRef.current) {
           isLockedRef.current = false;
+          hasFlippedRef.current = false;
           document.body.style.overflow = 'auto';
           if (window.lenis) window.lenis.start();
           return;
         }
 
-        // If at Card 09 and scrolling DOWN, release OS lock & allow page scroll DOWN
-        if (isScrollingDown && activeIndex === services.length - 1) {
+        // If at Card 09 and scrolling DOWN strongly, release OS lock & allow page scroll DOWN into About Us
+        if (isScrollingDown && activeIndex === services.length - 1 && e.deltaY > 15) {
           isLockedRef.current = false;
+          hasFlippedRef.current = false;
           document.body.style.overflow = 'auto';
           if (window.lenis) window.lenis.start();
           return;
@@ -73,12 +77,14 @@ export default function Services() {
           isCooldownRef.current = true;
 
           if (isScrollingDown) {
+            hasFlippedRef.current = true;
             setDirection(1);
             setActiveIndex((prev) => {
               const next = Math.min(services.length - 1, prev + 1);
               if (next === services.length - 1) {
                 setTimeout(() => {
                   isLockedRef.current = false;
+                  hasFlippedRef.current = false;
                   document.body.style.overflow = 'auto';
                   if (window.lenis) window.lenis.start();
                 }, 300);
