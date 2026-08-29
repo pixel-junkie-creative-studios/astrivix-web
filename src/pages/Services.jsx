@@ -24,16 +24,17 @@ export default function Services() {
   const [direction, setDirection] = useState(1);
   const prevIndexRef = useRef(0);
 
-  // GSAP ScrollTrigger Hardware Pin Engine
+  // GSAP ScrollTrigger Hardware Pin Engine (Mobile Responsive Speed Tuning)
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: '+=1800', // 1800px total scroll distance (exactly 1 scroll per card)
+        end: isMobile ? '+=4800' : '+=1800', // 4800px on mobile for 1-swipe-per-card control
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: 0.1,
+        scrub: isMobile ? 0.8 : 0.1,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,

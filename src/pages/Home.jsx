@@ -25,7 +25,7 @@ export default function Home() {
         <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="white" />
       </motion.div>
       
-      <section className="min-h-[85vh] flex flex-col justify-center items-center relative pt-12 pb-24">
+      <section className="min-h-[85vh] flex flex-col justify-center items-center relative pt-16 md:pt-12 pb-16 md:pb-24">
         
         {/* Centered Hero Container */}
         <motion.div 
@@ -33,7 +33,7 @@ export default function Home() {
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto"
         >
           {/* ASTRIVIX Particle Text Container */}
-          <div className="w-full h-[180px] sm:h-[300px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
+          <div className="w-full h-[140px] sm:h-[300px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
             <ParticleText
               text="ASTRIVIX"
               particleSize={3}
@@ -45,26 +45,26 @@ export default function Home() {
               stagger={100}
               pointerRepel={150}
               repelRadius={400}
-              fontSize="clamp(2.4rem, 12vw, 12rem)"
+              fontSize="clamp(2.0rem, 11vw, 12rem)"
               fontWeight={900}
             />
           </div>
           
           {/* Bottom Text Row - Perfectly aligned under ASTRIVIX */}
-          <div className="flex flex-col md:flex-row items-center md:items-start justify-between w-full px-4 md:px-16 mt-2 md:-mt-20 gap-3 md:gap-0">
+          <div className="flex flex-row items-center justify-between w-full px-6 sm:px-12 md:px-16 mt-4 sm:mt-2 md:-mt-20">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
-              <h2 className="text-2xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text">
-                CORP<span className="text-ax-text text-3xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
+              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text">
+                CORP<span className="text-ax-text text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
               </h2>
             </div>
 
             {/* Right Side: BUSINESS CONSULTANTS */}
-            <div className="flex flex-col items-center md:items-end text-center md:text-right md:pt-2">
-              <h3 className="text-xs sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
+            <div className="flex flex-col items-end text-right pt-1 md:pt-2">
+              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
                 BUSINESS
               </h3>
-              <h3 className="text-base sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
+              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
                 CONSULTANTS
               </h3>
             </div>
@@ -72,22 +72,22 @@ export default function Home() {
         </motion.div>
           
         <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="w-full flex justify-center mt-12 md:mt-24 px-4 z-10"
-          >
-            <div className="bg-white/5 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-liquid-glass border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
-              <div className="relative z-10">
-                <SplitFlapText
-                  words={['ENGINEERING', 'STABILITY', 'AT VELOCITY']}
-                  fontSize={20}
-                  tileColor="#050505"
-                  textColor="#ffffff"
-                  stagger={0.05}
-                />
-              </div>
+          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+          className="w-full flex justify-center mt-8 md:mt-24 px-4 z-10"
+        >
+          <div className="bg-white/5 backdrop-blur-xl p-5 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] shadow-liquid-glass border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden max-w-[90vw]">
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
+            <div className="relative z-10 flex justify-center overflow-x-auto">
+              <SplitFlapText
+                words={['ENGINEERING', 'STABILITY', 'AT VELOCITY']}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 13 : 20}
+                tileColor="#050505"
+                textColor="#ffffff"
+                stagger={0.05}
+              />
             </div>
-          </motion.div>
+          </div>
+        </motion.div>
       </section>
 
       <section id="clients" className="py-24 relative z-10">
