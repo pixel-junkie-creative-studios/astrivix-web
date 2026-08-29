@@ -254,23 +254,30 @@ const InteractiveStars = () => {
 
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
+  const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
 
   return (
     <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#0a1128] dark:bg-[#020202] transition-colors duration-500">
-      <Canvas camera={{ position: [0, 0, 0], fov: 60 }} dpr={[1, 1.5]} gl={{ antialias: false, powerPreference: "high-performance" }}>
+      <Canvas 
+        camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
+        dpr={isMobile ? 1 : [1, 1.5]} 
+        gl={{ antialias: !isMobile, powerPreference: "high-performance" }}
+      >
         {/* Cinematic Lighting Rig */}
         <ambientLight intensity={0.1} />
-        <directionalLight position={[150, 100, 50]} intensity={4.5} color="#ffffff" castShadow />
+        <directionalLight position={[150, 100, 50]} intensity={isMobile ? 3.5 : 4.5} color="#ffffff" castShadow={!isMobile} />
         <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#4d79ff" />
         
         <InteractiveStars />
         <Planets />
         <CameraController scrollYProgress={scrollYProgress} />
         
-        {/* Cinematic Post Processing */}
-        <EffectComposer disableNormalPass>
-          <Bloom luminanceThreshold={0.1} mipmapBlur intensity={2.5} />
-        </EffectComposer>
+        {/* Cinematic Post Processing - Only on desktop */}
+        {!isMobile && (
+          <EffectComposer disableNormalPass>
+            <Bloom luminanceThreshold={0.1} mipmapBlur intensity={2.5} />
+          </EffectComposer>
+        )}
       </Canvas>
     </div>
   );

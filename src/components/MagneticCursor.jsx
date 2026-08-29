@@ -5,6 +5,11 @@ export default function MagneticCursor() {
   const dotRef = useRef(null);
   const requestRef = useRef(null);
 
+  // Disable custom cursor on mobile / touch devices for maximum performance
+  if (typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches)) {
+    return null;
+  }
+
   // Use refs for mutable state to completely bypass React re-renders (ZERO LAG)
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
