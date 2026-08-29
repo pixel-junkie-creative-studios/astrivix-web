@@ -1,6 +1,10 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 import Layout from './Layout';
 
@@ -34,10 +38,6 @@ function App() {
     });
 
     // Synchronize Lenis with GSAP ScrollTrigger for hardware-perfect pinning
-    const { gsap } = await import('gsap');
-    const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-    gsap.registerPlugin(ScrollTrigger);
-
     lenis.on('scroll', ScrollTrigger.update);
 
     const updateGSAP = (time) => {
