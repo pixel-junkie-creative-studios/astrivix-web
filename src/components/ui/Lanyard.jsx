@@ -140,7 +140,7 @@ export default function Lanyard({
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 30 : 1 / 60}>
+        <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 120} interpolate={true}>
           <Band
             isMobile={isMobile}
             frontImage={frontImage}
@@ -203,7 +203,7 @@ function Band({
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
   const { width, height } = useThree((state) => state.size);
-  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2.5, linearDamping: 2.5, ccd: true };
   const { nodes, materials } = useGLTF(cardGLB);
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
