@@ -66,10 +66,10 @@ export default function Services() {
   };
 
   return (
-    <div id="services" ref={containerRef} className="relative z-10 w-full bg-transparent h-[380vh]">
+    <div id="services" ref={containerRef} className="relative z-10 w-full bg-transparent h-[280vh]">
       
-      {/* Sticky Fullscreen Stage */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden pt-12 pb-8">
+      {/* Sticky Centered Fullscreen Stage */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden py-6">
         
         {/* Header section */}
         <div className="text-center mb-6 md:mb-10 z-30 pointer-events-none">

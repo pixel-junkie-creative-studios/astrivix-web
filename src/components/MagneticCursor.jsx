@@ -45,8 +45,8 @@ export default function MagneticCursor() {
 
     // Smooth trailing animation loop for the outer ring using raw GPU acceleration
     const render = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.2;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.2;
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.45;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.45;
       
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0)`;
@@ -114,7 +114,7 @@ export default function MagneticCursor() {
           pointer-events: none;
           z-index: 10000;
           mix-blend-mode: difference;
-          transition: opacity 0.2s, transform 0.1s;
+          transition: opacity 0.15s ease-out;
           will-change: transform;
         }
         .custom-cursor-dot.hovering {
