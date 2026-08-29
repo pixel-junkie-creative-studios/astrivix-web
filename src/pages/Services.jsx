@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const services = [
   { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Identity', color: '#ff4d4d', desc: 'Crafting unique brand identities that resonate and leave a lasting impression.' },
@@ -14,25 +14,74 @@ const services = [
 ];
 
 export default function Services() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const isCooldownRef = useRef(false);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end']
-  });
+  // Wheel Scroll Lock & Flip Controller
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const newIndex = Math.min(
-      services.length - 1,
-      Math.max(0, Math.floor(latest * services.length))
-    );
-    if (newIndex !== activeIndex) {
-      setDirection(newIndex > activeIndex ? 1 : -1);
-      setActiveIndex(newIndex);
+    const handleWheel = (e) => {
+      const rect = el.getBoundingClientRect();
+      // Check if section is centered in viewport
+      const isVisible = rect.top <= window.innerHeight * 0.3 && rect.bottom >= window.innerHeight * 0.7;
+
+      if (!isVisible) return;
+
+      const isScrollingDown = e.deltaY > 0;
+      const isScrollingUp = e.deltaY < 0;
+
+      // Allow natural scroll at boundaries
+      if (isScrollingUp && activeIndex === 0) return;
+      if (isScrollingDown && activeIndex === services.length - 1) return;
+
+      // Intercept wheel event & flip card without moving page
+      e.preventDefault();
+
+      if (isCooldownRef.current) return;
+
+      if (Math.abs(e.deltaY) > 15) {
+        isCooldownRef.current = true;
+        if (isScrollingDown) {
+          setDirection(1);
+          setActiveIndex((prev) => Math.min(services.length - 1, prev + 1));
+        } else {
+          setDirection(-1);
+          setActiveIndex((prev) => Math.max(0, prev - 1));
+        }
+
+        setTimeout(() => {
+          isCooldownRef.current = false;
+        }, 450);
+      }
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [activeIndex]);
+
+  // Touch Swipe Support for Mobile
+  const touchStartY = useRef(0);
+  const handleTouchStart = (e) => {
+    touchStartY.current = e.touches[0].clientY;
+  };
+  const handleTouchEnd = (e) => {
+    const touchEndY = e.changedTouches[0].clientY;
+    const diff = touchStartY.current - touchEndY;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0 && activeIndex < services.length - 1) {
+        setDirection(1);
+        setActiveIndex((prev) => prev + 1);
+      } else if (diff < 0 && activeIndex > 0) {
+        setDirection(-1);
+        setActiveIndex((prev) => prev - 1);
+      }
     }
-  });
+  };
 
   const prevIndex = (activeIndex - 1 + services.length) % services.length;
   const nextIndex = (activeIndex + 1) % services.length;
@@ -66,188 +115,189 @@ export default function Services() {
   };
 
   return (
-    <div id="services" ref={containerRef} className="relative z-10 w-full bg-transparent h-[280vh]">
-      
-      {/* Sticky Centered Fullscreen Stage */}
-      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden py-6">
-        
-        {/* Header section */}
-        <div className="text-center mb-6 md:mb-10 z-30 pointer-events-none">
-          <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
-            <span className="w-8 h-px bg-white/20"></span>
-            What We Do
-            <span className="w-8 h-px bg-white/20"></span>
-          </h2>
-          <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
-            OUR SERVICES
-          </h3>
-          <p className="text-xs md:text-sm text-white/50 font-mono mt-2 uppercase tracking-widest">
-            Scroll down to explore capabilities
-          </p>
-        </div>
+    <div 
+      id="services" 
+      ref={sectionRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className="relative z-10 w-full bg-transparent min-h-screen flex flex-col justify-center items-center py-16 overflow-hidden"
+    >
+      {/* Header section */}
+      <div className="text-center mb-6 md:mb-10 z-30 pointer-events-none">
+        <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
+          <span className="w-8 h-px bg-white/20"></span>
+          What We Do
+          <span className="w-8 h-px bg-white/20"></span>
+        </h2>
+        <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
+          OUR SERVICES
+        </h3>
+        <p className="text-xs md:text-sm text-white/50 font-mono mt-2 uppercase tracking-widest">
+          Scroll wheel to flip cards
+        </p>
+      </div>
 
-        {/* 3D Card Deck Stage */}
+      {/* 3D Card Deck Stage */}
+      <div 
+        className="relative w-full max-w-6xl mx-auto px-4 flex items-center justify-center h-[420px] md:h-[480px]"
+        style={{ perspective: '1200px' }}
+      >
+        {/* LEFT PEEK CARD */}
         <div 
-          className="relative w-full max-w-6xl mx-auto px-4 flex items-center justify-center h-[420px] md:h-[480px]"
-          style={{ perspective: '1200px' }}
+          onClick={() => {
+            setDirection(-1);
+            setActiveIndex(prevIndex);
+          }}
+          className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+          style={{ 
+            transform: 'rotateY(25deg) translateZ(-60px)',
+            background: `radial-gradient(circle at top left, ${prevService.color}25, #09090e 70%)`
+          }}
         >
-          {/* LEFT PEEK CARD */}
-          <div 
-            onClick={() => {
-              setDirection(-1);
-              setActiveIndex(prevIndex);
-            }}
-            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
-            style={{ 
-              transform: 'rotateY(25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top left, ${prevService.color}25, #09090e 70%)`
-            }}
-          >
-            <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
-              {prevService.id}
-            </div>
-            <div>
-              <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
-                {prevService.category}
-              </div>
-              <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
-                {prevService.title}
-              </div>
-            </div>
+          <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
+            {prevService.id}
           </div>
-
-          {/* ACTIVE CENTER CARD WITH 3D FLIP */}
-          <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
-            <AnimatePresence initial={false} custom={direction} mode="popLayout">
-              <motion.div
-                key={activeIndex}
-                custom={direction}
-                variants={cardVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  duration: 0.55,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                style={{ 
-                  transformStyle: 'preserve-3d',
-                  background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
-                }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden bg-[#0a0a0f]"
-              >
-                {/* Accent Line Header */}
-                <div 
-                  className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"
-                  style={{ background: `linear-gradient(90deg, ${activeService.color}, transparent)` }}
-                />
-
-                {/* Card Header: Number & Category */}
-                <div className="flex justify-between items-start w-full pt-2">
-                  <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white/90">
-                    {activeService.id}
-                  </span>
-                  <span 
-                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/20 backdrop-blur-md"
-                    style={{ backgroundColor: `${activeService.color}30` }}
-                  >
-                    {activeService.category}
-                  </span>
-                </div>
-
-                {/* Card Body: Title & Description */}
-                <div className="my-auto pt-2">
-                  <h4 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-4">
-                    {activeService.title}
-                  </h4>
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed font-medium">
-                    {activeService.desc}
-                  </p>
-                </div>
-
-                {/* Card Footer: Scroll Hint & Indicators */}
-                <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
-                  <div className="flex items-center gap-2">
-                    {services.map((s, idx) => (
-                      <div 
-                        key={s.id}
-                        onClick={() => {
-                          setDirection(idx > activeIndex ? 1 : -1);
-                          setActiveIndex(idx);
-                        }}
-                        className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
-                      />
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] md:text-xs font-mono font-bold text-white/50 uppercase tracking-widest hidden sm:inline-block">
-                      Scroll to flip
-                    </span>
-                    <span className="text-xs md:text-sm font-mono font-black text-white/90 px-3 py-1 rounded-full bg-white/5 border border-white/10">
-                      {activeService.id} / 09
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* RIGHT PEEK CARD */}
-          <div 
-            onClick={() => {
-              setDirection(1);
-              setActiveIndex(nextIndex);
-            }}
-            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
-            style={{ 
-              transform: 'rotateY(-25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top right, ${nextService.color}25, #09090e 70%)`
-            }}
-          >
-            <div className="text-xs font-bold tracking-widest text-white/40 uppercase">
-              Next Service
+          <div>
+            <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
+              {prevService.category}
             </div>
-            <div>
-              <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
-                {nextService.category}
-              </div>
-              <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
-                {nextService.title}
-              </div>
+            <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
+              {prevService.title}
             </div>
           </div>
         </div>
 
-        {/* Mobile Controls */}
-        <div className="flex sm:hidden items-center justify-center gap-6 mt-6 z-30">
-          <button
-            onClick={() => {
-              setDirection(-1);
-              setActiveIndex(prevIndex);
-            }}
-            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
-          >
-            ←
-          </button>
-          <span className="text-xs font-mono font-bold text-white/70">
-            {activeService.id} / 09
-          </span>
-          <button
-            onClick={() => {
-              setDirection(1);
-              setActiveIndex(nextIndex);
-            }}
-            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
-          >
-            →
-          </button>
+        {/* ACTIVE CENTER CARD WITH 3D FLIP */}
+        <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={activeIndex}
+              custom={direction}
+              variants={cardVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              style={{ 
+                transformStyle: 'preserve-3d',
+                background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
+              }}
+              className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden bg-[#0a0a0f]"
+            >
+              {/* Accent Line Header */}
+              <div 
+                className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"
+                style={{ background: `linear-gradient(90deg, ${activeService.color}, transparent)` }}
+              />
+
+              {/* Card Header: Number & Category */}
+              <div className="flex justify-between items-start w-full pt-2">
+                <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white/90">
+                  {activeService.id}
+                </span>
+                <span 
+                  className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/20 backdrop-blur-md"
+                  style={{ backgroundColor: `${activeService.color}30` }}
+                >
+                  {activeService.category}
+                </span>
+              </div>
+
+              {/* Card Body: Title & Description */}
+              <div className="my-auto pt-2">
+                <h4 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-4">
+                  {activeService.title}
+                </h4>
+                <p className="text-white/70 text-sm md:text-base leading-relaxed font-medium">
+                  {activeService.desc}
+                </p>
+              </div>
+
+              {/* Card Footer: Scroll Hint & Indicators */}
+              <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
+                <div className="flex items-center gap-2">
+                  {services.map((s, idx) => (
+                    <div 
+                      key={s.id}
+                      onClick={() => {
+                        setDirection(idx > activeIndex ? 1 : -1);
+                        setActiveIndex(idx);
+                      }}
+                      className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] md:text-xs font-mono font-bold text-white/50 uppercase tracking-widest hidden sm:inline-block">
+                    Scroll to flip
+                  </span>
+                  <span className="text-xs md:text-sm font-mono font-black text-white/90 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                    {activeService.id} / 09
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
+        {/* RIGHT PEEK CARD */}
+        <div 
+          onClick={() => {
+            setDirection(1);
+            setActiveIndex(nextIndex);
+          }}
+          className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+          style={{ 
+            transform: 'rotateY(-25deg) translateZ(-60px)',
+            background: `radial-gradient(circle at top right, ${nextService.color}25, #09090e 70%)`
+          }}
+        >
+          <div className="text-xs font-bold tracking-widest text-white/40 uppercase">
+            Next Service
+          </div>
+          <div>
+            <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
+              {nextService.category}
+            </div>
+            <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
+              {nextService.title}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Controls */}
+      <div className="flex sm:hidden items-center justify-center gap-6 mt-6 z-30">
+        <button
+          onClick={() => {
+            setDirection(-1);
+            setActiveIndex(prevIndex);
+          }}
+          className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
+        >
+          ←
+        </button>
+        <span className="text-xs font-mono font-bold text-white/70">
+          {activeService.id} / 09
+        </span>
+        <button
+          onClick={() => {
+            setDirection(1);
+            setActiveIndex(nextIndex);
+          }}
+          className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
+        >
+          →
+        </button>
       </div>
 
     </div>
   );
 }
+
 
 
