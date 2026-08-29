@@ -20,7 +20,7 @@ export default function Services() {
   const isCooldownRef = useRef(false);
   const isLockedRef = useRef(false);
 
-  // Discrete Wheel Lock & Lenis Freeze Controller
+  // Discrete Wheel Lock Controller
   useEffect(() => {
     const handleWheel = (e) => {
       const el = sectionRef.current;
@@ -30,30 +30,26 @@ export default function Services() {
       const isScrollingDown = e.deltaY > 0;
       const isScrollingUp = e.deltaY < 0;
 
-      // Lock into Services when top is aligned (within 100px of top of screen)
-      const isAtHeader = rect.top <= 100 && rect.top >= -100;
+      // Lock into Services when top is aligned
+      const isAtHeader = rect.top <= 120 && rect.bottom >= window.innerHeight * 0.3;
 
       if (isAtHeader && isScrollingDown && !isLockedRef.current && activeIndex < services.length - 1) {
         isLockedRef.current = true;
-        if (window.lenis) window.lenis.stop();
-        window.scrollTo({ top: window.scrollY + rect.top, behavior: 'instant' });
       }
 
-      // While locked on cards 01 through 08: FREEZE DOWNWARD PAGE SCROLL 100%
+      // While locked on cards 01 through 08: PAUSE DOWNWARD PAGE SCROLL 100%
       if (isLockedRef.current) {
         e.preventDefault();
 
-        // If at Card 01 and scrolling UP, release lock & resume page scroll UP
+        // If at Card 01 and scrolling UP, release lock & allow page scroll UP
         if (isScrollingUp && activeIndex === 0) {
           isLockedRef.current = false;
-          if (window.lenis) window.lenis.start();
           return;
         }
 
-        // If at Card 09 and scrolling DOWN, release lock & resume page scroll DOWN
+        // If at Card 09 and scrolling DOWN, release lock & allow page scroll DOWN
         if (isScrollingDown && activeIndex === services.length - 1) {
           isLockedRef.current = false;
-          if (window.lenis) window.lenis.start();
           return;
         }
 
@@ -66,11 +62,9 @@ export default function Services() {
             setDirection(1);
             setActiveIndex((prev) => {
               const next = Math.min(services.length - 1, prev + 1);
-              // When reaching last card, unlock Lenis so next scroll down moves page to About Us
               if (next === services.length - 1) {
                 setTimeout(() => {
                   isLockedRef.current = false;
-                  if (window.lenis) window.lenis.start();
                 }, 300);
               }
               return next;
@@ -90,7 +84,6 @@ export default function Services() {
     window.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       window.removeEventListener('wheel', handleWheel);
-      if (window.lenis) window.lenis.start();
     };
   }, [activeIndex]);
 
@@ -178,7 +171,7 @@ export default function Services() {
 
         {/* ACTIVE CENTER CARD WITH 3D FLIP */}
         <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
-          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+          <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={activeIndex}
               custom={direction}
@@ -187,7 +180,7 @@ export default function Services() {
               animate="center"
               exit="exit"
               transition={{
-                duration: 0.45,
+                duration: 0.4,
                 ease: [0.16, 1, 0.3, 1],
               }}
               style={{ 
