@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Lenis from '@studio-freight/lenis';
+import { ReactLenis } from 'lenis/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -31,34 +31,22 @@ function App() {
     }
     window.scrollTo(0, 0);
 
-    // Ultra-Smooth 120Hz Lenis Config connected to GSAP ScrollTrigger
-    const lenis = new Lenis({
-      lerp: 0.08,
-      wheelMultiplier: 1.0,
-      smoothWheel: true,
-      syncTouch: true,
-    });
-
-    window.lenis = lenis;
-
-    // Synchronize Lenis with GSAP ScrollTrigger for hardware-perfect pinning
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const updateGSAP = (time) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(updateGSAP);
+    // Sync GSAP ScrollTrigger ticker for lag smoothing
     gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(updateGSAP);
-      lenis.destroy();
-    };
   }, []);
 
   return (
-    <BrowserRouter>
+    <ReactLenis
+      root
+      options={{
+        lerp: 0.1,
+        duration: 1.2,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.5,
+      }}
+    >
+      <BrowserRouter>
       <Preloader />
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -123,6 +111,7 @@ function App() {
         } />
       </Routes>
     </BrowserRouter>
+    </ReactLenis>
   );
 }
 

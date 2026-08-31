@@ -71,12 +71,12 @@ export default function Home() {
           </div>
         </motion.div>
           
-        {/* Sleek Mechanical SplitFlap Banner (No bulky black boxes) */}
+        {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-12 md:mt-24 px-4 z-10"
+          className="w-full flex justify-center mt-12 md:mt-24 px-4 z-10 gpu-layer"
         >
-          <div className="bg-white/[0.03] backdrop-blur-2xl px-6 py-4 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden max-w-full">
+          <div className="glass-fast px-6 py-4 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden max-w-full">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
