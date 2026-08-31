@@ -92,16 +92,16 @@ function createAstrivixBandTexture() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 80px sans-serif';
+  ctx.font = '900 36px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '5px';
+  ctx.letterSpacing = '3px';
   
   // Flip context to counteract the MeshLine's reversed UV mapping
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
+  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
