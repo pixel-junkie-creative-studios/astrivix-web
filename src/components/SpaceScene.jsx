@@ -16,6 +16,7 @@ const CameraController = ({ scrollYProgress }) => {
 const DetailedEarth = ({ position }) => {
   const earthRef = useRef();
   const cloudsRef = useRef();
+  const atmosRef = useRef();
 
   const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
     '/assets/planets/earth.jpg',
@@ -25,18 +26,46 @@ const DetailedEarth = ({ position }) => {
   ]);
 
   useFrame((state, delta) => {
-    // Significantly increased rotation speed so it's noticeably spinning
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.25;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.3;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.18;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
+    if (atmosRef.current) atmosRef.current.rotation.y += delta * 0.18;
   });
 
   return (
-    <group position={position}>
+    <group position={position} rotation={[0.4, 0, 0.2]}>
+      {/* High-Resolution Earth Core Sphere */}
       <Sphere ref={earthRef} args={[5, 128, 128]}>
-        <meshStandardMaterial map={colorMap} normalMap={normalMap} roughnessMap={specularMap} roughness={0.7} metalness={0.0} />
+        <meshStandardMaterial 
+          map={colorMap} 
+          normalMap={normalMap} 
+          normalScale={new THREE.Vector2(3.5, 3.5)}
+          roughnessMap={specularMap} 
+          roughness={0.25} 
+          metalness={0.2}
+        />
       </Sphere>
-      <Sphere ref={cloudsRef} args={[5.05, 128, 128]}>
-        <meshStandardMaterial map={cloudsMap} transparent={true} opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
+
+      {/* Realistic Volumetric Cloud Layer */}
+      <Sphere ref={cloudsRef} args={[5.06, 128, 128]}>
+        <meshStandardMaterial 
+          map={cloudsMap} 
+          transparent={true} 
+          opacity={0.82} 
+          depthWrite={false} 
+          roughness={0.9}
+        />
+      </Sphere>
+
+      {/* Atmospheric Rayleigh Scattering Glow (Blue Rim) */}
+      <Sphere ref={atmosRef} args={[5.28, 64, 64]}>
+        <meshStandardMaterial 
+          color="#2b82c9" 
+          transparent={true} 
+          opacity={0.4} 
+          blending={THREE.AdditiveBlending} 
+          depthWrite={false} 
+          side={THREE.BackSide} 
+        />
       </Sphere>
     </group>
   );
@@ -47,14 +76,19 @@ const DetailedMoon = ({ position }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    // Visibly rotating
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.15;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
   });
 
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[2, 128, 128]}>
-        <meshStandardMaterial map={colorMap} bumpMap={colorMap} bumpScale={0.15} roughness={1.0} metalness={0.0} />
+      <Sphere ref={moonRef} args={[2.2, 128, 128]}>
+        <meshStandardMaterial 
+          map={colorMap} 
+          bumpMap={colorMap} 
+          bumpScale={0.35} 
+          roughness={0.85} 
+          metalness={0.05} 
+        />
       </Sphere>
     </group>
   );
@@ -64,31 +98,36 @@ const RealisticMars = ({ position }) => {
   const marsRef = useRef();
   const atmosRef = useRef();
   
-  // Using Venus texture as a high-res rocky base, tinted red for Mars
   const rockyMap = useTexture('/assets/planets/venus.jpg');
-  const normalMap = useTexture('/assets/planets/earth_normal.jpg');
 
   useFrame((state, delta) => {
-    // Fast rotation for Mars
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.3;
-    if (atmosRef.current) atmosRef.current.rotation.y -= delta * 0.35;
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
+    if (atmosRef.current) atmosRef.current.rotation.y -= delta * 0.25;
   });
 
   return (
-    <group position={position}>
-      <Sphere ref={marsRef} args={[4, 128, 128]}>
+    <group position={position} rotation={[-0.3, 0, 0.3]}>
+      {/* High-Contrast Martian Topography Core */}
+      <Sphere ref={marsRef} args={[4.2, 128, 128]}>
         <meshStandardMaterial 
           map={rockyMap} 
-          color="#ff4400" 
-          normalMap={normalMap} 
-          normalScale={[4, 4]} 
-          roughness={0.9} 
-          metalness={0.0}
+          color="#d64c24" 
+          bumpMap={rockyMap} 
+          bumpScale={0.3} 
+          roughness={0.8} 
+          metalness={0.1}
         />
       </Sphere>
-      {/* Glowing Martian Atmosphere */}
-      <Sphere ref={atmosRef} args={[4.2, 64, 64]}>
-        <meshStandardMaterial color="#ff2200" transparent opacity={0.25} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
+      {/* Glowing Crimson Martian Atmosphere */}
+      <Sphere ref={atmosRef} args={[4.45, 64, 64]}>
+        <meshStandardMaterial 
+          color="#ff3300" 
+          transparent={true} 
+          opacity={0.35} 
+          blending={THREE.AdditiveBlending} 
+          depthWrite={false} 
+          side={THREE.BackSide} 
+        />
       </Sphere>
     </group>
   );
@@ -286,10 +325,10 @@ export default function SpaceScene() {
           dpr={isMobile ? 1 : [1, 1.5]} 
           gl={{ antialias: false, powerPreference: "high-performance" }}
         >
-          {/* Cinematic Lighting Rig */}
-          <ambientLight intensity={0.15} />
-          <directionalLight position={[150, 100, 50]} intensity={isMobile ? 3.5 : 4.5} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#ffffff" />
+          {/* Cinematic High-Contrast Solar Lighting Rig */}
+          <ambientLight intensity={0.2} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 4.5 : 6.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={1.8} color="#88aaff" />
           
           <InteractiveStars />
           <React.Suspense fallback={null}>
