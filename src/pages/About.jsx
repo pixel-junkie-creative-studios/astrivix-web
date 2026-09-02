@@ -102,10 +102,10 @@ export default function About() {
               {screwState === 0 && (
                 <motion.div 
                   key="dialogue-0"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -top-6 left-6 z-30 bg-yellow-500/95 text-black font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-yellow-300 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute top-3.5 left-14 z-30 bg-yellow-500/95 text-black font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-yellow-300 flex items-center gap-1.5 pointer-events-none max-w-[280px] sm:max-w-none"
                 >
                   <span>⚠️ DO NOT TOUCH ME SCROLL DOWN FAST THIS SHIT TOO HEAVY TO HOLD ON</span>
                 </motion.div>
@@ -114,12 +114,12 @@ export default function About() {
               {screwState === 1 && (
                 <motion.div 
                   key="dialogue-1"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -top-6 right-6 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
                 >
-                  <span className="animate-ping">🚨</span>
+                  <span className="animate-ping text-yellow-300">🚨</span>
                   <span>OH SHIT ITS JUST ME AND YOU UNO...</span>
                 </motion.div>
               )}
@@ -127,10 +127,10 @@ export default function About() {
               {screwState === 2 && (
                 <motion.div 
                   key="dialogue-2"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute bottom-3 left-16 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute -bottom-10 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
                 >
                   <span>😭 IM SORRY DUO! I CAN'T HOLD THIS ALONE!</span>
                 </motion.div>
