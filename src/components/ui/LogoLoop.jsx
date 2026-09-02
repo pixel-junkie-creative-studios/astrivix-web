@@ -61,10 +61,17 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
   const lastTimestampRef = useRef(null);
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
+  const isVisibleRef = useRef(true);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisibleRef.current = entry.isIntersecting;
+    }, { threshold: 0.05 });
+    
+    observer.observe(track);
 
     const seqSize = isVertical ? seqHeight : seqWidth;
 
@@ -77,11 +84,17 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     }
 
     const animate = timestamp => {
+      if (!isVisibleRef.current) {
+        lastTimestampRef.current = null;
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
+
       if (lastTimestampRef.current === null) {
         lastTimestampRef.current = timestamp;
       }
 
-      const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
+      const deltaTime = Math.min(0.05, Math.max(0, timestamp - lastTimestampRef.current) / 1000);
       lastTimestampRef.current = timestamp;
 
       const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
@@ -106,6 +119,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
+      observer.disconnect();
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
