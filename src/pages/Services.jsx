@@ -148,14 +148,14 @@ export default function Services() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  duration: 0.4,
+                  duration: 0.35,
                   ease: [0.16, 1, 0.3, 1],
                 }}
                 style={{ 
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
               >
                 {/* Accent Line Header */}
                 <div 
@@ -165,12 +165,12 @@ export default function Services() {
 
                 {/* Card Header: Number & Category */}
                 <div className="flex justify-between items-start w-full pt-2">
-                  <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white/90">
+                  <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white drop-shadow-md">
                     {activeService.id}
                   </span>
                   <span 
-                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/20 backdrop-blur-md"
-                    style={{ backgroundColor: `${activeService.color}30` }}
+                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/30 backdrop-blur-md"
+                    style={{ backgroundColor: `${activeService.color}40` }}
                   >
                     {activeService.category}
                   </span>
@@ -181,7 +181,7 @@ export default function Services() {
                   <h4 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-4">
                     {activeService.title}
                   </h4>
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed font-medium">
+                  <p className="text-white text-sm md:text-base leading-relaxed font-medium">
                     {activeService.desc}
                   </p>
                 </div>
