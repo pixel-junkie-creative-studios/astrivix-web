@@ -43,10 +43,11 @@ const waitForFonts = async font => {
   if (!('fonts' in document)) return;
 
   try {
-    await document.fonts.load(font);
+    await Promise.race([
+      document.fonts.load(font),
+      new Promise(resolve => setTimeout(resolve, 300))
+    ]);
   } catch {}
-
-  await document.fonts.ready;
 };
 
 const ParticleText = ({

@@ -192,35 +192,7 @@
     }
     </script>
 
-    <!-- Samsung Knox-Level Security & Anti-DevTools Protection -->
-    <script>
-      (function() {
-        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-          // Disable Right-Click Context Menu Protection Shield
-          document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, false);
-          
-          // Disable Keyboard Inspect & DevTools Shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U)
-          document.addEventListener('keydown', function(e) {
-            if (
-              e.keyCode === 123 || 
-              (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) || 
-              (e.ctrlKey && e.keyCode === 85)
-            ) {
-              e.preventDefault();
-              return false;
-            }
-          }, false);
 
-          // Console Sanitizer Shield: Suppress console logs in production to prevent API/Route leaks
-          if (typeof window.console !== "undefined") {
-            window.console.log = function() {};
-            window.console.debug = function() {};
-            window.console.info = function() {};
-            window.console.warn = function() {};
-          }
-        }
-      })();
-    </script>
   </head>
   <body>
     <div id="root"></div>
