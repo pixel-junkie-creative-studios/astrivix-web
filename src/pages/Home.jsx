@@ -80,11 +80,11 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
-                words={['BRANDS APPS & TECH', 'CREATIVE ENGINEERING', 'BUSINESS GROWTH ENGINE', 'STABILITY AT VELOCITY']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 14 : 22}
+                words={['SHIP NO SLOP', 'BYE WORDPRESS', '120 FPS ONLY', 'FAST & UNTIMED']}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 18 : 26}
                 tileColor="#09090e"
                 textColor="#ffffff"
-                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 6}
+                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
                 stagger={0.05}
               />
             </div>
