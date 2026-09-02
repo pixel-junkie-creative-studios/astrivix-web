@@ -122,7 +122,7 @@ export default function About() {
             <div className="flex items-center gap-3">
               <span className="text-base">⚠️</span>
               <span className="text-white/90 leading-relaxed">
-                <strong className="text-white">DISCLAIMER:</strong> Pardon the unprofessionalism—our copywriter unexpectedly resigned for a "grand corporate MNC dream", so the dev team hijacked the copy writer seat. Send coffee.
+                <strong className="text-white">SYSTEM WARNING:</strong> Our copywriter suddenly quit for some corporate MNC fantasy. The dev team hijacked the typewriter. Expect zero corporate filter, caffeine overload, and pure dark mode.
               </span>
             </div>
             <span className="text-[10px] tracking-widest text-white/40 uppercase font-bold shrink-0 hidden sm:inline">DEV TEAM MODE</span>

@@ -24,14 +24,14 @@ export default function Careers() {
             <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter uppercase leading-[0.9]">
               Join <br /> Astrivix.
             </h2>
-            <p className="text-white/50 text-sm md:text-base leading-relaxed mb-8 max-w-sm font-medium">
-              We are looking for the absolute best. We provide elite training, internships, and certifications for engineers and designers who refuse to compromise on quality. 
+            <p className="text-white/80 text-sm md:text-base leading-relaxed mb-8 max-w-sm font-medium">
+              If you enjoy drinking 4 coffees a day, writing zero-lag code, and roasting 9-to-5 corporate slop, apply now. We don't do boring.
             </p>
             <a 
               href="#contact"
-              className="inline-block bg-white text-black px-8 py-4 rounded-none text-[10px] md:text-xs font-black tracking-widest uppercase shadow-[4px_4px_10px_rgba(0,0,0,0.5),inset_2px_2px_4px_rgba(255,255,255,0.8)] hover:translate-y-1 hover:shadow-[2px_2px_5px_rgba(0,0,0,0.5),inset_1px_1px_2px_rgba(255,255,255,0.8)] transition-all duration-200"
+              className="inline-block skeuo-button text-black px-8 py-4 rounded-xl text-[10px] md:text-xs font-black tracking-widest uppercase"
             >
-              Apply Now
+              JOIN THE REBELLION →
             </a>
           </div>
 
