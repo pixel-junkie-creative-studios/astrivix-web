@@ -97,9 +97,7 @@
   align-items: center;
   justify-content: center;
   color: var(--split-flap-text-color, #f8fafc);
-  text-shadow:
-    0 0.025em 0 rgba(255, 255, 255, 0.16),
-    0 0.09em 0.16em rgba(0, 0, 0, 0.42);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .split-flap-text__half--top .split-flap-text__char,
@@ -109,7 +107,7 @@
 
 .split-flap-text__half--bottom .split-flap-text__char,
 .split-flap-text__flap--back .split-flap-text__char {
-  bottom: 0;
+  top: -100%;
 }
 
 .split-flap-text__flap {

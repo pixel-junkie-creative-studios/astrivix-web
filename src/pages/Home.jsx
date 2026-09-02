@@ -30,10 +30,10 @@ export default function Home() {
         {/* Centered Hero Container */}
         <motion.div 
           initial="hidden" animate="visible" variants={fadeUp}
-          className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4"
+          className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
         >
           {/* ASTRIVIX Particle Text Container */}
-          <div className="w-full h-[220px] sm:h-[320px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
+          <div className="w-full h-[260px] sm:h-[340px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
             <ParticleText
               text="ASTRIVIX"
               particleSize={2}
@@ -45,26 +45,26 @@ export default function Home() {
               stagger={100}
               pointerRepel={150}
               repelRadius={400}
-              fontSize="clamp(2.8rem, 13.5vw, 12rem)"
+              fontSize="clamp(3.8rem, 16vw, 12rem)"
               fontWeight={900}
             />
           </div>
           
-          {/* Subtitle Row - Clean side-by-side layout on PC & Mobile */}
-          <div className="flex flex-row items-center justify-between w-full px-4 sm:px-12 md:px-16 mt-2 sm:mt-2 md:-mt-20">
+          {/* Subtitle Row - Tight side-by-side alignment directly under ASTRIVIX */}
+          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-6 sm:-mt-8 md:-mt-20 z-20">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
-              <h2 className="text-2xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text">
-                CORP<span className="text-ax-text text-3xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
+              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text drop-shadow-md">
+                CORP<span className="text-ax-text text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
               </h2>
             </div>
 
             {/* Right Side: BUSINESS CONSULTANTS */}
-            <div className="flex flex-col items-end text-right pt-1 md:pt-2">
-              <h3 className="text-xs sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
+            <div className="flex flex-col items-end text-right">
+              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
                 BUSINESS
               </h3>
-              <h3 className="text-sm sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight">
+              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
                 CONSULTANTS
               </h3>
             </div>
@@ -74,15 +74,15 @@ export default function Home() {
         {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-12 md:mt-24 px-4 z-10 gpu-layer"
+          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-2 sm:px-4 z-10 gpu-layer"
         >
-          <div className="glass-fast px-6 py-4 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/10 shadow-2xl relative overflow-hidden max-w-full">
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+          <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
                 words={['WE BUILD LEGENDS', 'UNSTOPPABLE SPEED', 'PURE CHAOS & CODE', 'DOMINATE DIGITAL']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 18 : 26}
-                tileColor="#09090e"
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
+                tileColor="#050509"
                 textColor="#ffffff"
                 gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
                 stagger={0.05}
