@@ -80,7 +80,7 @@ export default function About() {
             <div className="absolute w-28 h-28 bg-white/15 blur-2xl rounded-full group-hover:scale-150 transition-transform duration-500" />
             <div className="relative z-10 text-center">
               <span className="text-5xl sm:text-7xl font-black tracking-tighter text-white drop-shadow-md block mb-1">100%</span>
-              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Custom Crafted Magic</span>
+              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Dark Magic & Dev Tears</span>
             </div>
           </motion.div>
 
