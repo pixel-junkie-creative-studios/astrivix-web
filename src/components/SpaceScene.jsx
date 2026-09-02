@@ -16,7 +16,6 @@ const CameraController = ({ scrollYProgress }) => {
 const DetailedEarth = ({ position }) => {
   const earthRef = useRef();
   const cloudsRef = useRef();
-  const atmosRef = useRef();
 
   const [colorMap, normalMap, specularMap, cloudsMap] = useTexture([
     '/assets/planets/earth.jpg',
@@ -28,7 +27,6 @@ const DetailedEarth = ({ position }) => {
   useFrame((state, delta) => {
     if (earthRef.current) earthRef.current.rotation.y += delta * 0.18;
     if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
-    if (atmosRef.current) atmosRef.current.rotation.y += delta * 0.18;
   });
 
   return (
@@ -46,25 +44,13 @@ const DetailedEarth = ({ position }) => {
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[5.06, 128, 128]}>
+      <Sphere ref={cloudsRef} args={[5.05, 128, 128]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
           opacity={0.82} 
           depthWrite={false} 
           roughness={0.9}
-        />
-      </Sphere>
-
-      {/* Atmospheric Rayleigh Scattering Glow (Blue Rim) */}
-      <Sphere ref={atmosRef} args={[5.28, 64, 64]}>
-        <meshStandardMaterial 
-          color="#2b82c9" 
-          transparent={true} 
-          opacity={0.4} 
-          blending={THREE.AdditiveBlending} 
-          depthWrite={false} 
-          side={THREE.BackSide} 
         />
       </Sphere>
     </group>
@@ -96,13 +82,11 @@ const DetailedMoon = ({ position }) => {
 
 const RealisticMars = ({ position }) => {
   const marsRef = useRef();
-  const atmosRef = useRef();
   
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
     if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
-    if (atmosRef.current) atmosRef.current.rotation.y -= delta * 0.25;
   });
 
   return (
@@ -116,17 +100,6 @@ const RealisticMars = ({ position }) => {
           bumpScale={0.3} 
           roughness={0.8} 
           metalness={0.1}
-        />
-      </Sphere>
-      {/* Glowing Crimson Martian Atmosphere */}
-      <Sphere ref={atmosRef} args={[4.45, 64, 64]}>
-        <meshStandardMaterial 
-          color="#ff3300" 
-          transparent={true} 
-          opacity={0.35} 
-          blending={THREE.AdditiveBlending} 
-          depthWrite={false} 
-          side={THREE.BackSide} 
         />
       </Sphere>
     </group>
