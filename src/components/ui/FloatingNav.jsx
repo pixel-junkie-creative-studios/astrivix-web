@@ -152,7 +152,7 @@ export const FloatingNav = ({ navItems, className }) => {
           {/* Bottom Agency Contact Details */}
           <div className="border-t border-white/10 pt-4 flex flex-col gap-2 font-mono text-[10px] tracking-widest text-white/60 uppercase">
             <a href="mailto:hello@astrivix.in" className="hover:text-white text-emerald-400 font-bold">
-              > GET CONSULTATION #
+              &gt; GET CONSULTATION #
             </a>
             <span>hello@astrivix.in | www.astrivix.in</span>
           </div>
