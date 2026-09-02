@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function About() {
-  // screwState: 0 = all 3 screws intact, 1 = screw 1 fell, 2 = screw 2 fell, 3 = total collapse!
+    // screwState: 0 = all intact, 1 = Trio fell (Duo talks to Uno), 2 = Uno fell (Duo talks to viewer), 3 = Duo fell (Total Collapse!), 4 = Left Broken Forever
   const [screwState, setScrewState] = useState(0);
 
   const containerVariants = {
@@ -23,30 +23,30 @@ export default function About() {
     }
   };
 
-  // Auto progression timers for hilarious sequential screw story
-  const triggerScrew1 = () => {
+  // Step 1: Trio (Top-Left) falls first
+  const triggerTrioFall = () => {
     if (screwState === 0) {
-      setScrewState(1);
-      // Auto trigger screw 2 after 2.5s
+      setScrewState(1); // Trio falls! Duo talks to Uno
       setTimeout(() => {
         setScrewState(prev => prev === 1 ? 2 : prev);
-      }, 2500);
+      }, 2600);
     }
   };
 
-  const triggerScrew2 = () => {
+  // Step 2: Uno (Top-Right) falls second
+  const triggerUnoFall = () => {
     if (screwState <= 1) {
-      setScrewState(2);
-      // Auto trigger screw 3 (Duo) total collapse after 2.8s
+      setScrewState(2); // Uno falls! Duo talks to viewer
       setTimeout(() => {
         setScrewState(prev => prev === 2 ? 3 : prev);
-      }, 2800);
+      }, 3200);
     }
   };
 
-  const triggerScrew3 = () => {
+  // Step 3: Duo (Bottom-Left) falls last (Total Collapse)
+  const triggerDuoFall = () => {
     if (screwState <= 2) {
-      setScrewState(3);
+      setScrewState(3); // Duo falls! Total Collapse!
     }
   };
 
@@ -86,7 +86,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             onViewportEnter={() => {
-              setTimeout(triggerScrew1, 1200);
+              setTimeout(triggerTrioFall, 1400);
             }}
             animate={
               screwState === 0 ? { rotate: 0, y: 0 } :
@@ -99,35 +99,37 @@ export default function About() {
           >
             {/* --- POPUP SPEECH DIALOGUES --- */}
             <AnimatePresence mode="wait">
+              {/* Dialogue 1: After Trio falls, Duo talks to Uno */}
               {screwState === 1 && (
                 <motion.div 
                   key="dialogue-1"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
-                  <span>OH SHIT UNO FELL OFF! DUO DON'T YOU DARE LOOK AT ME I'M SWEATING METAL!</span>
+                  <span>DUO: YO UNO! TRIO JUST DIPPED! HOLD ON TO YOUR METAL BRO!</span>
                 </motion.div>
               )}
 
+              {/* Dialogue 2: After Uno falls, ONLY Duo remains talking to the viewer */}
               {screwState === 2 && (
                 <motion.div 
                   key="dialogue-2"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -bottom-10 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute -bottom-11 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
                 >
-                  <span>😭 I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU UNHINGED MONSTER!</span>
+                  <span>😭 DUO: I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* --- SCREW 1 (Top-Left) --- */}
+            {/* --- SCREW 1: TRIO (Top-Left Screw - Falls 1st) --- */}
             <motion.div 
-              onClick={triggerScrew1}
+              onClick={triggerTrioFall}
               animate={screwState >= 1 ? { 
                 y: [0, -20, 420], 
                 x: [0, -30, -80], 
@@ -136,12 +138,12 @@ export default function About() {
               } : {}}
               transition={{ duration: 1.2, ease: "easeIn" }}
               className="absolute top-5 left-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
-              title="Click to unscrew!"
+              title="Trio Screw (Click to unscrew)"
             />
 
-            {/* --- SCREW 2 (Top-Right) --- */}
+            {/* --- SCREW 2: UNO (Top-Right Screw - Falls 2nd) --- */}
             <motion.div 
-              onClick={triggerScrew2}
+              onClick={triggerUnoFall}
               animate={screwState >= 2 ? { 
                 y: [0, -20, 420], 
                 x: [0, 30, 80], 
@@ -150,12 +152,12 @@ export default function About() {
               } : {}}
               transition={{ duration: 1.2, ease: "easeIn" }}
               className="absolute top-5 right-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
-              title="Click to unscrew!"
+              title="Uno Screw (Click to unscrew)"
             />
 
-            {/* --- SCREW 3 (Bottom-Left) --- */}
+            {/* --- SCREW 3: DUO (Bottom-Left Screw - Falls 3rd, Last Surviving Screw) --- */}
             <motion.div 
-              onClick={triggerScrew3}
+              onClick={triggerDuoFall}
               animate={screwState >= 3 ? { 
                 y: [0, 20, 450], 
                 x: [0, -20, -60], 
@@ -164,7 +166,7 @@ export default function About() {
               } : {}}
               transition={{ duration: 1.2, ease: "easeIn" }}
               className="absolute bottom-5 left-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
-              title="Click to unscrew!"
+              title="Duo Screw (The Last Screw!)"
             />
 
             {/* --- REPAIR / SAVAGE CHOICE BUTTONS (WHEN COLLAPSED) --- */}
