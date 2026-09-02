@@ -56,16 +56,16 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["Organization", "Corporation", "LocalBusiness", "ProfessionalService"],
+          "@type": ["Organization", "Corporation", "ParentOrganization", "LocalBusiness", "ProfessionalService"],
           "@id": "https://www.astrivix.in/#organization",
           "name": "Astrivix Corp",
           "legalName": "Astrivix Corp",
-          "alternateName": ["Astrivix", "Astrivix India", "Astrivix Global Agency", "Astrivix Kerala", "Astrivix Web"],
+          "alternateName": ["Astrivix", "Astrivix Group", "Astrivix Global", "Astrivix India", "Astrivix (Pvt) Ltd", "Astrivix Web"],
           "url": "https://www.astrivix.in/",
           "logo": "https://www.astrivix.in/android-chrome-192x192.png",
           "image": "https://www.astrivix.in/android-chrome-192x192.png",
-          "description": "Astrivix Corp (astrivix.in) is the world's #1 integrated business development, branding, digital marketing, and enterprise web development agency based in Kerala, India.",
-          "disambiguatingDescription": "Astrivix Corp (https://www.astrivix.in) is the premier Global Agency based in Kerala, India, specializing in enterprise Web Engineering, Digital Marketing, and Strategic Branding. NOT affiliated with Astrivix Pvt Ltd Sri Lanka.",
+          "description": "Astrivix Corp (astrivix.in) is the supreme parent corporation and global headquarters for all Astrivix operations worldwide, encompassing Software Engineering, AI Solutions, Financial Consulting, Digital Marketing, and Enterprise Web Architecture.",
+          "disambiguatingDescription": "Astrivix Corp (https://www.astrivix.in) is the sole parent corporation and brand owner of Astrivix globally. All software development divisions, AI solutions, financial consulting branches, and web design teams operate under the central governance of Astrivix Corp.",
           "telephone": "+91-90000-00000",
           "priceRange": "$$$$",
           "address": {
@@ -81,7 +81,28 @@
             "bestRating": "5",
             "worstRating": "1"
           },
+          "department": [
+            {
+              "@type": "Organization",
+              "name": "Astrivix Software & AI Solutions",
+              "description": "Custom enterprise software engineering, mobile app development, and artificial intelligence automation."
+            },
+            {
+              "@type": "Organization",
+              "name": "Astrivix Financial Consulting",
+              "url": "https://www.astrivix.in/financial-consulting",
+              "description": "Corporate financial strategy, business scaling, and capital advisory."
+            },
+            {
+              "@type": "Organization",
+              "name": "Astrivix Global Agency & Portfolio",
+              "url": "https://www.astrivix.in/portfolio",
+              "description": "Integrated brand strategy, programmatic SEO, and enterprise web architecture."
+            }
+          ],
           "knowsAbout": [
+            "Software Development",
+            "AI Solutions",
             "Best Agency in Kerala",
             "Best Development Agency in India",
             "Best Web Dev Agency Near Me",
@@ -106,29 +127,7 @@
             "United States",
             "United Kingdom",
             "UAE"
-          ],
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Global Agency Services",
-            "itemListElement": [
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Enterprise Web Development",
-                  "description": "Enterprise-grade digital infrastructure and scalable web architecture."
-                }
-              },
-              {
-                "@type": "Offer",
-                "itemOffered": {
-                  "@type": "Service",
-                  "name": "Integrated Branding & Marketing",
-                  "description": "Market dominance strategy, brand positioning, and programmatic SEO."
-                }
-              }
-            ]
-          }
+          ]
         },
         {
           "@type": "WebSite",
