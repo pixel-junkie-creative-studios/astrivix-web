@@ -101,16 +101,16 @@ export default function About() {
             transition={{ type: "spring", stiffness: 180, damping: 14 }}
             className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[320px]"
           >
-            {/* --- POPUP SPEECH DIALOGUES (FLOATING OUTSIDE CARD TO NEVER OVERLAP TEXT) --- */}
+            {/* --- POPUP SPEECH DIALOGUES (ANCHORED INSIDE CARD TOP BAR) --- */}
             <AnimatePresence mode="wait">
               {/* Dialogue 1: After Trio falls, Duo talks to Uno */}
               {screwState === 1 && (
                 <motion.div 
                   key="dialogue-1"
-                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  initial={{ opacity: 0, scale: 0.8, y: -5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -top-12 right-6 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2 rounded-2xl shadow-[0_10px_30px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
+                  className="absolute top-14 right-6 sm:right-12 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2 rounded-2xl shadow-[0_10px_30px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
                   <span>DUO: YO UNO! TRIO JUST DIPPED! HOLD ON TO YOUR METAL BRO!</span>
@@ -121,10 +121,10 @@ export default function About() {
               {screwState === 2 && (
                 <motion.div 
                   key="dialogue-2"
-                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                  initial={{ opacity: 0, scale: 0.8, y: -5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -top-12 left-6 z-30 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-2xl shadow-[0_10px_35px_rgba(234,88,12,0.9)] border-2 border-orange-300 flex items-center gap-2 pointer-events-none max-w-[90vw] sm:max-w-none"
+                  className="absolute top-14 left-6 sm:left-12 z-30 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-2xl shadow-[0_10px_35px_rgba(234,88,12,0.9)] border-2 border-orange-300 flex items-center gap-2 pointer-events-none max-w-[85vw] sm:max-w-none"
                 >
                   <span className="animate-bounce text-lg">😭</span>
                   <span>DUO: I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
