@@ -157,12 +157,6 @@ export default function Services() {
                 }}
                 className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
               >
-                {/* Skeuomorphic Metallic Corner Screws */}
-                <div className="absolute top-4 left-4 skeuo-screw opacity-70" />
-                <div className="absolute top-4 right-4 skeuo-screw opacity-70" />
-                <div className="absolute bottom-4 left-4 skeuo-screw opacity-70" />
-                <div className="absolute bottom-4 right-4 skeuo-screw opacity-70" />
-
                 {/* Accent Line Header */}
                 <div 
                   className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"

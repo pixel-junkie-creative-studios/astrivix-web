@@ -149,12 +149,6 @@ export default function About() {
             whileHover={{ scale: 1.01, y: -4 }}
             className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-10 flex flex-col justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[280px]"
           >
-            {/* Skeuomorphic Screws */}
-            <div className="absolute top-5 left-5 skeuo-screw opacity-70" />
-            <div className="absolute top-5 right-5 skeuo-screw opacity-70" />
-            <div className="absolute bottom-5 left-5 skeuo-screw opacity-70" />
-            <div className="absolute bottom-5 right-5 skeuo-screw opacity-70" />
-
             <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/40 uppercase block mb-3">03 // NO FILTER PHILOSOPHY</span>
             <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 text-white tracking-tight">
               No corporate speak. No fake synergy.

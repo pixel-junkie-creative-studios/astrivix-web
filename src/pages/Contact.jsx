@@ -47,12 +47,6 @@ export default function Contact() {
         {/* Right Column: Message Form */}
         <div className="glass-metallic p-8 md:p-12 rounded-[2.5rem] border border-white/30 shadow-2xl relative overflow-hidden flex flex-col justify-center group gpu-layer">
           
-          {/* Skeuomorphic Metallic Corner Screws */}
-          <div className="absolute top-4 left-4 skeuo-screw opacity-70" />
-          <div className="absolute top-4 right-4 skeuo-screw opacity-70" />
-          <div className="absolute bottom-4 left-4 skeuo-screw opacity-70" />
-          <div className="absolute bottom-4 right-4 skeuo-screw opacity-70" />
-
           {/* Liquid Glass Reflections */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
 
