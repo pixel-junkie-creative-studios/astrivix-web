@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Visual Identity', color: '#ff4d4d', desc: 'Crafting magnetic brand identities that turn heads, win trust, and make your business unforgettable.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Code', color: '#4d79ff', desc: 'Building lightning-fast web applications that feel fluid, look insane, and load in milliseconds.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'iOS & Android Experience', color: '#4dff88', desc: 'Designing slick, intuitive mobile experiences your users will genuinely enjoy opening every day.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'SEO, AEO & Growth Engine', color: '#ff4dff', desc: 'Smart, high-converting digital marketing campaigns that bring qualified clients straight to you.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'UX & Analytics', color: '#ffff4d', desc: 'Turning casual visitors into excited buyers with intuitive, effortless user flows.' },
-  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Visual Magic', color: '#ff884d', desc: 'Bold, pixel-perfect design crafted from scratch with zero compromises or cookie-cutter templates.' },
-  { id: '07', title: 'MOTION & VIDEO', category: 'Cinematic Storytelling', color: '#4dffff', desc: 'High-impact motion graphics and video production that make your brand larger than life.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Scale & Strategy', color: '#b34dff', desc: 'Unlocking new growth opportunities and streamlining your business so you scale effortlessly.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Strategy', color: '#4dffb3', desc: 'Smart financial modeling and capital growth strategy to power your company’s next big move.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Rescue', color: '#ff4d4d', desc: 'We fix your logo and brand before your relatives ask if you made it in Microsoft Paint.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Jank Engineering', color: '#4d79ff', desc: 'Code so clean even your angry senior engineer can’t find anything to complain about.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Pure Fluidity', color: '#4dff88', desc: 'Apps so smooth people open them on the toilet just to swipe around for fun.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Real Traffic', color: '#ff4dff', desc: 'Getting you actual paying customers instead of 5,000 fake bots from random countries.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Checkout Perfection', color: '#ffff4d', desc: 'Fixing your site so visitors stop abandoning their carts like their bad habits.' },
+  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Custom Pixels', color: '#ff884d', desc: 'Custom designs that don’t look like a $12 Fiverr template from 2014.' },
+  { id: '07', title: 'MOTION & VIDEO', category: 'Visual Hypnosis', color: '#4dffff', desc: 'Animations so pretty your users forget why they even opened the browser tab.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Meeting Eraser', color: '#b34dff', desc: 'We kill your useless 8 AM Zoom calls so your team can actually get real work done.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Growth', color: '#4dffb3', desc: 'Making sure your company bank account grows faster than your daily caffeine addiction.' }
 ];
 
 export default function Services() {
@@ -157,6 +157,12 @@ export default function Services() {
                 }}
                 className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
               >
+                {/* Skeuomorphic Metallic Corner Screws */}
+                <div className="absolute top-4 left-4 skeuo-screw opacity-70" />
+                <div className="absolute top-4 right-4 skeuo-screw opacity-70" />
+                <div className="absolute bottom-4 left-4 skeuo-screw opacity-70" />
+                <div className="absolute bottom-4 right-4 skeuo-screw opacity-70" />
+
                 {/* Accent Line Header */}
                 <div 
                   className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"

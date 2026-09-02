@@ -54,8 +54,14 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.01, y: -3 }}
-            className="md:col-span-2 glass-fast gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-10 flex flex-col justify-center border border-white/25 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden group"
+            className="md:col-span-2 glass-metallic gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-10 flex flex-col justify-center border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden group"
           >
+            {/* Skeuomorphic Screws */}
+            <div className="absolute top-4 left-4 skeuo-screw opacity-60" />
+            <div className="absolute top-4 right-4 skeuo-screw opacity-60" />
+            <div className="absolute bottom-4 left-4 skeuo-screw opacity-60" />
+            <div className="absolute bottom-4 right-4 skeuo-screw opacity-60" />
+
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black leading-tight tracking-tight text-white z-10">
               We build digital experiences <br className="hidden sm:inline" />
