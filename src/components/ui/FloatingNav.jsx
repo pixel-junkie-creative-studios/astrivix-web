@@ -108,42 +108,54 @@ export const FloatingNav = ({ navItems, className }) => {
       </div>
     </motion.div>
 
-    {/* Mobile Fullscreen Menu */}
+    {/* Mobile Fullscreen Menu (Reference Screenshot Synth/Agency Design) */}
     <AnimatePresence>
       {isMobileMenuOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="fixed inset-x-4 top-20 bg-[#0a0a0a]/95 backdrop-blur-3xl border border-white/20 rounded-[2rem] p-6 shadow-2xl z-[4900] md:hidden flex flex-col items-center gap-6"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-x-3 top-16 bottom-24 bg-[#050508]/98 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.98)] z-[4900] md:hidden flex flex-col justify-between overflow-y-auto"
         >
-          {navItems.map((navItem, idx) => (
+          {/* Top Header Tag */}
+          <div className="flex justify-between items-center border-b border-white/10 pb-4">
+            <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-emerald-400 uppercase flex items-center gap-2">
+              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              AST. // CREATIVE AGENCY
+            </span>
+            <span className="text-[10px] font-mono text-white/40 uppercase">CLOSE [X]</span>
+          </div>
+
+          {/* Huge Stacked Navigation Typography (Exact synthu. Reference Style) */}
+          <div className="flex flex-col gap-3 my-auto py-6">
+            {navItems.map((navItem, idx) => (
+              <a
+                key={idx}
+                href={navItem.link}
+                onClick={(e) => handleScroll(e, navItem.link)}
+                className="text-3xl sm:text-4xl font-black tracking-tighter uppercase text-white hover:text-emerald-400 transition-colors text-left flex items-center justify-between group"
+              >
+                <span>{navItem.name}</span>
+                <span className="text-xs font-mono text-white/30 group-hover:text-emerald-400 font-normal">0{idx + 1} →</span>
+              </a>
+            ))}
             <a
-              key={idx}
-              href={navItem.link}
-              onClick={(e) => handleScroll(e, navItem.link)}
-              className="text-white font-bold text-lg tracking-[0.15em] uppercase hover:text-purple-400 transition-colors w-full text-center border-b border-white/5 pb-4"
+              href="#contact"
+              onClick={(e) => handleScroll(e, '#contact')}
+              className="text-3xl sm:text-4xl font-black tracking-tighter uppercase text-emerald-400 hover:text-white transition-colors text-left"
             >
-              {navItem.name}
+              CONTACT
             </a>
-          ))}
-          <button 
-            onClick={() => {
-              window.dispatchEvent(new Event('make-a-wish'));
-              setIsMobileMenuOpen(false);
-            }}
-            className="w-full relative text-sm font-bold uppercase tracking-[0.2em] text-white py-4 rounded-full bg-gradient-to-r from-purple-600/50 to-blue-600/50 border border-white/20 mt-4"
-          >
-            Make a Wish
-          </button>
-          <a 
-            href="#contact" 
-            onClick={(e) => handleScroll(e, '#contact')}
-            className="w-full relative text-sm font-bold uppercase tracking-[0.2em] text-black text-center py-4 rounded-full bg-white"
-          >
-            Contact
-          </a>
+          </div>
+
+          {/* Bottom Agency Contact Details */}
+          <div className="border-t border-white/10 pt-4 flex flex-col gap-2 font-mono text-[10px] tracking-widest text-white/60 uppercase">
+            <a href="mailto:hello@astrivix.in" className="hover:text-white text-emerald-400 font-bold">
+              > GET CONSULTATION #
+            </a>
+            <span>hello@astrivix.in | www.astrivix.in</span>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
