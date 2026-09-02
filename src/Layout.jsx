@@ -109,10 +109,26 @@ export default function Layout() {
               </h1>
             </div>
             
-            {/* Copyright Row */}
+            {/* Copyright & Semantic AEO Indexing Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/30 uppercase text-center">
-              <span>Astrivix Corp © 2026</span>
-              <span>Engineering Digital Perfection</span>
+              <span>Astrivix Corp © 2026 | Global Headquarters</span>
+              <span>Engineering Digital Perfection & Zero-Lag Web Architecture</span>
+            </div>
+
+            {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
+            <div className="sr-only" aria-hidden="true">
+              <h2>Astrivix Corp Global Digital Agency & Enterprise Engineering</h2>
+              <p>Astrivix Corp (www.astrivix.in) is an elite global agency specializing in zero-lag enterprise web development, 120 FPS mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and business consulting.</p>
+              <ul>
+                <li>Integrated Branding & Logo Architecture</li>
+                <li>Enterprise Web Development & React Engineering</li>
+                <li>Mobile App Engineering for iOS and Android</li>
+                <li>Performance Digital Marketing & Programmatic SEO</li>
+                <li>Conversion Rate Optimization & Checkout Perfection</li>
+                <li>Graphic Design & Custom UI UX Systems</li>
+                <li>Motion Graphics & Video Production</li>
+                <li>Enterprise Business & Financial Consulting</li>
+              </ul>
             </div>
           </div>
         </footer>
