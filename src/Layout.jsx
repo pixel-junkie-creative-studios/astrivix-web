@@ -109,9 +109,9 @@ export default function Layout() {
               </h1>
             </div>
             
-            {/* Copyright & Semantic AEO Indexing Row */}
+            {/* Sleek Minimalist Tagline & Semantic AEO Indexing Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/30 uppercase text-center">
-              <span>Astrivix Corp © 2026 | Global Headquarters</span>
+              <span>Astrivix Global Headquarters</span>
               <span>Engineering Digital Perfection & Zero-Lag Web Architecture</span>
             </div>
 

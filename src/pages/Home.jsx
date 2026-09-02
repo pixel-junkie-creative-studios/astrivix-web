@@ -92,22 +92,22 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <section id="clients" className="py-24 relative z-10">
+      <section id="clients" className="py-12 sm:py-24 relative z-10">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
-          className="w-full rounded-[2.5rem] bg-white/5 backdrop-blur-xl shadow-liquid-glass py-16 border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden"
+          className="w-full rounded-[2.5rem] bg-white/5 backdrop-blur-xl shadow-liquid-glass py-10 sm:py-16 border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
-          <div className="text-center mb-12 relative z-10">
-            <h3 className="text-[11px] tracking-[0.3em] font-bold text-white/40 uppercase">Brands & Visionaries We've Had The Pleasure of Building With</h3>
+          <div className="text-center mb-8 sm:mb-12 relative z-10 px-4">
+            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Brands & Visionaries We've Had The Pleasure of Building With</h3>
           </div>
-          <div className="relative z-10 w-full overflow-hidden mask-edges px-8">
+          <div className="relative z-10 w-full overflow-hidden mask-edges px-2 sm:px-8">
             <LogoLoop
               logos={clientLogos}
               speed={100}
               direction="left"
-              logoHeight={75}
-              gap={60}
+              logoHeight={typeof window !== 'undefined' && window.innerWidth < 640 ? 48 : 75}
+              gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 36 : 60}
               hoverSpeed={20}
               scaleOnHover={true}
               fadeOut={true}
