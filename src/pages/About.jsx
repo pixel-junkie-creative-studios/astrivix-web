@@ -64,9 +64,9 @@ export default function About() {
 
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black leading-tight tracking-tight text-white z-10">
-              We build digital experiences <br className="hidden sm:inline" />
+              We build digital products <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-100 to-gray-300">
-                that make people stop, stare, and smile.
+                that trigger existential crises in your competitors.
               </span>
             </h2>
           </motion.div>
@@ -80,7 +80,7 @@ export default function About() {
             <div className="absolute w-28 h-28 bg-white/15 blur-2xl rounded-full group-hover:scale-150 transition-transform duration-500" />
             <div className="relative z-10 text-center">
               <span className="text-5xl sm:text-7xl font-black tracking-tighter text-white drop-shadow-md block mb-1">100%</span>
-              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Dark Magic & Dev Tears</span>
+              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Dark Magic & Dev Suffering</span>
             </div>
           </motion.div>
 
@@ -95,7 +95,7 @@ export default function About() {
             </div>
             
             <p className="text-base sm:text-lg md:text-xl text-white font-medium relative z-10 leading-relaxed">
-              Your business shouldn't blend into the background. We craft memorable, lightning-fast sites that get you noticed, loved, and hired.
+              Most agencies charge $50k for 12 slides and a broken template. We ship custom, zero-lag web apps while suffering in deep dark mode.
             </p>
           </motion.div>
 
@@ -106,10 +106,10 @@ export default function About() {
             className="md:col-span-2 glass-fast gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-center border border-white/25 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden"
           >
             <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 text-white tracking-tight">
-              High energy, zero ego, relentless execution.
+              No corporate speak. No fake synergy.
             </h3>
             <p className="text-sm sm:text-lg text-white/95 leading-relaxed font-normal max-w-3xl">
-              Building your dream web platform or mobile app should be the most exciting part of growing your company. We bring creative energy, raw speed, and true passion to every build!
+              We drink dangerous amounts of espresso, roast bad UX in code reviews, and build digital weapons that make your brand unbeatable.
             </p>
           </motion.div>
 
@@ -117,12 +117,12 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -3 }}
-            className="md:col-span-3 glass-fast gpu-layer rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white/15 bg-white/5 backdrop-blur-md flex items-center justify-between gap-4 text-xs font-mono"
+            className="md:col-span-3 glass-fast gpu-layer rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white/20 bg-white/5 backdrop-blur-md flex items-center justify-between gap-4 text-xs font-mono"
           >
             <div className="flex items-center gap-3">
               <span className="text-base">⚠️</span>
-              <span className="text-white/80">
-                <strong className="text-white">FUN FACT:</strong> Our copywriter quit because the dumb guy got a job at a tiny media company. The dev team is writing the website copy now. Send help.
+              <span className="text-white/90 leading-relaxed">
+                <strong className="text-white">FUN FACT:</strong> Our copywriter quit because the dumb guy got a job at some "MNC" media company (it's tiny compared to us). The dev team is writing the website copy now. Send help.
               </span>
             </div>
             <span className="text-[10px] tracking-widest text-white/40 uppercase font-bold shrink-0 hidden sm:inline">DEV TEAM MODE</span>
