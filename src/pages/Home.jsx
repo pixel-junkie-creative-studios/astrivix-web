@@ -80,7 +80,7 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
-                words={['SHIP NO SLOP', 'BYE WORDPRESS', '120 FPS ONLY', 'FAST & UNTIMED']}
+                words={['WE BUILD LEGENDS', 'UNSTOPPABLE SPEED', 'PURE CHAOS & CODE', 'DOMINATE DIGITAL']}
                 fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 18 : 26}
                 tileColor="#09090e"
                 textColor="#ffffff"
