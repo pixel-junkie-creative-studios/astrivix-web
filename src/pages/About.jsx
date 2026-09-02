@@ -79,7 +79,7 @@ export default function About() {
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 relative"
         >
@@ -87,8 +87,10 @@ export default function About() {
           {/* Cell 1: Main Headline (Spans 2 columns on desktop) */}
           <motion.div 
             variants={itemVariants}
+            viewport={{ amount: 0.65, once: true }}
             onViewportEnter={() => {
-              setTimeout(triggerTrioFall, 1800);
+              // Only start falling AFTER the user is directly looking at this card (65% in view)
+              setTimeout(triggerTrioFall, 2000);
             }}
             animate={
               screwState === 0 ? { rotate: 0, y: 0 } :
@@ -99,16 +101,16 @@ export default function About() {
             transition={{ type: "spring", stiffness: 180, damping: 14 }}
             className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[320px]"
           >
-            {/* --- POPUP SPEECH DIALOGUES --- */}
+            {/* --- POPUP SPEECH DIALOGUES (FLOATING OUTSIDE CARD TO NEVER OVERLAP TEXT) --- */}
             <AnimatePresence mode="wait">
               {/* Dialogue 1: After Trio falls, Duo talks to Uno */}
               {screwState === 1 && (
                 <motion.div 
                   key="dialogue-1"
-                  initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2 rounded-xl shadow-[0_10px_30px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
+                  className="absolute -top-12 right-6 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2 rounded-2xl shadow-[0_10px_30px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
                   <span>DUO: YO UNO! TRIO JUST DIPPED! HOLD ON TO YOUR METAL BRO!</span>
@@ -119,10 +121,10 @@ export default function About() {
               {screwState === 2 && (
                 <motion.div 
                   key="dialogue-2"
-                  initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                  initial={{ opacity: 0, scale: 0.8, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute bottom-4 left-14 z-30 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-xl shadow-[0_10px_35px_rgba(234,88,12,0.9)] border-2 border-orange-300 flex items-center gap-2 pointer-events-none"
+                  className="absolute -top-12 left-6 z-30 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-2xl shadow-[0_10px_35px_rgba(234,88,12,0.9)] border-2 border-orange-300 flex items-center gap-2 pointer-events-none max-w-[90vw] sm:max-w-none"
                 >
                   <span className="animate-bounce text-lg">😭</span>
                   <span>DUO: I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
