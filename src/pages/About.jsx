@@ -236,15 +236,15 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            className="glass-metallic gpu-layer rounded-[2.5rem] p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px]"
+            className="glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px] w-full"
           >
             <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
-            <div className="relative z-10 text-center flex flex-col items-center">
-              <span className="text-6xl sm:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 drop-shadow-2xl block mb-3 font-mono">
+            <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
+              <span className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 drop-shadow-2xl block mb-3 font-mono">
                 100%
               </span>
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-white/90 bg-white/10 px-4 py-2 rounded-2xl border border-white/20 backdrop-blur-md block max-w-[230px] leading-relaxed shadow-lg">
-                Pure Dark Magic & Dev Suffering
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-white/90 bg-white/10 px-3.5 py-2 rounded-2xl border border-white/20 backdrop-blur-md block max-w-full leading-relaxed shadow-lg">
+                BESPOKE ARCHITECTURE & UNMATCHED SPEED
               </span>
             </div>
           </motion.div>
