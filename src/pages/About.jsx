@@ -132,7 +132,7 @@ export default function About() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="absolute -bottom-10 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
                 >
-                  <span>😭 IM SORRY DUO! I CAN'T HOLD THIS ALONE!</span>
+                  <span>😭 I'M DUO AND I'M THE LAST SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
                 </motion.div>
               )}
             </AnimatePresence>
