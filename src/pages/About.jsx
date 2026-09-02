@@ -27,9 +27,10 @@ export default function About() {
   const triggerTrioFall = () => {
     if (screwState === 0) {
       setScrewState(1); // Trio falls! Duo talks to Uno
+      // Keep Duo -> Uno dialogue visible for 4.2 seconds
       setTimeout(() => {
         setScrewState(prev => prev === 1 ? 2 : prev);
-      }, 2600);
+      }, 4200);
     }
   };
 
@@ -37,9 +38,10 @@ export default function About() {
   const triggerUnoFall = () => {
     if (screwState <= 1) {
       setScrewState(2); // Uno falls! Duo talks to viewer
+      // Keep Duo -> Viewer dialogue visible for 5.5 seconds before total collapse!
       setTimeout(() => {
         setScrewState(prev => prev === 2 ? 3 : prev);
-      }, 3200);
+      }, 5500);
     }
   };
 
@@ -86,7 +88,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             onViewportEnter={() => {
-              setTimeout(triggerTrioFall, 1400);
+              setTimeout(triggerTrioFall, 1800);
             }}
             animate={
               screwState === 0 ? { rotate: 0, y: 0 } :
@@ -106,7 +108,7 @@ export default function About() {
                   initial={{ opacity: 0, scale: 0.8, y: 5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2 rounded-xl shadow-[0_10px_30px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
                   <span>DUO: YO UNO! TRIO JUST DIPPED! HOLD ON TO YOUR METAL BRO!</span>
@@ -120,9 +122,10 @@ export default function About() {
                   initial={{ opacity: 0, scale: 0.8, y: 5 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute -bottom-11 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
+                  className="absolute bottom-4 left-14 z-30 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-xl shadow-[0_10px_35px_rgba(234,88,12,0.9)] border-2 border-orange-300 flex items-center gap-2 pointer-events-none"
                 >
-                  <span>😭 DUO: I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
+                  <span className="animate-bounce text-lg">😭</span>
+                  <span>DUO: I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
                 </motion.div>
               )}
             </AnimatePresence>
