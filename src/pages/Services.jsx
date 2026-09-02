@@ -118,10 +118,10 @@ export default function Services() {
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 border-t-white/40 shadow-2xl glass-metallic bg-[#08080c]"
             style={{ 
               transform: 'rotateY(25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top left, ${prevService.color}25, #09090e 70%)`
+              background: `radial-gradient(circle at top left, ${prevService.color}20, #08080c 75%)`
             }}
           >
             <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
@@ -223,10 +223,10 @@ export default function Services() {
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/10 shadow-2xl backdrop-blur-xl bg-[#09090e]"
+            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 border-t-white/40 shadow-2xl glass-metallic bg-[#08080c]"
             style={{ 
               transform: 'rotateY(-25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top right, ${nextService.color}25, #09090e 70%)`
+              background: `radial-gradient(circle at top right, ${nextService.color}20, #08080c 75%)`
             }}
           >
             <div className="text-xs font-bold tracking-widest text-white/40 uppercase">

@@ -260,7 +260,7 @@ export default function SpaceScene() {
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-[#0a1128] dark:bg-[#020202] transition-colors duration-500">
+    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black transition-colors duration-500">
       <Canvas 
         camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
         dpr={[1, 2]} 
@@ -269,7 +269,7 @@ export default function SpaceScene() {
         {/* Cinematic Lighting Rig */}
         <ambientLight intensity={0.1} />
         <directionalLight position={[150, 100, 50]} intensity={isMobile ? 3.5 : 4.5} color="#ffffff" castShadow={!isMobile} />
-        <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#4d79ff" />
+        <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#ffffff" />
         
         <InteractiveStars />
         <Planets isMobile={isMobile} />
