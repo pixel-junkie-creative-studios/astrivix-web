@@ -203,7 +203,7 @@ function Band({
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
   const { width, height } = useThree((state) => state.size);
-  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2.5, linearDamping: 2.5, ccd: true };
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 6.0, linearDamping: 6.0, ccd: true };
   const { nodes, materials } = useGLTF(cardGLB);
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
@@ -311,13 +311,13 @@ function Band({
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
       
-      // Apply a very gentle, slow automatic swinging force so it moves on its own
+      // Apply a subtle, gentle micro-movement so it doesn't swing wildly
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         card.current.applyImpulse({ 
-          x: Math.sin(time * 0.8) * 0.08, 
+          x: Math.sin(time * 0.5) * 0.006, 
           y: 0, 
-          z: Math.cos(time * 0.5) * 0.04 
+          z: Math.cos(time * 0.4) * 0.003 
         }, true);
       }
     }
