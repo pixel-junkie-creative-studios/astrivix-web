@@ -58,9 +58,9 @@ export default function About() {
           >
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black leading-tight tracking-tight text-white z-10">
-              We don't do 9-to-5. <br className="hidden sm:inline" />
+              We build digital experiences <br className="hidden sm:inline" />
               <span className="text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-100 to-gray-300">
-                We do caffeine, dark mode & total market domination.
+                that make people stop, stare, and smile.
               </span>
             </h2>
           </motion.div>
@@ -73,8 +73,8 @@ export default function About() {
           >
             <div className="absolute w-28 h-28 bg-white/15 blur-2xl rounded-full group-hover:scale-150 transition-transform duration-500" />
             <div className="relative z-10 text-center">
-              <span className="text-5xl sm:text-7xl font-black tracking-tighter text-white drop-shadow-md block mb-1">0%</span>
-              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Canva & WordPress Slop</span>
+              <span className="text-5xl sm:text-7xl font-black tracking-tighter text-white drop-shadow-md block mb-1">100%</span>
+              <span className="text-xs sm:text-sm uppercase tracking-[0.25em] font-bold text-white">Custom Crafted Magic</span>
             </div>
           </motion.div>
 
@@ -89,7 +89,7 @@ export default function About() {
             </div>
             
             <p className="text-base sm:text-lg md:text-xl text-white font-medium relative z-10 leading-relaxed">
-              Your business deserves more than a $5 Upwork template that crashes on mobile. We build digital warheads that convert traffic into cash.
+              Your business shouldn't blend into the background. We craft memorable, lightning-fast sites that get you noticed, loved, and hired.
             </p>
           </motion.div>
 
@@ -100,10 +100,10 @@ export default function About() {
             className="md:col-span-2 glass-fast gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-center border border-white/25 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden"
           >
             <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 text-white tracking-tight">
-              We roast bad UX in code reviews for fun.
+              High energy, zero ego, relentless execution.
             </h3>
             <p className="text-sm sm:text-lg text-white/95 leading-relaxed font-normal max-w-3xl">
-              While other agencies host 3-hour Zoom meetings to decide button gradients, we ship 120 FPS custom web apps that put your competitors out of business.
+              Building your dream website should be the most exciting part of growing your company. We bring creative energy, raw speed, and true passion to every single build!
             </p>
           </motion.div>
 

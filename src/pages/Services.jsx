@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Identity Destruction', color: '#ff4d4d', desc: 'Crafting lethal brand identities that make your competitor’s marketing team cry.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Slop Code', color: '#4d79ff', desc: 'Building web architectures so fast your CTO will doubt his own career choices.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Dopamine & PWA', color: '#4dff88', desc: 'Designing addictively fluid iOS and Android apps. You’re welcome.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Aggressive Growth', color: '#ff4dff', desc: 'Driving traffic so hostile your hosting provider will call law enforcement.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Wallet Extraction', color: '#ffff4d', desc: 'Turning casual lurkers into paying clients before they realize what hit them.' },
-  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Pixel Domination', color: '#ff884d', desc: 'Visually stunning interfaces. No cheap templates, no Canva slop, no mercy.' },
-  { id: '07', title: 'MOTION & VIDEO', category: 'Retinal Hypnosis', color: '#4dffff', desc: 'Cinematic graphics that force users to stop mindless scrolling and look.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Corporate Exorcism', color: '#b34dff', desc: 'Cutting corporate fat and useless meetings so your revenue actually explodes.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Weaponization', color: '#4dffb3', desc: 'Ruthless cashflow management to scale your bottom line without selling your soul.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Visual Identity', color: '#ff4d4d', desc: 'Crafting magnetic brand identities that turn heads, win trust, and make your business unforgettable.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Code', color: '#4d79ff', desc: 'Building lightning-fast web applications that feel fluid, look insane, and load in milliseconds.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'iOS & Android Experience', color: '#4dff88', desc: 'Designing slick, intuitive mobile experiences your users will genuinely enjoy opening every day.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'SEO, AEO & Growth Engine', color: '#ff4dff', desc: 'Smart, high-converting digital marketing campaigns that bring qualified clients straight to you.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'UX & Analytics', color: '#ffff4d', desc: 'Turning casual visitors into excited buyers with intuitive, effortless user flows.' },
+  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Visual Magic', color: '#ff884d', desc: 'Bold, pixel-perfect design crafted from scratch with zero compromises or cookie-cutter templates.' },
+  { id: '07', title: 'MOTION & VIDEO', category: 'Cinematic Storytelling', color: '#4dffff', desc: 'High-impact motion graphics and video production that make your brand larger than life.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Scale & Strategy', color: '#b34dff', desc: 'Unlocking new growth opportunities and streamlining your business so you scale effortlessly.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Strategy', color: '#4dffb3', desc: 'Smart financial modeling and capital growth strategy to power your company’s next big move.' }
 ];
 
 export default function Services() {

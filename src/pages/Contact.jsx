@@ -58,15 +58,15 @@ export default function Contact() {
                 <input 
                   type="text" 
                   className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                  placeholder="Future Billionaire"
+                  placeholder="Alex Rivers"
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] tracking-widest uppercase text-white/80 font-bold ml-2">Company</label>
+                <label className="text-[10px] tracking-widest uppercase text-white/80 font-bold ml-2">Company / Brand</label>
                 <input 
                   type="text" 
                   className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                  placeholder="Competitor Exterminator Inc"
+                  placeholder="Your Dream Venture"
                 />
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function Contact() {
               <input 
                 type="email" 
                 className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                placeholder="ceo@dominate-industry.com"
+                placeholder="hello@yourbrand.com"
               />
             </div>
 
@@ -85,7 +85,7 @@ export default function Contact() {
               <textarea 
                 rows="4"
                 className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all resize-none placeholder:text-white/30"
-                placeholder="Tell us what you want to build. If your budget is under $50, we'll pray for you."
+                placeholder="Tell us about your project, your timeline, or your wild ideas. Let's make it happen!"
               ></textarea>
             </div>
 
@@ -93,7 +93,7 @@ export default function Contact() {
               type="submit"
               className="w-full py-4 bg-white text-black font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-zinc-200 transition-all transform active:scale-98 shadow-lg text-xs"
             >
-              NUKE COMPETITORS & TRANSMIT
+              LET'S BUILD SOMETHING EPIC →
             </button>
           </form>
         </div>
