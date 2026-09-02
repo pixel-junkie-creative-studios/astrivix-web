@@ -236,11 +236,13 @@ export default function About() {
             whileHover={{ scale: 1.02, y: -4 }}
             className="glass-metallic gpu-layer rounded-[2.5rem] p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px]"
           >
-            <div className="absolute w-36 h-36 bg-red-500/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+            <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
             <div className="relative z-10 text-center flex flex-col items-center">
-              <span className="text-6xl sm:text-8xl font-black tracking-tighter text-white drop-shadow-2xl block mb-2 font-mono">100%</span>
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.18em] font-mono font-black text-red-400 bg-red-950/60 px-4 py-2 rounded-2xl border border-red-500/40 shadow-[0_0_20px_rgba(239,68,68,0.3)] block max-w-[220px] leading-relaxed">
-                PURE DARK MAGIC & EXISTENTIAL DEV TRAUMA
+              <span className="text-6xl sm:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 drop-shadow-2xl block mb-3 font-mono">
+                100%
+              </span>
+              <span className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-white/90 bg-white/10 px-4 py-2 rounded-2xl border border-white/20 backdrop-blur-md block max-w-[230px] leading-relaxed shadow-lg">
+                Pure Dark Magic & Dev Suffering
               </span>
             </div>
           </motion.div>
