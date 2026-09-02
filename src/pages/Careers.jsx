@@ -35,9 +35,9 @@ export default function Careers() {
             </a>
           </div>
 
-          {/* Right Column: 3D Lanyard (Desktop Only to prevent mobile layout overlap) */}
-          <div className="hidden lg:flex relative h-[480px] w-full justify-center items-center z-10 overflow-visible">
-            <Lanyard position={[0, 2, 22]} gravity={[0, -40, 0]} transparent={true} />
+          {/* Right Column: 3D Lanyard (Compact Responsive Container) */}
+          <div className="relative h-[220px] sm:h-[280px] lg:h-[450px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/10 glass-fast gpu-layer">
+            <Lanyard position={[0, 2, 24]} gravity={[0, -40, 0]} transparent={true} />
           </div>
         </motion.div>
       </div>

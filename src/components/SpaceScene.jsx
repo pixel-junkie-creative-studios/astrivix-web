@@ -202,18 +202,21 @@ const Comet = () => {
   );
 };
 
-const Planets = () => {
+const Planets = ({ isMobile }) => {
+  const earthPos = isMobile ? [-6, 3, -25] : [-15, 5, -30];
+  const moonPos = isMobile ? [6, -2, -50] : [15, -2, -70];
+  const marsPos = isMobile ? [12, 10, -75] : [35, 15, -120];
+
   return (
     <>
       <Comet />
-      <DetailedEarth position={[-15, 5, -30]} />
-      {/* Restored moon position as requested */}
-      <DetailedMoon position={[15, -2, -70]} />
-      <RealisticMars position={[35, 15, -120]} />
+      <DetailedEarth position={earthPos} />
+      <DetailedMoon position={moonPos} />
+      <RealisticMars position={marsPos} />
       
-      {/* High Quality Satellite orbiting the Earth - Pushed further out so it doesn't clip */}
-      <group position={[-15, 5, -30]}>
-        <HighResSatellite orbitRadius={12} speed={0.1} yOffset={6} />
+      {/* High Quality Satellite orbiting the Earth */}
+      <group position={earthPos}>
+        <HighResSatellite orbitRadius={isMobile ? 8 : 12} speed={0.1} yOffset={isMobile ? 4 : 6} />
       </group>
     </>
   );
@@ -269,7 +272,7 @@ export default function SpaceScene() {
         <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#4d79ff" />
         
         <InteractiveStars />
-        <Planets />
+        <Planets isMobile={isMobile} />
         <CameraController scrollYProgress={scrollYProgress} />
         
         {/* Cinematic Post Processing - Only on desktop */}
