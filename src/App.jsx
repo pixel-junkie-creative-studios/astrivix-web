@@ -24,20 +24,33 @@ const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultin
 import Preloader from './components/Preloader';
 
 function App() {
+  const lenisRef = useRef(null);
+
   useEffect(() => {
-    // Force browser to ALWAYS start at the top of the page on refresh/new tab
+    // Force browser to ALWAYS start at the top of the page (Hero Section) on refresh or reload
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
 
+    // Force Lenis to scroll to top immediately on mount
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0);
+      if (lenisRef.current?.lenis) {
+        lenisRef.current.lenis.scrollTo(0, { immediate: true });
+      }
+    }, 100);
+
     // Sync GSAP ScrollTrigger ticker for lag smoothing
     gsap.ticker.lagSmoothing(0);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <ReactLenis
       root
+      ref={lenisRef}
       options={{
         lerp: 0.1,
         duration: 1.2,

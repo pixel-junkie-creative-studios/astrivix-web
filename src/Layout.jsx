@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
@@ -12,6 +12,11 @@ import Careers from './pages/Careers';
 import Contact from './pages/Contact';
 
 export default function Layout() {
+  useEffect(() => {
+    // Ensure homepage layout ALWAYS starts at top (0, 0) Hero section
+    window.scrollTo(0, 0);
+  }, []);
+
   const navItems = [
     { name: "Services", link: "#services" },
     { name: "Financial Consulting", link: "/financial-consulting" },
