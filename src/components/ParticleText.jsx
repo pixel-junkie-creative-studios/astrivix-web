@@ -138,7 +138,18 @@ const ParticleText = ({
       ctx.fill();
     };
 
+    let isVisible = true;
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.02 });
+    visibilityObserver.observe(container);
+
     const render = now => {
+      if (!isVisible) {
+        animationFrame = window.requestAnimationFrame(render);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       if (glow && !reducedMotion) {
@@ -281,7 +292,7 @@ const ParticleText = ({
         }
       }
 
-      const maxParticles = Math.max(900, Math.min(5200, Math.floor((width * height) / 90)));
+      const maxParticles = Math.max(800, Math.min(2400, Math.floor((width * height) / 140)));
       const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
       const baseRgb = hexToRgb(color);
       const highlightRgb = hexToRgb(highlightColor);
@@ -376,6 +387,7 @@ const ParticleText = ({
 
     return () => {
       buildId += 1;
+      visibilityObserver.disconnect();
       resizeObserver.disconnect();
       reduceMotionQuery?.removeEventListener('change', handleReduceMotionChange);
       canvas.removeEventListener('pointerenter', handlePointerEnter);
