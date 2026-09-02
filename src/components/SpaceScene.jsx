@@ -272,7 +272,9 @@ export default function SpaceScene() {
         <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#ffffff" />
         
         <InteractiveStars />
-        <Planets isMobile={isMobile} />
+        <React.Suspense fallback={null}>
+          <Planets isMobile={isMobile} />
+        </React.Suspense>
         <CameraController scrollYProgress={scrollYProgress} />
       </Canvas>
     </div>

@@ -7,15 +7,23 @@ export default function Preloader() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    // Safety max timeout: guarantee preloader screen closes in 1200ms max under all network conditions
+    const maxTimer = setTimeout(() => {
+      setShow(false);
+    }, 1200);
+
     // When progress hits 100%, wait a tiny bit, then trigger the out-animation
     if (progress === 100 || !active) {
       const timer = setTimeout(() => {
         setShow(false);
-      }, 500); // 500ms delay for a smooth cinematic transition
-      return () => clearTimeout(timer);
-    } else {
-      setShow(true);
+      }, 400);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(maxTimer);
+      };
     }
+
+    return () => clearTimeout(maxTimer);
   }, [progress, active]);
 
   return (
