@@ -58,7 +58,7 @@ export default function Contact() {
                 <input 
                   type="text" 
                   className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                  placeholder="John Doe"
+                  placeholder="Future Billionaire"
                 />
               </div>
               <div className="space-y-2">
@@ -66,7 +66,7 @@ export default function Contact() {
                 <input 
                   type="text" 
                   className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                  placeholder="Acme Corp"
+                  placeholder="Competitor Exterminator Inc"
                 />
               </div>
             </div>
@@ -76,7 +76,7 @@ export default function Contact() {
               <input 
                 type="email" 
                 className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all placeholder:text-white/30"
-                placeholder="john@example.com"
+                placeholder="ceo@dominate-industry.com"
               />
             </div>
 
@@ -85,13 +85,15 @@ export default function Contact() {
               <textarea 
                 rows="4"
                 className="w-full bg-[#0d0d12] border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:border-white/50 focus:outline-none transition-all resize-none placeholder:text-white/30"
-                placeholder="How can we help you?"
+                placeholder="Tell us what you want to build. If your budget is under $50, we'll pray for you."
               ></textarea>
             </div>
 
-            <button className="w-full relative overflow-hidden bg-white/15 hover:bg-white/25 backdrop-blur-xl shadow-2xl border border-white/30 text-white font-bold tracking-widest uppercase text-sm py-5 rounded-xl transition-all active:scale-95 mt-4 group/btn">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[100%] group-hover/btn:translate-x-[100%] transition-transform duration-700 ease-in-out"></div>
-              <span className="relative z-10 shadow-black drop-shadow-md">Send Message</span>
+            <button 
+              type="submit"
+              className="w-full py-4 bg-white text-black font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-zinc-200 transition-all transform active:scale-98 shadow-lg text-xs"
+            >
+              NUKE COMPETITORS & TRANSMIT
             </button>
           </form>
         </div>

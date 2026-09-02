@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Strategy & Identity', color: '#ff4d4d', desc: 'Crafting unique brand identities that resonate and leave a lasting impression.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Engineering & Scale', color: '#4d79ff', desc: 'Building robust, scalable, and high-performance web applications.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native & PWA', color: '#4dff88', desc: 'Designing seamless mobile experiences for iOS and Android platforms.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Growth, SEO, AEO & More', color: '#ff4dff', desc: 'Driving growth through data-driven marketing and SEO dominance.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'UX/UI & Analytics', color: '#ffff4d', desc: 'Turning visitors into loyal customers through expert UI/UX methodologies.' },
-  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Visual Identity', color: '#ff884d', desc: 'Creating visually stunning interfaces that elevate your digital presence.' },
-  { id: '07', title: 'MOTION & VIDEO', category: 'Creative Production', color: '#4dffff', desc: 'Bringing ideas to life with cinematic video production and motion graphics.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategy & Growth', color: '#b34dff', desc: 'Providing strategic insights to scale operations and maximize revenue.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Management & Scaling', color: '#4dffb3', desc: 'Expert financial management to ensure sustainable and profitable scaling.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Identity Destruction', color: '#ff4d4d', desc: 'Crafting lethal brand identities that make your competitor’s marketing team cry.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Slop Code', color: '#4d79ff', desc: 'Building web architectures so fast your CTO will doubt his own career choices.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Dopamine & PWA', color: '#4dff88', desc: 'Designing addictively fluid iOS and Android apps. You’re welcome.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Aggressive Growth', color: '#ff4dff', desc: 'Driving traffic so hostile your hosting provider will call law enforcement.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Wallet Extraction', color: '#ffff4d', desc: 'Turning casual lurkers into paying clients before they realize what hit them.' },
+  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Pixel Domination', color: '#ff884d', desc: 'Visually stunning interfaces. No cheap templates, no Canva slop, no mercy.' },
+  { id: '07', title: 'MOTION & VIDEO', category: 'Retinal Hypnosis', color: '#4dffff', desc: 'Cinematic graphics that force users to stop mindless scrolling and look.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Corporate Exorcism', color: '#b34dff', desc: 'Cutting corporate fat and useless meetings so your revenue actually explodes.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Weaponization', color: '#4dffb3', desc: 'Ruthless cashflow management to scale your bottom line without selling your soul.' }
 ];
 
 export default function Services() {

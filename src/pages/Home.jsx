@@ -80,8 +80,8 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
-                words={['ENGINEERING', 'STABILITY', 'AT VELOCITY']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 22}
+                words={['WE BUILD CODE', 'ZERO BOILERPLATE', 'NO CORPORATE SLOP', 'STABILITY AT VELOCITY']}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 14 : 22}
                 tileColor="#09090e"
                 textColor="#ffffff"
                 gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 6}
@@ -99,7 +99,7 @@ export default function Home() {
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           <div className="text-center mb-12 relative z-10">
-            <h3 className="text-[11px] tracking-[0.3em] font-bold text-white/40 uppercase">Trusted by Industry Leaders</h3>
+            <h3 className="text-[11px] tracking-[0.3em] font-bold text-white/40 uppercase">Brands that dumped WordPress & embraced reality</h3>
           </div>
           <div className="relative z-10 w-full overflow-hidden mask-edges px-8">
             <LogoLoop
