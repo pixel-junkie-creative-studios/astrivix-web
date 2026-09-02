@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Visual identities so sharp your competitors will think you hired Apple’s branding team on a war budget.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Lag Engineering', color: '#4d79ff', desc: 'Zero-lag web platforms that load faster than your brain can process the page.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: '120 FPS Fluidity', color: '#4dff88', desc: 'Engineered with 120 FPS gesture physics so addictively smooth your users will swipe around just to feel the haptics.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Growth Engine', color: '#ff4dff', desc: 'Targeted campaigns that bring high-ticket paying clients straight to your calendar with zero bot noise.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Checkout Perfection', color: '#ffff4d', desc: 'Checkout architecture so frictionless that visitors convert before they even have time to hesitate.' },
-  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Custom Pixels', color: '#ff884d', desc: 'Pixel-perfect custom UI built from scratch with zero compromises and zero cookie-cutter templates.' },
-  { id: '07', title: 'MOTION & VIDEO', category: 'Cinematic Storytelling', color: '#4dffff', desc: 'Cinematic motion graphics that turn simple product demos into visual masterpieces.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Scale & Output', color: '#b34dff', desc: 'We eliminate friction, purge useless meetings, and build scalable systems that double your team output.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Strategy', color: '#4dffb3', desc: 'Precision financial modeling to make sure your capital reserves grow as fast as your revenue.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Rescue', color: '#ff4d4d', desc: 'We fix your logo and brand before your relatives ask if you made it in Microsoft Paint.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Jank Engineering', color: '#4d79ff', desc: 'Code so clean even your angry senior engineer can’t find anything to complain about.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Pure Fluidity', color: '#4dff88', desc: 'Gesture physics so ridiculously fluid your users will open the app 50 times a day just to swipe around.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Real Traffic', color: '#ff4dff', desc: 'Getting you actual paying customers instead of 5,000 fake bots from random countries.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Checkout Perfection', color: '#ffff4d', desc: 'Fixing your site so visitors stop abandoning their carts like their bad habits.' },
+  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Custom Pixels', color: '#ff884d', desc: 'Custom designs that don’t look like a $12 Fiverr template from 2014.' },
+  { id: '07', title: 'MOTION & VIDEO', category: 'Visual Hypnosis', color: '#4dffff', desc: 'Animations so pretty your users forget why they even opened the browser tab.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Meeting Eraser', color: '#b34dff', desc: 'We kill your useless 8 AM Zoom calls so your team can actually get real work done.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Growth', color: '#4dffb3', desc: 'Making sure your company bank account grows faster than your daily caffeine addiction.' }
 ];
 
 export default function Services() {
