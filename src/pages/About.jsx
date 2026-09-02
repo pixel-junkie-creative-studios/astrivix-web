@@ -179,24 +179,50 @@ export default function About() {
               title="Click to unscrew!"
             />
 
-            {/* --- REPAIR BUTTON (WHEN COLLAPSED) --- */}
+            {/* --- REPAIR / SAVAGE CHOICE BUTTONS (WHEN COLLAPSED) --- */}
             <AnimatePresence>
               {screwState === 3 && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setScrewState(0);
-                  }}
-                  className="absolute inset-0 m-auto w-max h-max z-40 bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-mono text-xs font-black uppercase px-6 py-3 rounded-2xl shadow-[0_0_35px_rgba(239,68,68,0.9)] border-2 border-white flex items-center gap-2 hover:scale-110 active:scale-95 transition-transform cursor-pointer"
+                  className="absolute inset-0 m-auto w-max h-max z-40 flex flex-col sm:flex-row items-center gap-3.5 p-3 pointer-events-auto"
                 >
-                  <span className="animate-spin text-lg">🛠️</span>
-                  <span>REPAIR BENTO CARD (SCREW BACK TOGETHER)</span>
-                </motion.button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setScrewState(0);
+                    }}
+                    className="bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-mono text-[11px] sm:text-xs font-black uppercase px-5 py-3 rounded-2xl shadow-[0_0_30px_rgba(16,185,129,0.8)] border border-emerald-300 flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+                  >
+                    <span className="animate-spin text-base">🛠️</span>
+                    <span>REPAIR BOX (SCREW BACK TOGETHER)</span>
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setScrewState(4);
+                    }}
+                    className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white font-mono text-[11px] sm:text-xs font-black uppercase px-5 py-3 rounded-2xl shadow-[0_0_30px_rgba(225,29,72,0.9)] border border-red-400 flex items-center gap-2 hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+                  >
+                    <span className="text-base">💀</span>
+                    <span>LEAVE IT BROKEN LIKE YO DADDY LEFT YOU HAHHA</span>
+                  </button>
+                </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Permanent Broken Badge if screwState === 4 */}
+            {screwState === 4 && (
+              <div 
+                onClick={() => setScrewState(0)}
+                className="absolute top-4 right-4 z-40 bg-black/80 text-red-400 font-mono text-[10px] font-bold uppercase px-3 py-1.5 rounded-xl border border-red-500/40 cursor-pointer hover:scale-105 transition-transform flex items-center gap-1.5"
+                title="Click to finally repair"
+              >
+                <span>💀 LEFT BROKEN FOREVER (CLICK TO RESET)</span>
+              </div>
+            )}
 
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
             
