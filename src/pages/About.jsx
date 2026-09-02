@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function About() {
-  const [screwFell, setScrewFell] = useState(false);
+  // screwState: 0 = all 3 screws intact, 1 = screw 1 fell, 2 = screw 2 fell, 3 = total collapse!
+  const [screwState, setScrewState] = useState(0);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -19,6 +20,33 @@ export default function About() {
       y: 0, 
       scale: 1,
       transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  // Auto progression timers for hilarious sequential screw story
+  const triggerScrew1 = () => {
+    if (screwState === 0) {
+      setScrewState(1);
+      // Auto trigger screw 2 after 2.2s if user doesn't click
+      setTimeout(() => {
+        setScrewState(prev => prev === 1 ? 2 : prev);
+      }, 2400);
+    }
+  };
+
+  const triggerScrew2 = () => {
+    if (screwState < 2) {
+      setScrewState(2);
+      // Auto trigger screw 3 total collapse after 1.8s
+      setTimeout(() => {
+        setScrewState(prev => prev === 2 ? 3 : prev);
+      }, 1800);
+    }
+  };
+
+  const triggerScrew3 = () => {
+    if (screwState < 3) {
+      setScrewState(3);
     }
   };
 
@@ -58,44 +86,117 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             onViewportEnter={() => {
-              setTimeout(() => setScrewFell(true), 300);
+              setTimeout(triggerScrew1, 1000);
             }}
-            onClick={() => setScrewFell(true)}
-            animate={{ rotate: screwFell ? -2.5 : 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[300px] cursor-pointer"
+            animate={
+              screwState === 0 ? { rotate: 0, y: 0 } :
+              screwState === 1 ? { rotate: -4, y: 8 } :
+              screwState === 2 ? { rotate: -16, y: 25 } :
+              { rotate: -28, y: 110, opacity: 0.88 }
+            }
+            transition={{ type: "spring", stiffness: 180, damping: 14 }}
+            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[320px]"
           >
-            {/* Panic Speech Bubble when Screw Falls */}
-            <AnimatePresence>
-              {screwFell && (
+            {/* --- POPUP SPEECH DIALOGUES --- */}
+            <AnimatePresence mode="wait">
+              {screwState === 0 && (
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.7, x: -10 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="absolute top-3.5 left-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-[0_10px_25px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
+                  key="dialogue-0"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="absolute -top-6 left-6 z-30 bg-yellow-500/95 text-black font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-yellow-300 flex items-center gap-1.5 pointer-events-none"
                 >
-                  <span className="animate-ping text-yellow-300">🚨</span>
-                  <span>OH SHIT NOT AGAIN! SCROLL DOWN FAST I CAN'T HOLD ON...</span>
+                  <span>⚠️ DO NOT TOUCH ME SCROLL DOWN FAST THIS SHIT TOO HEAVY TO HOLD ON</span>
+                </motion.div>
+              )}
+
+              {screwState === 1 && (
+                <motion.div 
+                  key="dialogue-1"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="absolute -top-6 right-6 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
+                >
+                  <span className="animate-ping">🚨</span>
+                  <span>OH SHIT ITS JUST ME AND YOU UNO...</span>
+                </motion.div>
+              )}
+
+              {screwState === 2 && (
+                <motion.div 
+                  key="dialogue-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="absolute bottom-3 left-16 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
+                >
+                  <span>😭 IM SORRY DUO! I CAN'T HOLD THIS ALONE!</span>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Falling Top-Left Screw Animation */}
+            {/* --- SCREW 1 (Top-Left) --- */}
             <motion.div 
-              animate={screwFell ? { 
-                y: [0, -15, 380], 
-                x: [0, -25, -60], 
-                rotate: [0, 720, 1440], 
+              onClick={triggerScrew1}
+              animate={screwState >= 1 ? { 
+                y: [0, -20, 420], 
+                x: [0, -30, -80], 
+                rotate: [0, 720, 1800], 
                 opacity: [1, 1, 0] 
               } : {}}
-              transition={{ duration: 1.4, ease: "easeIn" }}
-              className="absolute top-5 left-5 skeuo-screw z-20" 
+              transition={{ duration: 1.2, ease: "easeIn" }}
+              className="absolute top-5 left-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
+              title="Click to unscrew!"
             />
 
-            {/* Remaining Stable Screws */}
-            <div className="absolute top-5 right-5 skeuo-screw opacity-80" />
-            <div className="absolute bottom-5 left-5 skeuo-screw opacity-80" />
-            <div className="absolute bottom-5 right-5 skeuo-screw opacity-80" />
+            {/* --- SCREW 2 (Top-Right) --- */}
+            <motion.div 
+              onClick={triggerScrew2}
+              animate={screwState >= 2 ? { 
+                y: [0, -20, 420], 
+                x: [0, 30, 80], 
+                rotate: [0, -720, -1800], 
+                opacity: [1, 1, 0] 
+              } : {}}
+              transition={{ duration: 1.2, ease: "easeIn" }}
+              className="absolute top-5 right-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
+              title="Click to unscrew!"
+            />
+
+            {/* --- SCREW 3 (Bottom-Left) --- */}
+            <motion.div 
+              onClick={triggerScrew3}
+              animate={screwState >= 3 ? { 
+                y: [0, 20, 450], 
+                x: [0, -20, -60], 
+                rotate: [0, 540, 1440], 
+                opacity: [1, 1, 0] 
+              } : {}}
+              transition={{ duration: 1.2, ease: "easeIn" }}
+              className="absolute bottom-5 left-5 skeuo-screw z-20 cursor-pointer hover:scale-125 transition-transform" 
+              title="Click to unscrew!"
+            />
+
+            {/* --- REPAIR BUTTON (WHEN COLLAPSED) --- */}
+            <AnimatePresence>
+              {screwState === 3 && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setScrewState(0);
+                  }}
+                  className="absolute inset-0 m-auto w-max h-max z-40 bg-gradient-to-r from-red-600 via-orange-500 to-amber-500 text-white font-mono text-xs font-black uppercase px-6 py-3 rounded-2xl shadow-[0_0_35px_rgba(239,68,68,0.9)] border-2 border-white flex items-center gap-2 hover:scale-110 active:scale-95 transition-transform cursor-pointer"
+                >
+                  <span className="animate-spin text-lg">🛠️</span>
+                  <span>REPAIR BENTO CARD (SCREW BACK TOGETHER)</span>
+                </motion.button>
+              )}
+            </AnimatePresence>
 
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
             
