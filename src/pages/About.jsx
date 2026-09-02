@@ -27,25 +27,25 @@ export default function About() {
   const triggerScrew1 = () => {
     if (screwState === 0) {
       setScrewState(1);
-      // Auto trigger screw 2 after 2.2s if user doesn't click
+      // Auto trigger screw 2 after 2.5s
       setTimeout(() => {
         setScrewState(prev => prev === 1 ? 2 : prev);
-      }, 2400);
+      }, 2500);
     }
   };
 
   const triggerScrew2 = () => {
-    if (screwState < 2) {
+    if (screwState <= 1) {
       setScrewState(2);
-      // Auto trigger screw 3 total collapse after 1.8s
+      // Auto trigger screw 3 (Duo) total collapse after 2.8s
       setTimeout(() => {
         setScrewState(prev => prev === 2 ? 3 : prev);
-      }, 1800);
+      }, 2800);
     }
   };
 
   const triggerScrew3 = () => {
-    if (screwState < 3) {
+    if (screwState <= 2) {
       setScrewState(3);
     }
   };
@@ -86,7 +86,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             onViewportEnter={() => {
-              setTimeout(triggerScrew1, 1000);
+              setTimeout(triggerScrew1, 1200);
             }}
             animate={
               screwState === 0 ? { rotate: 0, y: 0 } :
@@ -99,18 +99,6 @@ export default function About() {
           >
             {/* --- POPUP SPEECH DIALOGUES --- */}
             <AnimatePresence mode="wait">
-              {screwState === 0 && (
-                <motion.div 
-                  key="dialogue-0"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="absolute top-3.5 left-14 z-30 bg-yellow-500/95 text-black font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-yellow-300 flex items-center gap-1.5 pointer-events-none max-w-[280px] sm:max-w-none"
-                >
-                  <span>⚠️ DO NOT TOUCH ME BRO! I'M HOLDING THIS WHOLE AGENCY TOGETHER ON 4 ESPRESSOS!</span>
-                </motion.div>
-              )}
-
               {screwState === 1 && (
                 <motion.div 
                   key="dialogue-1"
