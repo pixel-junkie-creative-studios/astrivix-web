@@ -26,9 +26,7 @@ export default function Contact() {
           </p>
           
           <div className="flex flex-col gap-8">
-
             <div>
-              <p className="text-[10px] tracking-widest uppercase text-white/80 font-bold mb-4 font-mono">DIRECT WHATSAPP LINE</p>
               <a 
                 href="https://wa.me/917736387794" 
                 target="_blank" 
