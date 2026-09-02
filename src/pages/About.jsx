@@ -1,7 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function About() {
+  const [screwFell, setScrewFell] = useState(false);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -13,54 +15,81 @@ export default function About() {
   const itemVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.98 },
     visible: { 
-      opacity: 1, y: 0, scale: 1, 
-      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
   return (
-    <div id="about" className="py-16 sm:py-24 md:py-32 relative z-10 w-full min-h-screen flex flex-col justify-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div id="about" className="py-24 relative z-10 w-full min-h-screen flex flex-col justify-center">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
         
         {/* Section Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
-          className="mb-8 sm:mb-14"
+          transition={{ duration: 0.6 }}
+          className="mb-12 text-center md:text-left"
         >
-          <div className="flex items-center gap-4 sm:gap-6 mb-2">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter text-white drop-shadow-lg">
-              About Us.
-            </h1>
-            <div className="flex-grow h-[2px] bg-gradient-to-r from-white/40 via-white/20 to-transparent mt-2"></div>
-          </div>
-          <p className="text-xs sm:text-sm font-mono tracking-widest text-white/90 uppercase font-semibold">
-            Engineering High-Performance Digital Experiences
-          </p>
+          <span className="text-[11px] tracking-[0.3em] font-bold text-white/40 uppercase block mb-3">About Astrivix Corp</span>
+          <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white skeuo-engraved">
+            High Energy. Raw Velocity.
+          </h1>
         </motion.div>
 
         {/* Bento Grid Container */}
         <motion.div 
-          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6"
+          variants={containerVariants}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 relative"
         >
           
           {/* Cell 1: Main Headline (Spans 2 columns on desktop) */}
           <motion.div 
             variants={itemVariants}
-            whileHover={{ scale: 1.01, y: -3 }}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-10 flex flex-col justify-center border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative overflow-hidden group"
+            onViewportEnter={() => {
+              setTimeout(() => setScrewFell(true), 800);
+            }}
+            animate={{ rotate: screwFell ? -2.2 : 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className="md:col-span-2 glass-metallic gpu-layer rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-10 flex flex-col justify-center border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative overflow-visible group"
           >
-            {/* Skeuomorphic Screws */}
-            <div className="absolute top-4 left-4 skeuo-screw opacity-60" />
-            <div className="absolute top-4 right-4 skeuo-screw opacity-60" />
-            <div className="absolute bottom-4 left-4 skeuo-screw opacity-60" />
-            <div className="absolute bottom-4 right-4 skeuo-screw opacity-60" />
+            {/* Panic Speech Bubble when Screw Falls */}
+            <AnimatePresence>
+              {screwFell && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 15, scale: 0.7 }}
+                  animate={{ opacity: 1, y: -45, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute -top-6 left-4 sm:left-8 z-30 bg-red-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-2 rounded-2xl shadow-[0_10px_25px_rgba(239,68,68,0.6)] border border-red-400 flex items-center gap-2 pointer-events-none"
+                >
+                  <span className="animate-ping text-yellow-300">🚨</span>
+                  <span>OH SHIT NOT AGAIN! SCROLL DOWN FAST I CAN'T HOLD ON...</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Falling Top-Left Screw Animation */}
+            <motion.div 
+              animate={screwFell ? { 
+                y: [0, -15, 350], 
+                x: [0, -20, -50], 
+                rotate: [0, 720, 1440], 
+                opacity: [1, 1, 0] 
+              } : {}}
+              transition={{ duration: 1.4, ease: "easeIn" }}
+              className="absolute top-4 left-4 skeuo-screw z-20" 
+            />
+
+            {/* Remaining Stable Screws */}
+            <div className="absolute top-4 right-4 skeuo-screw opacity-80" />
+            <div className="absolute bottom-4 left-4 skeuo-screw opacity-80" />
+            <div className="absolute bottom-4 right-4 skeuo-screw opacity-80" />
 
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             <h2 className="text-2xl sm:text-4xl md:text-6xl font-black leading-tight tracking-tight text-white z-10">
