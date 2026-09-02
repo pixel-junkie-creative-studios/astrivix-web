@@ -107,7 +107,7 @@ export default function About() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="absolute top-3.5 left-14 z-30 bg-yellow-500/95 text-black font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-yellow-300 flex items-center gap-1.5 pointer-events-none max-w-[280px] sm:max-w-none"
                 >
-                  <span>⚠️ DO NOT TOUCH ME SCROLL DOWN FAST THIS SHIT TOO HEAVY TO HOLD ON</span>
+                  <span>⚠️ DO NOT TOUCH ME BRO! I'M HOLDING THIS WHOLE AGENCY TOGETHER ON 4 ESPRESSOS!</span>
                 </motion.div>
               )}
 
@@ -120,7 +120,7 @@ export default function About() {
                   className="absolute top-3.5 right-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-red-400 flex items-center gap-1.5 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
-                  <span>OH SHIT ITS JUST ME AND YOU UNO...</span>
+                  <span>OH SHIT UNO FELL OFF! DUO DON'T YOU DARE LOOK AT ME I'M SWEATING METAL!</span>
                 </motion.div>
               )}
 
@@ -132,7 +132,7 @@ export default function About() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="absolute -bottom-10 left-4 z-30 bg-orange-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-2xl border border-orange-400 flex items-center gap-1.5 pointer-events-none"
                 >
-                  <span>😭 I'M DUO AND I'M THE LAST SCREW! DO NOT TOUCH ME YOU CRAZY ANIMAL!</span>
+                  <span>😭 I'M DUO AND I'M THE LAST SURVIVING SCREW! DO NOT TOUCH ME YOU UNHINGED MONSTER!</span>
                 </motion.div>
               )}
             </AnimatePresence>
