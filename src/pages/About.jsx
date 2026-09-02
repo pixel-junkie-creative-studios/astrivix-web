@@ -58,20 +58,21 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             onViewportEnter={() => {
-              setTimeout(() => setScrewFell(true), 800);
+              setTimeout(() => setScrewFell(true), 300);
             }}
-            animate={{ rotate: screwFell ? -2.2 : 0 }}
+            onClick={() => setScrewFell(true)}
+            animate={{ rotate: screwFell ? -2.5 : 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[300px]"
+            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-visible group min-h-[300px] cursor-pointer"
           >
             {/* Panic Speech Bubble when Screw Falls */}
             <AnimatePresence>
               {screwFell && (
                 <motion.div 
-                  initial={{ opacity: 0, y: 15, scale: 0.7 }}
-                  animate={{ opacity: 1, y: -50, scale: 1 }}
+                  initial={{ opacity: 0, scale: 0.7, x: -10 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
                   exit={{ opacity: 0 }}
-                  className="absolute -top-6 left-6 z-30 bg-red-600 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-4 py-2.5 rounded-2xl shadow-[0_10px_30px_rgba(239,68,68,0.7)] border border-red-400 flex items-center gap-2 pointer-events-none"
+                  className="absolute top-3.5 left-14 z-30 bg-red-600/95 text-white font-mono text-[10px] sm:text-xs font-black uppercase px-3.5 py-1.5 rounded-xl shadow-[0_10px_25px_rgba(239,68,68,0.8)] border border-red-400 flex items-center gap-2 pointer-events-none"
                 >
                   <span className="animate-ping text-yellow-300">🚨</span>
                   <span>OH SHIT NOT AGAIN! SCROLL DOWN FAST I CAN'T HOLD ON...</span>
