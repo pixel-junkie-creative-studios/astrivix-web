@@ -32,12 +32,17 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="mb-12 text-center md:text-left"
+          className="mb-12 text-left"
         >
-          <span className="text-[11px] tracking-[0.3em] font-bold text-white/40 uppercase block mb-3">About Astrivix Corp</span>
-          <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white skeuo-engraved">
-            High Energy. Raw Velocity.
-          </h1>
+          <div className="flex items-center gap-4 mb-3">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white skeuo-engraved">
+              About Us.
+            </h1>
+            <div className="flex-grow h-[2px] bg-gradient-to-r from-white/40 via-white/10 to-transparent mt-2"></div>
+          </div>
+          <p className="text-xs sm:text-sm font-mono tracking-[0.25em] text-white/70 uppercase font-semibold">
+            ENGINEERING HIGH-PERFORMANCE DIGITAL INFRASTRUCTURE & CREATIVE MAGIC
+          </p>
         </motion.div>
 
         {/* Bento Grid Container */}
