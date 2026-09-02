@@ -255,28 +255,49 @@ const InteractiveStars = () => {
   );
 };
 
+class WebGLErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error) {
+    console.warn("SpaceScene WebGL caught error:", error);
+  }
+  render() {
+    if (this.state.hasError) {
+      return <div className="fixed inset-0 w-full h-full z-0 bg-black pointer-events-none" />;
+    }
+    return this.props.children;
+  }
+}
+
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black transition-colors duration-500">
-      <Canvas 
-        camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
-        dpr={isMobile ? 1 : [1, 1.5]} 
-        gl={{ antialias: false, powerPreference: "high-performance" }}
-      >
-        {/* Cinematic Lighting Rig */}
-        <ambientLight intensity={0.15} />
-        <directionalLight position={[150, 100, 50]} intensity={isMobile ? 3.5 : 4.5} color="#ffffff" castShadow={false} />
-        <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#ffffff" />
-        
-        <InteractiveStars />
-        <React.Suspense fallback={null}>
-          <Planets isMobile={isMobile} />
-        </React.Suspense>
-        <CameraController scrollYProgress={scrollYProgress} />
-      </Canvas>
-    </div>
+    <WebGLErrorBoundary>
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black transition-colors duration-500">
+        <Canvas 
+          camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
+          dpr={isMobile ? 1 : [1, 1.5]} 
+          gl={{ antialias: false, powerPreference: "high-performance" }}
+        >
+          {/* Cinematic Lighting Rig */}
+          <ambientLight intensity={0.15} />
+          <directionalLight position={[150, 100, 50]} intensity={isMobile ? 3.5 : 4.5} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-150, -50, -100]} intensity={1.5} color="#ffffff" />
+          
+          <InteractiveStars />
+          <React.Suspense fallback={null}>
+            <Planets isMobile={isMobile} />
+          </React.Suspense>
+          <CameraController scrollYProgress={scrollYProgress} />
+        </Canvas>
+      </div>
+    </WebGLErrorBoundary>
   );
 }

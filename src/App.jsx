@@ -21,7 +21,7 @@ const Terms = lazy(() => import('./pages/Terms'));
 const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
 const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
 
-import Preloader from './components/Preloader';
+
 
 function App() {
   const lenisRef = useRef(null);
@@ -60,7 +60,6 @@ function App() {
       }}
     >
       <BrowserRouter>
-      <Preloader />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={
