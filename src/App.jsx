@@ -61,44 +61,26 @@ function App() {
     >
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={
-            <Suspense fallback={null}>
-              <Home />
-            </Suspense>
-          } />
-          <Route path="services" element={
-            <Suspense fallback={null}>
-              <Services />
-            </Suspense>
-          } />
-          <Route path="about" element={
-            <Suspense fallback={null}>
-              <About />
-            </Suspense>
-          } />
-          <Route path="contact" element={
-            <Suspense fallback={null}>
-              <Contact />
-            </Suspense>
-          } />
-          <Route path="privacy" element={
-            <Suspense fallback={null}>
-              <Privacy />
-            </Suspense>
-          } />
-          <Route path="terms" element={
-            <Suspense fallback={null}>
-              <Terms />
-            </Suspense>
-          } />
-          {/* Catch-all route for Custom 404 */}
-          <Route path="*" element={
-            <Suspense fallback={null}>
-              <NotFound />
-            </Suspense>
-          } />
-        </Route>
+        <Route path="/" element={<Layout />} />
+        <Route path="/services" element={<Layout />} />
+        <Route path="/about" element={<Layout />} />
+        <Route path="/careers" element={<Layout />} />
+        <Route path="/contact" element={<Layout />} />
+        <Route path="/privacy" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <Privacy />
+          </Suspense>
+        } />
+        <Route path="/terms" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <Terms />
+          </Suspense>
+        } />
+        <Route path="*" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <NotFound />
+          </Suspense>
+        } />
         
         {/* ISOLATED FULL-SCREEN SUBSITE ROUTES */}
         <Route path="/portfolio" element={
