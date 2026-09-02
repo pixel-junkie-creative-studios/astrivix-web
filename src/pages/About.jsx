@@ -103,8 +103,23 @@ export default function About() {
               High energy, zero ego, relentless execution.
             </h3>
             <p className="text-sm sm:text-lg text-white/95 leading-relaxed font-normal max-w-3xl">
-              Building your dream website should be the most exciting part of growing your company. We bring creative energy, raw speed, and true passion to every single build!
+              Building your dream web platform or mobile app should be the most exciting part of growing your company. We bring creative energy, raw speed, and true passion to every build!
             </p>
+          </motion.div>
+
+          {/* Cell 5: Hilarious Copywriter Resignation Joke */}
+          <motion.div 
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -3 }}
+            className="md:col-span-3 glass-fast gpu-layer rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-white/15 bg-white/5 backdrop-blur-md flex items-center justify-between gap-4 text-xs font-mono"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-base">⚠️</span>
+              <span className="text-white/80">
+                <strong className="text-white">FUN FACT:</strong> Our copywriter quit because the dumb guy got a job at a tiny media company. The dev team is writing the website copy now. Send help.
+              </span>
+            </div>
+            <span className="text-[10px] tracking-widest text-white/40 uppercase font-bold shrink-0 hidden sm:inline">DEV TEAM MODE</span>
           </motion.div>
 
         </motion.div>
