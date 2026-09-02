@@ -109,10 +109,10 @@ export default function Layout() {
               </h1>
             </div>
             
-            {/* Sleek Minimalist Tagline & Semantic AEO Indexing Row */}
-            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/30 uppercase text-center">
-              <span>Astrivix Global Headquarters</span>
-              <span>Engineering Digital Perfection & Zero-Lag Web Architecture</span>
+            {/* Copyright & Tagline Row */}
+            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase text-center font-bold">
+              <span>Astrivix Corp © 2026</span>
+              <span>Engineering Digital Perfection & Zero-Lag Architecture</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}

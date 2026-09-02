@@ -66,10 +66,10 @@ export default function About() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
             
             <div className="relative z-10 my-auto">
-              <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/40 uppercase block mb-4">01 // CORE MANIFESTO</span>
+              <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-4">01 // CORE MANIFESTO</span>
               <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-md">
                 We build digital products <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-200 to-zinc-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-300">
                   that trigger existential crises in your competitors.
                 </span>
               </h2>
@@ -84,10 +84,10 @@ export default function About() {
           >
             <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
             <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
-              <span className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-400 drop-shadow-2xl block mb-3 font-mono">
+              <span className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-2xl block mb-3 font-mono">
                 100%
               </span>
-              <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-white/90 bg-white/10 px-3.5 py-2 rounded-2xl border border-white/20 backdrop-blur-md block max-w-full leading-relaxed shadow-lg">
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold text-white bg-white/15 px-3.5 py-2 rounded-2xl border border-white/30 backdrop-blur-md block max-w-full leading-relaxed shadow-lg">
                 BESPOKE ARCHITECTURE & UNMATCHED SPEED
               </span>
             </div>
@@ -100,13 +100,13 @@ export default function About() {
             className="glass-metallic gpu-layer rounded-[2.5rem] p-8 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[280px]"
           >
             <div className="flex items-center justify-between mb-6">
-              <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/40 uppercase">02 // REALITY CHECK</span>
+              <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase">02 // REALITY CHECK</span>
               <div className="w-8 h-8 rounded-full bg-white/10 border border-white/30 flex items-center justify-center">
                 <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,1)]" />
               </div>
             </div>
             
-            <p className="text-base sm:text-lg text-white/90 font-medium relative z-10 leading-relaxed font-sans">
+            <p className="text-base sm:text-lg text-white font-medium relative z-10 leading-relaxed font-sans">
               Most agencies charge <strong className="text-white font-bold">$50k for 12 slides</strong> and a broken template. We ship custom, zero-lag web apps while suffering in deep dark mode.
             </p>
           </motion.div>
@@ -115,30 +115,15 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.01, y: -4 }}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-10 flex flex-col justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[280px]"
+            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-10 flex flex-col justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[240px]"
           >
-            <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/40 uppercase block mb-3">03 // NO FILTER PHILOSOPHY</span>
+            <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-3">03 // NO FILTER PHILOSOPHY</span>
             <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 text-white tracking-tight">
               No corporate speak. No fake synergy.
             </h3>
-            <p className="text-sm sm:text-lg text-white/80 leading-relaxed font-normal max-w-3xl">
+            <p className="text-sm sm:text-lg text-white leading-relaxed font-normal max-w-3xl">
               We drink dangerous amounts of espresso, roast bad UX in code reviews, and build digital weapons that make your brand unbeatable.
             </p>
-          </motion.div>
-
-          {/* Cell 5: Hilarious Copywriter Resignation Joke (Spans full width) */}
-          <motion.div 
-            variants={itemVariants}
-            whileHover={{ scale: 1.01, y: -2 }}
-            className="md:col-span-3 glass-metallic gpu-layer rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-white/30 bg-white/5 backdrop-blur-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs font-mono shadow-2xl"
-          >
-            <div className="flex items-center gap-3.5">
-              <span className="text-lg text-yellow-400">⚠️</span>
-              <span className="text-white/90 leading-relaxed">
-                <strong className="text-white">SYSTEM WARNING:</strong> Our copywriter suddenly quit for some corporate MNC fantasy. The dev team hijacked the typewriter. Expect zero corporate filter, caffeine overload, and pure dark mode.
-              </span>
-            </div>
-            <span className="text-[10px] tracking-widest text-white/50 bg-white/10 px-3 py-1 rounded-md border border-white/20 uppercase font-bold shrink-0">DEV TEAM MODE</span>
           </motion.div>
 
         </motion.div>
