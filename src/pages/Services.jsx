@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Rescue', color: '#ff4d4d', desc: 'We fix your logo and brand before your relatives ask if you made it in Microsoft Paint.' },
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Rescue', color: '#ff4d4d', desc: 'We fix your logo and brand identity before anyone asks if you made it in Microsoft Paint.' },
   { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Jank Engineering', color: '#4d79ff', desc: 'Code so clean even your angry senior engineer can’t find anything to complain about.' },
   { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Pure Fluidity', color: '#4dff88', desc: 'Gesture physics so ridiculously fluid your users will open the app 50 times a day just to swipe around.' },
   { id: '04', title: 'DIGITAL MARKETING', category: 'Real Traffic', color: '#ff4dff', desc: 'Getting you actual paying customers instead of 5,000 fake bots from random countries.' },
