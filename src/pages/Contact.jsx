@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ParticleButton from '../components/ui/ParticleButton';
 
 export default function Contact() {
   const fadeUp = {
@@ -86,12 +87,11 @@ export default function Contact() {
               ></textarea>
             </div>
 
-            <button 
-              type="submit"
-              className="w-full py-4 skeuo-button text-black font-extrabold uppercase tracking-[0.2em] rounded-xl text-xs"
+            <ParticleButton 
+              className="w-full py-4 rounded-xl"
             >
               TRANSMIT TO DEVS (BEFORE WE RUN OUT OF COFFEE) →
-            </button>
+            </ParticleButton>
           </form>
         </div>
       </motion.div>

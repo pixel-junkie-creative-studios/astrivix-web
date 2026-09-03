@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
-import { FloatingNav } from './components/ui/FloatingNav';
+import { MorphicNavbar } from './components/ui/MorphicNavbar';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -33,8 +33,8 @@ export default function Layout() {
       <SpaceScene />
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,120,120,0.1),rgba(255,255,255,0))]" />
 
-      {/* ACETERNITY FLOATING NAV */}
-      <FloatingNav navItems={navItems} />
+      {/* KOKONUT UI MORPHIC NAVBAR */}
+      <MorphicNavbar navItems={navItems} />
 
       <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
