@@ -4,9 +4,6 @@ import ParticleText from '../components/ParticleText';
 import SplitFlapText from '../components/SplitFlapText';
 import LogoLoop from '../components/ui/LogoLoop';
 import { Spotlight } from '../components/ui/Spotlight';
-import ManusTerminal from '../components/ui/ManusTerminal';
-import KokonutCard from '../components/ui/KokonutCard';
-import { LucideZap, LucideCpu, LucideLayers } from 'lucide-react';
 
 export default function Home() {
   const clientLogos = Array.from({ length: 24 }, (_, i) => ({
@@ -93,44 +90,6 @@ export default function Home() {
             </div>
           </div>
         </motion.div>
-
-        {/* Manus.im Interactive AI Command Terminal Widget */}
-        <div className="w-full px-4 relative z-20 mt-12">
-          <ManusTerminal />
-        </div>
-      </section>
-
-      {/* Kokonut UI Bento Grid Section */}
-      <section className="py-12 relative z-10 max-w-6xl mx-auto px-4 w-full">
-        <div className="text-center mb-8">
-          <span className="text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase font-bold">MOTION.DEV + KOKONUT.UI + BKLIT.UI ENGINE</span>
-          <h2 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight mt-1">
-            Engineered For Pure Digital Dominance
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <KokonutCard 
-            title="OBSIDIAN FLUIDITY"
-            subtitle="Motion.dev Physics"
-            description="Built with high-frequency spring motion, liquid hardware blur, and zero-jank 120 FPS compositing."
-            badge="MOTION.DEV"
-            icon={LucideZap}
-          />
-          <KokonutCard 
-            title="MANUS COMMAND AI"
-            subtitle="Manus.im System"
-            description="Direct terminal command execution engine designed for instant project transmission and zero-wait feedback."
-            badge="MANUS.IM"
-            icon={LucideCpu}
-          />
-          <KokonutCard 
-            title="BKLIT MICRO-SYSTEMS"
-            subtitle="Bklit.ui Components"
-            description="Skeuomorphic Corner Brackets, debossed typography, and tactile liquid metallic glassmorphism."
-            badge="BKLIT.UI"
-            icon={LucideLayers}
-          />
-        </div>
       </section>
 
       <section id="clients" className="py-12 sm:py-24 relative z-10">
