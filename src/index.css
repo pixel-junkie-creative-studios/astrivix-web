@@ -77,6 +77,28 @@ html.lenis { height: auto; }
   contain: paint;
 }
 
+/* BKLIT / Kokonut UI Corner Bracket Accents */
+.corner-bracket-tl::before {
+  content: '┌';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+.corner-bracket-tr::after {
+  content: '┐';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+
 /* Tactile Skeuomorphic Physical Metallic Bevels & Buttons */
 .skeuo-button {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 210, 220, 0.85) 100%);

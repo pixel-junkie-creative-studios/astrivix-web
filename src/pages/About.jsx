@@ -55,7 +55,7 @@ export default function About() {
           {/* Cell 1: Main Headline (Spans 2 columns on desktop) */}
           <motion.div 
             variants={itemVariants}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[280px] sm:min-h-[320px]"
+            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[280px] sm:min-h-[320px] corner-bracket-tl corner-bracket-tr"
           >
             {/* Clean Static Corner Metallic Accents */}
             <div className="absolute top-5 left-5 skeuo-screw z-20 pointer-events-none" />
@@ -80,7 +80,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            className="glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px] w-full"
+            className="glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px] w-full corner-bracket-tl corner-bracket-tr"
           >
             <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
             <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
@@ -97,7 +97,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.01, y: -4 }}
-            className="glass-metallic gpu-layer rounded-[2.5rem] p-8 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[280px]"
+            className="glass-metallic gpu-layer rounded-[2.5rem] p-8 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[280px] corner-bracket-tl corner-bracket-tr"
           >
             <div className="flex items-center justify-between mb-6">
               <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase">02 // REALITY CHECK</span>
@@ -115,7 +115,7 @@ export default function About() {
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.01, y: -4 }}
-            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-10 flex flex-col justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[240px]"
+            className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-8 sm:p-10 flex flex-col justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden min-h-[240px] corner-bracket-tl corner-bracket-tr"
           >
             <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-3">03 // NO FILTER PHILOSOPHY</span>
             <h3 className="text-xl sm:text-3xl md:text-4xl font-black mb-3 text-white tracking-tight">
