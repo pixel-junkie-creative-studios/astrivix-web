@@ -138,43 +138,6 @@ export const MorphicNavbar = ({ navItems }) => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Fixed Bottom Glass Pill Dock for Mobile */}
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="md:hidden fixed bottom-6 inset-x-0 mx-auto w-[92vw] max-w-sm z-[5000] bg-[#0a0a0f]/85 backdrop-blur-2xl rounded-full p-1.5 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between"
-      >
-        <a
-          href="#clients"
-          onClick={(e) => handleScroll(e, '#clients', 0)}
-          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
-        >
-          WORK
-        </a>
-        <a
-          href="#services"
-          onClick={(e) => handleScroll(e, '#services', 1)}
-          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
-        >
-          SERVICES
-        </a>
-        <a
-          href="#about"
-          onClick={(e) => handleScroll(e, '#about', 2)}
-          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
-        >
-          ABOUT
-        </a>
-        <a
-          href="#contact"
-          onClick={(e) => handleScroll(e, '#contact', 4)}
-          className="flex items-center justify-center px-4 py-2.5 rounded-full text-[10px] font-mono font-black tracking-widest uppercase bg-white text-black shadow-lg active:scale-95 transition-transform shrink-0"
-        >
-          CONTACT
-        </a>
-      </motion.div>
     </>
   );
 };

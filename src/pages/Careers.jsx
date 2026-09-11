@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Lanyard from '../components/ui/Lanyard';
 
 export default function Careers() {
   const fadeUp = {
@@ -35,9 +34,40 @@ export default function Careers() {
             </a>
           </div>
 
-          {/* Right Column: 3D Lanyard (Liquid Glass Box) */}
-          <div className="relative h-[240px] sm:h-[300px] lg:h-[360px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/30 glass-metallic gpu-layer shadow-2xl p-2">
-            <Lanyard position={[0, 0.5, 24]} gravity={[0, -40, 0]} transparent={true} />
+          {/* Right Column: Interactive Executive Pass Card */}
+          <div className="relative w-full flex justify-center items-center py-4">
+            <motion.div 
+              whileHover={{ scale: 1.03, rotateY: 6, rotateX: -4 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="relative w-full max-w-[280px] sm:max-w-[320px] aspect-[1/1.45] glass-metallic rounded-[2rem] p-6 border border-white/40 shadow-[0_25px_60px_rgba(0,0,0,0.9)] flex flex-col justify-between overflow-hidden group cursor-pointer"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 via-white to-blue-500" />
+              <div className="absolute -right-12 -top-12 w-36 h-36 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform pointer-events-none" />
+
+              {/* Top Pass Header */}
+              <div className="flex items-center justify-between border-b border-white/15 pb-4 relative z-10">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,1)]" />
+                  <span className="text-[10px] font-mono font-bold tracking-widest text-white/90 uppercase">AST.PERMIT #2026</span>
+                </div>
+                <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full uppercase">VERIFIED</span>
+              </div>
+
+              {/* Center Hologram Branding */}
+              <div className="my-auto flex flex-col items-center text-center relative z-10">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/10 border border-white/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-2xl backdrop-blur-md">
+                  <span className="text-2xl sm:text-3xl font-black text-white">★</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black tracking-tight text-white uppercase drop-shadow-md">ASTRIVIX CORP.</h3>
+                <p className="text-[10px] font-mono tracking-[0.25em] text-white/70 uppercase mt-1 font-semibold">CREATIVE & TECH STUDIO</p>
+              </div>
+
+              {/* Bottom Bar */}
+              <div className="border-t border-white/15 pt-3 flex items-center justify-between text-[9px] font-mono text-white/70 relative z-10">
+                <span className="font-semibold">GLOBAL PASS // 2026</span>
+                <span className="text-emerald-400 font-bold group-hover:translate-x-1 transition-transform">APPLY NOW →</span>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

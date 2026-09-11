@@ -75,19 +75,22 @@ export default function Home() {
         {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-2 sm:px-4 z-10 gpu-layer"
+          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-1 sm:px-4 z-10 gpu-layer"
         >
-          <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
+          <div className="glass-fast px-2 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full w-full flex justify-center items-center">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-            <div className="relative z-10 flex justify-center">
-              <SplitFlapText
-                words={['BUILDING DIGITAL PRODUCTS', 'PEAK SPEED & PERFORMANCE', 'CUSTOM DESIGN & CODE', 'ENTERPRISE EXCELLENCE']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
-                tileColor="#050509"
-                textColor="#ffffff"
-                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
-                stagger={0.05}
-              />
+            <div className="relative z-10 flex justify-center items-center w-full max-w-full overflow-hidden py-1">
+              <div className="transform scale-[0.45] xs:scale-[0.58] sm:scale-[0.78] md:scale-100 origin-center flex justify-center items-center transition-transform">
+                <SplitFlapText
+                  words={['BUILDING DIGITAL PRODUCTS', 'PEAK SPEED & PERFORMANCE', 'CUSTOM DESIGN & CODE', 'ENTERPRISE EXCELLENCE']}
+                  fontSize={24}
+                  padTo={0}
+                  tileColor="#050509"
+                  textColor="#ffffff"
+                  gap={6}
+                  stagger={0.05}
+                />
+              </div>
             </div>
           </div>
         </motion.div>

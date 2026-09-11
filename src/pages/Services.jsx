@@ -31,10 +31,10 @@ export default function Services() {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: isMobile ? '+=4800' : '+=1800', // 4800px on mobile for 1-swipe-per-card control
+        end: isMobile ? '+=9000' : '+=7200', // Extended scroll distance so 1 scroll tick cleanly advances 1 card
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: isMobile ? 0.8 : 0.1,
+        scrub: isMobile ? 0.6 : 0.4,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,
