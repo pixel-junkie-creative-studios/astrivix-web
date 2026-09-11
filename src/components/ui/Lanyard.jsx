@@ -134,7 +134,7 @@ export default function Lanyard({
   return (
     <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 19 : 16], fov: isMobile ? 18 : 16 }}
+        camera={{ position: [0, 0.2, isMobile ? 22 : 18], fov: isMobile ? 20 : 18 }}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
@@ -269,13 +269,14 @@ function Band({
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
 
-  // Compact shorter rope joints (0.5 max segment distance)
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.55]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.55]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.55]);
+  // Rope joints (0.65 segment distance)
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.65]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.65]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.65]);
+  // Anchor j3 EXACTLY at the top metal clip ring of the card (Y = 1.45)
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.4, 0]
+    [0, 1.45, 0]
   ]);
 
   useEffect(() => {
@@ -327,22 +328,22 @@ function Band({
 
   return (
     <>
-      <group position={[0, isMobile ? 3.4 : 3.8, 0]}>
+      <group position={[0, isMobile ? 2.2 : 2.5, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.3, 0, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0, -0.65, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[0.6, 0, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[0, -1.3, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[0.9, 0, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[0, -1.95, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[1.2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
-          <CuboidCollider args={[0.5, 0.7, 0.01]} />
+        <RigidBody position={[0, -3.4, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+          <CuboidCollider args={[0.6, 0.8, 0.01]} />
           <group
-            scale={1.25}
-            position={[0, -0.7, -0.02]}
+            scale={1.35}
+            position={[0, 0, 0]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
@@ -361,10 +362,10 @@ function Band({
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry}>
-              <meshStandardMaterial color="#cccccc" metalness={0.95} roughness={0.15} />
+              <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.1} envMapIntensity={3} />
             </mesh>
             <mesh geometry={nodes.clamp.geometry}>
-              <meshStandardMaterial color="#dddddd" metalness={0.95} roughness={0.1} />
+              <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.1} envMapIntensity={3} />
             </mesh>
           </group>
         </RigidBody>
@@ -373,12 +374,13 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest={true}
           depthWrite={false}
+          transparent={true}
           resolution={[width, height]}
           useMap={1}
           map={bandTexture}
-          lineWidth={lanyardWidth * 0.75}
+          lineWidth={lanyardWidth * 0.85}
         />
       </mesh>
     </>
