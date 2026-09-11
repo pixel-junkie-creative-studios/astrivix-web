@@ -7,23 +7,35 @@ import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
   const targetZ = useRef(0);
+  const lockedZ = useRef(null);
 
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
     const servicesEl = typeof document !== 'undefined' ? document.getElementById('services') : null;
-    let dampFactor = 1;
-
+    
+    let isServicesActive = false;
     if (servicesEl) {
       const rect = servicesEl.getBoundingClientRect();
-      if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-        dampFactor = 0.02; // 98% slowdown during services section
+      // Services section is active while pinned in viewport
+      if (rect.top <= 100 && rect.bottom >= window.innerHeight - 100) {
+        isServicesActive = true;
       }
     }
 
-    // Extended Z range so planets remain visible throughout the whole site scroll
-    const nextTargetZ = -progress * 65;
-    targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
-    camera.position.z += (targetZ.current - camera.position.z) * 0.06;
+    if (isServicesActive) {
+      // Pause background planet movement completely while user scrolls through pinned services cards
+      if (lockedZ.current === null) {
+        lockedZ.current = camera.position.z;
+      }
+      targetZ.current = lockedZ.current;
+    } else {
+      // Clear lock and track normal site scroll progress smoothly in all other sections
+      lockedZ.current = null;
+      targetZ.current = -progress * 65;
+    }
+
+    // Smooth lerp to targetZ (0.1 lerp speed for instant smooth response)
+    camera.position.z += (targetZ.current - camera.position.z) * 0.1;
   });
 
   return null;
