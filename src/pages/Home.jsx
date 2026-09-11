@@ -81,7 +81,7 @@ export default function Home() {
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
-                words={['BUILDING DIGITAL LEGENDS', 'UNMATCHED PERFORMANCE', 'BESPOKE ENGINEERING', 'DOMINATE DIGITAL']}
+                words={['BUILDING DIGITAL PRODUCTS', 'PEAK SPEED & PERFORMANCE', 'CUSTOM DESIGN & CODE', 'ENTERPRISE EXCELLENCE']}
                 fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
                 tileColor="#050509"
                 textColor="#ffffff"

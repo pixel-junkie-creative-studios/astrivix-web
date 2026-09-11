@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 function Counter100Gauge() {
   const [count, setCount] = useState(0);
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { amount: 0.35, once: true });
 
   useEffect(() => {
     if (isInView) {
@@ -138,7 +138,7 @@ export default function About() {
             <div className="relative z-10 my-auto">
               <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-4">01 // CORE MANIFESTO</span>
               <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-md">
-                We build bespoke digital products <br className="hidden sm:inline" />
+                We engineer custom digital products <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-300">
                   that set new global benchmarks for performance and design.
                 </span>
@@ -156,8 +156,8 @@ export default function About() {
             <div className="relative z-10 text-center flex flex-col items-center w-full px-1">
               <Counter100Gauge />
               <div className="text-[10px] sm:text-xs uppercase tracking-[0.14em] font-mono font-bold text-white bg-white/15 px-3 py-2 rounded-2xl border border-white/30 backdrop-blur-md w-full max-w-[240px] leading-tight shadow-lg text-center mt-1">
-                <div>BESPOKE ARCHITECTURE</div>
-                <div className="text-white/70 text-[9px] sm:text-[10px] mt-0.5">& UNMATCHED SPEED</div>
+                <div>CUSTOM CODE QUALITY</div>
+                <div className="text-white/70 text-[9px] sm:text-[10px] mt-0.5">& MAXIMUM PERFORMANCE</div>
               </div>
             </div>
           </motion.div>
