@@ -280,14 +280,15 @@ const InteractiveStars = () => {
 
     const handleOrientation = (e) => {
       if (e.beta !== null && e.gamma !== null) {
-        // Full 360-degree 3-axis gyro mapping
+        // Full 360-degree 3-axis VR orientation (pitch, roll, yaw)
         const pitch = (e.beta * Math.PI) / 180;
         const roll = (e.gamma * Math.PI) / 180;
-        const yaw = e.alpha ? (e.alpha * Math.PI) / 180 : 0;
+        const yaw = e.alpha !== null ? (e.alpha * Math.PI) / 180 : 0;
 
-        gyroTarget.current.x = Math.sin(pitch * 0.5);
-        gyroTarget.current.y = Math.sin(roll * 0.5);
-        gyroTarget.current.z = Math.sin(yaw * 0.25);
+        // Inverted signs so tilting phone left/right/up/down moves camera in natural 1:1 VR window motion
+        gyroTarget.current.x = -Math.sin(pitch * 0.5);
+        gyroTarget.current.y = -Math.sin(roll * 0.5);
+        gyroTarget.current.z = -Math.sin(yaw * 0.4);
       }
     };
 
@@ -313,17 +314,17 @@ const InteractiveStars = () => {
   useFrame(() => {
     if (groupRef.current) {
       // Exponential lerp dampening for liquid-smooth 360 G-sensor tracking
-      gyroCurrent.current.x += (gyroTarget.current.x - gyroCurrent.current.x) * 0.04;
-      gyroCurrent.current.y += (gyroTarget.current.y - gyroCurrent.current.y) * 0.04;
-      gyroCurrent.current.z += (gyroTarget.current.z - gyroCurrent.current.z) * 0.04;
+      gyroCurrent.current.x += (gyroTarget.current.x - gyroCurrent.current.x) * 0.05;
+      gyroCurrent.current.y += (gyroTarget.current.y - gyroCurrent.current.y) * 0.05;
+      gyroCurrent.current.z += (gyroTarget.current.z - gyroCurrent.current.z) * 0.05;
 
-      const targetX = (mouse.current.y * Math.PI) / 14 + gyroCurrent.current.x * 0.8;
-      const targetY = (mouse.current.x * Math.PI) / 14 + gyroCurrent.current.y * 0.8;
-      const targetZ = gyroCurrent.current.z * 0.4;
+      const targetX = (mouse.current.y * Math.PI) / 14 + gyroCurrent.current.x * 0.9;
+      const targetY = (mouse.current.x * Math.PI) / 14 + gyroCurrent.current.y * 0.9;
+      const targetZ = gyroCurrent.current.z * 0.6;
       
-      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
-      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
-      groupRef.current.rotation.z += (targetZ - groupRef.current.rotation.z) * 0.04;
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.05;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.05;
+      groupRef.current.rotation.z += (targetZ - groupRef.current.rotation.z) * 0.05;
     }
   });
 
@@ -361,8 +362,8 @@ export default function SpaceScene() {
   return (
     <WebGLErrorBoundary>
       <div 
-        className="fixed inset-0 w-full h-[100dvh] z-0 pointer-events-none bg-black transition-colors duration-500 overflow-hidden touch-none"
-        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh' }}
+        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden touch-none"
+        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}
       >
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 

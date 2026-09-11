@@ -33,26 +33,26 @@ export default function Home() {
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
         >
           {/* ASTRIVIX Particle Text Container (GPU Accelerated with Contrast Halo) */}
-          <div className="w-full h-[120px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
+          <div className="w-full h-[180px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
             <div className="absolute inset-0 bg-black/50 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.5 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.6 : 2}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3.5 : 5}
               color="#ffffff"
               highlightColor="#ffffff"
               scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
               gatherDuration={1400}
               stagger={80}
-              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 50 : 150}
-              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.0rem, 9.2vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
+              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 400}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.6rem, 12.5vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
               fontWeight={900}
             />
           </div>
           
           {/* Subtitle Row - Tight side-by-side alignment directly under ASTRIVIX */}
-          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-3 sm:-mt-8 md:-mt-20 z-20 gpu-layer">
+          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-2 sm:-mt-8 md:-mt-20 z-20 gpu-layer">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
               <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text drop-shadow-md">

@@ -18,7 +18,7 @@ export default function Contact() {
             Initiate Contact.
           </h1>
           <p className="text-white/90 mb-8 sm:mb-12 max-w-md text-sm sm:text-base leading-relaxed font-medium">
-            Partner with Astrivix to engineer high-converting digital platforms, custom software, and global brand architecture. Transmit your project requirements below.
+            Partner with Astrivix to engineer high-converting digital platforms, custom software, and global brand architecture. Submit your project requirements below.
           </p>
           
           <div className="flex flex-col gap-8">
@@ -75,7 +75,7 @@ export default function Contact() {
             <ParticleButton 
               className="w-full py-4 rounded-xl"
             >
-              TRANSMIT PROJECT INQUIRY →
+              SUBMIT PROJECT INQUIRY →
             </ParticleButton>
           </form>
         </div>
