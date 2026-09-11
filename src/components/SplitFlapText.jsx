@@ -17,8 +17,12 @@ const resolveCharset = charset => {
 };
 
 const normalizePhrase = (phrase, width) => {
-  const safe = String(phrase ?? '');
-  return safe.padEnd(width, ' ').slice(0, width);
+  const safe = String(phrase ?? '').trim();
+  if (safe.length >= width) return safe.slice(0, width);
+  const diff = width - safe.length;
+  const left = Math.floor(diff / 2);
+  const right = diff - left;
+  return ' '.repeat(left) + safe + ' '.repeat(right);
 };
 
 const createTiles = phrase =>

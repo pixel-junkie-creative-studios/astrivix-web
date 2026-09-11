@@ -39,7 +39,7 @@ export default function Layout() {
       {/* KOKONUT UI MORPHIC NAVBAR */}
       <MorphicNavbar navItems={navItems} />
 
-      <div className="relative z-10 w-full mx-auto flex flex-col items-center">
+      <main className="relative z-10 w-full mx-auto flex flex-col items-center">
         
         {/* SPA Sections Stacked Logically */}
         <div id="home" className="w-full">
@@ -69,13 +69,13 @@ export default function Layout() {
               
               {/* Brand & Newsletter */}
               <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start w-full">
-                <h3 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h3>
+                <h2 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h2>
                 <p className="text-white/50 text-sm mb-8 max-w-md leading-relaxed">
                   Engineering digital perfection. Subscribe to our newsletter to receive the latest updates, case studies, and industry insights.
                 </p>
                 <div className="flex w-full max-w-md bg-white/5 border border-white/10 rounded-full p-1 pl-4 md:pl-6 backdrop-blur-md focus-within:border-white/30 transition-colors">
-                  <input type="email" placeholder="ENTER EMAIL ADDRESS" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
-                  <button className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
+                  <input type="email" placeholder="ENTER EMAIL ADDRESS" aria-label="Enter Email Address" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
+                  <button aria-label="Subscribe to Newsletter" className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
                 </div>
               </div>
 
@@ -136,7 +136,7 @@ export default function Layout() {
           </div>
         </footer>
 
-      </div>
+      </main>
     </div>
   );
 }
