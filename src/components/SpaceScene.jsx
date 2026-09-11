@@ -28,18 +28,29 @@ const CameraController = ({ scrollYProgress }) => {
     const contactP = getElementProgress('contact');
 
     // Camera Z Depth Profile:
-    // Home: 0 to -15 (Active space scroll)
-    // Services: -15 to -20 (Ultra-slow 5 unit drift across entire 7200px Services section = PAUSED/SLOW)
-    // About: -20 to -35 (Active space scroll)
-    // Careers: -35 to -45 (Active space scroll)
-    // Contact: -45 to -60 (Active space scroll)
-    const calcZ = -(homeP * 15) - (servicesP * 5) - (aboutP * 15) - (careersP * 10) - (contactP * 15);
+    // Home: 0 to -15 (Normal space scroll)
+    // Services: -15 to -15.2 (DRASTICALLY SLOW / 0.2 unit drift over 27000px pin)
+    // About: -15.2 to -30 (Normal space scroll)
+    // Careers: -30 to -40 (Normal space scroll)
+    // Contact: -40 to -55 (Normal space scroll)
+    const calcZ = -(homeP * 15) - (servicesP * 0.2) - (aboutP * 15) - (careersP * 10) - (contactP * 15);
 
     targetZ.current = calcZ;
     camera.position.z += (targetZ.current - camera.position.z) * 0.08;
   });
 
   return null;
+};
+
+// Helper function to get global Services section slowdown factor (10x slower during Services)
+const getSpeedMultiplier = () => {
+  if (typeof document === 'undefined') return 1.0;
+  const el = document.getElementById('services');
+  if (!el) return 1.0;
+  const rect = el.getBoundingClientRect();
+  const windowH = window.innerHeight;
+  const inServices = rect.top < windowH && rect.bottom > 0;
+  return inServices ? 0.08 : 1.0; // Drastically slow down (8% speed) in Services, 100% in other sections
 };
 
 const DetailedEarth = ({ position, isMobile = false }) => {
@@ -63,8 +74,9 @@ const DetailedEarth = ({ position, isMobile = false }) => {
   }, [colorMap, normalMap, specularMap, cloudsMap]);
 
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.18;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
+    const mult = getSpeedMultiplier();
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.18 * mult;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22 * mult;
   });
 
   const earthRadius = isMobile ? 3.2 : 5;
@@ -109,7 +121,8 @@ const DetailedMoon = ({ position, isMobile = false }) => {
   }, [colorMap]);
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
+    const mult = getSpeedMultiplier();
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12 * mult;
   });
 
   const moonRadius = isMobile ? 1.6 : 2.2;
@@ -141,7 +154,8 @@ const RealisticMars = ({ position, isMobile = false }) => {
   }, [rockyMap]);
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
+    const mult = getSpeedMultiplier();
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2 * mult;
   });
 
   const marsRadius = isMobile ? 2.6 : 4.2;
@@ -197,7 +211,8 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const { scene } = useGLTF('/assets/planets/satellite.glb');
 
   useFrame((state, delta) => {
-    if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
+    const mult = getSpeedMultiplier();
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * speed * mult;
   });
 
   return (
@@ -310,7 +325,8 @@ const GalaxyDustCloud = () => {
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.02;
+      const mult = getSpeedMultiplier();
+      pointsRef.current.rotation.y += delta * 0.02 * mult;
     }
   });
 

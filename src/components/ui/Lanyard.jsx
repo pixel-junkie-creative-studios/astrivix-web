@@ -139,15 +139,15 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className="lanyard-wrapper">
+    <div className="lanyard-wrapper w-full h-full min-h-[460px] md:min-h-[540px] flex items-center justify-center relative overflow-hidden">
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 15 : 12], fov: isMobile ? 22 : 18 }}
+        camera={{ position: [0, 0, isMobile ? 14 : 11.5], fov: isMobile ? 24 : 20 }}
         dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent, powerPreference: 'high-performance' }}
+        gl={{ alpha: transparent, powerPreference: 'high-performance', antialias: true }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
-        <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 120} interpolate={true}>
+        <ambientLight intensity={Math.PI * 1.2} />
+        <Physics gravity={gravity} timeStep={1 / 120} numSolverIterations={25} interpolate={true}>
           <Band
             isMobile={isMobile}
             frontImage={frontImage}
@@ -211,7 +211,7 @@ function Band({
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
   const { width, height } = useThree((state) => state.size);
-  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 8.0, linearDamping: 6.0, ccd: true };
+  const segmentProps = { type: 'dynamic', canSleep: false, colliders: false, angularDamping: 14.0, linearDamping: 10.0, ccd: true };
   const { nodes, materials } = useGLTF(cardGLB);
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
@@ -290,14 +290,17 @@ function Band({
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
-    if (dragged) {
+    if (dragged && card.current && j3.current) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
       vec.add(dir.multiplyScalar(state.camera.position.length()));
       [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
-      card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z });
+      
+      const targetCardPos = { x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z };
+      card.current.setNextKinematicTranslation(targetCardPos);
+      j3.current.setTranslation({ x: targetCardPos.x, y: targetCardPos.y + 1.45, z: targetCardPos.z }, true);
     }
-    if (fixed.current) {
+    if (fixed.current && j3.current && card.current) {
       [j1, j2].forEach(ref => {
         if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
         const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
@@ -307,6 +310,12 @@ function Band({
           Math.min(1, alpha)
         );
       });
+
+      // Strict Frame Hierarchy Lock: Lock card top ring pivot [0, 1.45, 0] to j3 position on every frame
+      if (!dragged) {
+        const j3Pos = j3.current.translation();
+        card.current.setTranslation({ x: j3Pos.x, y: j3Pos.y - 1.45, z: j3Pos.z }, true);
+      }
 
       // Bottom of strap connects into clip ring cleanly
       curve.points[0].copy(j3.current.translation()).add(new THREE.Vector3(0, 0.05, 0));
@@ -319,13 +328,12 @@ function Band({
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         const targetY = Math.sin(time * 0.8) * 0.55;
-        const currentAng = card.current.angvel();
         const currentRot = card.current.rotation();
 
         card.current.setAngvel({ 
-          x: -currentRot.x * 3.0, 
-          y: (targetY - currentRot.y) * 2.5, 
-          z: -currentRot.z * 3.0 
+          x: -currentRot.x * 4.0, 
+          y: (targetY - currentRot.y) * 3.0, 
+          z: -currentRot.z * 4.0 
         }, true);
       }
     }
