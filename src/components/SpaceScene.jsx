@@ -279,6 +279,66 @@ const Planets = ({ isMobile }) => {
   );
 };
 
+const GalaxyDustCloud = () => {
+  const pointsRef = useRef();
+  
+  const [positions, colors] = useMemo(() => {
+    const count = 20000;
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+    
+    for (let i = 0; i < count; i++) {
+      const radius = Math.random() * 160 + 10;
+      const spinAngle = radius * 0.06;
+      const branchAngle = ((i % 4) * Math.PI) / 2 + spinAngle;
+      
+      const randomX = (Math.random() - 0.5) * 20;
+      const randomY = (Math.random() - 0.5) * 20;
+      const randomZ = (Math.random() - 0.5) * 20;
+      
+      pos[i * 3] = Math.cos(branchAngle) * radius + randomX;
+      pos[i * 3 + 1] = randomY + (Math.random() - 0.5) * (160 - radius) * 0.25;
+      pos[i * 3 + 2] = Math.sin(branchAngle) * radius + randomZ - 50;
+      
+      const brightness = 0.75 + Math.random() * 0.25;
+      col[i * 3] = brightness;
+      col[i * 3 + 1] = brightness;
+      col[i * 3 + 2] = brightness;
+    }
+    return [pos, col];
+  }, []);
+
+  useFrame((state, delta) => {
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y += delta * 0.02;
+    }
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          args={[colors, 3]}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.7}
+        vertexColors={true}
+        transparent={true}
+        opacity={0.88}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        sizeAttenuation={true}
+      />
+    </points>
+  );
+};
+
 const InteractiveStars = () => {
   const groupRef = useRef();
   const mouse = useRef({ x: 0, y: 0 });
@@ -293,12 +353,10 @@ const InteractiveStars = () => {
 
     const handleOrientation = (e) => {
       if (e.beta !== null && e.gamma !== null) {
-        // Full 360-degree 3-axis VR orientation (pitch, roll, yaw)
         const pitch = (e.beta * Math.PI) / 180;
         const roll = (e.gamma * Math.PI) / 180;
         const yaw = e.alpha !== null ? (e.alpha * Math.PI) / 180 : 0;
 
-        // Inverted signs so tilting phone left/right/up/down moves camera in natural 1:1 VR window motion
         gyroTarget.current.x = -Math.sin(pitch * 0.5);
         gyroTarget.current.y = -Math.sin(roll * 0.5);
         gyroTarget.current.z = -Math.sin(yaw * 0.4);
@@ -326,7 +384,6 @@ const InteractiveStars = () => {
 
   useFrame(() => {
     if (groupRef.current) {
-      // Exponential lerp dampening for liquid-smooth 360 G-sensor tracking
       gyroCurrent.current.x += (gyroTarget.current.x - gyroCurrent.current.x) * 0.05;
       gyroCurrent.current.y += (gyroTarget.current.y - gyroCurrent.current.y) * 0.05;
       gyroCurrent.current.z += (gyroTarget.current.z - gyroCurrent.current.z) * 0.05;
@@ -343,8 +400,10 @@ const InteractiveStars = () => {
 
   return (
     <group ref={groupRef}>
-      <Stars radius={120} depth={60} count={9000} factor={4.5} saturation={0} fade speed={2.5} />
-      <Stars radius={60} depth={30} count={3000} factor={3} saturation={0.5} fade speed={1.5} />
+      <GalaxyDustCloud />
+      <Stars radius={150} depth={80} count={16000} factor={6} saturation={0} fade speed={3.0} />
+      <Stars radius={80} depth={50} count={8000} factor={4.5} saturation={0} fade speed={2.0} />
+      <Stars radius={40} depth={25} count={4000} factor={3} saturation={0} fade speed={1.2} />
     </group>
   );
 };
