@@ -36,8 +36,8 @@ export default function Careers() {
           </div>
 
           {/* Right Column: 3D Lanyard (Liquid Glass Box) */}
-          <div className="relative h-[280px] sm:h-[340px] lg:h-[420px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/30 glass-metallic gpu-layer shadow-2xl p-2">
-            <Lanyard position={[0, 1.5, 32]} gravity={[0, -40, 0]} transparent={true} />
+          <div className="relative h-[240px] sm:h-[300px] lg:h-[360px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/30 glass-metallic gpu-layer shadow-2xl p-2">
+            <Lanyard position={[0, 0.5, 24]} gravity={[0, -40, 0]} transparent={true} />
           </div>
         </motion.div>
       </div>

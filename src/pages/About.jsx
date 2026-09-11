@@ -28,8 +28,13 @@ function Counter100() {
   }, [isInView]);
 
   return (
-    <span ref={ref} className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-2xl block mb-3 font-mono">
-      {count}%
+    <span ref={ref} className="inline-flex items-baseline justify-center font-black tracking-tight drop-shadow-2xl mb-3">
+      <span className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-mono text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300">
+        {count}
+      </span>
+      <span className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-sans text-white/90 ml-1 font-bold">
+        %
+      </span>
     </span>
   );
 }

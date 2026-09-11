@@ -338,13 +338,13 @@ export default function SpaceScene() {
   return (
     <WebGLErrorBoundary>
       <div 
-        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black transition-colors duration-500 overflow-hidden"
-        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}
+        className="fixed inset-0 w-full h-[100dvh] z-[-1] pointer-events-none bg-black transition-colors duration-500 overflow-hidden touch-none"
+        style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh' }}
       >
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
           dpr={[1, isMobile ? 1.5 : 2]} 
-          gl={{ antialias: true, powerPreference: "high-performance" }}
+          gl={{ antialias: true, powerPreference: "high-performance", precision: "highp" }}
         >
           {/* Cinematic High-Contrast Solar Lighting Rig */}
           <ambientLight intensity={0.35} />

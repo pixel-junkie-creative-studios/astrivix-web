@@ -70,18 +70,21 @@
   overflow: hidden;
   background: #050509;
   backface-visibility: hidden;
-  clip-path: inset(0 0 0 0);
+  transform-style: preserve-3d;
 }
 
 .split-flap-text__half--top,
 .split-flap-text__flap--front {
   top: 0;
+  clip-path: inset(0 0 0 0);
 }
 
 .split-flap-text__half--bottom,
 .split-flap-text__flap--back {
+  top: 50%;
   bottom: 0;
   background: #050509;
+  clip-path: inset(0 0 0 0);
 }
 
 .split-flap-text__char {
@@ -94,17 +97,20 @@
   justify-content: center;
   color: var(--split-flap-text-color, #f8fafc);
   text-shadow: none;
+  line-height: 1;
 }
 
 .split-flap-text__half--top .split-flap-text__char,
 .split-flap-text__flap--front .split-flap-text__char {
   top: 0;
+  clip-path: inset(0 0 50% 0);
 }
 
 .split-flap-text__half--bottom .split-flap-text__char,
 .split-flap-text__flap--back .split-flap-text__char {
   top: -100%;
   transform: translateY(0);
+  clip-path: inset(50% 0 0 0);
 }
 
 .split-flap-text__flap {

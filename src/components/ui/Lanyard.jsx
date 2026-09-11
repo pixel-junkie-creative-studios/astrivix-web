@@ -134,9 +134,9 @@ export default function Lanyard({
   return (
     <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
+        camera={{ position: [0, -0.6, isMobile ? 28 : 22], fov: isMobile ? 20 : 18 }}
         dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
+        gl={{ alpha: transparent, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
         <ambientLight intensity={Math.PI} />
@@ -274,7 +274,7 @@ function Band({
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.5, 0]
+    [0, 1.2, 0]
   ]);
 
   useEffect(() => {
@@ -311,13 +311,13 @@ function Band({
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
       
-      // Apply a subtle, gentle micro-movement so it doesn't swing wildly
+      // Apply smooth gentle continuous swaying impulse
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         card.current.applyImpulse({ 
-          x: Math.sin(time * 0.8) * 0.008, 
+          x: Math.sin(time * 1.2) * 0.006, 
           y: 0, 
-          z: Math.cos(time * 0.5) * 0.004 
+          z: Math.cos(time * 0.8) * 0.003 
         }, true);
       }
     }
@@ -326,7 +326,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, isMobile ? 2.6 : 3.6, 0]}>
+      <group position={[0, isMobile ? 2.2 : 3.0, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
@@ -338,10 +338,10 @@ function Band({
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
-          <CuboidCollider args={[0.8, 1.125, 0.01]} />
+          <CuboidCollider args={[0.7, 0.95, 0.01]} />
           <group
-            scale={2.25}
-            position={[0, -1.2, -0.05]}
+            scale={1.75}
+            position={[0, -0.9, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
@@ -368,7 +368,8 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={false}
+          depthTest={true}
+          depthWrite={true}
           resolution={[width, height]}
           useMap={1}
           map={bandTexture}
