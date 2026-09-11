@@ -134,7 +134,7 @@ export default function Lanyard({
   return (
     <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position: [0, -0.6, isMobile ? 28 : 22], fov: isMobile ? 20 : 18 }}
+        camera={{ position: [0, 0, isMobile ? 19 : 16], fov: isMobile ? 18 : 16 }}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent, powerPreference: 'high-performance' }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
@@ -269,12 +269,13 @@ function Band({
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
 
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
+  // Compact shorter rope joints (0.5 max segment distance)
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.55]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.55]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.55]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.2, 0]
+    [0, 1.4, 0]
   ]);
 
   useEffect(() => {
@@ -315,7 +316,7 @@ function Band({
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         card.current.applyImpulse({ 
-          x: Math.sin(time * 1.2) * 0.006, 
+          x: Math.sin(time * 1.2) * 0.005, 
           y: 0, 
           z: Math.cos(time * 0.8) * 0.003 
         }, true);
@@ -326,22 +327,22 @@ function Band({
 
   return (
     <>
-      <group position={[0, isMobile ? 2.2 : 3.0, 0]}>
+      <group position={[0, isMobile ? 3.4 : 3.8, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
-          <BallCollider args={[0.1]} />
+        <RigidBody position={[0.3, 0, 0]} ref={j1} {...segmentProps}>
+          <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
-          <BallCollider args={[0.1]} />
+        <RigidBody position={[0.6, 0, 0]} ref={j2} {...segmentProps}>
+          <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
-          <BallCollider args={[0.1]} />
+        <RigidBody position={[0.9, 0, 0]} ref={j3} {...segmentProps}>
+          <BallCollider args={[0.08]} />
         </RigidBody>
-        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
-          <CuboidCollider args={[0.7, 0.95, 0.01]} />
+        <RigidBody position={[1.2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+          <CuboidCollider args={[0.5, 0.7, 0.01]} />
           <group
-            scale={1.75}
-            position={[0, -0.9, -0.05]}
+            scale={1.25}
+            position={[0, -0.7, -0.02]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
@@ -359,8 +360,12 @@ function Band({
                 envMapIntensity={2}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
+            <mesh geometry={nodes.clip.geometry}>
+              <meshStandardMaterial color="#cccccc" metalness={0.95} roughness={0.15} />
+            </mesh>
+            <mesh geometry={nodes.clamp.geometry}>
+              <meshStandardMaterial color="#dddddd" metalness={0.95} roughness={0.1} />
+            </mesh>
           </group>
         </RigidBody>
       </group>
@@ -368,12 +373,12 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={true}
-          depthWrite={true}
+          depthTest={false}
+          depthWrite={false}
           resolution={[width, height]}
           useMap={1}
           map={bandTexture}
-          lineWidth={lanyardWidth}
+          lineWidth={lanyardWidth * 0.75}
         />
       </mesh>
     </>

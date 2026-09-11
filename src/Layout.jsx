@@ -26,7 +26,7 @@ export default function Layout() {
   ];
 
   return (
-    <div className="w-full max-w-[100vw] min-h-screen bg-zinc-50 dark:bg-[#050505] text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
+    <div className="w-full max-w-[100vw] min-h-screen bg-transparent text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
       <MagneticCursor />
       
       {/* 3D WebGL Space Journey Background */}
