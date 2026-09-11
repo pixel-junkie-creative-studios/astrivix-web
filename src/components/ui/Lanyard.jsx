@@ -81,33 +81,38 @@ function createAstrivixBack() {
   ctx.fillText('ASTRIVIX', 256, 480);
   
   return canvas.toDataURL('image/png');
-}
-
-function createAstrivixBandTexture() {
+}function createAstrivixBandTexture() {
   const canvas = document.createElement('canvas');
-  canvas.width = 2048; 
+  canvas.width = 1024; 
   canvas.height = 128; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050505';
+  
+  // Premium Matte Black Fabric Weave Base
+  ctx.fillStyle = '#08080a';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
+  // Subtle Fabric Border Accents
+  ctx.fillStyle = '#22222a';
+  ctx.fillRect(0, 0, canvas.width, 4);
+  ctx.fillRect(0, 124, canvas.width, 4);
+  
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 36px sans-serif';
+  ctx.font = '900 40px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '3px';
+  ctx.letterSpacing = '10px';
   
-  // Flip context to counteract the MeshLine's reversed UV mapping
+  // Flip context to counteract MeshLine's reversed UV mapping
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
+  ctx.fillText('★   ASTRIVIX   ★', 512, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-  tex.repeat.set(4, 1);
+  tex.repeat.set(1.5, 1);
   return tex;
 }
 
@@ -304,22 +309,22 @@ function Band({
           Math.min(1, alpha)
         );
       });
-      curve.points[0].copy(j3.current.translation());
+      // Offset curve endpoint 0.42 units UPWARD so black fabric stops cleanly above metal clip
+      curve.points[0].copy(j3.current.translation()).add(new THREE.Vector3(0, 0.42, 0));
       curve.points[1].copy(j2.current.lerped);
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
       band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
-      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
       
-      // Apply smooth gentle continuous swaying impulse
+      // Automatic smooth continuous Y-axis rotation (spin) so user automatically sees front & back of card
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
-        card.current.applyImpulse({ 
-          x: Math.sin(time * 1.2) * 0.005, 
-          y: 0, 
-          z: Math.cos(time * 0.8) * 0.003 
+        card.current.setAngvel({ 
+          x: ang.x, 
+          y: Math.sin(time * 0.9) * 1.8, 
+          z: ang.z 
         }, true);
       }
     }
@@ -353,19 +358,35 @@ function Band({
             )}
           >
             <mesh geometry={nodes.card.geometry}>
-              <meshStandardMaterial
+              <meshPhysicalMaterial
                 map={cardMap}
-                color="#999999"
-                roughness={0.4}
-                metalness={0.9}
-                envMapIntensity={2}
+                color="#ffffff"
+                roughness={0.3}
+                metalness={0.5}
+                clearcoat={1.0}
+                clearcoatRoughness={0.1}
+                envMapIntensity={2.5}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry}>
-              <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.1} envMapIntensity={3} />
+              <meshPhysicalMaterial
+                color="#ffffff"
+                metalness={0.98}
+                roughness={0.05}
+                clearcoat={1.0}
+                clearcoatRoughness={0.05}
+                envMapIntensity={4}
+              />
             </mesh>
             <mesh geometry={nodes.clamp.geometry}>
-              <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.1} envMapIntensity={3} />
+              <meshPhysicalMaterial
+                color="#ffffff"
+                metalness={0.98}
+                roughness={0.05}
+                clearcoat={1.0}
+                clearcoatRoughness={0.05}
+                envMapIntensity={4}
+              />
             </mesh>
           </group>
         </RigidBody>
@@ -375,7 +396,7 @@ function Band({
         <meshLineMaterial
           color="white"
           depthTest={true}
-          depthWrite={false}
+          depthWrite={true}
           transparent={true}
           resolution={[width, height]}
           useMap={1}
