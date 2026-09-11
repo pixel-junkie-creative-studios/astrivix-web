@@ -7,35 +7,36 @@ import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
   const targetZ = useRef(0);
-  const lockedZ = useRef(null);
 
   useFrame(({ camera }) => {
-    const progress = scrollYProgress.get();
-    const servicesEl = typeof document !== 'undefined' ? document.getElementById('services') : null;
-    
-    let isServicesActive = false;
-    if (servicesEl) {
-      const rect = servicesEl.getBoundingClientRect();
-      // Services section is active while pinned in viewport
-      if (rect.top <= 100 && rect.bottom >= window.innerHeight - 100) {
-        isServicesActive = true;
-      }
-    }
+    if (typeof document === 'undefined') return;
 
-    if (isServicesActive) {
-      // Pause background planet movement completely while user scrolls through pinned services cards
-      if (lockedZ.current === null) {
-        lockedZ.current = camera.position.z;
-      }
-      targetZ.current = lockedZ.current;
-    } else {
-      // Clear lock and track normal site scroll progress smoothly in all other sections
-      lockedZ.current = null;
-      targetZ.current = -progress * 65;
-    }
+    const getElementProgress = (id) => {
+      const el = document.getElementById(id);
+      if (!el) return 0;
+      const rect = el.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const totalH = rect.height || windowH;
+      const p = (windowH - rect.top) / (totalH + windowH);
+      return Math.max(0, Math.min(1, p));
+    };
 
-    // Smooth lerp to targetZ (0.1 lerp speed for instant smooth response)
-    camera.position.z += (targetZ.current - camera.position.z) * 0.1;
+    const homeP = getElementProgress('home');
+    const servicesP = getElementProgress('services');
+    const aboutP = getElementProgress('about');
+    const careersP = getElementProgress('careers');
+    const contactP = getElementProgress('contact');
+
+    // Camera Z Depth Profile:
+    // Home: 0 to -15 (Active space scroll)
+    // Services: -15 to -20 (Ultra-slow 5 unit drift across entire 7200px Services section = PAUSED/SLOW)
+    // About: -20 to -35 (Active space scroll)
+    // Careers: -35 to -45 (Active space scroll)
+    // Contact: -45 to -60 (Active space scroll)
+    const calcZ = -(homeP * 15) - (servicesP * 5) - (aboutP * 15) - (careersP * 10) - (contactP * 15);
+
+    targetZ.current = calcZ;
+    camera.position.z += (targetZ.current - camera.position.z) * 0.08;
   });
 
   return null;
