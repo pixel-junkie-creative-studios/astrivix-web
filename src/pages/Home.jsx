@@ -38,15 +38,15 @@ export default function Home() {
             <ParticleText
               text="ASTRIVIX"
               particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.2 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 6 : 5}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 5}
               color="#ffffff"
               highlightColor="#ffffff"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 150}
               gatherDuration={1400}
               stagger={80}
               pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
               repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(3.8rem, 16vw, 12rem)" : "clamp(4.2rem, 16vw, 12rem)"}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(4.2rem, 18vw, 12rem)" : "clamp(4.2rem, 16vw, 12rem)"}
               fontWeight={900}
             />
           </div>

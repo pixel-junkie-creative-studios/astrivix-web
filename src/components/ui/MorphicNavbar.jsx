@@ -113,8 +113,8 @@ export const MorphicNavbar = ({ navItems }) => {
             className="fixed inset-x-3 top-16 bottom-24 bg-[#050508]/98 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.98)] z-[4900] md:hidden flex flex-col justify-between overflow-y-auto"
           >
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
-              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-emerald-400 uppercase flex items-center gap-2">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-pink-400 uppercase flex items-center gap-2">
+                <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(236,72,153,1)]" />
                 AST. // CREATIVE AGENCY
               </span>
               <span className="text-[10px] font-mono text-white/40 uppercase">CLOSE [X]</span>
@@ -126,7 +126,7 @@ export const MorphicNavbar = ({ navItems }) => {
                   key={idx}
                   href={item.link}
                   onClick={(e) => handleScroll(e, item.link, idx)}
-                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-emerald-400 transition-colors text-left flex items-center justify-between"
+                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-pink-400 transition-colors text-left flex items-center justify-between"
                 >
                   <span>{item.name}</span>
                   <span className="text-xs font-mono text-white/30 font-normal">0{idx + 1} →</span>

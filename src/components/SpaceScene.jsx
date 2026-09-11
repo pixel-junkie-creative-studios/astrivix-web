@@ -208,7 +208,6 @@ const RealisticJupiterRinged = ({ position }) => {
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  const { scene } = useGLTF('/assets/planets/satellite.glb');
 
   useFrame((state, delta) => {
     const mult = getSpeedMultiplier();
@@ -217,8 +216,27 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
 
   return (
     <group ref={pivotRef}>
-      <group position={[orbitRadius, yOffset, 0]}>
-        <primitive object={scene} scale={0.22} rotation={[0.5, Math.PI / 2, 0]} />
+      <group position={[orbitRadius, yOffset, 0]} rotation={[0.4, 0.8, 0]}>
+        {/* Central Metallic Satellite Body */}
+        <mesh>
+          <boxGeometry args={[0.3, 0.3, 0.4]} />
+          <meshStandardMaterial color="#dddddd" metalness={0.9} roughness={0.1} />
+        </mesh>
+        {/* Solar Panel Left */}
+        <mesh position={[-0.45, 0, 0]}>
+          <boxGeometry args={[0.6, 0.2, 0.02]} />
+          <meshStandardMaterial color="#1e3a8a" metalness={0.8} roughness={0.2} />
+        </mesh>
+        {/* Solar Panel Right */}
+        <mesh position={[0.45, 0, 0]}>
+          <boxGeometry args={[0.6, 0.2, 0.02]} />
+          <meshStandardMaterial color="#1e3a8a" metalness={0.8} roughness={0.2} />
+        </mesh>
+        {/* Dish Antenna */}
+        <mesh position={[0, 0, 0.25]} rotation={[Math.PI / 2, 0, 0]}>
+          <coneGeometry args={[0.15, 0.1, 16, 1, true]} />
+          <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} side={THREE.DoubleSide} />
+        </mesh>
       </group>
     </group>
   );

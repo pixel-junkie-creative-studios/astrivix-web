@@ -292,7 +292,10 @@ function Band({
   useFrame((state, delta) => {
     if (card.current) {
       const cardPos = card.current.translation();
-      const clipRingWorld = new THREE.Vector3(cardPos.x, cardPos.y + 1.45, cardPos.z);
+      const cardRot = card.current.rotation();
+      const cardQuat = new THREE.Quaternion(cardRot.x, cardRot.y, cardRot.z, cardRot.w);
+      const localHookOffset = new THREE.Vector3(0, 1.45, 0).applyQuaternion(cardQuat);
+      const clipRingWorld = new THREE.Vector3(cardPos.x, cardPos.y, cardPos.z).add(localHookOffset);
 
       if (dragged) {
         vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
