@@ -294,11 +294,11 @@ const Planets = ({ isMobile }) => {
   );
 };
 
-const GalaxyDustCloud = () => {
+const GalaxyDustCloud = ({ isMobile = false }) => {
   const pointsRef = useRef();
   
   const [positions, colors] = useMemo(() => {
-    const count = 20000;
+    const count = isMobile ? 6000 : 20000;
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
     
@@ -321,7 +321,7 @@ const GalaxyDustCloud = () => {
       col[i * 3 + 2] = brightness;
     }
     return [pos, col];
-  }, []);
+  }, [isMobile]);
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
@@ -343,7 +343,7 @@ const GalaxyDustCloud = () => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.7}
+        size={isMobile ? 0.9 : 0.7}
         vertexColors={true}
         transparent={true}
         opacity={0.88}
@@ -355,7 +355,7 @@ const GalaxyDustCloud = () => {
   );
 };
 
-const InteractiveStars = () => {
+const InteractiveStars = ({ isMobile = false }) => {
   const groupRef = useRef();
   const mouse = useRef({ x: 0, y: 0 });
   const gyroTarget = useRef({ x: 0, y: 0, z: 0 });
@@ -416,10 +416,9 @@ const InteractiveStars = () => {
 
   return (
     <group ref={groupRef}>
-      <GalaxyDustCloud />
-      <Stars radius={150} depth={80} count={16000} factor={6} saturation={0} fade speed={3.0} />
-      <Stars radius={80} depth={50} count={8000} factor={4.5} saturation={0} fade speed={2.0} />
-      <Stars radius={40} depth={25} count={4000} factor={3} saturation={0} fade speed={1.2} />
+      <GalaxyDustCloud isMobile={isMobile} />
+      <Stars radius={150} depth={80} count={isMobile ? 5000 : 16000} factor={6} saturation={0} fade speed={2.5} />
+      <Stars radius={80} depth={50} count={isMobile ? 3000 : 8000} factor={4.5} saturation={0} fade speed={1.8} />
     </group>
   );
 };
@@ -455,15 +454,15 @@ export default function SpaceScene() {
       >
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
-          dpr={[1, isMobile ? 1.5 : 2]} 
-          gl={{ antialias: true, powerPreference: "high-performance", precision: "highp" }}
+          dpr={[1, isMobile ? 1.25 : 2]} 
+          gl={{ antialias: true, powerPreference: "high-performance", precision: isMobile ? "mediump" : "highp" }}
         >
           {/* Cinematic High-Contrast Solar Lighting Rig */}
           <ambientLight intensity={0.35} />
           <directionalLight position={[180, 120, 80]} intensity={isMobile ? 5.5 : 6.0} color="#ffffff" castShadow={false} />
           <directionalLight position={[-180, -80, -120]} intensity={2.2} color="#88aaff" />
           
-          <InteractiveStars />
+          <InteractiveStars isMobile={isMobile} />
           <React.Suspense fallback={null}>
             <Planets isMobile={isMobile} />
           </React.Suspense>
