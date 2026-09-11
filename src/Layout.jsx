@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import { MorphicNavbar } from './components/ui/MorphicNavbar';
@@ -91,8 +92,8 @@ export default function Layout() {
               <div className="flex flex-col items-center md:items-start w-full">
                 <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Social</h4>
                 <div className="flex flex-col gap-4 text-sm text-white/70">
-                  <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
-                  <a href="#terms" className="hover:text-white transition-colors">Terms of Service</a>
+                  <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                  <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">
                     <a href="#twitter" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">X / TWITTER</a>
                     <a href="#linkedin" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">LINKEDIN</a>
