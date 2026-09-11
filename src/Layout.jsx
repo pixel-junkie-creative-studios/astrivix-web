@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import { MorphicNavbar } from './components/ui/MorphicNavbar';
+import SEOManager from './components/ui/SEOManager';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -28,6 +29,7 @@ export default function Layout() {
 
   return (
     <div className="w-full max-w-[100vw] min-h-screen bg-transparent text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
+      <SEOManager />
       <MagneticCursor />
       
       {/* 3D WebGL Space Journey Background */}

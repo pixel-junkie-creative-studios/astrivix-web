@@ -8,26 +8,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 import Layout from './Layout';
 
-// Ultra-fast Code Splitting
-const Home = lazy(() => import('./pages/Home'));
-const Services = lazy(() => import('./pages/Services'));
-const About = lazy(() => import('./pages/About'));
-const Careers = lazy(() => import('./pages/Careers'));
-const Contact = lazy(() => import('./pages/Contact'));
-const PortfolioShowcase = lazy(() => import('./pages/PortfolioShowcase'));
+// Subsites Code Splitting
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
 const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
 
-
-
 function App() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // Force browser to ALWAYS start at the top of the page (Hero Section) on refresh or reload
+    // Force browser to ALWAYS start at top of page on refresh or reload
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
@@ -60,51 +52,46 @@ function App() {
       }}
     >
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />} />
-        <Route path="/services" element={<Layout />} />
-        <Route path="/about" element={<Layout />} />
-        <Route path="/careers" element={<Layout />} />
-        <Route path="/contact" element={<Layout />} />
-        <Route path="/privacy" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <Privacy />
-          </Suspense>
-        } />
-        <Route path="/terms" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <Terms />
-          </Suspense>
-        } />
-        <Route path="*" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <NotFound />
-          </Suspense>
-        } />
-        
-        {/* ISOLATED FULL-SCREEN SUBSITE ROUTES */}
-        <Route path="/portfolio" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <PortfolioSubsite />
-          </Suspense>
-        } />
-        <Route path="/portfolio-showcase" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <PortfolioSubsite />
-          </Suspense>
-        } />
-        <Route path="/financial-consulting" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <FinancialConsultingSubsite />
-          </Suspense>
-        } />
-        <Route path="/portfolio-preview" element={
-          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <PortfolioShowcase />
-          </Suspense>
-        } />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />} />
+          <Route path="/services" element={<Layout />} />
+          <Route path="/about" element={<Layout />} />
+          <Route path="/careers" element={<Layout />} />
+          <Route path="/contact" element={<Layout />} />
+          <Route path="/privacy" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <Privacy />
+            </Suspense>
+          } />
+          <Route path="/terms" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <Terms />
+            </Suspense>
+          } />
+          <Route path="*" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <NotFound />
+            </Suspense>
+          } />
+          
+          {/* ISOLATED SUBSITE ROUTES */}
+          <Route path="/portfolio" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <PortfolioSubsite />
+            </Suspense>
+          } />
+          <Route path="/portfolio-showcase" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <PortfolioSubsite />
+            </Suspense>
+          } />
+          <Route path="/financial-consulting" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <FinancialConsultingSubsite />
+            </Suspense>
+          } />
+        </Routes>
+      </BrowserRouter>
     </ReactLenis>
   );
 }
