@@ -361,7 +361,7 @@ export default function SpaceScene() {
   return (
     <WebGLErrorBoundary>
       <div 
-        className="fixed inset-0 w-full h-[100dvh] z-[-1] pointer-events-none bg-black transition-colors duration-500 overflow-hidden touch-none"
+        className="fixed inset-0 w-full h-[100dvh] z-0 pointer-events-none bg-black transition-colors duration-500 overflow-hidden touch-none"
         style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100dvh' }}
       >
         <Canvas 

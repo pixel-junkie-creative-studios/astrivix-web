@@ -13,7 +13,7 @@
 
 html, body {
   overflow-x: hidden;
-  background-color: #000;
+  background-color: transparent;
 }
 @tailwind utilities;
 
@@ -37,7 +37,7 @@ html, body {
 
 @layer base {
   body {
-    @apply bg-ax-bg text-ax-text antialiased overflow-x-hidden transition-colors duration-500;
+    @apply bg-transparent text-ax-text antialiased overflow-x-hidden transition-colors duration-500;
   }
 }
 
