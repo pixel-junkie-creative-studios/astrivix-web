@@ -44,13 +44,14 @@ export const MorphicNavbar = ({ navItems }) => {
         className="fixed top-4 md:top-6 inset-x-0 mx-auto w-[92vw] max-w-4xl z-[5000] bg-[#0a0a0f]/85 backdrop-blur-2xl rounded-full p-2 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between"
       >
         {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-2 pl-3 pr-2 group">
+        <a href="#" aria-label="Astrivix Homepage" className="flex items-center gap-2 pl-3 pr-2 group">
           <video 
             src="/assets/astreivix_nav_bar.mp4"
             autoPlay 
             loop 
             muted 
             playsInline 
+            aria-hidden="true"
             className="h-9 w-9 object-contain group-hover:scale-110 transition-transform duration-300"
           />
           <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase">
@@ -59,7 +60,7 @@ export const MorphicNavbar = ({ navItems }) => {
         </a>
 
         {/* Morphic Desktop Nav Tabs */}
-        <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative">
+        <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-pink-500/20 relative">
           {navItems.map((item, idx) => (
             <a
               key={idx}
@@ -70,7 +71,7 @@ export const MorphicNavbar = ({ navItems }) => {
               {activeTab === idx && (
                 <motion.span
                   layoutId="morphicTabIndicator"
-                  className="absolute inset-0 bg-white/20 rounded-full border border-white/30 shadow-lg"
+                  className="absolute inset-0 bg-gradient-to-r from-pink-500/35 via-fuchsia-500/30 to-purple-600/35 rounded-full border border-pink-400/60 shadow-[0_0_15px_rgba(236,72,153,0.45)]"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -91,6 +92,7 @@ export const MorphicNavbar = ({ navItems }) => {
 
           {/* Mobile Hamburger Button */}
           <button 
+            aria-label="Toggle navigation menu"
             className="md:hidden relative flex flex-col justify-center items-center w-9 h-9 rounded-full bg-white/10 border border-white/20 p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >

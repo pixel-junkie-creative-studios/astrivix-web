@@ -290,51 +290,56 @@ function Band({
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
-    if (dragged && card.current && j3.current) {
-      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
-      dir.copy(vec).sub(state.camera.position).normalize();
-      vec.add(dir.multiplyScalar(state.camera.position.length()));
-      [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
-      
-      const targetCardPos = { x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z };
-      card.current.setNextKinematicTranslation(targetCardPos);
-      j3.current.setTranslation({ x: targetCardPos.x, y: targetCardPos.y + 1.45, z: targetCardPos.z }, true);
-    }
-    if (fixed.current && j3.current && card.current) {
-      [j1, j2].forEach(ref => {
-        if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
-        const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
-        const alpha = delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed));
-        ref.current.lerped.lerp(
-          ref.current.translation(),
-          Math.min(1, alpha)
-        );
-      });
+    if (card.current) {
+      const cardPos = card.current.translation();
+      const clipRingWorld = new THREE.Vector3(cardPos.x, cardPos.y + 1.45, cardPos.z);
 
-      // Strict Frame Hierarchy Lock: Lock card top ring pivot [0, 1.45, 0] to j3 position on every frame
-      if (!dragged) {
-        const j3Pos = j3.current.translation();
-        card.current.setTranslation({ x: j3Pos.x, y: j3Pos.y - 1.45, z: j3Pos.z }, true);
+      if (dragged) {
+        vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+        dir.copy(vec).sub(state.camera.position).normalize();
+        vec.add(dir.multiplyScalar(state.camera.position.length()));
+        [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+        
+        const targetCardPos = { x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z };
+        card.current.setNextKinematicTranslation(targetCardPos);
+        if (j3.current) {
+          j3.current.setTranslation({ x: targetCardPos.x, y: targetCardPos.y + 1.45, z: targetCardPos.z }, true);
+        }
+      } else if (j3.current) {
+        // Strict Frame Lock: keep j3 anchored exactly at top clip ring
+        j3.current.setTranslation({ x: clipRingWorld.x, y: clipRingWorld.y, z: clipRingWorld.z }, true);
       }
 
-      // Bottom of strap connects into clip ring cleanly
-      curve.points[0].copy(j3.current.translation()).add(new THREE.Vector3(0, 0.05, 0));
-      curve.points[1].copy(j2.current.lerped);
-      curve.points[2].copy(j1.current.lerped);
-      curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      if (fixed.current && j3.current) {
+        [j1, j2].forEach(ref => {
+          if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+          const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
+          const alpha = delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed));
+          ref.current.lerped.lerp(
+            ref.current.translation(),
+            Math.min(1, alpha)
+          );
+        });
 
-      // Controlled smooth Y-axis sway (front/back reveal) without tilting or flipping
-      if (!dragged && card.current) {
-        const time = state.clock.getElapsedTime();
-        const targetY = Math.sin(time * 0.8) * 0.55;
-        const currentRot = card.current.rotation();
+        // Bottom end of lanyard rope (curve.points[0]) MUST touch clip ring position
+        curve.points[0].copy(clipRingWorld).add(new THREE.Vector3(0, 0.02, 0));
+        curve.points[1].copy(j2.current.lerped);
+        curve.points[2].copy(j1.current.lerped);
+        curve.points[3].copy(fixed.current.translation());
+        band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
 
-        card.current.setAngvel({ 
-          x: -currentRot.x * 4.0, 
-          y: (targetY - currentRot.y) * 3.0, 
-          z: -currentRot.z * 4.0 
-        }, true);
+        // Controlled smooth Y-axis sway
+        if (!dragged) {
+          const time = state.clock.getElapsedTime();
+          const targetY = Math.sin(time * 0.8) * 0.55;
+          const currentRot = card.current.rotation();
+
+          card.current.setAngvel({ 
+            x: -currentRot.x * 4.0, 
+            y: (targetY - currentRot.y) * 3.0, 
+            z: -currentRot.z * 4.0 
+          }, true);
+        }
       }
     }
   });
