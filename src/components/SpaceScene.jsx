@@ -29,7 +29,7 @@ const CameraController = ({ scrollYProgress }) => {
   return null;
 };
 
-const DetailedEarth = ({ position }) => {
+const DetailedEarth = ({ position, isMobile = false }) => {
   const earthRef = useRef();
   const cloudsRef = useRef();
 
@@ -54,10 +54,12 @@ const DetailedEarth = ({ position }) => {
     if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
   });
 
+  const earthRadius = isMobile ? 3.2 : 5;
+
   return (
     <group position={position} rotation={[0.4, 0, 0.2]}>
       {/* High-Resolution Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[5, 128, 128]}>
+      <Sphere ref={earthRef} args={[earthRadius, 128, 128]}>
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
@@ -69,7 +71,7 @@ const DetailedEarth = ({ position }) => {
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[5.05, 128, 128]}>
+      <Sphere ref={cloudsRef} args={[earthRadius + 0.04, 128, 128]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
@@ -82,7 +84,7 @@ const DetailedEarth = ({ position }) => {
   );
 };
 
-const DetailedMoon = ({ position }) => {
+const DetailedMoon = ({ position, isMobile = false }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
@@ -97,9 +99,11 @@ const DetailedMoon = ({ position }) => {
     if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
   });
 
+  const moonRadius = isMobile ? 1.6 : 2.2;
+
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[2.2, 128, 128]}>
+      <Sphere ref={moonRef} args={[moonRadius, 128, 128]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
@@ -112,7 +116,7 @@ const DetailedMoon = ({ position }) => {
   );
 };
 
-const RealisticMars = ({ position }) => {
+const RealisticMars = ({ position, isMobile = false }) => {
   const marsRef = useRef();
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
@@ -127,10 +131,12 @@ const RealisticMars = ({ position }) => {
     if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
   });
 
+  const marsRadius = isMobile ? 2.6 : 4.2;
+
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[4.2, 128, 128]}>
+      <Sphere ref={marsRef} args={[marsRadius, 128, 128]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
@@ -242,19 +248,19 @@ const Comet = () => {
 };
 
 const Planets = ({ isMobile }) => {
-  const earthPos = isMobile ? [-4.5, 2.2, -20] : [-15, 5, -30];
-  const moonPos = isMobile ? [5.5, -1.8, -42] : [15, -2, -70];
-  const marsPos = isMobile ? [9, 8, -62] : [35, 15, -120];
+  const earthPos = isMobile ? [-8.5, 7.5, -34] : [-18, 9, -42];
+  const moonPos = isMobile ? [7.2, -6.5, -45] : [18, -6, -75];
+  const marsPos = isMobile ? [9.5, 9.0, -75] : [38, 18, -130];
 
   return (
     <>
       <Comet />
-      <DetailedEarth position={earthPos} />
-      <DetailedMoon position={moonPos} />
-      <RealisticMars position={marsPos} />
+      <DetailedEarth position={earthPos} isMobile={isMobile} />
+      <DetailedMoon position={moonPos} isMobile={isMobile} />
+      <RealisticMars position={marsPos} isMobile={isMobile} />
       
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 7 : 12} speed={0.1} yOffset={isMobile ? 3.5 : 6} />
+        <HighResSatellite orbitRadius={isMobile ? 5.5 : 12} speed={0.1} yOffset={isMobile ? 2.5 : 6} />
       </group>
     </>
   );
@@ -263,8 +269,8 @@ const Planets = ({ isMobile }) => {
 const InteractiveStars = () => {
   const groupRef = useRef();
   const mouse = useRef({ x: 0, y: 0 });
-  const gyroTarget = useRef({ x: 0, y: 0 });
-  const gyroCurrent = useRef({ x: 0, y: 0 });
+  const gyroTarget = useRef({ x: 0, y: 0, z: 0 });
+  const gyroCurrent = useRef({ x: 0, y: 0, z: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -273,16 +279,29 @@ const InteractiveStars = () => {
     };
 
     const handleOrientation = (e) => {
-      if (e.gamma !== null && e.beta !== null) {
-        // Silky smooth tilt mapping
-        gyroTarget.current.x = Math.max(-1, Math.min(1, e.gamma / 30));
-        gyroTarget.current.y = Math.max(-1, Math.min(1, (e.beta - 40) / 30));
+      if (e.beta !== null && e.gamma !== null) {
+        // Full 360-degree 3-axis gyro mapping
+        const pitch = (e.beta * Math.PI) / 180;
+        const roll = (e.gamma * Math.PI) / 180;
+        const yaw = e.alpha ? (e.alpha * Math.PI) / 180 : 0;
+
+        gyroTarget.current.x = Math.sin(pitch * 0.5);
+        gyroTarget.current.y = Math.sin(roll * 0.5);
+        gyroTarget.current.z = Math.sin(yaw * 0.25);
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
-      window.addEventListener('deviceorientation', handleOrientation);
+      if (typeof window.DeviceOrientationEvent.requestPermission === 'function') {
+        window.DeviceOrientationEvent.requestPermission().then(res => {
+          if (res === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation);
+          }
+        }).catch(() => {});
+      } else {
+        window.addEventListener('deviceorientation', handleOrientation);
+      }
     }
 
     return () => {
@@ -293,21 +312,25 @@ const InteractiveStars = () => {
 
   useFrame(() => {
     if (groupRef.current) {
-      // Exponential lerp dampening for liquid-smooth G-sensor VR window tracking
-      gyroCurrent.current.x += (gyroTarget.current.x - gyroCurrent.current.x) * 0.03;
-      gyroCurrent.current.y += (gyroTarget.current.y - gyroCurrent.current.y) * 0.03;
+      // Exponential lerp dampening for liquid-smooth 360 G-sensor tracking
+      gyroCurrent.current.x += (gyroTarget.current.x - gyroCurrent.current.x) * 0.04;
+      gyroCurrent.current.y += (gyroTarget.current.y - gyroCurrent.current.y) * 0.04;
+      gyroCurrent.current.z += (gyroTarget.current.z - gyroCurrent.current.z) * 0.04;
 
-      const targetX = (mouse.current.y * Math.PI) / 14 + (gyroCurrent.current.y * Math.PI) / 16;
-      const targetY = (mouse.current.x * Math.PI) / 14 + (gyroCurrent.current.x * Math.PI) / 16;
+      const targetX = (mouse.current.y * Math.PI) / 14 + gyroCurrent.current.x * 0.8;
+      const targetY = (mouse.current.x * Math.PI) / 14 + gyroCurrent.current.y * 0.8;
+      const targetZ = gyroCurrent.current.z * 0.4;
       
-      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.03;
-      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.03;
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
+      groupRef.current.rotation.z += (targetZ - groupRef.current.rotation.z) * 0.04;
     }
   });
 
   return (
     <group ref={groupRef}>
-      <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
+      <Stars radius={120} depth={60} count={9000} factor={4.5} saturation={0} fade speed={2.5} />
+      <Stars radius={60} depth={30} count={3000} factor={3} saturation={0.5} fade speed={1.5} />
     </group>
   );
 };

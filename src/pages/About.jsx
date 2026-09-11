@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 
-function Counter100() {
+function Counter100Gauge() {
   const [count, setCount] = useState(0);
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
     if (isInView) {
-      let start = 0;
-      const end = 100;
-      const duration = 1500;
+      const duration = 1600;
       const startTime = performance.now();
 
       const animateCount = (now) => {
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const current = Math.floor(progress * end);
+        const current = Math.floor(progress * 100);
         setCount(current);
         if (progress < 1) {
           requestAnimationFrame(animateCount);
@@ -27,15 +25,55 @@ function Counter100() {
     }
   }, [isInView]);
 
+  const radius = 48;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (count / 100) * circumference;
+
   return (
-    <span ref={ref} className="inline-flex items-baseline justify-center font-black tracking-tight drop-shadow-2xl mb-3">
-      <span className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-mono text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300">
-        {count}
-      </span>
-      <span className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-sans text-white/90 ml-1 font-bold">
-        %
-      </span>
-    </span>
+    <div ref={ref} className="relative flex flex-col items-center justify-center my-2">
+      {/* Liquid Glass Radial Speed Ring */}
+      <div className="relative w-32 h-32 sm:w-40 sm:h-40 flex items-center justify-center rounded-full glass-metallic shadow-[0_0_30px_rgba(255,255,255,0.15)] border border-white/30 p-2">
+        <svg className="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+          <circle
+            cx="60"
+            cy="60"
+            r={radius}
+            stroke="rgba(255, 255, 255, 0.1)"
+            strokeWidth="6"
+            fill="transparent"
+          />
+          <circle
+            cx="60"
+            cy="60"
+            r={radius}
+            stroke="url(#gaugeGradient)"
+            strokeWidth="6"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            fill="transparent"
+            className="transition-all duration-300 ease-out"
+          />
+          <defs>
+            <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="50%" stopColor="#e4e4e7" />
+              <stop offset="100%" stopColor="#a1a1aa" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Center Number + Inline % Symbol */}
+        <div className="relative z-10 flex items-baseline justify-center">
+          <span className="text-3xl sm:text-5xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-lg">
+            {count}
+          </span>
+          <span className="text-lg sm:text-2xl font-bold font-sans text-white/90 ml-0.5">
+            %
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -90,7 +128,7 @@ export default function About() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6 relative"
         >
           
-          {/* Cell 1: Main Headline (Spans 2 columns on desktop) */}
+          {/* Cell 1: Main Manifesto (Spans 2 columns on desktop) */}
           <motion.div 
             variants={itemVariants}
             className="md:col-span-2 glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-12 flex flex-col justify-between border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[280px] sm:min-h-[320px] corner-bracket-tl corner-bracket-tr"
@@ -108,18 +146,19 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Cell 2: Visual Stat (Spans 1 column) */}
+          {/* Cell 2: Visual Gauge Stat (Spans 1 column) */}
           <motion.div 
             variants={itemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
             className="glass-metallic gpu-layer rounded-[2.5rem] p-6 sm:p-8 flex flex-col items-center justify-center border border-white/30 border-t-white/50 shadow-[0_30px_70px_rgba(0,0,0,0.95)] relative overflow-hidden group min-h-[300px] w-full corner-bracket-tl corner-bracket-tr"
           >
             <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
-            <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
-              <Counter100 />
-              <span className="text-[10px] sm:text-xs uppercase tracking-[0.18em] font-mono font-bold text-white bg-white/15 px-3 py-2 rounded-2xl border border-white/30 backdrop-blur-md max-w-full leading-normal shadow-lg block text-center">
-                BESPOKE ARCHITECTURE & PERFORMANCE
-              </span>
+            <div className="relative z-10 text-center flex flex-col items-center w-full px-1">
+              <Counter100Gauge />
+              <div className="text-[10px] sm:text-xs uppercase tracking-[0.14em] font-mono font-bold text-white bg-white/15 px-3 py-2 rounded-2xl border border-white/30 backdrop-blur-md w-full max-w-[240px] leading-tight shadow-lg text-center mt-1">
+                <div>BESPOKE ARCHITECTURE</div>
+                <div className="text-white/70 text-[9px] sm:text-[10px] mt-0.5">& UNMATCHED SPEED</div>
+              </div>
             </div>
           </motion.div>
 

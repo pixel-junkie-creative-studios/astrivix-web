@@ -32,17 +32,18 @@ export default function Home() {
           initial="hidden" animate="visible" variants={fadeUp}
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
         >
-          {/* ASTRIVIX Particle Text Container (GPU Accelerated) */}
+          {/* ASTRIVIX Particle Text Container (GPU Accelerated with Contrast Halo) */}
           <div className="w-full h-[120px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
+            <div className="absolute inset-0 bg-black/50 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.3 : 2}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.5 : 2}
               density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
               color="#ffffff"
-              highlightColor="#cccccc"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 70 : 150}
+              highlightColor="#ffffff"
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
               gatherDuration={1400}
-              stagger={90}
+              stagger={80}
               pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 50 : 150}
               repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
               fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.0rem, 9.2vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
