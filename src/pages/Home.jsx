@@ -33,20 +33,20 @@ export default function Home() {
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
         >
           {/* ASTRIVIX Particle Text Container (GPU Accelerated with Contrast Halo) */}
-          <div className="w-full h-[180px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
+          <div className="w-full h-[220px] sm:h-[280px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
             <div className="absolute inset-0 bg-black/50 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.6 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3.5 : 5}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.2 : 2}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 6 : 5}
               color="#ffffff"
               highlightColor="#ffffff"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
               gatherDuration={1400}
               stagger={80}
-              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
-              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.6rem, 12.5vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
+              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(3.8rem, 16vw, 12rem)" : "clamp(4.2rem, 16vw, 12rem)"}
               fontWeight={900}
             />
           </div>
