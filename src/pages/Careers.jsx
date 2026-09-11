@@ -25,7 +25,7 @@ export default function Careers() {
               Join <br /> Astrivix.
             </h2>
             <p className="text-white text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-sm font-medium">
-              We are seeking elite engineers, designers, and strategists driven by craftsmanship, speed, and continuous digital innovation.
+              We look for exceptional engineers, designers, and strategists passionate about product craftsmanship, web performance, and brand architecture.
             </p>
             <a 
               href="#contact"

@@ -60,13 +60,13 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Right Side: BUSINESS CONSULTANTS */}
+            {/* Right Side: PRODUCT STUDIO */}
             <div className="flex flex-col items-end text-right">
               <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                BUSINESS
+                PRODUCT
               </h3>
               <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                CONSULTANTS
+                STUDIO
               </h3>
             </div>
           </div>
@@ -100,7 +100,7 @@ export default function Home() {
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           <div className="text-center mb-8 sm:mb-12 relative z-10 px-4">
-            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Brands & Visionaries We've Had The Pleasure of Building With</h3>
+            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Selected Clients & Strategic Partners</h3>
           </div>
           <div className="relative z-10 w-full overflow-hidden mask-edges px-2 sm:px-8">
             <LogoLoop
