@@ -6,10 +6,25 @@ import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
+  const targetZ = useRef(0);
+
   useFrame(({ camera }) => {
-    // As scrollYProgress goes 0 -> 1, camera Z moves from 0 to -100
-    camera.position.z = -scrollYProgress.get() * 100;
+    const progress = scrollYProgress.get();
+    const servicesEl = typeof document !== 'undefined' ? document.getElementById('services') : null;
+    let dampFactor = 1;
+
+    if (servicesEl) {
+      const rect = servicesEl.getBoundingClientRect();
+      if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+        dampFactor = 0.05; // 95% slowdown during services section
+      }
+    }
+
+    const nextTargetZ = -progress * 100;
+    targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
+    camera.position.z += (targetZ.current - camera.position.z) * 0.08;
   });
+
   return null;
 };
 
@@ -240,23 +255,35 @@ const InteractiveStars = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      // Normalize to -1 to 1
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
+
+    const handleOrientation = (e) => {
+      if (e.gamma !== null && e.beta !== null) {
+        mouse.current.x = Math.max(-1, Math.min(1, e.gamma / 25));
+        mouse.current.y = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (typeof window !== 'undefined') window.removeEventListener('deviceorientation', handleOrientation);
+    };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      // Very subtle cursor tracking for the stars
-      const targetX = (mouse.current.y * Math.PI) / 10;
-      const targetY = (mouse.current.x * Math.PI) / 10;
+      const targetX = (mouse.current.y * Math.PI) / 12;
+      const targetY = (mouse.current.x * Math.PI) / 12;
       
-      // Much slower, slighter interpolation
-      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.05;
-      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.05;
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
     }
   });
 
@@ -292,7 +319,7 @@ export default function SpaceScene() {
 
   return (
     <WebGLErrorBoundary>
-      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black transition-colors duration-500">
+      <div className="fixed inset-0 w-full h-[100dvh] z-0 pointer-events-none bg-black transition-colors duration-500 overflow-hidden">
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
           dpr={isMobile ? 1 : [1, 1.5]} 

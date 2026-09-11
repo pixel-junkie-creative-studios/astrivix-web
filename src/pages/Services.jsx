@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Rescue', color: '#ff4d4d', desc: 'We fix your logo and brand identity before anyone asks if you made it in Microsoft Paint.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Jank Engineering', color: '#4d79ff', desc: 'Code so clean even your angry senior engineer can’t find anything to complain about.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Pure Fluidity', color: '#4dff88', desc: 'Gesture physics so ridiculously fluid your users will open the app 50 times a day just to swipe around.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Real Traffic', color: '#ff4dff', desc: 'Getting you actual paying customers instead of 5,000 fake bots from random countries.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Checkout Perfection', color: '#ffff4d', desc: 'Fixing your site so visitors stop abandoning their carts like their bad habits.' },
-  { id: '06', title: 'GRAPHIC & UI DESIGN', category: 'Custom Pixels', color: '#ff884d', desc: 'Custom designs that don’t look like a $12 Fiverr template from 2014.' },
-  { id: '07', title: 'MOTION & VIDEO', category: 'Visual Hypnosis', color: '#4dffff', desc: 'Animations so pretty your users forget why they even opened the browser tab.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Meeting Eraser', color: '#b34dff', desc: 'We kill your useless 8 AM Zoom calls so your team can actually get real work done.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Growth', color: '#4dffb3', desc: 'Making sure your company bank account grows faster than your daily caffeine addiction.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Bespoke brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Latency Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: '120 FPS Fluidity', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffff4d', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
+  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
+  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#4dffff', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#b34dff', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#4dffb3', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
 ];
 
 export default function Services() {

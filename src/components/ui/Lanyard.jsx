@@ -134,7 +134,7 @@ export default function Lanyard({
   return (
     <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position: position, fov: fov }}
+        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
         gl={{ alpha: transparent }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
@@ -315,9 +315,9 @@ function Band({
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         card.current.applyImpulse({ 
-          x: Math.sin(time * 0.5) * 0.006, 
+          x: Math.sin(time * 0.8) * 0.008, 
           y: 0, 
-          z: Math.cos(time * 0.4) * 0.003 
+          z: Math.cos(time * 0.5) * 0.004 
         }, true);
       }
     }
@@ -326,7 +326,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group position={[0, isMobile ? 2.6 : 3.6, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />

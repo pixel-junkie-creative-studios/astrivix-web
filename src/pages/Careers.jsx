@@ -25,19 +25,19 @@ export default function Careers() {
               Join <br /> Astrivix.
             </h2>
             <p className="text-white text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-sm font-medium">
-              If you enjoy drinking 4 coffees a day, writing zero-lag code, and roasting 9-to-5 corporate slop, apply now. We don't do boring.
+              We are seeking elite engineers, designers, and strategists driven by craftsmanship, speed, and continuous digital innovation.
             </p>
             <a 
               href="#contact"
               className="inline-block skeuo-button text-black px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-[10px] sm:text-xs font-black tracking-widest uppercase shadow-xl active:scale-95 transition-transform"
             >
-              JOIN THE REBELLION →
+              EXPLORE OPPORTUNITIES →
             </a>
           </div>
 
           {/* Right Column: 3D Lanyard (Liquid Glass Box) */}
-          <div className="relative h-[260px] sm:h-[320px] lg:h-[420px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/30 glass-metallic gpu-layer shadow-2xl">
-            <Lanyard position={[0, 2, 24]} gravity={[0, -40, 0]} transparent={true} />
+          <div className="relative h-[280px] sm:h-[340px] lg:h-[420px] w-full flex justify-center items-center z-10 overflow-hidden rounded-3xl border border-white/30 glass-metallic gpu-layer shadow-2xl p-2">
+            <Lanyard position={[0, 1.5, 32]} gravity={[0, -40, 0]} transparent={true} />
           </div>
         </motion.div>
       </div>
