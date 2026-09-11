@@ -15,13 +15,13 @@ By executing a Statement of Work (SOW), issuing a purchase order, accessing our 
     },
     {
       title: "2. Scope of Services & Statement of Work (SOW)",
-      content: `A. Service Delivery: Astrivix delivers bespoke digital engineering and agency services strictly in accordance with approved Statements of Work, Master Services Agreements (MSAs), or project proposals.
+      content: `A. Service Delivery: Astrivix delivers custom digital engineering and agency services strictly in accordance with approved Statements of Work, Master Services Agreements (MSAs), or project proposals.
 
 B. Scope Revisions & Change Orders: Any request for feature additions, design alterations, performance enhancements, or structural revisions outside the explicitly defined deliverables in an active SOW shall be evaluated via a formal Change Order process. Change Orders will detail modified milestones, delivery timelines, and associated fee adjustments.`
     },
     {
       title: "3. Intellectual Property Rights & Work Product Assignment",
-      content: `A. Client Work Product: Upon full and final settlement of all invoiced fees associated with a specific project, Astrivix assigns to Client all right, title, and interest (including copyright and trademark rights) in the final bespoke deliverables (custom source code, logos, visual assets, and UI components created specifically for Client).
+      content: `A. Client Work Product: Upon full and final settlement of all invoiced fees associated with a specific project, Astrivix assigns to Client all right, title, and interest (including copyright and trademark rights) in the final custom deliverables (custom source code, logos, visual assets, and UI components created specifically for Client).
 
 B. Astrivix Pre-Existing IP & Frameworks: Astrivix retains exclusive ownership of all pre-existing technology, proprietary frameworks, modular libraries, baseline algorithms, 3D shader code, development workflows, and agency toolsets ("Astrivix IP"). Client is granted a perpetual, non-exclusive, worldwide, royalty-free license to use Astrivix IP solely as integrated within the final delivered Work Product.`
     },
