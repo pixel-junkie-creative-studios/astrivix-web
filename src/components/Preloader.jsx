@@ -44,7 +44,7 @@ export default function Preloader() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="w-24 h-24 rounded-full border border-white/10 mb-8 flex items-center justify-center bg-black/50 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)]"
+              className="w-24 h-24 rounded-full border border-white/10 mb-8 flex items-center justify-center bg-black/50 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.2)]"
             >
               <video 
                 src="/assets/astreivix_nav_bar.mp4"
