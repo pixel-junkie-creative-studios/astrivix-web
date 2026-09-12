@@ -208,7 +208,7 @@ const MarsFallback = ({ position, isMobile = false }) => {
 };
 
 // Ultra-Detailed GLTF 3D Satellite Model (Orbiting Earth in Top-Left Background)
-const GLTFSatelliteModel = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isMobile = false }) => {
+const GLTFSatelliteModel = ({ orbitRadius = 10, speed = 0.12, yOffset = 4.0, isMobile = false }) => {
   const pivotRef = useRef();
   const satRef = useRef();
   const { scene } = useGLTF('/assets/planets/satellite.glb');
@@ -221,21 +221,18 @@ const GLTFSatelliteModel = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isM
     if (pivotRef.current) {
       pivotRef.current.rotation.y += delta * speed * mult;
     }
-    if (satRef.current) {
-      satRef.current.rotation.z += delta * 0.2 * mult;
-      satRef.current.rotation.x += delta * 0.1 * mult;
-    }
   });
 
-  const scale = isMobile ? 1.6 : 2.8; // High resolution scale for clear, crisp detail
-  const radius = isMobile ? 7.0 : orbitRadius;
+  const scale = isMobile ? 0.18 : 0.28; // Sleek, perfectly proportioned realistic scale
+  const radius = isMobile ? 6.5 : orbitRadius;
 
   return (
-    <group ref={pivotRef} rotation={[0.35, 0, 0.15]}>
+    <group ref={pivotRef} rotation={[0.3, 0, 0.1]}>
       <group 
         ref={satRef} 
         position={[radius, yOffset, 0]} 
         scale={[scale, scale, scale]}
+        rotation={[0.5, Math.PI / 2, 0]}
       >
         {/* High-Contrast Solar Specular Lighting Rig */}
         <directionalLight position={[15, 20, 15]} intensity={6.0} color="#ffffff" />
@@ -247,7 +244,7 @@ const GLTFSatelliteModel = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isM
 };
 
 // Fallback Satellite
-const HighResSatelliteFallback = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isMobile = false }) => {
+const HighResSatelliteFallback = ({ orbitRadius = 10, speed = 0.12, yOffset = 4.0, isMobile = false }) => {
   const pivotRef = useRef();
   const satRef = useRef();
 
@@ -261,11 +258,11 @@ const HighResSatelliteFallback = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.
     }
   });
 
-  const scale = isMobile ? 0.8 : 1.4;
-  const radius = isMobile ? 7.0 : orbitRadius;
+  const scale = isMobile ? 0.4 : 0.7;
+  const radius = isMobile ? 6.5 : orbitRadius;
 
   return (
-    <group ref={pivotRef} rotation={[0.35, 0, 0.15]}>
+    <group ref={pivotRef} rotation={[0.3, 0, 0.1]}>
       <group 
         ref={satRef} 
         position={[radius, yOffset, 0]} 
