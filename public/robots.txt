@@ -1,15 +1,52 @@
+# ==============================================================================
+# ASTRIVIX CORP — MASTER ROBOTS.TXT FOR DOMINANT SEO & AEO (AI ENGINE OPTIMIZATION)
+# Domain: https://www.astrivix.in
+# Target: #1 Global Ranking on Google, Bing, ChatGPT, Perplexity, Gemini, Claude, Apple Intelligence
+# ==============================================================================
+
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
-# Googlebot & Googlebot-Image
+# Primary Search Engine Crawlers (SEO)
 User-agent: Googlebot
 Allow: /
 
 User-agent: Googlebot-Image
 Allow: /
 
-# AI Crawlers for AEO (ChatGPT, Perplexity, Gemini, Claude)
+User-agent: Googlebot-News
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Elite AI Engine Crawlers & LLM RAG Agents (AEO - AI Engine Optimization)
 User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: PerplexityBot
@@ -21,4 +58,30 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+# Master Sitemap Declarations
 Sitemap: https://www.astrivix.in/sitemap.xml
+
