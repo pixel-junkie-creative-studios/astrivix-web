@@ -1,9 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React, { useRef, useState } from 'react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const services = [
   { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
@@ -19,38 +15,26 @@ const services = [
 
 export default function Services() {
   const containerRef = useRef(null);
-  const pinTargetRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const prevIndexRef = useRef(0);
 
-  // GSAP ScrollTrigger Hardware Pin Engine (Mobile Responsive Speed Tuning)
-  useEffect(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top top',
-        end: isMobile ? '+=4800' : '+=1800', // 4800px on mobile for 1-swipe-per-card control
-        pin: pinTargetRef.current,
-        pinSpacing: true,
-        scrub: isMobile ? 0.8 : 0.1,
-        onUpdate: (self) => {
-          const newIndex = Math.min(
-            services.length - 1,
-            Math.floor(self.progress * services.length)
-          );
-          if (newIndex !== prevIndexRef.current) {
-            setDirection(newIndex > prevIndexRef.current ? 1 : -1);
-            prevIndexRef.current = newIndex;
-            setActiveIndex(newIndex);
-          }
-        }
-      });
-    }, containerRef);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-    return () => ctx.revert();
-  }, []);
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const newIndex = Math.min(
+      services.length - 1,
+      Math.floor(latest * services.length)
+    );
+    if (newIndex !== prevIndexRef.current) {
+      setDirection(newIndex > prevIndexRef.current ? 1 : -1);
+      prevIndexRef.current = newIndex;
+      setActiveIndex(newIndex);
+    }
+  });
 
   const prevIndex = (activeIndex - 1 + services.length) % services.length;
   const nextIndex = (activeIndex + 1) % services.length;
@@ -84,12 +68,9 @@ export default function Services() {
   };
 
   return (
-    <div id="services" ref={containerRef} className="relative z-10 w-full bg-transparent">
-      {/* GSAP ScrollTrigger Pinned Target Stage */}
-      <div 
-        ref={pinTargetRef}
-        className="w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10"
-      >
+    <div id="services" ref={containerRef} className="relative z-10 w-full h-[320vh] bg-transparent">
+      {/* Native CSS Sticky Stage (Zero GSAP Pin Spacer Overhead) */}
+      <div className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10">
         {/* Header section */}
         <div className="text-center mb-4 md:mb-8 z-30 pointer-events-none">
           <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
