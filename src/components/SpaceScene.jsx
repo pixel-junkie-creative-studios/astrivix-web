@@ -294,9 +294,9 @@ const Comet = () => {
 };
 
 const Planets = ({ isMobile }) => {
-  const earthPos = isMobile ? [-8.5, 7.5, -34] : [-18, 9, -42];
-  const moonPos = isMobile ? [7.2, -6.5, -45] : [18, -6, -75];
-  const marsPos = isMobile ? [9.5, 9.0, -75] : [38, 18, -130];
+  const earthPos = isMobile ? [-3.2, 4.0, -18] : [7.2, 3.0, -22];
+  const moonPos = isMobile ? [3.8, -3.2, -26] : [-11, -4.2, -32];
+  const marsPos = isMobile ? [4.5, 4.5, -40] : [12, 6.5, -48];
 
   return (
     <>
@@ -306,7 +306,7 @@ const Planets = ({ isMobile }) => {
       <RealisticMars position={marsPos} isMobile={isMobile} />
       
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 5.5 : 12} speed={0.1} yOffset={isMobile ? 2.5 : 6} />
+        <HighResSatellite orbitRadius={isMobile ? 4.5 : 8} speed={0.12} yOffset={isMobile ? 2.0 : 4} />
       </group>
     </>
   );
@@ -361,7 +361,7 @@ const GalaxyDustCloud = ({ isMobile = false }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={isMobile ? 0.9 : 0.7}
+        size={isMobile ? 0.4 : 0.3}
         vertexColors={true}
         transparent={true}
         opacity={0.88}
@@ -435,8 +435,8 @@ const InteractiveStars = ({ isMobile = false }) => {
   return (
     <group ref={groupRef}>
       <GalaxyDustCloud isMobile={isMobile} />
-      <Stars radius={250} depth={100} count={isMobile ? 8000 : 25000} factor={7} saturation={0} fade={false} speed={1.5} />
-      <Stars radius={120} depth={60} count={isMobile ? 4000 : 12000} factor={5} saturation={0} fade={false} speed={1.2} />
+      <Stars radius={250} depth={100} count={isMobile ? 8000 : 25000} factor={3.5} saturation={0} fade={false} speed={2.0} />
+      <Stars radius={120} depth={60} count={isMobile ? 4000 : 12000} factor={2.5} saturation={0} fade={false} speed={1.5} />
     </group>
   );
 };
