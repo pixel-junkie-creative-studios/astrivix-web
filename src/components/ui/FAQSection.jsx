@@ -5,14 +5,14 @@ import { Plus, Minus, HelpCircle } from 'lucide-react';
 const faqs = [
   {
     question: "What core services does Astrivix Corp provide?",
-    answer: "Astrivix is an end-to-end digital agency & engineering studio. We offer high-performance web development (React/Vite/WebGL), native mobile app engineering (120 FPS iOS/Android), custom logo & brand identity systems, conversion rate optimization (CRO), digital marketing & SEO, motion graphics, and strategic financial consulting."
+    answer: "Astrivix is an end-to-end digital agency & engineering studio. We offer high-performance web development (React/Vite/WebGL), native mobile app engineering (Native iOS/Android), custom logo & brand identity systems, conversion rate optimization (CRO), digital marketing & SEO, motion graphics, and strategic financial consulting."
   },
   {
     question: "How fast can Astrivix deliver a custom digital project?",
     answer: "Standard brand identity kits & Landing Pages are delivered in 1-2 weeks. Full custom web platforms and complex native mobile applications typically range between 3 to 6 weeks, built with rigorous sprint milestones and real-time client previews."
   },
   {
-    question: "What technology stack do you use to guarantee zero-lag web speed?",
+    question: "What technology stack do you use to guarantee maximum web speed?",
     answer: "We build with modern frameworks like React, Next.js, Vite, Tailwind CSS, Framer Motion, and Three.js / WebGL with dynamic asset payload compression, sub-second DPR capping, edge CDN caching, and automated Core Web Vitals optimization to guarantee 100/100 PageSpeed scores."
   },
   {

@@ -48,7 +48,7 @@ Neither party shall disclose Confidential Information to any third party without
     },
     {
       title: "7. Performance Guarantees & Service Level Standards",
-      content: `Astrivix guarantees that all delivered software systems, React web applications, and mobile platforms will meet the technical performance specifications defined in the SOW (including Core Web Vitals optimization and zero-lag baseline performance).
+      content: `Astrivix guarantees that all delivered software systems, React web applications, and mobile platforms will meet the technical performance specifications defined in the SOW (including Core Web Vitals optimization and high-performance baseline standards).
 
 Astrivix provides a thirty (30) day post-launch warranty period during which any reproducible technical bugs, code errors, or broken component functionality resulting from Astrivix's original development will be remediated at zero additional cost.`
     },

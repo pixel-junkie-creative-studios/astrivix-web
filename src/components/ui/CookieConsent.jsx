@@ -53,7 +53,7 @@ export default function CookieConsent() {
           </div>
 
           <p className="text-white/60 text-xs mt-3 leading-relaxed">
-            We use essential cookies and analytical tags to optimize site performance, zero-lag WebGL rendering, and secure user browsing. Read our{' '}
+            We use essential cookies and analytical tags to optimize site performance, fluid WebGL rendering, and secure user browsing. Read our{' '}
             <Link to="/privacy" className="text-white underline hover:text-white/80">
               Privacy Policy
             </Link>.

@@ -39,7 +39,7 @@ B. Automatically Collected Technical Data:
     },
     {
       title: "4. Cookies & Advanced Telemetry",
-      content: `Astrivix utilizes cookies, local storage objects, and session telemetry to deliver an ultra-fast, zero-lag user experience:
+      content: `Astrivix utilizes cookies, local storage objects, and session telemetry to deliver an ultra-fast, fluid user experience:
 
 • Essential Cookies: Necessary for security authentication, CSRF token validation, and session navigation state.
 • Analytics Cookies: Anonymous telemetry measuring page latency, interaction heatmaps, and Core Web Vitals performance.

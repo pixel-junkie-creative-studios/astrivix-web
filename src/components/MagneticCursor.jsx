@@ -10,7 +10,7 @@ export default function MagneticCursor() {
     return null;
   }
 
-  // Use refs for mutable state to completely bypass React re-renders (ZERO LAG, 240Hz+)
+  // Use refs for mutable state to completely bypass React re-renders (Hardware-accelerated 240Hz tracking)
   const mouse = useRef({ x: -100, y: -100 });
   const ring = useRef({ x: -100, y: -100 });
 

@@ -35,14 +35,14 @@ export const ManusTerminal = () => {
         </div>
         <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-bold uppercase flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-          ONLINE 120 FPS
+          SYSTEM ACTIVE
         </span>
       </div>
 
       {/* Terminal Content */}
       <div className="font-mono text-xs sm:text-sm text-white/90 space-y-3 mb-6">
         <p className="text-white/60">
-          &gt; AST.ENGINE_INIT --mode=zero-lag --framework=motion.dev
+          &gt; AST.ENGINE_INIT --mode=high-performance --framework=motion.dev
         </p>
         <p className="text-emerald-400 font-semibold">
           ✓ Loaded Kokonut.UI + Manus.im + BKLIT.UI Design Systems

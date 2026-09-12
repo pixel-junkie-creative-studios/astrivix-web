@@ -7,7 +7,7 @@ const reviews = [
     role: "CEO & Founder",
     company: "Apex Tech Ventures",
     rating: 5,
-    quote: "Astrivix transformed our entire digital ecosystem. Their 3D WebGL interactions and zero-lag mobile performance increased our conversion rates by 140% within the first 30 days.",
+    quote: "Astrivix transformed our entire digital ecosystem. Their 3D WebGL interactions and fluid mobile performance increased our conversion rates by 140% within the first 30 days.",
     initials: "VS",
     badge: "Verified Client"
   },
@@ -76,7 +76,7 @@ export default function Testimonials() {
           Trusted by Industry Leaders
         </h2>
         <p className="text-white/60 text-sm md:text-base max-w-2xl mt-4 leading-relaxed">
-          See how our zero-lag digital engineering and brand identity systems drive real business growth.
+          See how our high-performance digital engineering and brand identity systems drive real business growth.
         </p>
       </div>
 

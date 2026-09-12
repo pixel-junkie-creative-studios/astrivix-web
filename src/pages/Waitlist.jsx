@@ -56,7 +56,7 @@ export default function Waitlist() {
           </h1>
 
           <p className="text-white/60 text-sm md:text-base mt-4 leading-relaxed">
-            Be the first to access our upcoming zero-lag AI design tools, enterprise micro-frameworks, and priority client consulting slots.
+            Be the first to access our upcoming advanced AI design tools, enterprise micro-frameworks, and priority client consulting slots.
           </p>
 
           {submitted ? (

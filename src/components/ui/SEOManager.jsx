@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
  */
 export default function SEOManager({
   title = "Astrivix Corp | #1 Global Web Development, Branding & Mobile App Engineering Agency",
-  description = "Astrivix Corp (www.astrivix.in) is an elite global agency specializing in zero-lag web development, 120 FPS mobile app engineering, custom branding, and high-ROI digital marketing.",
+  description = "Astrivix Corp (www.astrivix.in) is an elite global agency specializing in enterprise web development, native mobile app engineering, custom branding, and high-ROI digital marketing.",
   canonical = "https://www.astrivix.in/",
   googleSiteVerification = "GSC-VERIFICATION-TOKEN-PLACEHOLDER",
   gaMeasurementId = "G-MEASUREMENT-ID-PLACEHOLDER"
