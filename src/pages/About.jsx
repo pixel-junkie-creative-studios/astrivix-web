@@ -193,7 +193,7 @@ export default function About() {
             </div>
             
             <p className="text-base sm:text-lg text-white font-medium relative z-10 leading-relaxed font-sans">
-              We architect custom, zero-latency digital systems engineered for maximum conversion, fluid gesture performance, and institutional scaling.
+              We architect custom digital platforms engineered for high conversion, responsive performance, and business growth.
             </p>
           </motion.div>
 

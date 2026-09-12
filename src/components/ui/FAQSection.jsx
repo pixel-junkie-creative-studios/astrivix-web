@@ -36,16 +36,16 @@ const faqs = [
     categoryLabel: "DELIVERY & TIMELINE",
     icon: Clock,
     badge: "24 HOURS - 6 WEEKS",
-    question: "How fast can Astrivix deliver a custom digital platform or brand identity?",
-    shortAnswer: "Express sprints deploy in 24 to 72 hours; complex enterprise platforms range between 2 to 6 weeks.",
-    detailedAnswer: "Project execution velocity is tailored to your scope and milestone urgency. Rapid brand identity kits, high-converting landing pages, and marketing sites are deployed in 24 to 72 hours under our express sprint protocol. Enterprise web platforms, complex React applications, and native iOS/Android mobile apps typically range between 2 to 6 weeks with real-time preview links.",
+    question: "How fast can Astrivix launch our project?",
+    shortAnswer: "Express brand & web sprints launch in 24–72 hours; full custom platforms take 2–6 weeks.",
+    detailedAnswer: "Project timelines depend on your scope and launch goals. Express brand packages, high-converting landing pages, and campaign sites are deployed in 24 to 72 hours. Custom web platforms, complex web applications, and mobile apps typically range between 2 to 6 weeks with live preview updates throughout.",
     highlights: [
-      "24-72 Hour Express Sprint Protocol",
-      "Real-Time Preview Staging Links",
-      "Milestone-Driven Delivery Tracking",
-      "Zero-Downtime Live Cutover"
+      "24–72 Hour Express Sprint Option",
+      "Live Preview Staging Links",
+      "Clear Milestone Delivery Tracking",
+      "Smooth Production Deployment"
     ],
-    ctaText: "INITIATE EXPRESS SPRINT",
+    ctaText: "START YOUR PROJECT",
     ctaLink: "#contact"
   },
   {
@@ -54,16 +54,16 @@ const faqs = [
     categoryLabel: "IP & LEGAL",
     icon: ShieldCheck,
     badge: "100% OWNERSHIP TRANSFER",
-    question: "Who owns the source code, design systems, and intellectual property?",
-    shortAnswer: "You retain 100% full intellectual property, copyright, and source code ownership upon project completion.",
-    detailedAnswer: "Upon final project delivery and milestone completion, Astrivix transfers 100% of all intellectual property, copyright, Figma design tokens, and Git source code repositories directly to your organization. We retain zero licensing lock-ins, zero hidden platform fees, and zero code restrictions.",
+    question: "Who owns the code, design files, and intellectual property?",
+    shortAnswer: "You retain 100% ownership of all source code, design files, and IP upon project completion.",
+    detailedAnswer: "Upon completion, Astrivix transfers 100% of all intellectual property, design assets, Figma files, and code repositories to your team. No hidden platform fees, no recurring license locks, and zero restrictions.",
     highlights: [
-      "Complete Copyright & Patent Transfer",
-      "Full GitHub/GitLab Repo Handover",
-      "Zero License Lock-ins or Monthly Fees",
-      "Clean Modular Codebase Documentation"
+      "100% Copyright & IP Transfer",
+      "Full GitHub Repository Handover",
+      "Zero Monthly License Fees",
+      "Clean Modular Code Documentation"
     ],
-    ctaText: "REVIEW LEGAL TERMS",
+    ctaText: "REVIEW TERMS OF SERVICE",
     ctaLink: "/terms"
   },
   {
@@ -72,16 +72,16 @@ const faqs = [
     categoryLabel: "CUSTOM CODE",
     icon: Code2,
     badge: "ZERO TEMPLATE BLOAT",
-    question: "Do you use pre-built templates or write 100% custom code?",
-    shortAnswer: "We write 100% custom React, Vite, WebGL, and Tailwind code engineered specifically for your brand.",
-    detailedAnswer: "Every line of code and UI component is handcrafted from scratch. We strictly avoid bloated WordPress themes, slow website builders, or generic templates. We build modern single-page applications and web apps powered by React, Next.js, Vite, Tailwind CSS, Framer Motion, and Three.js / WebGL, achieving 100/100 PageSpeed scores and 120 FPS render loops.",
+    question: "Do you use pre-built templates or build custom solutions?",
+    shortAnswer: "Everything is built custom using modern technologies tailored to your exact brand requirements.",
+    detailedAnswer: "We build tailored web applications and digital experiences using modern frameworks like React, Next.js, Vite, Tailwind CSS, Framer Motion, and WebGL. We avoid clunky templates or slow website builders to ensure maximum performance, responsiveness, and scalability.",
     highlights: [
-      "100/100 Google PageSpeed Guarantee",
-      "120 FPS Hardware Accelerated Animation",
-      "Sub-Second Initial Payload Hydration",
-      "Custom Micro-Interactions & Physics"
+      "Custom React & WebGL Frontend",
+      "Lightning-Fast Page Load Times",
+      "Responsive on All Screen Sizes",
+      "Bespoke Micro-Interactions"
     ],
-    ctaText: "EXPLORE SERVICES",
+    ctaText: "VIEW OUR SERVICES",
     ctaLink: "#services"
   },
   {
@@ -90,16 +90,16 @@ const faqs = [
     categoryLabel: "PRICING & RETENTION",
     icon: CreditCard,
     badge: "TRANSPARENT MILESTONES",
-    question: "How does project pricing, billing structure, and milestone schedules work?",
-    shortAnswer: "Transparent fixed-price milestone quotes or dedicated monthly studio retainers with zero hidden fees.",
-    detailedAnswer: "Following an initial strategy consultation, we deliver an itemized fixed-price proposal detailing deliverables, timelines, and payment phases (e.g. 50% kick-off, 25% staging preview, 25% final cutover). For ongoing product scaling and dedicated feature iterations, we offer monthly studio retainers.",
+    question: "How does pricing and payment milestones work?",
+    shortAnswer: "Fixed-price milestone quotes or dedicated monthly retainers with zero surprise costs.",
+    detailedAnswer: "After our initial consultation, we provide an itemized quote detailing deliverables, timelines, and clear payment milestones (such as 50% deposit, 25% staging review, 25% final launch). We also offer monthly retainers for ongoing product updates and feature additions.",
     highlights: [
-      "Fixed-Price Itemized Scope Proposals",
-      "Zero Hidden Fees or Surprise Charges",
-      "Flexible Milestone Payment Phases",
-      "Dedicated Studio Retainer Options"
+      "Itemized Fixed-Price Proposals",
+      "Zero Surprise Costs or Extra Charges",
+      "Clear Milestone Payment Schedule",
+      "Monthly Studio Retainer Options"
     ],
-    ctaText: "GET ESTIMATE NOW",
+    ctaText: "GET A QUOTE",
     ctaLink: "#contact"
   },
   {
@@ -107,17 +107,17 @@ const faqs = [
     category: "timeline",
     categoryLabel: "DELIVERY & TIMELINE",
     icon: Zap,
-    badge: "24/7 MONITORING SLA",
-    question: "What post-launch maintenance, hosting, and technical support do you provide?",
-    shortAnswer: "24/7 uptime monitoring, security patching, CDN optimization, and dedicated SLA support tiers.",
-    detailedAnswer: "Our engineering commitment extends well beyond launch day. We provide comprehensive post-launch SLA support packages including 24/7 global server health monitoring, security audits, dependency updates, CDN edge caching maintenance, and rapid 1-hour emergency response times.",
+    badge: "POST-LAUNCH SUPPORT",
+    question: "What support and maintenance do you provide after launch?",
+    shortAnswer: "Ongoing technical maintenance, security updates, server monitoring, and SLA support.",
+    detailedAnswer: "Our partnership doesn't end at launch. We offer post-launch maintenance packages that include uptime monitoring, security updates, performance tuning, and direct support whenever you need updates or new features.",
     highlights: [
-      "24/7 Global Uptime & Server Monitoring",
-      "1-Hour SLA Emergency Technical Response",
-      "Continuous Core Web Vitals Auditing",
-      "Managed Vercel / AWS / Edge Deployment"
+      "Global Server Health & Uptime Monitoring",
+      "Fast Technical Support & Response Times",
+      "Continuous Performance Auditing",
+      "Managed Cloud & Vercel Deployments"
     ],
-    ctaText: "TALK TO OUR ENGINEERS",
+    ctaText: "CONTACT OUR TEAM",
     ctaLink: "https://wa.me/917736387794"
   },
   {
@@ -125,17 +125,17 @@ const faqs = [
     category: "ip",
     categoryLabel: "IP & LEGAL",
     icon: Lock,
-    badge: "ENTERPRISE NDA SIGNED",
-    question: "Can we execute a Non-Disclosure Agreement (NDA) before sharing project details?",
-    shortAnswer: "Yes, we execute mutual enterprise NDAs before reviewing proprietary blueprints or IP.",
-    detailedAnswer: "Client confidentiality is paramount. Before any initial discovery call, project audit, or code review, we sign mutual enterprise-grade NDAs. Your confidential business logic, product roadmaps, trade secrets, and user data remain strictly protected under legal enforceability.",
+    badge: "ENTERPRISE NDA",
+    question: "Can we sign a Non-Disclosure Agreement (NDA) before starting?",
+    shortAnswer: "Yes, we sign mutual NDAs before reviewing proprietary blueprints or project details.",
+    detailedAnswer: "Client privacy and security are top priorities. Before any discovery call or code audit, we sign a mutual NDA to protect your confidential business logic, product roadmaps, trade secrets, and user data.",
     highlights: [
-      "Mutual Enterprise Legal NDA Execution",
-      "Encrypted Asset Storage & Transfer",
-      "Strict Internal Confidentiality Protocol",
-      "GDPR & CCPA Compliant Security"
+      "Mutual Legal NDA Execution",
+      "Encrypted Asset Storage",
+      "Strict Confidentiality Protocols",
+      "Data Protection & Security Standard"
     ],
-    ctaText: "REQUEST NDA SPRINT",
+    ctaText: "REQUEST NDA",
     ctaLink: "#contact"
   },
   {
@@ -143,17 +143,17 @@ const faqs = [
     category: "csr",
     categoryLabel: "CSR FOUNDER GRANT",
     icon: HeartHandshake,
-    badge: "100% PRO-BONO GRANT",
-    question: "What is the Astrivix Corporate Social Responsibility & Young Founder Grant?",
-    shortAnswer: "Pro-bono branding, web development, and marketing grants to support ambitious founders under 22.",
-    detailedAnswer: "Through our CSR initiative, Astrivix empowers the next generation of visionaries, student entrepreneurs, and young founders under 22. We award 100% free pro-bono custom brand identity design, full-stack web engineering, and go-to-market marketing strategies to turn ambitious ideas into market-ready ventures.",
+    badge: "100% FREE GRANT",
+    question: "What is the Astrivix CSR & Young Founder Grant?",
+    shortAnswer: "Pro-bono branding, web development, and strategy support for young founders under 22.",
+    detailedAnswer: "Through our CSR initiative, Astrivix awards 100% free pro-bono brand design, web engineering, and launch strategy to ambitious young founders and student entrepreneurs under 22 to help turn great ideas into real businesses.",
     highlights: [
       "100% Free Pro-Bono Engineering & Design",
       "Custom Brand Identity & Web Platform",
-      "Dedicated GTM & Marketing Strategy",
+      "Go-To-Market Strategy Assistance",
       "Open to Founders & Students Under 22"
     ],
-    ctaText: "APPLY FOR FOUNDER GRANT",
+    ctaText: "APPLY FOR GRANT",
     ctaLink: "/csr"
   }
 ];

@@ -48,7 +48,7 @@ export default function Contact() {
     }
     if (num < 25000) {
       return {
-        text: "Sweet spot! Perfect for full custom web platforms, 120 FPS animations & mobile apps.",
+        text: "Sweet spot! Perfect for full custom web platforms, interactive animations & mobile applications.",
         style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
       };
     }
@@ -64,33 +64,45 @@ export default function Contact() {
     e.preventDefault();
     setLoading(true);
 
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      budget: `$${formData.budget}`,
+      message: formData.message,
+      _subject: `🚀 New Project Inquiry: ${formData.name} ($${formData.budget})`,
+      _captcha: "false",
+      _template: "table",
+      _autoresponse: `Thank you for contacting Astrivix Corp (${formData.name}). We have received your project inquiry ($${formData.budget}) and our team will get back to you within 2 hours.`
+    };
+
     try {
-      // Direct FormSubmit AJAX Endpoint with Automated AI Email Response
-      const response = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+      // Direct FormSubmit AJAX Endpoint with Captcha Disabled
+      const res1 = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          budget: `$${formData.budget}`,
-          message: formData.message,
-          _subject: `New Project Inquiry from ${formData.name} ($${formData.budget})`,
-          _autoresponse: `Thank you for contacting Astrivix Corp. We have received your inquiry and will reply to your email within 2 hours.`
-        })
+        body: JSON.stringify(payload)
       });
 
-      if (response.ok) {
+      if (res1.ok) {
         setSubmitted(true);
       } else {
-        // Fallback mailto
-        window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)} ($${formData.budget})&body=${encodeURIComponent(formData.message)}`;
+        // Fallback: Post via FormData to FormSubmit standard endpoint
+        const bodyForm = new FormData();
+        Object.entries(payload).forEach(([k, v]) => bodyForm.append(k, v));
+        
+        await fetch("https://formsubmit.co/business@astrivix.in", {
+          method: "POST",
+          mode: "no-cors",
+          body: bodyForm
+        });
         setSubmitted(true);
       }
     } catch (err) {
-      window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)} ($${formData.budget})&body=${encodeURIComponent(formData.message)}`;
+      // Final Fallback: Open mailto client
+      window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -160,12 +172,30 @@ export default function Contact() {
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Inquiry Received!</h3>
-              <p className="text-white/70 text-sm max-w-sm font-mono leading-relaxed mb-8">
-                Thank you for reaching out. We have received your project details and sent a confirmation email to <strong className="text-white">{formData.email}</strong>.
+              <p className="text-white/70 text-sm max-w-sm font-mono leading-relaxed mb-6">
+                Thank you for reaching out! We have dispatched your project details. You can also chat directly with us on WhatsApp or email.
               </p>
+              <div className="flex flex-col sm:flex-row gap-3 mb-8 w-full max-w-xs justify-center">
+                <a
+                  href={`https://wa.me/917736387794?text=${encodeURIComponent(`Hi Astrivix! My name is ${formData.name} ($${formData.budget}). Project Brief: ${formData.message}`)}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-5 py-3 rounded-full bg-[#25D366] text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-[#20bd5a] transition-all text-center flex items-center justify-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>CHAT ON WHATSAPP</span>
+                </a>
+                <a
+                  href={`mailto:business@astrivix.in?subject=${encodeURIComponent(`Project Inquiry: ${formData.name} ($${formData.budget})`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`}
+                  className="px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold uppercase tracking-widest hover:bg-white/20 transition-all text-center flex items-center justify-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>EMAIL DIRECTLY</span>
+                </a>
+              </div>
               <button
                 onClick={() => setSubmitted(false)}
-                className="px-6 py-3 rounded-full bg-white text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-zinc-200 transition-colors"
+                className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"
               >
                 SEND ANOTHER INQUIRY
               </button>

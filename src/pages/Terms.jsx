@@ -71,7 +71,7 @@ export default function Terms() {
           <div id="disclaimer" className="border-t border-b border-white/10 py-6 my-6 space-y-2">
             <h3 className="text-lg font-semibold text-white">4. Legal Disclaimer</h3>
             <p className="text-white/70 text-sm leading-relaxed">
-              We engineer clean, modern, zero-latency code and test extensively prior to launch. Deliverables are provided with our standard SLA guarantees and post-launch technical support.
+              We build clean, modern, high-performance code and test extensively prior to launch. Deliverables are provided with our standard SLA guarantees and post-launch technical support.
             </p>
           </div>
 

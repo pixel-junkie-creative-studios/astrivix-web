@@ -3,8 +3,8 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-
 
 const services = [
   { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Latency Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: '120 FPS Fluidity', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web', color: '#4d79ff', desc: 'Custom web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native Mobile Apps', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
   { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
   { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffff4d', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
   { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
