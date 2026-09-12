@@ -6,15 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ffffff', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web Apps', color: '#e4e4e7', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL graphics, and clean architecture.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native iOS & Android', color: '#d4d4d8', desc: 'Native iOS and Android mobile platforms featuring fluid gesture interaction, offline synchronization, and intuitive user experiences.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#cbd5e1', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffffff', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
-  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Design Systems', color: '#94a3b8', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
-  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#e2e8f0', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#f1f5f9', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#ffffff', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL graphics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native iOS & Android', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture interaction, offline synchronization, and intuitive user experiences.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffff4d', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
+  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Design Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
+  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#4dffff', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#b34dff', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#4dffb3', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
 ];
 
 export default function Services() {
