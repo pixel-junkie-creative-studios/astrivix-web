@@ -148,14 +148,7 @@ const ParticleText = ({
 
       ctx.clearRect(0, 0, width, height);
 
-      if (glow && !reducedMotion) {
-        ctx.shadowBlur = particleSize * 4;
-        ctx.shadowColor = rainbowMode 
-          ? `hsla(${(now * 0.05) % 360}, 90%, 65%, 0.8)` 
-          : highlightColor;
-      } else {
-        ctx.shadowBlur = 0;
-      }
+      ctx.shadowBlur = 0;
 
       pointer.smoothX += (pointer.x - pointer.smoothX) * 0.18;
       pointer.smoothY += (pointer.y - pointer.smoothY) * 0.18;

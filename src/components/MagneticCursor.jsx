@@ -15,7 +15,9 @@ export default function MagneticCursor() {
   const ring = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
-    // Hardware-instant 1-to-1 tracking for the inner dot
+    let lastTarget = null;
+    const interactiveTags = new Set(['A', 'BUTTON', 'INPUT', 'TEXTAREA', 'SELECT']);
+
     const onMouseMove = (e) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
@@ -25,8 +27,13 @@ export default function MagneticCursor() {
       }
 
       const target = e.target;
-      if (target) {
-        if (target.closest('a, button, input, textarea, .interactive') || target.style?.cursor === 'pointer') {
+      if (target && target !== lastTarget) {
+        lastTarget = target;
+        const isInteractive = interactiveTags.has(target.tagName) || 
+          target.classList?.contains('interactive') || 
+          !!target.closest('a, button, input, textarea, select, .interactive');
+          
+        if (isInteractive) {
           if (cursorRef.current) cursorRef.current.classList.add('hovering');
           if (dotRef.current) dotRef.current.classList.add('hovering');
         } else {
@@ -61,10 +68,11 @@ export default function MagneticCursor() {
     };
     requestRef.current = requestAnimationFrame(render);
 
-    // Global cursor override
+    // Scoped cursor override (avoids '*' wildcard style recalculation)
     document.body.style.cursor = 'none';
     const style = document.createElement('style');
-    style.innerHTML = `* { cursor: none !important; }`;
+    style.id = 'custom-cursor-scoped-style';
+    style.innerHTML = `body, a, button, input, select, textarea, [role="button"], .interactive { cursor: none !important; }`;
     document.head.appendChild(style);
 
     return () => {
@@ -73,7 +81,8 @@ export default function MagneticCursor() {
       window.removeEventListener('mouseup', onMouseUp);
       cancelAnimationFrame(requestRef.current);
       document.body.style.cursor = 'auto';
-      document.head.removeChild(style);
+      const existingStyle = document.getElementById('custom-cursor-scoped-style');
+      if (existingStyle) existingStyle.remove();
     };
   }, []);
 

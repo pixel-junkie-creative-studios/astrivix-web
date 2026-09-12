@@ -40,8 +40,8 @@ function App() {
       }
     }, 100);
 
-    // Sync GSAP ScrollTrigger ticker for lag smoothing
-    gsap.ticker.lagSmoothing(0);
+    // Enable standard GSAP lag smoothing to eliminate visual frame drops
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => clearTimeout(timer);
   }, []);
@@ -51,11 +51,12 @@ function App() {
       root
       ref={lenisRef}
       options={{
-        lerp: 0.1,
-        duration: 1.2,
+        lerp: 0.14,
+        duration: 0.8,
         smoothWheel: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 1.5,
+        wheelMultiplier: 1.1,
+        touchMultiplier: 1.2,
+        syncTouch: false
       }}
     >
       <BrowserRouter>

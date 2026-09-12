@@ -124,6 +124,8 @@ export default function Lanyard({
   lanyardWidth = 2
 }) {
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  const [isVisible, setIsVisible] = useState(true);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -131,18 +133,29 @@ export default function Lanyard({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+    }, { threshold: 0.05 });
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="lanyard-wrapper">
-      <Canvas
-        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
-        dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent }}
-        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
-      >
-        <ambientLight intensity={Math.PI} />
-        <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 120} interpolate={true}>
-          <Band
-            isMobile={isMobile}
+    <div ref={wrapperRef} className="lanyard-wrapper">
+      {isVisible && (
+        <Canvas
+          camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
+          dpr={[1, isMobile ? 1.25 : 1.5]}
+          gl={{ alpha: transparent, powerPreference: "high-performance" }}
+          onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+        >
+          <ambientLight intensity={Math.PI} />
+          <Physics gravity={gravity} timeStep={1 / 60} interpolate={true}>
+            <Band
+              isMobile={isMobile}
             frontImage={frontImage}
             backImage={backImage}
             imageFit={imageFit}
@@ -180,6 +193,7 @@ export default function Lanyard({
           />
         </Environment>
       </Canvas>
+      )}
     </div>
   );
 }

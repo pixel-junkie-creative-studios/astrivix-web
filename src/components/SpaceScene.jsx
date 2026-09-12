@@ -7,19 +7,21 @@ import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
   const targetZ = useRef(0);
+  const isServicesActive = useRef(false);
+
+  useEffect(() => {
+    const el = document.getElementById('services');
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isServicesActive.current = entry.isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
-    const servicesEl = typeof document !== 'undefined' ? document.getElementById('services') : null;
-    let dampFactor = 1;
-
-    if (servicesEl) {
-      const rect = servicesEl.getBoundingClientRect();
-      if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-        dampFactor = 0.05; // 95% slowdown during services section
-      }
-    }
-
+    const dampFactor = isServicesActive.current ? 0.05 : 1;
     const nextTargetZ = -progress * 100;
     targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
     camera.position.z += (targetZ.current - camera.position.z) * 0.08;
