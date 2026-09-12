@@ -32,18 +32,29 @@ function createAstrivixCard() {
   canvas.width = 512;
   canvas.height = 768; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050508';
+  ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = '#222';
   ctx.lineWidth = 12;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 48px sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.moveTo(256, 240);
+  ctx.quadraticCurveTo(256, 320, 336, 320);
+  ctx.quadraticCurveTo(256, 320, 256, 400);
+  ctx.quadraticCurveTo(256, 320, 176, 320);
+  ctx.quadraticCurveTo(256, 320, 256, 240);
+  ctx.fill();
+
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 65px sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '4px';
-  ctx.fillText('ASTRIVIX', 256, 540);
+  ctx.letterSpacing = '2px';
+  ctx.fillText('ASTRIVIX', 256, 520);
+  ctx.font = '300 45px sans-serif';
+  ctx.fillText('CORP.', 256, 590);
   
   return canvas.toDataURL('image/png');
 }
@@ -53,39 +64,21 @@ function createAstrivixBack() {
   canvas.width = 512;
   canvas.height = 768; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050508';
+  ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#252535';
+  ctx.strokeStyle = '#222';
   ctx.lineWidth = 12;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-  // Sleek minimalist silver corner accents
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(36, 36, 28, 4);
-  ctx.fillRect(36, 36, 4, 28);
-  ctx.fillRect(canvas.width - 64, 36, 28, 4);
-  ctx.fillRect(canvas.width - 40, 36, 4, 28);
-
-  ctx.fillRect(36, canvas.height - 40, 28, 4);
-  ctx.fillRect(36, canvas.height - 64, 4, 28);
-  ctx.fillRect(canvas.width - 64, canvas.height - 40, 28, 4);
-  ctx.fillRect(canvas.width - 40, canvas.height - 64, 4, 28);
-
-  // Back Card Typography: CREATING LEGENDS
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 48px sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 50px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('CREATING', 256, 350);
-  
-  ctx.fillStyle = '#888899';
-  ctx.font = '900 48px sans-serif';
-  ctx.fillText('LEGENDS', 256, 420);
-
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-  ctx.font = '700 14px monospace';
-  ctx.fillText('ASTRIVIX CORP', 256, 510);
+  ctx.letterSpacing = '2px';
+  ctx.fillText('CREATIVE', 256, 320);
+  ctx.fillText('MINDS AT', 256, 400);
+  ctx.fillText('ASTRIVIX', 256, 480);
   
   return canvas.toDataURL('image/png');
 }
@@ -95,33 +88,26 @@ function createAstrivixBandTexture() {
   canvas.width = 2048; 
   canvas.height = 128; 
   const ctx = canvas.getContext('2d');
-  
-  // Premium Matte Obsidian Fabric Base
-  ctx.fillStyle = '#08080c';
+  ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  // Subtle Metallic Border Accents
-  ctx.fillStyle = '#22222a';
-  ctx.fillRect(0, 0, canvas.width, 4);
-  ctx.fillRect(0, 124, canvas.width, 4);
-  
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 38px sans-serif';
+  ctx.font = '900 36px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  ctx.letterSpacing = '3px';
   
-  // Draw ONLY ASTRIVIX repeating along lanyard strap tag as requested
+  // Flip context to counteract the MeshLine's reversed UV mapping
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('★   ASTRIVIX   ★   ASTRIVIX   ★   ASTRIVIX   ★   ASTRIVIX   ★', 1024, 64);
+  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
-  tex.wrapS = THREE.RepeatWrapping;
-  tex.wrapT = THREE.ClampToEdgeWrapping;
-  tex.repeat.set(1, 1);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(4, 1);
   return tex;
 }
 
@@ -146,15 +132,15 @@ export default function Lanyard({
   }, []);
 
   return (
-    <div className="lanyard-wrapper w-full h-full min-h-[460px] md:min-h-[540px] flex items-center justify-center relative overflow-hidden">
+    <div className="lanyard-wrapper">
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 14 : 11.5], fov: isMobile ? 24 : 20 }}
+        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
         dpr={[1, isMobile ? 1.5 : 2]}
-        gl={{ alpha: transparent, powerPreference: 'high-performance', antialias: true }}
+        gl={{ alpha: transparent }}
         onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
       >
-        <ambientLight intensity={Math.PI * 1.2} />
-        <Physics gravity={gravity} timeStep={1 / 120} numSolverIterations={25} interpolate={true}>
+        <ambientLight intensity={Math.PI} />
+        <Physics gravity={gravity} timeStep={isMobile ? 1 / 60 : 1 / 120} interpolate={true}>
           <Band
             isMobile={isMobile}
             frontImage={frontImage}
@@ -197,7 +183,6 @@ export default function Lanyard({
     </div>
   );
 }
-
 function Band({
   maxSpeed = 50,
   minSpeed = 0,
@@ -218,14 +203,18 @@ function Band({
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
   const { width, height } = useThree((state) => state.size);
-  const segmentProps = { type: 'dynamic', canSleep: false, colliders: false, angularDamping: 14.0, linearDamping: 10.0, ccd: true };
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 6.0, linearDamping: 6.0, ccd: true };
   const { nodes, materials } = useGLTF(cardGLB);
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
   
+  // useTexture must be called unconditionally; use a blank pixel when an image
+  // isn't supplied for a given face, then skip compositing it below.
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
+  // Composite the front/back images into the card's texture atlas (front = left
+  // half, back = right half). Each image is drawn aspect-preserving (no stretch).
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map;
     const baseImg = baseMap.image;
@@ -236,8 +225,10 @@ function Band({
     canvas.height = H;
     const ctx = canvas.getContext('2d');
     if (!ctx) return baseMap;
+    // Keep the original baked atlas for the card edges and any untouched face.
     ctx.drawImage(baseImg, 0, 0, W, H);
 
+    // Matte Black Overlay for the front and back faces!
     ctx.fillStyle = '#111111';
     ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
     ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
@@ -271,7 +262,6 @@ function Band({
     composite.needsUpdate = true;
     return composite;
   }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
-
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
@@ -279,14 +269,12 @@ function Band({
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
 
-  // Rope joints (0.65 segment distance)
-  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 0.65]);
-  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 0.65]);
-  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 0.65]);
-  // Anchor j3 EXACTLY at metal clip ring (Y = 1.45)
+  useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
+  useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1]);
   useSphericalJoint(j3, card, [
     [0, 0, 0],
-    [0, 1.45, 0]
+    [0, 1.5, 0]
   ]);
 
   useEffect(() => {
@@ -297,59 +285,40 @@ function Band({
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
-    if (card.current) {
-      const cardPos = card.current.translation();
-      const cardRot = card.current.rotation();
-      const cardQuat = new THREE.Quaternion(cardRot.x, cardRot.y, cardRot.z, cardRot.w);
-      const localHookOffset = new THREE.Vector3(0, 1.45, 0).applyQuaternion(cardQuat);
-      const clipRingWorld = new THREE.Vector3(cardPos.x, cardPos.y, cardPos.z).add(localHookOffset);
-
-      if (dragged) {
-        vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
-        dir.copy(vec).sub(state.camera.position).normalize();
-        vec.add(dir.multiplyScalar(state.camera.position.length()));
-        [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
-        
-        const targetCardPos = { x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z };
-        card.current.setNextKinematicTranslation(targetCardPos);
-        if (j3.current) {
-          j3.current.setTranslation({ x: targetCardPos.x, y: targetCardPos.y + 1.45, z: targetCardPos.z }, true);
-        }
-      } else if (j3.current) {
-        // Strict Frame Lock: keep j3 anchored exactly at top clip ring
-        j3.current.setTranslation({ x: clipRingWorld.x, y: clipRingWorld.y, z: clipRingWorld.z }, true);
-      }
-
-      if (fixed.current && j3.current) {
-        [j1, j2].forEach(ref => {
-          if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
-          const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
-          const alpha = delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed));
-          ref.current.lerped.lerp(
-            ref.current.translation(),
-            Math.min(1, alpha)
-          );
-        });
-
-        // Bottom end of lanyard rope (curve.points[0]) MUST touch clip ring position
-        curve.points[0].copy(clipRingWorld).add(new THREE.Vector3(0, 0.02, 0));
-        curve.points[1].copy(j2.current.lerped);
-        curve.points[2].copy(j1.current.lerped);
-        curve.points[3].copy(fixed.current.translation());
-        band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
-
-        // Controlled smooth Y-axis sway
-        if (!dragged) {
-          const time = state.clock.getElapsedTime();
-          const targetY = Math.sin(time * 0.8) * 0.55;
-          const currentRot = card.current.rotation();
-
-          card.current.setAngvel({ 
-            x: -currentRot.x * 4.0, 
-            y: (targetY - currentRot.y) * 3.0, 
-            z: -currentRot.z * 4.0 
-          }, true);
-        }
+    if (dragged) {
+      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
+      dir.copy(vec).sub(state.camera.position).normalize();
+      vec.add(dir.multiplyScalar(state.camera.position.length()));
+      [card, j1, j2, j3, fixed].forEach(ref => ref.current?.wakeUp());
+      card.current?.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z });
+    }
+    if (fixed.current) {
+      [j1, j2].forEach(ref => {
+        if (!ref.current.lerped) ref.current.lerped = new THREE.Vector3().copy(ref.current.translation());
+        const clampedDistance = Math.max(0.1, Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())));
+        const alpha = delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed));
+        ref.current.lerped.lerp(
+          ref.current.translation(),
+          Math.min(1, alpha)
+        );
+      });
+      curve.points[0].copy(j3.current.translation());
+      curve.points[1].copy(j2.current.lerped);
+      curve.points[2].copy(j1.current.lerped);
+      curve.points[3].copy(fixed.current.translation());
+      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
+      ang.copy(card.current.angvel());
+      rot.copy(card.current.rotation());
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
+      
+      // Apply a subtle, gentle micro-movement so it doesn't swing wildly
+      if (!dragged && card.current) {
+        const time = state.clock.getElapsedTime();
+        card.current.applyImpulse({ 
+          x: Math.sin(time * 0.8) * 0.008, 
+          y: 0, 
+          z: Math.cos(time * 0.5) * 0.004 
+        }, true);
       }
     }
   });
@@ -357,22 +326,22 @@ function Band({
 
   return (
     <>
-      <group position={[0, isMobile ? 2.5 : 2.8, 0]}>
+      <group position={[0, isMobile ? 2.6 : 3.6, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0, -0.65, 0]} ref={j1} {...segmentProps}>
-          <BallCollider args={[0.08]} />
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.3, 0]} ref={j2} {...segmentProps}>
-          <BallCollider args={[0.08]} />
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.95, 0]} ref={j3} {...segmentProps}>
-          <BallCollider args={[0.08]} />
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
+          <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -3.4, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
-          <CuboidCollider args={[0.6, 0.8, 0.01]} />
+        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={1.0}
-            position={[0, 0, 0]}
+            scale={2.25}
+            position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => (e.target.releasePointerCapture(e.pointerId), drag(false))}
@@ -382,36 +351,16 @@ function Band({
             )}
           >
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
+              <meshStandardMaterial
                 map={cardMap}
-                color="#ffffff"
-                roughness={0.3}
-                metalness={0.5}
-                clearcoat={1.0}
-                clearcoatRoughness={0.1}
-                envMapIntensity={2.5}
+                color="#999999"
+                roughness={0.4}
+                metalness={0.9}
+                envMapIntensity={2}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry}>
-              <meshPhysicalMaterial
-                color="#ffffff"
-                metalness={0.98}
-                roughness={0.05}
-                clearcoat={1.0}
-                clearcoatRoughness={0.05}
-                envMapIntensity={4}
-              />
-            </mesh>
-            <mesh geometry={nodes.clamp.geometry}>
-              <meshPhysicalMaterial
-                color="#ffffff"
-                metalness={0.98}
-                roughness={0.05}
-                clearcoat={1.0}
-                clearcoatRoughness={0.05}
-                envMapIntensity={4}
-              />
-            </mesh>
+            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
+            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
       </group>
@@ -419,13 +368,11 @@ function Band({
         <meshLineGeometry />
         <meshLineMaterial
           color="white"
-          depthTest={true}
-          depthWrite={true}
-          transparent={true}
+          depthTest={false}
           resolution={[width, height]}
           useMap={1}
           map={bandTexture}
-          lineWidth={lanyardWidth * 0.75}
+          lineWidth={lanyardWidth}
         />
       </mesh>
     </>

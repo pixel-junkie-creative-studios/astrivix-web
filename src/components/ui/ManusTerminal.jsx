@@ -35,14 +35,14 @@ export const ManusTerminal = () => {
         </div>
         <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20 font-bold uppercase flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-          SYSTEM ACTIVE
+          ONLINE 120 FPS
         </span>
       </div>
 
       {/* Terminal Content */}
       <div className="font-mono text-xs sm:text-sm text-white/90 space-y-3 mb-6">
         <p className="text-white/60">
-          &gt; AST.ENGINE_INIT --mode=high-performance --framework=motion.dev
+          &gt; AST.ENGINE_INIT --mode=zero-lag --framework=motion.dev
         </p>
         <p className="text-emerald-400 font-semibold">
           ✓ Loaded Kokonut.UI + Manus.im + BKLIT.UI Design Systems
@@ -80,7 +80,7 @@ export const ManusTerminal = () => {
           className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl font-mono text-xs text-emerald-400 flex items-center gap-2"
         >
           <LucideCheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>PROPOSAL SUBMITTED: Connecting with Astrivix lead engineers...</span>
+          <span>COMMAND RECEIVED: Transmitting proposal to Astrivix core engineers...</span>
         </motion.div>
       )}
     </motion.div>

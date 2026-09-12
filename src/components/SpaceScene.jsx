@@ -216,14 +216,14 @@ const Comet = () => {
       
       {/* Genuine Particle Core Glow (Billboarded Sprite) */}
       <sprite scale={[12, 12, 1]}>
-        <spriteMaterial map={coreMap} color="#ffffff" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} opacity={0.8} />
+        <spriteMaterial map={coreMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} opacity={0.8} />
       </sprite>
 
       {/* Tapered Volumetric Tail (Perfect 3D shape, strictly behind the core) */}
       {/* Position Z=20 pushes the center 20 units back. Height is 40, so it spans from Z=0 to Z=40 */}
       <mesh position={[0, 0, 20]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[2.5, 0.1, 40, 16, 1, true]} />
-        <meshBasicMaterial map={cometMap} color="#ffffff" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
+        <meshBasicMaterial map={cometMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
       </mesh>
     </group>
   );

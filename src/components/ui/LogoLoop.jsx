@@ -264,8 +264,6 @@ export const LogoLoop = memo(
             loading="lazy"
             decoding="async"
             draggable={false}
-            fetchpriority="low"
-            data-nosnippet="true"
           />
         );
         const itemAriaLabel = isNodeItem ? (item.ariaLabel ?? item.title) : (item.alt ?? item.title);

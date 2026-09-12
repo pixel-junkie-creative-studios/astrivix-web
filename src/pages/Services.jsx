@@ -6,12 +6,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL graphics, and clean architecture.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native iOS & Android', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture interaction, offline synchronization, and intuitive user experiences.' },
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Bespoke brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Latency Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: '120 FPS Fluidity', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
   { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
   { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffff4d', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
-  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Design Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
+  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
   { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#4dffff', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
   { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#b34dff', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
   { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#4dffb3', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
@@ -24,17 +24,17 @@ export default function Services() {
   const [direction, setDirection] = useState(1);
   const prevIndexRef = useRef(0);
 
-  // GSAP ScrollTrigger Hardware Pin Engine
+  // GSAP ScrollTrigger Hardware Pin Engine (Mobile Responsive Speed Tuning)
   useEffect(() => {
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: isMobile ? '+=2700' : '+=2200', // 1 light trackpad scroll stroke per card across 9 cards
+        end: isMobile ? '+=4800' : '+=1800', // 4800px on mobile for 1-swipe-per-card control
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: 0.1, // Ultra-responsive instant scrub without delay
+        scrub: isMobile ? 0.8 : 0.1,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,
@@ -94,14 +94,14 @@ export default function Services() {
         <div className="text-center mb-4 md:mb-8 z-30 pointer-events-none">
           <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
             <span className="w-8 h-px bg-white/20"></span>
-            Full Agency Offerings
+            What We Do
             <span className="w-8 h-px bg-white/20"></span>
           </h2>
           <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
             OUR SERVICES
           </h3>
           <p className="text-xs md:text-sm text-white/50 font-mono mt-2 uppercase tracking-widest">
-            Scroll down to explore capabilities
+            Scroll down to flip cards
           </p>
         </div>
 
@@ -155,7 +155,7 @@ export default function Services() {
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 hover:border-white/50 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer transition-colors"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer corner-bracket-tl corner-bracket-tr"
               >
                 {/* Accent Line Header */}
                 <div 
@@ -201,9 +201,15 @@ export default function Services() {
                       />
                     ))}
                   </div>
-                  <span className="text-xs font-mono font-bold text-white/70">
-                    0{activeIndex + 1} / 09
-                  </span>
+
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] md:text-xs font-mono font-bold text-white/50 uppercase tracking-widest hidden sm:inline-block">
+                      Scroll to flip
+                    </span>
+                    <span className="text-xs md:text-sm font-mono font-black text-white/90 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                      {activeService.id} / 09
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -223,8 +229,8 @@ export default function Services() {
               background: `radial-gradient(circle at top right, ${nextService.color}20, #08080c 75%)`
             }}
           >
-            <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
-              {nextService.id}
+            <div className="text-xs font-bold tracking-widest text-white/40 uppercase">
+              Next Service
             </div>
             <div>
               <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
@@ -235,35 +241,34 @@ export default function Services() {
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* Mobile Swipe Navigation Controls */}
-        <div className="flex sm:hidden items-center justify-between gap-4 mt-6 z-30 px-6 w-full max-w-[320px]">
-          <button 
+        {/* Mobile Controls */}
+        <div className="flex sm:hidden items-center justify-center gap-6 mt-6 z-30">
+          <button
             onClick={() => {
               setDirection(-1);
               const idx = Math.max(0, activeIndex - 1);
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="text-xs font-mono font-bold text-white/80 bg-white/10 border border-white/20 px-4 py-2 rounded-full uppercase tracking-wider active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
           >
-            ← PREV
+            ←
           </button>
-          <span className="text-xs font-mono text-white/60 font-bold">
-            0{activeIndex + 1} / 09
+          <span className="text-xs font-mono font-bold text-white/70">
+            {activeService.id} / 09
           </span>
-          <button 
+          <button
             onClick={() => {
               setDirection(1);
               const idx = Math.min(services.length - 1, activeIndex + 1);
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="text-xs font-mono font-bold text-white/80 bg-white/10 border border-white/20 px-4 py-2 rounded-full uppercase tracking-wider active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
           >
-            NEXT →
+            →
           </button>
         </div>
 
@@ -271,3 +276,12 @@ export default function Services() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+

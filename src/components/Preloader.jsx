@@ -44,7 +44,7 @@ export default function Preloader() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="w-24 h-24 rounded-full border border-white/10 mb-8 flex items-center justify-center bg-black/50 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+              className="w-24 h-24 rounded-full border border-white/10 mb-8 flex items-center justify-center bg-black/50 backdrop-blur-md overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.3)]"
             >
               <video 
                 src="/assets/astreivix_nav_bar.mp4"
@@ -59,7 +59,7 @@ export default function Preloader() {
             {/* Progress Bar Container */}
             <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-4">
               <motion.div 
-                className="h-full bg-gradient-to-r from-white via-zinc-400 to-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                className="h-full bg-gradient-to-r from-purple-600 to-blue-500"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.2, ease: "easeOut" }}

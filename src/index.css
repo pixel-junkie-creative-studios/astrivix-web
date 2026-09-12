@@ -13,7 +13,7 @@
 
 html, body {
   overflow-x: hidden;
-  background-color: transparent;
+  background-color: #000;
 }
 @tailwind utilities;
 
@@ -37,7 +37,7 @@ html, body {
 
 @layer base {
   body {
-    @apply bg-transparent text-ax-text antialiased overflow-x-hidden transition-colors duration-500;
+    @apply bg-ax-bg text-ax-text antialiased overflow-x-hidden transition-colors duration-500;
   }
 }
 
@@ -67,67 +67,62 @@ html.lenis { height: auto; }
 }
 
 /* High-Contrast Liquid Obsidian Glassmorphism (Mobile-First Ultra-Legible Surface) */
-/* High-Contrast Liquid Obsidian Glassmorphism (Mobile-First Ultra-Legible Surface) */
-.glass-fast, .glass-metallic, .glass-super {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(20, 20, 28, 0.94) 40%, rgba(10, 10, 15, 0.98) 100%);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.98), inset 0 2px 1px rgba(255, 255, 255, 0.5), inset 0 -2px 1px rgba(0, 0, 0, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.glass-fast, .glass-metallic {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(20, 20, 28, 0.94) 40%, rgba(12, 12, 18, 0.98) 100%);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.98), inset 0 1.5px 1px rgba(255, 255, 255, 0.45), inset 0 -1.5px 1px rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  isolation: isolate;
+  contain: paint;
 }
 
-.glass-metallic:hover, .glass-super:hover {
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.98), 0 0 35px rgba(255, 255, 255, 0.25), inset 0 2px 1px rgba(255, 255, 255, 0.7);
+/* BKLIT / Kokonut UI Corner Bracket Accents */
+.corner-bracket-tl::before {
+  content: '┌';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+.corner-bracket-tr::after {
+  content: '┐';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-family: monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
 }
 
-/* Pure Metallic Silver Chrome Skeuomorphic Button (Zero Pink/Purple) */
+/* Tactile Skeuomorphic Physical Metallic Bevels & Buttons */
 .skeuo-button {
-  background: linear-gradient(180deg, #ffffff 0%, #e4e4e7 60%, #cbd5e1 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 210, 220, 0.85) 100%);
   border: 1px solid rgba(255, 255, 255, 0.9);
-  color: #050508 !important;
   box-shadow: 
-    0 4px 18px rgba(255, 255, 255, 0.25),
-    0 8px 24px rgba(0, 0, 0, 0.8),
-    inset 0 1.5px 0 #ffffff,
-    inset 0 -2.5px 0 rgba(0, 0, 0, 0.35);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    0 4px 14px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .skeuo-button:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #e2e2e8 100%);
   box-shadow: 
-    0 6px 30px rgba(255, 255, 255, 0.45),
-    0 12px 32px rgba(0, 0, 0, 0.9),
-    inset 0 1.5px 0 #ffffff,
-    inset 0 -2.5px 0 rgba(0, 0, 0, 0.4);
-  transform: translateY(-1.5px);
+    0 6px 20px rgba(255, 255, 255, 0.25),
+    0 4px 14px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 #ffffff,
+    inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
 }
 .skeuo-button:active {
   transform: translateY(1px);
   box-shadow: 
-    0 2px 6px rgba(0, 0, 0, 0.9),
-    inset 0 2.5px 5px rgba(0, 0, 0, 0.5);
-}
-
-/* Skeuomorphic Physical Raised Card Plate */
-.skeuo-card {
-  background: linear-gradient(145deg, rgba(30, 30, 40, 0.95) 0%, rgba(12, 12, 18, 0.98) 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.45);
-  border-left: 1px solid rgba(255, 255, 255, 0.25);
-  border-right: 1px solid rgba(0, 0, 0, 0.8);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.9);
-  box-shadow: 
-    0 30px 70px rgba(0, 0, 0, 0.95),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.8);
-}
-
-/* Skeuomorphic Recessed Carved In Panel */
-.skeuo-recessed {
-  background: #040406;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.95), inset 0 1px 2px rgba(0, 0, 0, 0.8);
+    0 2px 5px rgba(0, 0, 0, 0.8),
+    inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Tactile Skeuomorphic Metallic Screw Accent */
@@ -152,7 +147,7 @@ html.lenis { height: auto; }
 
 /* Debossed Engraved Skeuomorphic Typography */
 .skeuo-engraved {
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3), 0 -1.5px 3px rgba(0, 0, 0, 0.95);
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.25), 0 -1px 2px rgba(0, 0, 0, 0.9);
 }
 
 /* Defer rendering of off-screen cards */

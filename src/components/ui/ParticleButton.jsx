@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const ParticleButton = ({ 
-  children = "SUBMIT INQUIRY", 
+  children = "TRANSMIT PROJECT", 
   onClick, 
   className = "",
   variant = "primary"
