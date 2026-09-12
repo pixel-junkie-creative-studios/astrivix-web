@@ -48,10 +48,10 @@ export default function MagneticCursor() {
     window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('mouseup', onMouseUp, { passive: true });
 
-    // Hyper-speed 240Hz ring interpolation (lerp = 0.65 for ultra-snappy instant response)
+    // Hyper-speed 240Hz ring interpolation (lerp = 0.75 for ultra-snappy instant response)
     const render = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.65;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.65;
+      ring.current.x += (mouse.current.x - ring.current.x) * 0.75;
+      ring.current.y += (mouse.current.y - ring.current.y) * 0.75;
       
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${ring.current.x}px, ${ring.current.y}px, 0)`;
@@ -82,47 +82,47 @@ export default function MagneticCursor() {
       <style>{`
         .custom-cursor-ring {
           position: fixed;
-          top: -18px;
-          left: -18px;
-          width: 36px;
-          height: 36px;
+          top: -12px;
+          left: -12px;
+          width: 24px;
+          height: 24px;
           border-radius: 50%;
-          border: 1.5px solid rgba(255, 255, 255, 0.85);
-          box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+          border: 1.2px solid rgba(255, 255, 255, 0.9);
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
           pointer-events: none;
           z-index: 99999;
           mix-blend-mode: difference;
-          transition: width 0.15s cubic-bezier(0.16, 1, 0.3, 1), height 0.15s cubic-bezier(0.16, 1, 0.3, 1), top 0.15s cubic-bezier(0.16, 1, 0.3, 1), left 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s;
+          transition: width 0.14s cubic-bezier(0.16, 1, 0.3, 1), height 0.14s cubic-bezier(0.16, 1, 0.3, 1), top 0.14s cubic-bezier(0.16, 1, 0.3, 1), left 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.14s;
           will-change: transform;
         }
         .custom-cursor-ring.hovering {
-          width: 64px;
-          height: 64px;
-          top: -32px;
-          left: -32px;
-          background-color: rgba(255, 255, 255, 0.18);
+          width: 44px;
+          height: 44px;
+          top: -22px;
+          left: -22px;
+          background-color: rgba(255, 255, 255, 0.15);
           border-color: rgba(255, 255, 255, 0.95);
-          box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
         }
         .custom-cursor-ring.clicking {
-          width: 22px;
-          height: 22px;
-          top: -11px;
-          left: -11px;
+          width: 16px;
+          height: 16px;
+          top: -8px;
+          left: -8px;
         }
         .custom-cursor-dot {
           position: fixed;
-          top: -4px;
-          left: -4px;
-          width: 8px;
-          height: 8px;
+          top: -2.5px;
+          left: -2.5px;
+          width: 5px;
+          height: 5px;
           border-radius: 50%;
           background-color: #ffffff;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+          box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
           pointer-events: none;
           z-index: 100000;
           mix-blend-mode: difference;
-          transition: opacity 0.12s ease-out;
+          transition: opacity 0.1s ease-out;
           will-change: transform;
         }
         .custom-cursor-dot.hovering {

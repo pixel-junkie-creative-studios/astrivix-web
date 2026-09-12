@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import ParticleText from '../components/ParticleText';
 import SplitFlapText from '../components/SplitFlapText';
 import LogoLoop from '../components/ui/LogoLoop';
-import FAQSection from '../components/ui/FAQSection';
 import { Spotlight } from '../components/ui/Spotlight';
 
 export default function Home() {
@@ -118,9 +117,6 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-
-      {/* FAQ Section */}
-      <FAQSection />
     </div>
   );
 }

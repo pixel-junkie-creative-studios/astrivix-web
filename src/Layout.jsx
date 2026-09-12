@@ -10,6 +10,7 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import FAQSection from './components/ui/FAQSection';
 
 export default function Layout() {
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function Layout() {
     { name: "Portfolio", link: "/portfolio" },
     { name: "About", link: "#about" },
     { name: "Careers", link: "#careers" },
+    { name: "FAQ", link: "#faq" },
   ];
 
   return (
@@ -59,6 +61,11 @@ export default function Layout() {
           <Contact />
         </div>
 
+        {/* FAQ Section Positioned Right Before Footer */}
+        <div id="faq" className="w-full relative z-20">
+          <FAQSection />
+        </div>
+
         {/* FOOTER */}
         <footer className="w-full relative z-20 mt-16 md:mt-32 bg-white/5 backdrop-blur-xl border-t border-white/10 overflow-hidden rounded-t-[3rem] pb-24 md:pb-0 text-center md:text-left">
           <div className="max-w-[1440px] mx-auto px-6 md:px-16 pt-16 md:pt-24 pb-8 relative z-10">
@@ -84,6 +91,7 @@ export default function Layout() {
                   <a href="#about" className="hover:text-white transition-colors">About Us</a>
                   <a href="#careers" className="hover:text-white transition-colors">Careers</a>
                   <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+                  <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
                 </div>
               </div>
 
