@@ -32,29 +32,18 @@ function createAstrivixCard() {
   canvas.width = 512;
   canvas.height = 768; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050505';
+  ctx.fillStyle = '#050508';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#222';
+  ctx.strokeStyle = '#22222e';
   ctx.lineWidth = 12;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-  ctx.fillStyle = '#fff';
-  ctx.beginPath();
-  ctx.moveTo(256, 240);
-  ctx.quadraticCurveTo(256, 320, 336, 320);
-  ctx.quadraticCurveTo(256, 320, 256, 400);
-  ctx.quadraticCurveTo(256, 320, 176, 320);
-  ctx.quadraticCurveTo(256, 320, 256, 240);
-  ctx.fill();
-
-  ctx.fillStyle = '#fff';
-  ctx.font = '900 65px sans-serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 48px sans-serif';
   ctx.textAlign = 'center';
-  ctx.letterSpacing = '2px';
-  ctx.fillText('ASTRIVIX', 256, 520);
-  ctx.font = '300 45px sans-serif';
-  ctx.fillText('CORP.', 256, 590);
+  ctx.letterSpacing = '4px';
+  ctx.fillText('ASTRIVIX', 256, 540);
   
   return canvas.toDataURL('image/png');
 }
@@ -64,21 +53,22 @@ function createAstrivixBack() {
   canvas.width = 512;
   canvas.height = 768; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050505';
+  ctx.fillStyle = '#050508';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#222';
+  ctx.strokeStyle = '#22222e';
   ctx.lineWidth = 12;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-  ctx.fillStyle = '#fff';
-  ctx.font = '900 50px sans-serif';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 42px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '2px';
-  ctx.fillText('CREATIVE', 256, 320);
-  ctx.fillText('MINDS AT', 256, 400);
-  ctx.fillText('ASTRIVIX', 256, 480);
+  ctx.letterSpacing = '3px';
+  ctx.fillText('CREATIVE MIND', 256, 360);
+  ctx.fillStyle = '#ec4899';
+  ctx.font = '900 36px sans-serif';
+  ctx.fillText('@ ASTRIVIX', 256, 430);
   
   return canvas.toDataURL('image/png');
 }
@@ -99,7 +89,7 @@ function createAstrivixBandTexture() {
   ctx.fillRect(0, 124, canvas.width, 4);
   
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 48px sans-serif';
+  ctx.font = '900 36px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
@@ -107,7 +97,7 @@ function createAstrivixBandTexture() {
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('★   ASTRIVIX CORP.   ★   ASTRIVIX CORP.   ★', 1024, 64);
+  ctx.fillText('★   ASTRIVIX   ★   CREATIVE MIND @ ASTRIVIX   ★   ASTRIVIX   ★', 1024, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
