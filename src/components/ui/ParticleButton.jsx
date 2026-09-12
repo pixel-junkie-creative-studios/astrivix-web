@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const ParticleButton = ({ 
-  children = "TRANSMIT PROJECT", 
+  children = "START YOUR PROJECT", 
   onClick, 
   className = "",
   variant = "primary"
@@ -21,7 +21,7 @@ export const ParticleButton = ({
       angle: (i / 12) * 360,
       speed: Math.random() * 40 + 20,
       size: Math.random() * 4 + 2,
-      color: i % 2 === 0 ? '#10b981' : '#ffffff'
+      color: i % 2 === 0 ? '#ffffff' : '#e2e8f0'
     }));
 
     setParticles(prev => [...prev.slice(-24), ...newParticles]);

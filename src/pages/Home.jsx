@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import ParticleText from '../components/ParticleText';
 import SplitFlapText from '../components/SplitFlapText';
 import LogoLoop from '../components/ui/LogoLoop';
+import FAQSection from '../components/ui/FAQSection';
 import { Spotlight } from '../components/ui/Spotlight';
 
 export default function Home() {
@@ -25,8 +26,8 @@ export default function Home() {
         <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="white" />
       </motion.div>
       
-      <section className="min-h-[85vh] flex flex-col justify-center items-center relative pt-8 md:pt-12 pb-16 md:pb-24">
-        
+      {/* Hero Section */}
+      <section id="hero" className="min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center relative z-10 px-4 sm:px-6">
         {/* Centered Hero Container */}
         <motion.div 
           initial="hidden" animate="visible" variants={fadeUp}
@@ -54,37 +55,37 @@ export default function Home() {
           <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-6 sm:-mt-8 md:-mt-20 z-20">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
-              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text drop-shadow-md">
-                CORP<span className="text-ax-text text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
+              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-white drop-shadow-md">
+                CORP<span className="text-white text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
               </h2>
             </div>
 
             {/* Right Side: BUSINESS CONSULTANTS */}
             <div className="flex flex-col items-end text-right">
-              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
+              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
                 BUSINESS
               </h3>
-              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
+              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
                 CONSULTANTS
               </h3>
             </div>
           </div>
         </motion.div>
           
-        {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
+        {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated & Responsive Tile Scale) */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-2 sm:px-4 z-10 gpu-layer"
         >
-          <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
+          <div className="glass-fast px-3 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-            <div className="relative z-10 flex justify-center">
+            <div className="relative z-10 flex justify-center overflow-hidden">
               <SplitFlapText
-                words={['BUILDING DIGITAL LEGENDS', 'UNMATCHED PERFORMANCE', 'BESPOKE ENGINEERING', 'DOMINATE DIGITAL']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
+                words={['BUILDING DIGITAL LEGENDS', 'UNMATCHED PERFORMANCE', 'CUSTOM ENGINEERING', 'DOMINATE DIGITAL']}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 12 : 24}
                 tileColor="#050509"
                 textColor="#ffffff"
-                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
+                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 6}
                 stagger={0.05}
               />
             </div>
@@ -92,6 +93,7 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Selected Clients & Partners Carousel */}
       <section id="clients" className="py-12 sm:py-24 relative z-10">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
@@ -116,6 +118,9 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQSection />
     </div>
   );
 }
