@@ -80,7 +80,7 @@ export const ManusTerminal = () => {
           className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl font-mono text-xs text-emerald-400 flex items-center gap-2"
         >
           <LucideCheckCircle2 className="w-4 h-4 shrink-0" />
-          <span>COMMAND RECEIVED: Transmitting proposal to Astrivix core engineers...</span>
+          <span>COMMAND RECEIVED: Dispatching project brief to Astrivix engineering team...</span>
         </motion.div>
       )}
     </motion.div>

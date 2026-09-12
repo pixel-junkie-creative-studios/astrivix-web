@@ -60,7 +60,7 @@ export default function ThankYou() {
               rel="noopener noreferrer"
               className="w-full sm:w-auto flex-1 py-3.5 px-6 bg-white/10 hover:bg-white/20 text-white font-medium text-xs rounded-full border border-white/15 transition-all tracking-widest uppercase flex items-center justify-center gap-2"
             >
-              <span>WhatsApp Direct</span>
+              <span>Instant Consultation</span>
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>

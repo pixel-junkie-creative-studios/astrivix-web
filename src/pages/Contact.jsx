@@ -146,7 +146,7 @@ export default function Contact() {
                   Inquiry Dispatched Successfully.
                 </h3>
                 <p className="text-white/80 text-sm max-w-md leading-relaxed mb-6 font-medium">
-                  Your project specifications have been transmitted to <span className="font-mono text-white underline">business@astrivix.in</span>. Our automated AI dispatch system has sent a preliminary confirmation & scheduling brief to <span className="font-mono text-white">{formData.email}</span>.
+                  Your project specifications have been dispatched to <span className="font-mono text-white underline">business@astrivix.in</span>. Our automated AI dispatch system has sent a preliminary confirmation & scheduling brief to <span className="font-mono text-white">{formData.email}</span>.
                 </p>
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/60 mb-6 text-left w-full">
                   <div>[AI SYSTEM NOTE]</div>

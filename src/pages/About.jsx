@@ -72,7 +72,7 @@ export default function About() {
             <div className="flex-grow h-[2px] bg-gradient-to-r from-white/40 via-white/10 to-transparent mt-2"></div>
           </div>
           <p className="text-[10px] sm:text-sm font-mono tracking-[0.25em] text-white/70 uppercase font-semibold">
-            ENGINEERING HIGH-PERFORMANCE DIGITAL INFRASTRUCTURE & CREATIVE EXCELLENCE
+            ENGINEERING HIGH-PERFORMANCE DIGITAL INFRASTRUCTURE & PROPRIETARY DESIGN
           </p>
         </motion.div>
 
@@ -95,7 +95,7 @@ export default function About() {
             <div className="relative z-10 my-auto">
               <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-4">01 // CORE MANIFESTO</span>
               <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-md">
-                We build bespoke digital products <br className="hidden sm:inline" />
+                We build proprietary digital products <br className="hidden sm:inline" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-300">
                   that set new global benchmarks for performance and design.
                 </span>
@@ -113,7 +113,7 @@ export default function About() {
             <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
               <Counter100 />
               <span className="text-[10px] sm:text-xs uppercase tracking-[0.18em] font-mono font-bold text-white bg-white/15 px-3 py-2 rounded-2xl border border-white/30 backdrop-blur-md max-w-full leading-normal shadow-lg block text-center">
-                BESPOKE ARCHITECTURE & PERFORMANCE
+                PROPRIETARY ARCHITECTURE & PERFORMANCE
               </span>
             </div>
           </motion.div>
