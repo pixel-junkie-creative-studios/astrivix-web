@@ -247,9 +247,9 @@ export default function FAQSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
                 onClick={() => setSelectedFaqId(faq.id)}
-                className={`group cursor-pointer relative p-5 md:p-6 rounded-2xl border transition-all duration-300 ${
+                className={`group cursor-pointer relative p-5 md:p-6 rounded-2xl border overflow-hidden transition-all duration-300 ${
                   isSelected
-                    ? 'bg-white/10 border-white/40 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-2xl ring-1 ring-white/30'
+                    ? 'bg-white/10 border-cyan-400/50 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl'
                     : 'bg-white/5 border-white/10 hover:border-white/25 hover:bg-white/[0.07] backdrop-blur-xl'
                 }`}
               >
@@ -257,7 +257,7 @@ export default function FAQSection() {
                 {isSelected && (
                   <motion.div
                     layoutId="activeFaqIndicator"
-                    className="absolute left-0 top-3 bottom-3 w-1.5 bg-gradient-to-b from-cyan-400 via-white to-purple-400 rounded-r-full shadow-[0_0_12px_rgba(255,255,255,0.8)]"
+                    className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyan-400 via-white to-purple-400 z-10"
                   />
                 )}
 
