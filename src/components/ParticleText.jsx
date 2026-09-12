@@ -56,6 +56,7 @@ const ParticleText = ({
   density = 4,
   color = '#ffffff',
   highlightColor = '#8b5cf6',
+  rainbowMode = false,
   scatter = 180,
   gatherDuration = 1600,
   stagger = 420,
@@ -148,8 +149,10 @@ const ParticleText = ({
       ctx.clearRect(0, 0, width, height);
 
       if (glow && !reducedMotion) {
-        ctx.shadowBlur = particleSize * 3;
-        ctx.shadowColor = highlightColor;
+        ctx.shadowBlur = particleSize * 4;
+        ctx.shadowColor = rainbowMode 
+          ? `hsla(${(now * 0.05) % 360}, 90%, 65%, 0.8)` 
+          : highlightColor;
       } else {
         ctx.shadowBlur = 0;
       }
@@ -191,6 +194,11 @@ const ParticleText = ({
         const follow = reducedMotion ? 1 : 0.22;
         particle.x += (baseX - particle.x) * follow;
         particle.y += (baseY - particle.y) * follow;
+
+        if (rainbowMode) {
+          const particleHue = ((particle.baseHue || 0) + now * 0.05) % 360;
+          particle.color = `hsl(${particleHue}, 95%, 70%)`;
+        }
 
         ctx.globalAlpha = clamp(0.35 + progress * 0.65, 0, 1);
         drawParticle(particle);
@@ -303,6 +311,8 @@ const ParticleText = ({
         const startX = target.x + Math.cos(angle) * distance + (seed - 0.5) * scatter * 0.45;
         const startY = target.y + Math.sin(angle) * distance + (depth - 0.9) * scatter * 0.45;
 
+        const baseHue = (target.x / Math.max(1, width)) * 360;
+
         return {
           x: reducedMotion ? target.x : startX,
           y: reducedMotion ? target.y : startY,
@@ -312,6 +322,7 @@ const ParticleText = ({
           targetY: target.y,
           size: Math.max(0.6, particleSize * (0.75 + target.alpha * 0.45)),
           color: particleColor,
+          baseHue,
           seed,
           depth,
           delay: seed * stagger

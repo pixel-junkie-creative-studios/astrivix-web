@@ -36,10 +36,9 @@ export default function Home() {
           <div className="w-full h-[260px] sm:h-[340px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
             <ParticleText
               text="ASTRIVIX"
-              particleSize={2}
+              particleSize={2.5}
               density={5}
-              color="#ffffff"
-              highlightColor="#aaaaaa"
+              rainbowMode={true}
               scatter={150}
               gatherDuration={1500}
               stagger={100}
