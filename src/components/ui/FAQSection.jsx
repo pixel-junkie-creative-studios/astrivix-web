@@ -56,7 +56,7 @@ export default function FAQSection() {
       {/* Header */}
       <div className="flex flex-col items-center text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-mono tracking-widest uppercase mb-4">
-          <HelpCircle className="w-4 h-4 text-emerald-400" />
+          <HelpCircle className="w-4 h-4 text-white/80" />
           <span>Frequently Asked Questions</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight">

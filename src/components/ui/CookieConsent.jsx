@@ -38,7 +38,7 @@ export default function CookieConsent() {
         >
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/80 shrink-0">
                 <Cookie className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-sm tracking-wide">Privacy & Cookie Preferences</h3>

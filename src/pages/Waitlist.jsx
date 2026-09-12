@@ -33,7 +33,7 @@ export default function Waitlist() {
           to="/"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-white/30 text-xs font-mono tracking-wider text-white/80 hover:text-white transition-all backdrop-blur-md"
         >
-          <ArrowLeft className="w-4 h-4 text-emerald-400" />
+          <ArrowLeft className="w-4 h-4 text-white/80" />
           <span>RETURN TO HOME</span>
         </Link>
         <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase">ASTRIVIX VIP ACCESS</span>
@@ -47,7 +47,7 @@ export default function Waitlist() {
           transition={{ duration: 0.6 }}
           className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl"
         >
-          <div className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 mx-auto mb-6 shadow-lg">
+          <div className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/90 mx-auto mb-6 shadow-lg">
             <Sparkles className="w-8 h-8" />
           </div>
 
@@ -65,7 +65,7 @@ export default function Waitlist() {
               animate={{ opacity: 1, scale: 1 }}
               className="mt-8 p-6 bg-white/10 border border-white/20 rounded-2xl flex flex-col items-center gap-3 text-white"
             >
-              <CheckCircle className="w-10 h-10 text-emerald-400" />
+              <CheckCircle className="w-10 h-10 text-white" />
               <span className="font-semibold text-lg">You're on the list!</span>
               <p className="text-xs text-white/70">
                 We've reserved your VIP position. Keep an eye on <strong className="text-white">{email}</strong> for launch updates.
@@ -96,7 +96,7 @@ export default function Waitlist() {
           )}
 
           <div className="flex items-center justify-center gap-2 mt-6 text-xs text-white/40 font-mono">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <ShieldCheck className="w-4 h-4 text-white/60" />
             <span>Zero Spam. Unsubscribe anytime with 1 click.</span>
           </div>
         </motion.div>

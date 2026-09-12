@@ -110,7 +110,7 @@ export const MorphicNavbar = ({ navItems }) => {
           >
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
               <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-white/70 uppercase flex items-center gap-2">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,1)]" />
+                <span className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
                 AST. // CREATIVE AGENCY
               </span>
               <span className="text-[10px] font-mono text-white/40 uppercase">CLOSE [X]</span>

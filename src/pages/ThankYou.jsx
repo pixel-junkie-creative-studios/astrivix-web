@@ -19,7 +19,7 @@ export default function ThankYou() {
           to="/"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-white/30 text-xs font-mono tracking-wider text-white/80 hover:text-white transition-all backdrop-blur-md"
         >
-          <Home className="w-4 h-4 text-emerald-400" />
+          <Home className="w-4 h-4 text-white/80" />
           <span>RETURN HOME</span>
         </Link>
         <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase">ASTRIVIX CONFIRMATION</span>
@@ -33,7 +33,7 @@ export default function ThankYou() {
           transition={{ duration: 0.6 }}
           className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl flex flex-col items-center"
         >
-          <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 mb-6 shadow-xl">
+          <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/90 mb-6 shadow-xl">
             <CheckCircle2 className="w-10 h-10" />
           </div>
 
