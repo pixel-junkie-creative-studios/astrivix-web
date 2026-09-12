@@ -55,8 +55,8 @@ export default function FAQSection() {
       
       {/* Header */}
       <div className="flex flex-col items-center text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-400 text-xs font-mono tracking-widest uppercase mb-4">
-          <HelpCircle className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-mono tracking-widest uppercase mb-4">
+          <HelpCircle className="w-4 h-4 text-emerald-400" />
           <span>Frequently Asked Questions</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight">
@@ -74,17 +74,17 @@ export default function FAQSection() {
           return (
             <div
               key={idx}
-              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl transition-all duration-300 hover:border-pink-500/30"
+              className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl transition-all duration-300 hover:border-white/30"
             >
               <button
                 onClick={() => toggleFAQ(idx)}
                 className="w-full flex items-center justify-between p-6 md:p-8 text-left text-white focus:outline-none group"
                 aria-expanded={isOpen}
               >
-                <span className="text-base md:text-lg font-medium pr-4 group-hover:text-pink-400 transition-colors">
+                <span className="text-base md:text-lg font-medium pr-4 group-hover:text-white/80 transition-colors">
                   {faq.question}
                 </span>
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-white/80 group-hover:bg-pink-500 group-hover:text-black transition-colors">
+                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-white/80 group-hover:bg-white group-hover:text-black transition-colors">
                   {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                 </div>
               </button>

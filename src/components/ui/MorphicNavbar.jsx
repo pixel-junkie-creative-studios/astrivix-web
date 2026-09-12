@@ -48,7 +48,7 @@ export const MorphicNavbar = ({ navItems }) => {
           <img 
             src="/astrivix-logo-sq.png"
             alt="Astrivix Official Logo" 
-            className="h-9 w-9 object-cover rounded-full border border-pink-500/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_12px_rgba(236,72,153,0.3)]"
+            className="h-9 w-9 object-cover rounded-full border border-white/20 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_12px_rgba(255,255,255,0.15)]"
           />
           <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase">
             ASTRIVIX
@@ -56,7 +56,7 @@ export const MorphicNavbar = ({ navItems }) => {
         </a>
 
         {/* Morphic Desktop Nav Tabs */}
-        <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-pink-500/20 relative">
+        <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative">
           {navItems.map((item, idx) => (
             <a
               key={idx}
@@ -67,7 +67,7 @@ export const MorphicNavbar = ({ navItems }) => {
               {activeTab === idx && (
                 <motion.span
                   layoutId="morphicTabIndicator"
-                  className="absolute inset-0 bg-gradient-to-r from-pink-500/35 via-fuchsia-500/30 to-purple-600/35 rounded-full border border-pink-400/60 shadow-[0_0_15px_rgba(236,72,153,0.45)]"
+                  className="absolute inset-0 bg-white/15 rounded-full border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -109,8 +109,8 @@ export const MorphicNavbar = ({ navItems }) => {
             className="fixed inset-x-3 top-16 bottom-24 bg-[#050508]/98 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.98)] z-[4900] md:hidden flex flex-col justify-between overflow-y-auto"
           >
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
-              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-pink-400 uppercase flex items-center gap-2">
-                <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(236,72,153,1)]" />
+              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-white/70 uppercase flex items-center gap-2">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,1)]" />
                 AST. // CREATIVE AGENCY
               </span>
               <span className="text-[10px] font-mono text-white/40 uppercase">CLOSE [X]</span>
@@ -122,7 +122,7 @@ export const MorphicNavbar = ({ navItems }) => {
                   key={idx}
                   href={item.link}
                   onClick={(e) => handleScroll(e, item.link, idx)}
-                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-pink-400 transition-colors text-left flex items-center justify-between"
+                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-white/70 transition-colors text-left flex items-center justify-between"
                 >
                   <span>{item.name}</span>
                   <span className="text-xs font-mono text-white/30 font-normal">0{idx + 1} →</span>

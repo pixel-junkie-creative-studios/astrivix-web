@@ -155,7 +155,7 @@ export default function Services() {
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 hover:border-pink-500/50 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer transition-colors"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 hover:border-white/50 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer transition-colors"
               >
                 {/* Accent Line Header */}
                 <div 

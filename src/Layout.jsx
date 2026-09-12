@@ -64,10 +64,6 @@ export default function Layout() {
           <About />
         </div>
 
-        <div className="w-full relative z-20">
-          <Testimonials />
-        </div>
-
         <div id="careers" className="w-full relative z-20">
           <Careers />
         </div>
@@ -113,7 +109,7 @@ export default function Layout() {
               <div className="flex flex-col items-center md:items-start w-full">
                 <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Access</h4>
                 <div className="flex flex-col gap-4 text-sm text-white/70">
-                  <Link to="/waitlist" className="hover:text-pink-400 transition-colors text-pink-400 font-semibold">VIP Waitlist</Link>
+                  <Link to="/waitlist" className="hover:text-white transition-colors text-white/70 font-semibold">VIP Waitlist</Link>
                   <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">
