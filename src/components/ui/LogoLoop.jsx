@@ -68,7 +68,14 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     if (!track) return;
 
     const observer = new IntersectionObserver(([entry]) => {
+      const wasVisible = isVisibleRef.current;
       isVisibleRef.current = entry.isIntersecting;
+      if (entry.isIntersecting && !wasVisible) {
+        lastTimestampRef.current = null;
+        if (rafRef.current === null) {
+          rafRef.current = requestAnimationFrame(animate);
+        }
+      }
     }, { threshold: 0.05 });
     
     observer.observe(track);
@@ -86,7 +93,7 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     const animate = timestamp => {
       if (!isVisibleRef.current) {
         lastTimestampRef.current = null;
-        rafRef.current = requestAnimationFrame(animate);
+        rafRef.current = null;
         return;
       }
 
