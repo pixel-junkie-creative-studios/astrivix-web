@@ -18,7 +18,6 @@ const mixRgb = (from, to, amount) => ({
 });
 
 const rgbToCss = rgb => `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
 
@@ -41,7 +40,6 @@ const resolveFontSize = (value, container, fontWeight, fontFamily) => {
 
 const waitForFonts = async font => {
   if (!('fonts' in document)) return;
-
   try {
     await Promise.race([
       document.fonts.load(font),
@@ -51,20 +49,20 @@ const waitForFonts = async font => {
 };
 
 const ParticleText = ({
-  text = 'React Bits',
-  particleSize = 2,
+  text = 'ASTRIVIX',
+  particleSize = 2.2,
   density = 4,
   color = '#ffffff',
   highlightColor = '#ffffff',
-  scatter = 180,
-  gatherDuration = 1600,
-  stagger = 420,
-  pointerRepel = 40,
-  repelRadius = 120,
-  idleDrift = 0.7,
+  scatter = 120,
+  gatherDuration = 1200,
+  stagger = 60,
+  pointerRepel = 50,
+  repelRadius = 180,
+  idleDrift = 0,
   trigger = 'mount',
-  fontSize = 'clamp(3rem, 12vw, 8rem)',
-  fontWeight = 800,
+  fontSize = 'clamp(4rem, 15vw, 11rem)',
+  fontWeight = 900,
   fontFamily = 'inherit',
   glow = true,
   className = '',
@@ -125,17 +123,12 @@ const ParticleText = ({
       gathering = true;
     };
 
+    // Uniform High-DPI Circular Anti-Aliased Particle Rendering
     const drawParticle = particle => {
-      const size = particle.size;
+      const radius = Math.max(0.75, particle.size / 2);
       ctx.fillStyle = particle.color;
-
-      if (size <= 2.1) {
-        ctx.fillRect(particle.x - size / 2, particle.y - size / 2, size, size);
-        return;
-      }
-
       ctx.beginPath();
-      ctx.arc(particle.x, particle.y, size / 2, 0, Math.PI * 2);
+      ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
       ctx.fill();
     };
 
@@ -154,8 +147,8 @@ const ParticleText = ({
       ctx.clearRect(0, 0, width, height);
 
       if (glow && !reducedMotion) {
-        ctx.shadowBlur = particleSize * 3;
-        ctx.shadowColor = highlightColor;
+        ctx.shadowBlur = particleSize * 2.5;
+        ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
       } else {
         ctx.shadowBlur = 0;
       }
@@ -194,11 +187,11 @@ const ParticleText = ({
           }
         }
 
-        const follow = reducedMotion ? 1 : 0.22;
+        const follow = reducedMotion ? 1 : 0.25;
         particle.x += (baseX - particle.x) * follow;
         particle.y += (baseY - particle.y) * follow;
 
-        ctx.globalAlpha = clamp(0.35 + progress * 0.65, 0, 1);
+        ctx.globalAlpha = clamp(0.4 + progress * 0.6, 0, 1);
         drawParticle(particle);
       });
 
@@ -234,7 +227,9 @@ const ParticleText = ({
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const computed = window.getComputedStyle(container);
-      const resolvedFamily = fontFamily === 'inherit' ? computed.fontFamily || 'sans-serif' : fontFamily;
+      const resolvedFamily = fontFamily === 'inherit' 
+        ? '"Inter", "JetBrains Mono", system-ui, -apple-system, sans-serif' 
+        : fontFamily;
       let resolvedSize = resolveFontSize(fontSize, container, fontWeight, resolvedFamily);
       let font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
 
@@ -278,12 +273,14 @@ const ParticleText = ({
 
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets = [];
-      const step = Math.max(2, Math.floor(density));
+
+      // UNIFORM 2D GRID SAMPLING — Prevents diagonal raster modulo pattern distortion
+      const step = Math.max(3, Math.min(6, Math.floor(resolvedSize / 28)));
 
       for (let y = 0; y < offscreen.height; y += step) {
         for (let x = 0; x < offscreen.width; x += step) {
           const alpha = imageData.data[(y * offscreen.width + x) * 4 + 3];
-          if (alpha > 40) {
+          if (alpha > 75) { // High alpha threshold for crisp letter outlines
             targets.push({
               x: width / 2 - offscreen.width / 2 + x,
               y: height / 2 - offscreen.height / 2 + y,
@@ -293,17 +290,15 @@ const ParticleText = ({
         }
       }
 
-      const maxParticles = Math.max(800, Math.min(2400, Math.floor((width * height) / 140)));
-      const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
-      const baseRgb = hexToRgb(color);
-      const highlightRgb = hexToRgb(highlightColor);
-      const selected = targets.filter((_, index) => index % stride === 0);
+      const baseRgb = hexToRgb(color) || { r: 255, g: 255, b: 255 };
+      const highlightRgb = hexToRgb(highlightColor) || { r: 255, g: 255, b: 255 };
 
-      particles = selected.map((target, index) => {
+      // Direct 1-to-1 mapping without destructive modulo index filtering
+      particles = targets.map((target, index) => {
         const seed = ((index * 9301 + 49297) % 233280) / 233280;
         const depth = 0.45 + (((index * 233 + 97) % 1000) / 1000) * 0.9;
-        const blend = baseRgb && highlightRgb ? clamp(target.x / Math.max(1, width) + (seed - 0.5) * 0.35, 0, 1) : 0;
-        const particleColor = baseRgb && highlightRgb ? rgbToCss(mixRgb(baseRgb, highlightRgb, blend)) : color;
+        const blend = clamp(target.x / Math.max(1, width), 0, 1);
+        const particleColor = rgbToCss(mixRgb(baseRgb, highlightRgb, blend));
         const angle = seed * Math.PI * 2;
         const distance = (reducedMotion ? 0 : scatter) * (0.35 + depth * 0.75);
         const startX = target.x + Math.cos(angle) * distance + (seed - 0.5) * scatter * 0.45;
@@ -316,7 +311,7 @@ const ParticleText = ({
           startY,
           targetX: target.x,
           targetY: target.y,
-          size: Math.max(0.6, particleSize * (0.75 + target.alpha * 0.45)),
+          size: Math.max(1.2, particleSize * (0.85 + target.alpha * 0.3)),
           color: particleColor,
           seed,
           depth,
@@ -350,10 +345,10 @@ const ParticleText = ({
       resizeFrame = window.requestAnimationFrame(sampleText);
     };
 
-    const handlePointerMove = event => {
-      const rect = canvas.getBoundingClientRect();
-      pointer.x = event.clientX - rect.left;
-      pointer.y = event.clientY - rect.top;
+    const handlePointerMove = e => {
+      const rect = container.getBoundingClientRect();
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
       pointer.active = true;
     };
 
@@ -361,43 +356,19 @@ const ParticleText = ({
       pointer.active = false;
     };
 
-    const handlePointerEnter = event => {
-      handlePointerMove(event);
-      if (trigger === 'hover') startGather(true);
-    };
+    container.addEventListener('pointermove', handlePointerMove);
+    container.addEventListener('pointerleave', handlePointerLeave);
+    window.addEventListener('resize', queueSample);
 
-    const handleClick = () => {
-      if (trigger === 'click') startGather(true);
-    };
-
-    const reduceMotionQuery = window.matchMedia?.('(prefers-reduced-motion: reduce)');
-    const handleReduceMotionChange = event => {
-      reducedMotion = event.matches;
-      sampleText();
-    };
-
-    reduceMotionQuery?.addEventListener('change', handleReduceMotionChange);
-    canvas.addEventListener('pointerenter', handlePointerEnter);
-    canvas.addEventListener('pointermove', handlePointerMove);
-    canvas.addEventListener('pointerleave', handlePointerLeave);
-    canvas.addEventListener('click', handleClick);
-
-    const resizeObserver = new ResizeObserver(queueSample);
-    resizeObserver.observe(container);
     sampleText();
 
     return () => {
-      buildId += 1;
+      container.removeEventListener('pointermove', handlePointerMove);
+      container.removeEventListener('pointerleave', handlePointerLeave);
+      window.removeEventListener('resize', queueSample);
       visibilityObserver.disconnect();
-      resizeObserver.disconnect();
-      reduceMotionQuery?.removeEventListener('change', handleReduceMotionChange);
-      canvas.removeEventListener('pointerenter', handlePointerEnter);
-      canvas.removeEventListener('pointermove', handlePointerMove);
-      canvas.removeEventListener('pointerleave', handlePointerLeave);
-      canvas.removeEventListener('click', handleClick);
-
-      if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
-      if (resizeFrame !== null) window.cancelAnimationFrame(resizeFrame);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      if (resizeFrame) window.cancelAnimationFrame(resizeFrame);
     };
   }, [
     text,
@@ -411,7 +382,6 @@ const ParticleText = ({
     pointerRepel,
     repelRadius,
     idleDrift,
-    trigger,
     fontSize,
     fontWeight,
     fontFamily,
@@ -419,9 +389,12 @@ const ParticleText = ({
   ]);
 
   return (
-    <div ref={containerRef} className={`particle-text relative flex items-center justify-center ${className}`} style={style} aria-label={text}>
-      <canvas ref={canvasRef} className="particle-text__canvas relative z-10" aria-hidden="true" />
-      <span className="particle-text__sr">{text}</span>
+    <div
+      ref={containerRef}
+      className={`particle-text-container ${className}`}
+      style={style}
+    >
+      <canvas ref={canvasRef} className="particle-text-canvas" />
     </div>
   );
 };

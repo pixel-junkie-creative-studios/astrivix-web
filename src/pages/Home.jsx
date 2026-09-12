@@ -37,16 +37,17 @@ export default function Home() {
             <div className="absolute inset-0 bg-black/60 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.2 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 5}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.6 : 2.2}
+              density={4}
               color="#ffffff"
               highlightColor="#ffffff"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 150}
-              gatherDuration={1400}
-              stagger={80}
-              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
-              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(4rem, 17vw, 11rem)" : "clamp(4.2rem, 15vw, 11rem)"}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 100}
+              gatherDuration={1200}
+              stagger={50}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 60}
+              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 220}
+              idleDrift={0}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(3.5rem, 16vw, 9rem)" : "clamp(4.5rem, 15vw, 11rem)"}
               fontWeight={900}
             />
           </div>
