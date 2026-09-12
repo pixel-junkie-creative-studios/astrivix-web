@@ -5,7 +5,7 @@ import { Plus, Minus, HelpCircle } from 'lucide-react';
 const faqs = [
   {
     question: "What core services does Astrivix Corp provide?",
-    answer: "Astrivix is an end-to-end digital agency & engineering studio. We offer high-performance web development (React/Vite/WebGL), native mobile app engineering (Native iOS/Android), custom logo & brand identity systems, conversion rate optimization (CRO), digital marketing & SEO, motion graphics, and strategic financial consulting."
+    answer: "Astrivix is a global software engineering & brand architecture studio. We offer high-performance web development (React/Vite/WebGL), native mobile app engineering (Native iOS/Android), custom logo & brand identity systems, conversion rate optimization (CRO), digital marketing & SEO, motion graphics, and strategic financial consulting."
   },
   {
     question: "How fast can Astrivix deliver a custom digital project?",

@@ -114,7 +114,7 @@ export default function About() {
             <div className="flex-grow h-[2px] bg-gradient-to-r from-white/40 via-white/10 to-transparent mt-2"></div>
           </div>
           <p className="text-[10px] sm:text-sm font-mono tracking-[0.25em] text-white/70 uppercase font-semibold">
-            ENGINEERING DIGITAL INFRASTRUCTURE & CREATIVE EXCELLENCE
+            BESPOKE SOFTWARE SYSTEMS & GLOBAL BRAND ARCHITECTURE
           </p>
         </motion.div>
 
