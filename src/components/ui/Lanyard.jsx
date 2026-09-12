@@ -56,19 +56,36 @@ function createAstrivixBack() {
   ctx.fillStyle = '#050508';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = '#252535';
   ctx.lineWidth = 12;
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
+  // Sleek minimalist silver corner accents
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 42px sans-serif';
+  ctx.fillRect(36, 36, 28, 4);
+  ctx.fillRect(36, 36, 4, 28);
+  ctx.fillRect(canvas.width - 64, 36, 28, 4);
+  ctx.fillRect(canvas.width - 40, 36, 4, 28);
+
+  ctx.fillRect(36, canvas.height - 40, 28, 4);
+  ctx.fillRect(36, canvas.height - 64, 4, 28);
+  ctx.fillRect(canvas.width - 64, canvas.height - 40, 28, 4);
+  ctx.fillRect(canvas.width - 40, canvas.height - 64, 4, 28);
+
+  // Back Card Typography: CREATING LEGENDS
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '900 48px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '3px';
-  ctx.fillText('CREATIVE MIND', 256, 360);
-  ctx.fillStyle = '#ec4899';
-  ctx.font = '900 36px sans-serif';
-  ctx.fillText('@ ASTRIVIX', 256, 430);
+  ctx.fillText('CREATING', 256, 350);
+  
+  ctx.fillStyle = '#888899';
+  ctx.font = '900 48px sans-serif';
+  ctx.fillText('LEGENDS', 256, 420);
+
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+  ctx.font = '700 14px monospace';
+  ctx.fillText('ASTRIVIX CORP', 256, 510);
   
   return canvas.toDataURL('image/png');
 }
@@ -79,25 +96,25 @@ function createAstrivixBandTexture() {
   canvas.height = 128; 
   const ctx = canvas.getContext('2d');
   
-  // Premium Matte Black Fabric Weave Base
-  ctx.fillStyle = '#0a0a0d';
+  // Premium Matte Obsidian Fabric Base
+  ctx.fillStyle = '#08080c';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  // Subtle Fabric Border Accents
+  // Subtle Metallic Border Accents
   ctx.fillStyle = '#22222a';
   ctx.fillRect(0, 0, canvas.width, 4);
   ctx.fillRect(0, 124, canvas.width, 4);
   
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 36px sans-serif';
+  ctx.font = '900 38px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   
-  // Draw horizontal bold text along strap length
+  // Draw ONLY ASTRIVIX repeating along lanyard strap tag as requested
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('★   ASTRIVIX   ★   CREATIVE MIND @ ASTRIVIX   ★   ASTRIVIX   ★', 1024, 64);
+  ctx.fillText('★   ASTRIVIX   ★   ASTRIVIX   ★   ASTRIVIX   ★   ASTRIVIX   ★', 1024, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
