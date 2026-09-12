@@ -14,8 +14,12 @@ import {
   Zap,
   ChevronRight,
   Lock,
-  Layers
+  Layers,
+  MessageSquare,
+  Mail,
+  Award
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const categories = [
   { id: 'all', label: 'ALL FAQS' },
@@ -69,8 +73,8 @@ const faqs = [
     categoryLabel: "CUSTOM CODE",
     icon: Code2,
     badge: "ZERO TEMPLATE BLOAT",
-    question: "Do you use pre-built templates or engineer 100% custom architectures?",
-    shortAnswer: "We write 100% bespoke React, Vite, WebGL, and Tailwind code engineered specifically for your brand.",
+    question: "Do you use pre-built templates or write 100% custom code?",
+    shortAnswer: "We write 100% custom React, Vite, WebGL, and Tailwind code engineered specifically for your brand.",
     detailedAnswer: "Every line of code and UI component is handcrafted from scratch. We strictly avoid bloated WordPress themes, slow website builders, or generic templates. We build modern single-page applications and web apps powered by React, Next.js, Vite, Tailwind CSS, Framer Motion, and Three.js / WebGL, achieving 100/100 PageSpeed scores and 120 FPS render loops.",
     highlights: [
       "100/100 Google PageSpeed Guarantee",
@@ -125,7 +129,7 @@ const faqs = [
     badge: "ENTERPRISE NDA SIGNED",
     question: "Can we execute a Non-Disclosure Agreement (NDA) before sharing project details?",
     shortAnswer: "Yes, we execute mutual enterprise NDAs before reviewing proprietary blueprints or IP.",
-    detailedAnswer: "Client confidentiality is paramount. Before any initial discovery call, project audit, or code review, we sign mutual enterprise-grade NDAs. Your proprietary business logic, product roadmaps, trade secrets, and user data remain strictly confidential under legal enforceability.",
+    detailedAnswer: "Client confidentiality is paramount. Before any initial discovery call, project audit, or code review, we sign mutual enterprise-grade NDAs. Your confidential business logic, product roadmaps, trade secrets, and user data remain strictly protected under legal enforceability.",
     highlights: [
       "Mutual Enterprise Legal NDA Execution",
       "Encrypted Asset Storage & Transfer",
@@ -297,8 +301,10 @@ export default function FAQSection() {
           })}
         </div>
 
-        {/* RIGHT COLUMN: ACTIVE DETAIL SPOTLIGHT PANEL (lg:col-span-7) */}
-        <div className="lg:col-span-7 sticky top-28">
+        {/* RIGHT COLUMN: ACTIVE DETAIL SPOTLIGHT PANEL + HELPDESK WIDGET (lg:col-span-7) */}
+        <div className="lg:col-span-7 sticky top-28 flex flex-col gap-6">
+          
+          {/* Active Question Spotlight Box */}
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedFaq.id}
@@ -306,52 +312,52 @@ export default function FAQSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: -15 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="p-8 md:p-12 rounded-3xl bg-gradient-to-br from-white/10 via-white/[0.05] to-black/80 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden group"
+              className="p-8 md:p-10 rounded-3xl bg-gradient-to-br from-white/10 via-white/[0.05] to-black/80 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden group"
             >
               {/* Top Liquid Glass Highlight */}
               <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
               
               {/* Category Icon Aura */}
-              <div className="flex items-center justify-between border-b border-white/10 pb-6 mb-8">
+              <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-inner">
-                    {React.createElement(selectedFaq.icon, { className: "w-6 h-6 text-cyan-300" })}
+                  <div className="w-11 h-11 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white shadow-inner">
+                    {React.createElement(selectedFaq.icon, { className: "w-5 h-5 text-cyan-300" })}
                   </div>
                   <div>
                     <span className="text-xs font-mono tracking-widest text-cyan-400 uppercase font-semibold block">
                       {selectedFaq.categoryLabel}
                     </span>
-                    <span className="text-xs font-mono text-white/50 uppercase">
+                    <span className="text-[10px] font-mono text-white/50 uppercase">
                       VERIFIED AGENCY POLICY
                     </span>
                   </div>
                 </div>
 
-                <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-2">
+                <div className="px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold tracking-wider uppercase flex items-center gap-2">
                   <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
                   <span>{selectedFaq.badge}</span>
                 </div>
               </div>
 
               {/* Title & Detailed Answer */}
-              <h2 className="text-xl md:text-3xl font-semibold text-white tracking-tight leading-snug mb-6">
+              <h2 className="text-xl md:text-2xl font-semibold text-white tracking-tight leading-snug mb-4">
                 {selectedFaq.question}
               </h2>
 
-              <p className="text-white/80 text-sm md:text-base leading-relaxed font-light mb-8">
+              <p className="text-white/80 text-xs md:text-sm leading-relaxed font-light mb-6">
                 {selectedFaq.detailedAnswer}
               </p>
 
               {/* Key Takeaways & Highlights Grid */}
-              <div className="mb-10">
-                <h4 className="text-xs font-mono tracking-widest uppercase text-white/40 mb-4 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-white/60" />
+              <div className="mb-6">
+                <h4 className="text-[10px] font-mono tracking-widest uppercase text-white/40 mb-3 flex items-center gap-2">
+                  <Layers className="w-3.5 h-3.5 text-white/60" />
                   <span>KEY HIGHLIGHTS & GUARANTEES</span>
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                   {selectedFaq.highlights.map((highlight, idx) => (
-                    <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90 font-mono">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <div key={idx} className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white/90 font-mono">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       <span>{highlight}</span>
                     </div>
                   ))}
@@ -359,7 +365,7 @@ export default function FAQSection() {
               </div>
 
               {/* Bottom Action CTA Row */}
-              <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="pt-5 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div className="flex items-center gap-2 text-xs text-white/50 font-mono">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
                   <span>GUARANTEED BY ASTRIVIX CORP</span>
@@ -367,7 +373,7 @@ export default function FAQSection() {
 
                 <a
                   href={selectedFaq.ctaLink}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-white text-black text-xs font-mono font-bold tracking-widest uppercase hover:bg-cyan-300 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.4)] group/btn"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-full bg-white text-black text-xs font-mono font-bold tracking-widest uppercase hover:bg-cyan-300 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.4)] group/btn"
                 >
                   <span>{selectedFaq.ctaText}</span>
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -375,6 +381,37 @@ export default function FAQSection() {
               </div>
             </motion.div>
           </AnimatePresence>
+
+          {/* SECONDARY HELPDESK & QUICK CONTACT WIDGET (Fills right column smoothly so zero empty black space exists) */}
+          <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+                <MessageSquare className="w-5 h-5" />
+              </div>
+              <div>
+                <h4 className="text-sm font-semibold text-white">Have a specific custom requirement?</h4>
+                <p className="text-xs text-white/60 font-mono mt-0.5">Chat directly with our founders on WhatsApp or email.</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
+              <a
+                href="https://wa.me/917736387794"
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 text-[#25D366] hover:bg-[#25D366] hover:text-black text-xs font-mono font-bold tracking-widest uppercase transition-all text-center"
+              >
+                WHATSAPP
+              </a>
+              <Link
+                to="/csr"
+                className="flex-1 sm:flex-none px-4 py-2.5 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500 hover:text-white text-xs font-mono font-bold tracking-widest uppercase transition-all text-center"
+              >
+                CSR GRANT
+              </Link>
+            </div>
+          </div>
+
         </div>
 
       </div>
