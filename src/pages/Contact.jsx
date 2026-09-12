@@ -29,7 +29,7 @@ export default function Contact() {
           budget: formData.budget,
           message: formData.message,
           _subject: `New Project Inquiry from ${formData.name} (${formData.budget})`,
-          _autoresponse: `Thank you for contacting Astrivix Corp. We have received your inquiry regarding "${formData.message.slice(0, 50)}...". Our engineering team is reviewing your requirements and will reply within 2 hours.`
+          _autoresponse: `Thank you for contacting Astrivix Corp. We have received your inquiry and will reply to your email within 2 hours.`
         })
       });
 
