@@ -253,17 +253,17 @@ export default function FAQSection() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
                 onClick={() => setSelectedFaqId(faq.id)}
-                className={`group cursor-pointer relative p-5 md:p-6 rounded-2xl border overflow-hidden transition-all duration-300 ${
+                className={`group cursor-pointer relative p-5 md:p-6 rounded-2xl border transition-all duration-300 ${
                   isSelected
-                    ? 'bg-white/10 border-cyan-400/50 shadow-[0_10px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl'
-                    : 'bg-white/5 border-white/10 hover:border-white/25 hover:bg-white/[0.07] backdrop-blur-xl'
+                    ? 'bg-[#0e0e18] border-cyan-400/60 shadow-[0_10px_35px_rgba(0,0,0,0.85)]'
+                    : 'bg-[#080810]/90 border-white/10 hover:border-white/30 hover:bg-[#0e0e18]'
                 }`}
               >
                 {/* Active Left Glow Accent Bar */}
                 {isSelected && (
                   <motion.div
                     layoutId="activeFaqIndicator"
-                    className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyan-400 via-white to-purple-400 z-10"
+                    className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-cyan-400 via-white to-purple-400 z-10 rounded-l-2xl"
                   />
                 )}
 
@@ -278,7 +278,7 @@ export default function FAQSection() {
                       {faq.categoryLabel}
                     </span>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-1 rounded bg-white/5 text-white/50 border border-white/10 group-hover:border-white/20">
+                  <span className="text-[10px] font-mono px-2 py-1 rounded bg-white/10 text-white/70 border border-white/15 group-hover:border-white/30">
                     {faq.badge}
                   </span>
                 </div>
@@ -314,7 +314,7 @@ export default function FAQSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: -15 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="p-8 md:p-10 rounded-3xl bg-gradient-to-br from-white/10 via-white/[0.05] to-black/80 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-2xl relative overflow-hidden group"
+              className="p-8 md:p-10 rounded-3xl bg-gradient-to-br from-[#12121e] via-[#0a0a14] to-[#05050a] border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.95)] relative overflow-hidden group"
             >
               {/* Top Liquid Glass Highlight */}
               <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
@@ -385,7 +385,7 @@ export default function FAQSection() {
           </AnimatePresence>
 
           {/* SECONDARY HELPDESK & QUICK CONTACT WIDGET (Fills right column smoothly so zero empty black space exists) */}
-          <div className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="p-6 rounded-3xl bg-[#0a0a14]/95 border border-white/15 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
                 <MessageSquare className="w-5 h-5" />
