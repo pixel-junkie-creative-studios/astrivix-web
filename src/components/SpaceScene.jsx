@@ -30,7 +30,9 @@ const CameraController = ({ scrollYProgress }) => {
   return null;
 };
 
-const DetailedEarth = ({ position }) => {
+const NORMAL_SCALE_EARTH = new THREE.Vector2(3.5, 3.5);
+
+const DetailedEarth = ({ position, isMobile }) => {
   const earthRef = useRef();
   const cloudsRef = useRef();
 
@@ -46,14 +48,16 @@ const DetailedEarth = ({ position }) => {
     if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
   });
 
+  const segments = isMobile ? 48 : 64;
+
   return (
     <group position={position} rotation={[0.4, 0, 0.2]}>
       {/* High-Resolution Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[5, 128, 128]}>
+      <Sphere ref={earthRef} args={[5, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
-          normalScale={new THREE.Vector2(3.5, 3.5)}
+          normalScale={NORMAL_SCALE_EARTH}
           roughnessMap={specularMap} 
           roughness={0.25} 
           metalness={0.2}
@@ -61,7 +65,7 @@ const DetailedEarth = ({ position }) => {
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[5.05, 128, 128]}>
+      <Sphere ref={cloudsRef} args={[5.05, segments, segments]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
@@ -74,7 +78,7 @@ const DetailedEarth = ({ position }) => {
   );
 };
 
-const DetailedMoon = ({ position }) => {
+const DetailedMoon = ({ position, isMobile }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
@@ -82,9 +86,11 @@ const DetailedMoon = ({ position }) => {
     if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
   });
 
+  const segments = isMobile ? 32 : 48;
+
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[2.2, 128, 128]}>
+      <Sphere ref={moonRef} args={[2.2, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
@@ -97,19 +103,20 @@ const DetailedMoon = ({ position }) => {
   );
 };
 
-const RealisticMars = ({ position }) => {
+const RealisticMars = ({ position, isMobile }) => {
   const marsRef = useRef();
-  
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
     if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
   });
 
+  const segments = isMobile ? 48 : 64;
+
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[4.2, 128, 128]}>
+      <Sphere ref={marsRef} args={[4.2, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
@@ -239,9 +246,9 @@ const Planets = ({ isMobile }) => {
   return (
     <>
       <Comet />
-      <DetailedEarth position={earthPos} />
-      <DetailedMoon position={moonPos} />
-      <RealisticMars position={marsPos} />
+      <DetailedEarth position={earthPos} isMobile={isMobile} />
+      <DetailedMoon position={moonPos} isMobile={isMobile} />
+      <RealisticMars position={marsPos} isMobile={isMobile} />
       
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>

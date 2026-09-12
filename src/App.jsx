@@ -51,11 +51,11 @@ function App() {
       root
       ref={lenisRef}
       options={{
-        lerp: 0.14,
-        duration: 0.8,
+        lerp: 0.12,
+        duration: 0.7,
         smoothWheel: true,
-        wheelMultiplier: 1.1,
-        touchMultiplier: 1.2,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.0,
         syncTouch: false
       }}
     >
