@@ -59,7 +59,7 @@ export default function Preloader() {
             {/* Progress Bar Container */}
             <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden mb-4">
               <motion.div 
-                className="h-full bg-gradient-to-r from-purple-600 to-blue-500"
+                className="h-full bg-gradient-to-r from-white via-zinc-400 to-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.2, ease: "easeOut" }}

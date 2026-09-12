@@ -15,13 +15,13 @@ export const KokonutCard = ({
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="glass-metallic p-6 sm:p-8 rounded-[2rem] border border-white/20 relative overflow-hidden group shadow-2xl gpu-layer flex flex-col justify-between min-h-[260px]"
     >
-      {/* Ambient Neon Highlight Blur */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+      {/* Ambient Silver Highlight Blur */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
       
       {/* Top Header Badge */}
       <div className="flex items-center justify-between relative z-10 mb-4">
-        <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 uppercase flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+        <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-white/80 bg-white/10 px-3 py-1 rounded-full border border-white/20 uppercase flex items-center gap-2">
+          <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
           {badge}
         </span>
         <div className="w-9 h-9 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white group-hover:border-white/40 transition-colors">

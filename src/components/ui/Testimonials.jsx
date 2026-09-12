@@ -68,8 +68,8 @@ export default function Testimonials() {
       />
 
       <div className="flex flex-col items-center text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono tracking-widest uppercase mb-4">
-          <ShieldCheck className="w-4 h-4 text-pink-400" />
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/15 text-white/80 text-xs font-mono tracking-widest uppercase mb-4">
+          <ShieldCheck className="w-4 h-4 text-white" />
           <span>Client Testimonials & Impact</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight">
@@ -84,9 +84,9 @@ export default function Testimonials() {
         {reviews.map((rev, idx) => (
           <div
             key={idx}
-            className="group relative bg-white/5 border border-white/10 p-8 rounded-3xl backdrop-blur-xl hover:border-pink-500/40 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between"
+            className="group relative glass-metallic p-8 rounded-3xl border border-white/20 hover:border-white/50 transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between"
           >
-            <div className="absolute top-6 right-6 text-white/10 group-hover:text-pink-500/20 transition-colors">
+            <div className="absolute top-6 right-6 text-white/10 group-hover:text-white/30 transition-colors">
               <Quote className="w-10 h-10" />
             </div>
 
@@ -94,7 +94,7 @@ export default function Testimonials() {
               {/* Star Rating */}
               <div className="flex items-center gap-1 mb-6">
                 {[...Array(rev.rating)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-pink-500 text-pink-500" />
+                  <Star key={i} className="w-4 h-4 fill-white text-white" />
                 ))}
               </div>
 
@@ -106,13 +106,13 @@ export default function Testimonials() {
 
             {/* Author details */}
             <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-pink-500/20">
+              <div className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-sm shadow-lg">
                 {rev.initials}
               </div>
               <div>
                 <h3 className="text-white font-semibold text-sm">{rev.name}</h3>
                 <p className="text-white/50 text-xs">{rev.role} • {rev.company}</p>
-                <span className="inline-block text-[10px] font-mono text-pink-400 mt-1 uppercase tracking-wider">
+                <span className="inline-block text-[10px] font-mono text-white/70 mt-1 uppercase tracking-wider">
                   ✓ {rev.badge}
                 </span>
               </div>
