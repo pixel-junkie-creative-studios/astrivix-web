@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, Send, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle2, DollarSign, Sparkles } from 'lucide-react';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -7,9 +7,46 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    budget: '$5k - $10k',
+    budget: '5000',
     message: ''
   });
+
+  const getBudgetFeedback = (val) => {
+    if (val === '' || val === null || val === undefined) return null;
+    const num = parseFloat(val);
+    if (isNaN(num)) return null;
+
+    if (num < 10) {
+      return {
+        text: "If your budget is under $10, we will pray for your soul 🙏 (Check out our free CSR Founder Grant below!)",
+        style: "text-amber-300 border-amber-500/30 bg-amber-500/10"
+      };
+    }
+    if (num < 500) {
+      return {
+        text: "We respect the hustle, but our servers cost more per hour! Check our CSR Grant for 100% free support.",
+        style: "text-rose-300 border-rose-500/30 bg-rose-500/10"
+      };
+    }
+    if (num < 3000) {
+      return {
+        text: "Solid start! Ideal for express landing pages, custom logo suites & brand identity kits (24-72 hrs).",
+        style: "text-cyan-300 border-cyan-500/30 bg-cyan-500/10"
+      };
+    }
+    if (num < 15000) {
+      return {
+        text: "Sweet spot! Perfect for full custom web platforms, 120 FPS animations & mobile apps.",
+        style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
+      };
+    }
+    return {
+      text: "Legendary status unlocked 🚀 Full studio priority + dedicated sprint squad activated!",
+      style: "text-purple-300 border-purple-500/30 bg-purple-500/10"
+    };
+  };
+
+  const feedback = getBudgetFeedback(formData.budget);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,9 +63,9 @@ export default function Contact() {
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
-          budget: formData.budget,
+          budget: `$${formData.budget}`,
           message: formData.message,
-          _subject: `New Project Inquiry from ${formData.name} (${formData.budget})`,
+          _subject: `New Project Inquiry from ${formData.name} ($${formData.budget})`,
           _autoresponse: `Thank you for contacting Astrivix Corp. We have received your inquiry and will reply to your email within 2 hours.`
         })
       });
@@ -37,11 +74,11 @@ export default function Contact() {
         setSubmitted(true);
       } else {
         // Fallback mailto
-        window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+        window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)} ($${formData.budget})&body=${encodeURIComponent(formData.message)}`;
         setSubmitted(true);
       }
     } catch (err) {
-      window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+      window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)} ($${formData.budget})&body=${encodeURIComponent(formData.message)}`;
       setSubmitted(true);
     } finally {
       setLoading(false);
@@ -151,18 +188,32 @@ export default function Contact() {
                 />
               </div>
 
+              {/* NUMERIC BUDGET INPUT WITH DYNAMIC FUNNY FEEDBACK */}
               <div>
-                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Estimated Budget Range</label>
-                <select
-                  value={formData.budget}
-                  onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                  className="w-full bg-[#050505] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
-                >
-                  <option value="Under $5k">Under $5,000 (Express Sprint)</option>
-                  <option value="$5k - $10k">$5,000 - $10,000 (Standard Web Platform)</option>
-                  <option value="$10k - $25k">$10,000 - $25,000 (Custom Enterprise App)</option>
-                  <option value="$25k+">$25,000+ (Full Product Suite & Retainer)</option>
-                </select>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">
+                  Estimated Budget (USD $)
+                </label>
+                <div className="relative flex items-center">
+                  <span className="absolute left-4 text-white/50 text-base font-mono font-bold">$</span>
+                  <input
+                    type="number"
+                    min="0"
+                    step="100"
+                    required
+                    value={formData.budget}
+                    onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                    placeholder="Enter amount in USD (e.g. 5000)"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                  />
+                </div>
+
+                {/* DYNAMIC FUNNY FEEDBACK BOX */}
+                {feedback && (
+                  <div className={`mt-3 p-3.5 rounded-xl border text-xs font-mono leading-relaxed transition-all duration-300 flex items-start gap-2.5 ${feedback.style}`}>
+                    <Sparkles className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span>{feedback.text}</span>
+                  </div>
+                )}
               </div>
 
               <div>
