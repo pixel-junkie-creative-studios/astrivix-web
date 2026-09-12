@@ -121,8 +121,8 @@ export default function Contact() {
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">WhatsApp Direct</span>
-                <span className="text-sm font-black tracking-wider uppercase text-white">Chat Directly On WhatsApp</span>
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">Instant Messaging</span>
+                <span className="text-sm font-black tracking-wider uppercase text-white">+91 77363 87794</span>
               </div>
             </a>
 
