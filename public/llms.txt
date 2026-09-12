@@ -1,0 +1,20 @@
+# Astrivix Corp
+
+> Astrivix Corp is a software engineering and design agency specializing in high-performance web applications, mobile platforms, enterprise cloud architecture, and financial technology solutions.
+
+## Core Capabilities & Services
+
+- [Services](https://www.astrivix.in/services): Custom software development, full-stack React & Node.js engineering, WebGL/Three.js interactive experiences, and cloud architecture.
+- [Portfolio](https://www.astrivix.in/portfolio): High-impact digital products, client case studies, and engineering benchmarks.
+- [Financial Consulting](https://www.astrivix.in/financial-consulting): Quantitative financial tech, algorithm design, and technology advisory for growing enterprises.
+- [About Us](https://www.astrivix.in/about): Company mission, core principles, and global engineering team background.
+- [Careers](https://www.astrivix.in/careers): Open positions for software engineers, UI/UX designers, and product leaders.
+- [Contact](https://www.astrivix.in/contact): Direct project inquiries, consultation requests, and project scope estimates.
+- [CSR Grant](https://www.astrivix.in/csr): Astrivix Social Responsibility Grant offering 100% free engineering support for non-profits and social enterprises.
+
+## Optional & Ingestion Resources
+
+- [Full LLM Knowledgebase](https://www.astrivix.in/llms-full.txt): Markdown ingestion document for RAG pipelines and AI search engines.
+- [Sitemap](https://www.astrivix.in/sitemap.xml): XML web index of all canonical routes.
+- [Privacy Policy](https://www.astrivix.in/privacy): Privacy standards and data protection principles.
+- [Terms of Service](https://www.astrivix.in/terms): Service terms and operational guidelines.

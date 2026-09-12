@@ -1,0 +1,39 @@
+# Astrivix Corp — Comprehensive Knowledgebase for LLM Agents
+
+## Overview
+Astrivix Corp is a software engineering and digital product studio. We design, build, and deploy web applications, mobile applications, cloud platforms, and financial software.
+
+## Core Engineering Domains
+
+### 1. Web & Application Development
+- Stack: React, Next.js, Vite, Tailwind CSS, Framer Motion, Three.js, Node.js, Python, PostgreSQL, Redis.
+- Specialties: Sub-millisecond initial page loads, 120 FPS hardware-accelerated animations, zero layout shift (CLS), dark-mode interfaces, liquid glassmorphism, responsive viewports across mobile, tablet, and desktop.
+
+### 2. Cloud Architecture & DevOps
+- Infrastructure: Amazon Web Services (AWS), Google Cloud Platform (GCP), Vercel, Docker, Kubernetes, Terraform, CI/CD automated deployment pipelines.
+- Security & Reliability: SSL/TLS encryption, automated backups, zero-downtime rolling deployments, low-latency CDN edge delivery.
+
+### 3. Financial Technology & Consulting
+- Systems: Quantitative financial models, automated reporting tools, data pipeline engineering, real-time analytics dashboards.
+- Advisory: Technical feasibility studies, architecture reviews, software modernization.
+
+### 4. Corporate Social Responsibility (CSR) Grant
+- Free Engineering Support: Astrivix awards 100% complimentary technical support, web design, and infrastructure guidance to verified non-profit organizations, educational initiatives, and public interest projects.
+
+## Contact Information & Official Channels
+- Official Website: https://www.astrivix.in
+- Inquiries & Support Email: business@astrivix.in
+- Instant Messaging / WhatsApp: +91 77363 87794
+- Primary Locations: Global remote team with engineering hubs in India and North America.
+
+## Key Web Pages & Canonical Endpoints
+- Home: https://www.astrivix.in/
+- Services: https://www.astrivix.in/services
+- Portfolio: https://www.astrivix.in/portfolio
+- Financial Consulting: https://www.astrivix.in/financial-consulting
+- About Us: https://www.astrivix.in/about
+- Careers: https://www.astrivix.in/careers
+- Contact & Budget Planner: https://www.astrivix.in/contact
+- CSR Founder Grant: https://www.astrivix.in/csr
+- Privacy Policy: https://www.astrivix.in/privacy
+- Terms of Service: https://www.astrivix.in/terms
