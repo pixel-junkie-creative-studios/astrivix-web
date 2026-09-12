@@ -18,10 +18,9 @@ const PortfolioShowcase = lazy(() => import('./pages/PortfolioShowcase'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
+const CSR = lazy(() => import('./pages/CSR'));
 const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
 const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
-
-
 
 function App() {
   const lenisRef = useRef(null);
@@ -76,9 +75,14 @@ function App() {
             <Terms />
           </Suspense>
         } />
-        <Route path="*" element={
+        <Route path="/csr" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
-            <NotFound />
+            <CSR />
+          </Suspense>
+        } />
+        <Route path="/impact" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <CSR />
           </Suspense>
         } />
         
@@ -101,6 +105,11 @@ function App() {
         <Route path="/portfolio-preview" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
             <PortfolioShowcase />
+          </Suspense>
+        } />
+        <Route path="*" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <NotFound />
           </Suspense>
         } />
       </Routes>
