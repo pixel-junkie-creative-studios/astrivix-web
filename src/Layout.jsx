@@ -5,6 +5,10 @@ import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import { MorphicNavbar } from './components/ui/MorphicNavbar';
 import SEOManager from './components/ui/SEOManager';
+import Breadcrumbs from './components/ui/Breadcrumbs';
+import Testimonials from './components/ui/Testimonials';
+import FAQSection from './components/ui/FAQSection';
+import CookieConsent from './components/ui/CookieConsent';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -25,12 +29,14 @@ export default function Layout() {
     { name: "Portfolio", link: "/portfolio" },
     { name: "About", link: "#about" },
     { name: "Careers", link: "#careers" },
+    { name: "FAQ", link: "#faq" },
   ];
 
   return (
     <div className="w-full max-w-[100vw] min-h-screen bg-transparent text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
       <SEOManager />
       <MagneticCursor />
+      <CookieConsent />
       
       {/* 3D WebGL Space Journey Background */}
       <SpaceScene />
@@ -45,6 +51,10 @@ export default function Layout() {
         <div id="home" className="w-full">
           <Home />
         </div>
+
+        <div className="w-full relative z-20 pt-4">
+          <Breadcrumbs />
+        </div>
         
         <div className="w-full relative z-20">
           <Services />
@@ -54,8 +64,16 @@ export default function Layout() {
           <About />
         </div>
 
+        <div className="w-full relative z-20">
+          <Testimonials />
+        </div>
+
         <div id="careers" className="w-full relative z-20">
           <Careers />
+        </div>
+
+        <div className="w-full relative z-20">
+          <FAQSection />
         </div>
         
         <div id="contact" className="w-full relative z-20">
@@ -86,14 +104,16 @@ export default function Layout() {
                   <a href="#services" className="hover:text-white transition-colors">Services</a>
                   <a href="#about" className="hover:text-white transition-colors">About Us</a>
                   <a href="#careers" className="hover:text-white transition-colors">Careers</a>
+                  <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
                   <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                 </div>
               </div>
 
               {/* Legal & Social */}
               <div className="flex flex-col items-center md:items-start w-full">
-                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Social</h4>
+                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Access</h4>
                 <div className="flex flex-col gap-4 text-sm text-white/70">
+                  <Link to="/waitlist" className="hover:text-pink-400 transition-colors text-pink-400 font-semibold">VIP Waitlist</Link>
                   <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">

@@ -14,6 +14,8 @@ const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
 const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
+const Waitlist = lazy(() => import('./pages/Waitlist'));
+const ThankYou = lazy(() => import('./pages/ThankYou'));
 
 function App() {
   const lenisRef = useRef(null);
@@ -58,6 +60,16 @@ function App() {
           <Route path="/about" element={<Layout />} />
           <Route path="/careers" element={<Layout />} />
           <Route path="/contact" element={<Layout />} />
+          <Route path="/waitlist" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <Waitlist />
+            </Suspense>
+          } />
+          <Route path="/thank-you" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <ThankYou />
+            </Suspense>
+          } />
           <Route path="/privacy" element={
             <Suspense fallback={<div className="bg-black w-full h-screen" />}>
               <Privacy />
@@ -66,11 +78,6 @@ function App() {
           <Route path="/terms" element={
             <Suspense fallback={<div className="bg-black w-full h-screen" />}>
               <Terms />
-            </Suspense>
-          } />
-          <Route path="*" element={
-            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
-              <NotFound />
             </Suspense>
           } />
           
@@ -88,6 +95,11 @@ function App() {
           <Route path="/financial-consulting" element={
             <Suspense fallback={<div className="bg-black w-full h-screen" />}>
               <FinancialConsultingSubsite />
+            </Suspense>
+          } />
+          <Route path="*" element={
+            <Suspense fallback={<div className="bg-black w-full h-screen" />}>
+              <NotFound />
             </Suspense>
           } />
         </Routes>
