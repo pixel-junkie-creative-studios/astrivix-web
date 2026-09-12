@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     question: "How fast can Astrivix deliver a custom digital project?",
-    answer: "Standard brand identity kits & Landing Pages are delivered in 1-2 weeks. Full custom web platforms and complex native mobile applications typically range between 3 to 6 weeks, built with rigorous sprint milestones and real-time client previews."
+    answer: "Project delivery timelines range from 24 hours to 6 weeks depending on scope, project type, and urgency. Rapid landing pages and brand identity assets can be deployed in 24 to 72 hours under express sprints, while full-scale custom web platforms and complex native mobile applications range between 2 to 6 weeks built with structured milestone previews."
   },
   {
     question: "What technology stack do you use to guarantee maximum web speed?",
