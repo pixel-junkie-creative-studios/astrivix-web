@@ -23,7 +23,7 @@ export default function PortfolioSubsite() {
         <div className="absolute inset-0 bg-[#050505] z-[9999] flex flex-col items-center justify-center gap-4">
           <div className="w-12 h-12 rounded-full border-2 border-purple-500/20 border-t-purple-500 animate-spin" />
           <span className="text-xs font-mono tracking-[0.3em] uppercase text-white/70 animate-pulse">
-            STEALING COMPETITOR DESIGNS...
+            LOADING PORTFOLIO SHOWCASE...
           </span>
         </div>
       )}

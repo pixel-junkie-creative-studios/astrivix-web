@@ -133,7 +133,7 @@ export const MorphicNavbar = ({ navItems }) => {
             </div>
 
             <div className="border-t border-white/10 pt-4 font-mono text-[10px] tracking-widest text-white/60 uppercase">
-              <span>hello@astrivix.in | www.astrivix.in</span>
+              <span>business@astrivix.in | www.astrivix.in</span>
             </div>
           </motion.div>
         )}

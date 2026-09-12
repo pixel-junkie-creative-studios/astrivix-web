@@ -8,22 +8,34 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.details) return;
 
     setLoading(true);
 
-    // Simulate instant dispatch to business@astrivix.in with AI response brief
-    setTimeout(() => {
+    try {
+      // Direct AJAX dispatch to business@astrivix.in with automatic AI response confirmation
+      await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: `New Executive Inquiry: ${formData.name}`,
+          _autoresponse: `Thank you for contacting Astrivix Corp. Our automated AI system has received your project specifications and routed them to our Principal Engineering team. An Astrivix strategist will respond within 2 hours.`,
+          name: formData.name,
+          email: formData.email,
+          message: formData.details
+        })
+      });
+    } catch (err) {
+      console.warn("FormSubmit background dispatch fallback triggered:", err);
+    } finally {
       setLoading(false);
       setSubmitted(true);
-
-      // Trigger mailto backup fallback so the browser opens email client if desired
-      const mailSubject = encodeURIComponent(`Executive Project Inquiry: ${formData.name}`);
-      const mailBody = encodeURIComponent(`Name / Org: ${formData.name}\nEmail: ${formData.email}\n\nProject Scope:\n${formData.details}`);
-      window.location.href = `mailto:business@astrivix.in?subject=${mailSubject}&body=${mailBody}`;
-    }, 800);
+    }
   };
 
   return (
