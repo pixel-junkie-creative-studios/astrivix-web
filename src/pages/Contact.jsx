@@ -134,7 +134,7 @@ export default function Contact() {
               </div>
               <div className="flex flex-col text-left">
                 <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">Instant Messaging</span>
-                <span className="text-sm font-black tracking-wider uppercase text-white">+91 77363 87794</span>
+                <span className="text-sm font-black tracking-wider uppercase text-white">WHATSAPP NOW</span>
               </div>
             </a>
 
@@ -147,7 +147,7 @@ export default function Contact() {
               </div>
               <div className="flex flex-col text-left">
                 <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">Official Email</span>
-                <span className="text-sm font-black tracking-wider uppercase text-white">business@astrivix.in</span>
+                <span className="text-sm font-black tracking-wider uppercase text-white">MAIL US</span>
               </div>
             </a>
           </div>

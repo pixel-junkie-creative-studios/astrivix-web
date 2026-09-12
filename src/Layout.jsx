@@ -25,7 +25,6 @@ export default function Layout() {
     { name: "Portfolio", link: "/portfolio" },
     { name: "About", link: "#about" },
     { name: "Careers", link: "#careers" },
-    { name: "FAQ", link: "#faq" },
   ];
 
   return (

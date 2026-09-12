@@ -41,7 +41,7 @@ export default function CSR() {
         <div className="text-center border-b border-white/10 pb-12 mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono tracking-widest uppercase mb-4 shadow-inner">
             <HeartHandshake className="w-4 h-4" />
-            <span>ASTRIVIX YOUNG FOUNDER GRANT</span>
+            <span>ASTRA FOUNDER GRANT // PRO-BONO INITIATIVE</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">

@@ -54,6 +54,26 @@
       "destination": "/"
     },
     {
+      "source": "/privacy",
+      "destination": "/"
+    },
+    {
+      "source": "/terms",
+      "destination": "/"
+    },
+    {
+      "source": "/csr",
+      "destination": "/"
+    },
+    {
+      "source": "/impact",
+      "destination": "/"
+    },
+    {
+      "source": "/grant",
+      "destination": "/"
+    },
+    {
       "source": "/api(/.*)?",
       "destination": {
         "type": "service",

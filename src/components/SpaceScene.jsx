@@ -328,7 +328,7 @@ export default function SpaceScene() {
 
   return (
     <WebGLErrorBoundary>
-      <div className="fixed inset-0 w-full h-[100dvh] z-0 pointer-events-none bg-black transition-colors duration-500 overflow-hidden">
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
           dpr={isMobile ? 1 : [1, 1.5]} 

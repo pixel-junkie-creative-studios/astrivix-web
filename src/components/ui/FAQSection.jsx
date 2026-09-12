@@ -27,7 +27,7 @@ const categories = [
   { id: 'engineering', label: 'CUSTOM CODE' },
   { id: 'ip', label: 'IP & LEGAL' },
   { id: 'pricing', label: 'PRICING & RETENTION' },
-  { id: 'csr', label: 'CSR FOUNDER GRANT' },
+  { id: 'csr', label: 'ASTRA FOUNDER GRANT' },
 ];
 
 const faqs = [
