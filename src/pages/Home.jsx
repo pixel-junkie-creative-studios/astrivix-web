@@ -33,7 +33,7 @@ export default function Home() {
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 text-center"
         >
           {/* ASTRIVIX Particle Text Container */}
-          <div className="w-full h-[200px] sm:h-[260px] md:h-[400px] relative flex justify-center items-center cursor-crosshair gpu-layer mb-2">
+          <div className="w-full h-[140px] sm:h-[260px] md:h-[420px] relative flex justify-center items-center cursor-crosshair gpu-layer">
             <div className="absolute inset-0 bg-black/60 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
@@ -47,26 +47,41 @@ export default function Home() {
               pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 60}
               repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 120 : 220}
               idleDrift={0}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(3.5rem, 16vw, 9rem)" : "clamp(4.5rem, 15vw, 11rem)"}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(3.2rem, 15vw, 9rem)" : "clamp(4.2rem, 16vw, 12rem)"}
               fontWeight={900}
             />
           </div>
           
-          {/* Motto-Inspired Executive Bold Tagline */}
-          <div className="max-w-4xl mx-auto px-4 z-20 gpu-layer my-4 sm:my-6">
-            <h2 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-white leading-[1.1] drop-shadow-lg">
+          {/* Iconic Side-by-Side Subtitle Row — CORP. on Left, CREATIVE & PRODUCT STUDIO on Right */}
+          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-4 sm:-mt-10 md:-mt-20 z-20 gpu-layer mb-6">
+            <div className="flex items-center space-x-1">
+              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-white drop-shadow-md">
+                CORP<span className="text-white text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
+              </h2>
+            </div>
+
+            <div className="flex flex-col items-end text-right">
+              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
+                CREATIVE &
+              </h3>
+              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
+                PRODUCT STUDIO
+              </h3>
+            </div>
+          </div>
+
+          {/* Motto Headline */}
+          <div className="max-w-4xl mx-auto px-4 z-20 gpu-layer my-2 sm:my-4">
+            <h2 className="text-lg sm:text-2xl md:text-4xl font-black uppercase tracking-tight text-white leading-[1.15] drop-shadow-lg">
               WE BUILD BRANDS & DIGITAL PRODUCTS FOR LEADERS WHO REFUSE TO BE ORDINARY.
             </h2>
-            <p className="text-xs sm:text-sm font-mono tracking-[0.25em] text-white/60 uppercase font-semibold mt-4">
-              ASTRIVIX CORP — GLOBAL CREATIVE & PRODUCT STUDIO
-            </p>
           </div>
         </motion.div>
           
         {/* Sleek Mechanical SplitFlap Banner */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-6 sm:mt-10 md:mt-16 px-3 sm:px-6 z-10 gpu-layer"
+          className="w-full flex justify-center mt-6 sm:mt-10 md:mt-14 px-3 sm:px-6 z-10 gpu-layer"
         >
           <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
