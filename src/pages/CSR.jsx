@@ -16,7 +16,6 @@ export default function CSR() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Redirect or trigger formsubmit ajax
     const mailtoUrl = `mailto:business@astrivix.in?subject=CSR%20Young%20Founder%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
     window.location.href = mailtoUrl;
     setSubmitted(true);
@@ -62,7 +61,7 @@ export default function CSR() {
             <div className="w-12 h-12 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-6 group-hover:scale-110 transition-transform">
               <Palette className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-3">1. Bespoke Branding Identity</h3>
+            <h3 className="text-xl font-semibold text-white mb-3">1. Custom Brand Identity</h3>
             <p className="text-white/60 text-xs md:text-sm leading-relaxed font-light mb-6">
               Complete brand visual architecture: custom logo mark, typography hierarchy, color tokens, and vector design system assets ready for launch.
             </p>
@@ -134,8 +133,8 @@ export default function CSR() {
           {submitted ? (
             <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center">
               <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-white mb-2">Application Transmitted!</h3>
-              <p className="text-xs font-mono text-white/70">Our team will review your project blueprint and reply via email within 24 hours.</p>
+              <h3 className="text-xl font-bold text-white mb-2">Application Received!</h3>
+              <p className="text-xs font-mono text-white/70">Our team will review your project details and reply via email within 24 hours.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">

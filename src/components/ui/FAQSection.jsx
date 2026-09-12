@@ -20,7 +20,7 @@ import {
 const categories = [
   { id: 'all', label: 'ALL FAQS' },
   { id: 'timeline', label: 'DELIVERY & TIMELINE' },
-  { id: 'engineering', label: 'BESPOKE CODE' },
+  { id: 'engineering', label: 'CUSTOM CODE' },
   { id: 'ip', label: 'IP & LEGAL' },
   { id: 'pricing', label: 'PRICING & RETENTION' },
   { id: 'csr', label: 'CSR FOUNDER GRANT' },
@@ -53,20 +53,20 @@ const faqs = [
     badge: "100% OWNERSHIP TRANSFER",
     question: "Who owns the source code, design systems, and intellectual property?",
     shortAnswer: "You retain 100% full intellectual property, copyright, and source code ownership upon project completion.",
-    detailedAnswer: "Upon final project delivery and milestone completion, Astrivix transfers 100% of all intellectual property, copyright, Figma design tokens, and Git source code repositories directly to your organization. We retain zero licensing lock-ins, zero proprietary platform fees, and zero code restrictions.",
+    detailedAnswer: "Upon final project delivery and milestone completion, Astrivix transfers 100% of all intellectual property, copyright, Figma design tokens, and Git source code repositories directly to your organization. We retain zero licensing lock-ins, zero hidden platform fees, and zero code restrictions.",
     highlights: [
       "Complete Copyright & Patent Transfer",
       "Full GitHub/GitLab Repo Handover",
-      "Zero Proprietary Lock-ins or Monthly Fees",
+      "Zero License Lock-ins or Monthly Fees",
       "Clean Modular Codebase Documentation"
     ],
     ctaText: "REVIEW LEGAL TERMS",
     ctaLink: "/terms"
   },
   {
-    id: "bespoke-stack",
+    id: "custom-stack",
     category: "engineering",
-    categoryLabel: "BESPOKE CODE",
+    categoryLabel: "CUSTOM CODE",
     icon: Code2,
     badge: "ZERO TEMPLATE BLOAT",
     question: "Do you use pre-built templates or engineer 100% custom architectures?",

@@ -1,59 +1,64 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ParticleButton from '../components/ui/ParticleButton';
-import { CheckCircle, ArrowRight, Mail, MessageSquare } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', details: '' });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    budget: '$5k - $10k',
+    message: ''
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.details) return;
-
     setLoading(true);
 
     try {
-      // Direct AJAX dispatch to business@astrivix.in with automatic AI response confirmation
-      await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+      // Direct FormSubmit AJAX Endpoint with Automated AI Email Response
+      const response = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
         method: "POST",
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
         body: JSON.stringify({
-          _subject: `New Executive Inquiry: ${formData.name}`,
-          _autoresponse: `Thank you for contacting Astrivix Corp. Our automated AI system has received your project specifications and routed them to our Principal Engineering team. An Astrivix strategist will respond within 2 hours.`,
           name: formData.name,
           email: formData.email,
-          message: formData.details
+          budget: formData.budget,
+          message: formData.message,
+          _subject: `New Project Inquiry from ${formData.name} (${formData.budget})`,
+          _autoresponse: `Thank you for contacting Astrivix Corp. We have received your inquiry regarding "${formData.message.slice(0, 50)}...". Our engineering team is reviewing your requirements and will reply within 2 hours.`
         })
       });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        // Fallback mailto
+        window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+        setSubmitted(true);
+      }
     } catch (err) {
-      console.warn("FormSubmit background dispatch fallback triggered:", err);
+      window.location.href = `mailto:business@astrivix.in?subject=Project Inquiry from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
+      setSubmitted(true);
     } finally {
       setLoading(false);
-      setSubmitted(true);
     }
   };
 
   return (
-    <div id="contact" className="pt-16 sm:pt-24 pb-24 md:pb-40 min-h-[75vh] flex flex-col justify-center px-4 sm:px-6 relative z-10">
-      <motion.div 
-        initial={{ opacity: 0, y: 24, scale: 0.96 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12"
-      >
+    <section className="w-full max-w-[1440px] mx-auto px-6 md:px-16 py-20 md:py-32 relative z-20">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        
         {/* Left Column: Direct Comms */}
         <div className="flex flex-col justify-center">
           <h1 className="text-4xl sm:text-6xl font-black mb-4 sm:mb-6 tracking-tight text-white drop-shadow-md skeuo-engraved uppercase">
-            Initiate Contact.
+            Start Your Project.
           </h1>
           <p className="text-white/90 mb-8 sm:mb-12 max-w-md text-sm sm:text-base leading-relaxed font-medium">
-            Partner with Astrivix Corp to engineer high-converting digital platforms, custom software, and global brand architecture. Share your project requirements below.
+            Partner with Astrivix Corp to build high-converting web platforms, custom software, and global brand systems. Share your project details below.
           </p>
           
           <div className="flex flex-col gap-4">
@@ -67,8 +72,8 @@ export default function Contact() {
                 <MessageSquare className="w-5 h-5" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">WhatsApp Concierge</span>
-                <span className="text-sm font-black tracking-wider uppercase text-white">Direct WhatsApp Consultation</span>
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">WhatsApp Direct</span>
+                <span className="text-sm font-black tracking-wider uppercase text-white">Chat Directly On WhatsApp</span>
               </div>
             </a>
 
@@ -80,105 +85,118 @@ export default function Contact() {
                 <Mail className="w-5 h-5" />
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">Official Inquiry Desk</span>
+                <span className="text-xs font-mono font-bold tracking-widest uppercase text-white/50">Official Email</span>
                 <span className="text-sm font-black tracking-wider uppercase text-white">business@astrivix.in</span>
               </div>
             </a>
           </div>
+
+          <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 max-w-md backdrop-blur-md">
+            <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>STUDIO RESPONSE TIME</span>
+            </div>
+            <p className="text-xs text-white/70 font-mono leading-relaxed">
+              All inquiries sent to business@astrivix.in receive an immediate automated confirmation and a personalized response from our team within 2 hours.
+            </p>
+          </div>
         </div>
 
-        {/* Right Column: Executive Form */}
-        <div className="glass-metallic p-6 sm:p-10 rounded-[2.5rem] border border-white/30 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
+        {/* Right Column: Inquiry Form */}
+        <div className="bg-white/5 backdrop-blur-2xl p-8 sm:p-12 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
           
-          <AnimatePresence mode="wait">
-            {!submitted ? (
-              <motion.form 
-                key="form"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="flex flex-col gap-6" 
-                onSubmit={handleSubmit}
+          {submitted ? (
+            <div className="py-16 text-center flex flex-col items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-6">
+                <CheckCircle2 className="w-8 h-8" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Inquiry Received!</h3>
+              <p className="text-white/70 text-sm max-w-sm font-mono leading-relaxed mb-8">
+                Thank you for reaching out. We have received your project details and sent a confirmation email to <strong className="text-white">{formData.email}</strong>.
+              </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="px-6 py-3 rounded-full bg-white text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-zinc-200 transition-colors"
               >
-                <div>
-                  <label className="block text-xs font-bold text-white/70 uppercase tracking-widest mb-2 font-mono">YOUR NAME / ORGANIZATION</label>
-                  <input 
-                    type="text" 
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#08080c] border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/60 transition-colors text-sm font-medium"
-                    placeholder="e.g. John Doe / Apex Global"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-xs font-bold text-white/70 uppercase tracking-widest mb-2 font-mono">EMAIL ADDRESS</label>
-                  <input 
-                    type="email" 
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#08080c] border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/60 transition-colors text-sm font-medium"
-                    placeholder="john@organization.com"
-                  />
-                </div>
+                SEND ANOTHER INQUIRY
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <h3 className="text-2xl font-light text-white tracking-tight uppercase mb-2">
+                Project Inquiry
+              </h3>
 
-                <div>
-                  <label className="block text-xs font-bold text-white/70 uppercase tracking-widest mb-2 font-mono">PROJECT DETAILS</label>
-                  <textarea 
-                    rows="4" 
-                    required
-                    value={formData.details}
-                    onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                    className="w-full bg-[#08080c] border border-white/20 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-white/60 transition-colors text-sm font-medium"
-                    placeholder="Describe your project scope, technical requirements, or strategic timeline..."
-                  ></textarea>
-                </div>
+              <div>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Your Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="e.g. Sarah Jenkins"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                />
+              </div>
 
-                <ParticleButton 
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-4 rounded-xl"
+              <div>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Your Email</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  placeholder="sarah@company.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Estimated Budget Range</label>
+                <select
+                  value={formData.budget}
+                  onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                  className="w-full bg-[#050505] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
                 >
-                  {loading ? "DISPATCHING INQUIRY..." : "SUBMIT PROJECT INQUIRY →"}
-                </ParticleButton>
-              </motion.form>
-            ) : (
-              <motion.div 
-                key="success"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center text-center py-10"
+                  <option value="Under $5k">Under $5,000 (Express Sprint)</option>
+                  <option value="$5k - $10k">$5,000 - $10,000 (Standard Web Platform)</option>
+                  <option value="$10k - $25k">$10,000 - $25,000 (Custom Enterprise App)</option>
+                  <option value="$25k+">$25,000+ (Full Product Suite & Retainer)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Project Brief / Goals</label>
+                <textarea
+                  rows="4"
+                  required
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  placeholder="Tell us about your brand, scope, and timeline requirements..."
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 rounded-xl bg-white text-black text-xs font-mono font-bold tracking-widest uppercase hover:bg-zinc-200 transition-all flex items-center justify-center gap-2 group shadow-[0_0_25px_rgba(255,255,255,0.3)] active:scale-[0.99]"
               >
-                <div className="w-16 h-16 rounded-full bg-white/10 border border-white/30 flex items-center justify-center text-white mb-6">
-                  <CheckCircle className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-3">
-                  Inquiry Dispatched Successfully.
-                </h3>
-                <p className="text-white/80 text-sm max-w-md leading-relaxed mb-6 font-medium">
-                  Your project specifications have been dispatched to <span className="font-mono text-white underline">business@astrivix.in</span>. Our automated AI dispatch system has sent a preliminary confirmation & scheduling brief to <span className="font-mono text-white">{formData.email}</span>.
-                </p>
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white/60 mb-6 text-left w-full">
-                  <div>[AI SYSTEM NOTE]</div>
-                  <div>Status: Queued for Senior Principal Engineer review.</div>
-                  <div>Estimated Response Time: &lt; 2 Hours</div>
-                </div>
-                <button
-                  onClick={() => {
-                    setSubmitted(false);
-                    setFormData({ name: '', email: '', details: '' });
-                  }}
-                  className="text-xs font-mono font-bold tracking-widest text-white/70 hover:text-white uppercase underline"
-                >
-                  Submit Another Inquiry
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                {loading ? (
+                  <span>SUBMITTING INQUIRY...</span>
+                ) : (
+                  <>
+                    <span>SUBMIT PROJECT INQUIRY</span>
+                    <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+            </form>
+          )}
+
         </div>
-      </motion.div>
-    </div>
+
+      </div>
+    </section>
   );
 }

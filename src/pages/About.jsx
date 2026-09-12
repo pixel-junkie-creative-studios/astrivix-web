@@ -208,7 +208,7 @@ export default function About() {
               Transparent strategy. Modern engineering.
             </h3>
             <p className="text-sm sm:text-lg text-white leading-relaxed font-normal max-w-3xl">
-              We combine cutting-edge technology, rigorous code standards, and executive design precision to position your brand at the absolute summit of your industry.
+              We combine modern web technology, rigorous code standards, and executive design precision to position your brand at the absolute summit of your industry.
             </p>
           </motion.div>
 

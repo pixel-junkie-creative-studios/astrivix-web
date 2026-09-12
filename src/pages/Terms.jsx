@@ -59,7 +59,7 @@ export default function Terms() {
             <p>We believe in complete client ownership and autonomy:</p>
             <ul className="list-disc pl-6 space-y-2 text-white/70">
               <li><strong className="text-white">Full IP Transfer:</strong> Upon 100% completion of agreed milestone payments, Astrivix transfers full legal title, copyright, trademark rights, and intellectual property ownership of all custom deliverables (including React source code, Figma design files, logos, and vector assets) to the Client.</li>
-              <li><strong className="text-white">Zero Royalty or License Lock-Ins:</strong> Clients retain perpetual, unrestricted rights to commercialize, modify, host, or transfer their software applications without paying ongoing proprietary license fees to Astrivix.</li>
+              <li><strong className="text-white">Zero Royalty or License Lock-Ins:</strong> Clients retain perpetual, unrestricted rights to commercialize, modify, host, or transfer their software applications without paying ongoing hidden licensing fees to Astrivix.</li>
               <li><strong className="text-white">Open Source Components:</strong> Deliverables incorporating third-party open-source packages (e.g. React, Vite, Framer Motion, Tailwind CSS) remain subject to their respective open-source licenses (MIT, Apache 2.0).</li>
             </ul>
           </section>
@@ -88,7 +88,7 @@ export default function Terms() {
           <section className="space-y-4">
             <h2 className="text-xl md:text-2xl font-semibold text-white">5. Confidentiality & Non-Disclosure (NDA)</h2>
             <p>
-              Astrivix enforces strict confidentiality for all client business logic, trade secrets, data schemas, and unreleased product roadmaps. Both parties agree to protect proprietary information with reasonable enterprise security measures during and after the engagement lifecycle.
+              Astrivix enforces strict confidentiality for all client business logic, trade secrets, data schemas, and unreleased product roadmaps. Both parties agree to protect confidential information with reasonable enterprise security measures during and after the engagement lifecycle.
             </p>
           </section>
 
