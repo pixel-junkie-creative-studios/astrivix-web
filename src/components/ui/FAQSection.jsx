@@ -198,7 +198,7 @@ export default function FAQSection() {
           <span>GLOBAL KNOWLEDGE BASE & FAQ</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-light text-white tracking-tight">
-          Clear Answers. <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white/60">Zero Jargon.</span>
+          Everything You <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-white/60">Need to Know.</span>
         </h2>
         <p className="text-white/60 text-sm md:text-base max-w-2xl mt-4 leading-relaxed font-light">
           Everything you need to know about our engineering workflow, code ownership, project pricing, SLAs, and our CSR Young Founder Grant.
