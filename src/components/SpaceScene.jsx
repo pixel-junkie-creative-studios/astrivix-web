@@ -435,8 +435,8 @@ const InteractiveStars = ({ isMobile = false }) => {
   return (
     <group ref={groupRef}>
       <GalaxyDustCloud isMobile={isMobile} />
-      <Stars radius={150} depth={80} count={isMobile ? 5000 : 16000} factor={6} saturation={0} fade speed={2.5} />
-      <Stars radius={80} depth={50} count={isMobile ? 3000 : 8000} factor={4.5} saturation={0} fade speed={1.8} />
+      <Stars radius={250} depth={100} count={isMobile ? 8000 : 25000} factor={7} saturation={0} fade={false} speed={1.5} />
+      <Stars radius={120} depth={60} count={isMobile ? 4000 : 12000} factor={5} saturation={0} fade={false} speed={1.2} />
     </group>
   );
 };
@@ -454,7 +454,7 @@ class WebGLErrorBoundary extends React.Component {
   }
   render() {
     if (this.state.hasError) {
-      return <div className="fixed inset-0 w-full h-full z-0 bg-black pointer-events-none" />;
+      return <div className="fixed inset-0 w-full h-full z-0 bg-transparent pointer-events-none" />;
     }
     return this.props.children;
   }
@@ -467,7 +467,7 @@ export default function SpaceScene() {
   return (
     <WebGLErrorBoundary>
       <div 
-        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden touch-none"
+        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-transparent overflow-hidden touch-none"
         style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}
       >
         <Canvas 

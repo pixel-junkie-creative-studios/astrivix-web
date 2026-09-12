@@ -5,12 +5,11 @@ export default function Starfield() {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     
-    // Default mouse to center of screen
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    // Track target mouse position for smooth interpolation
     let targetMouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
 
     const resize = () => {
@@ -19,14 +18,23 @@ export default function Starfield() {
     };
     resize();
 
-    // Create 300 stars with varying depth (z)
-    const stars = Array.from({ length: 300 }).map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      z: Math.random() * 3 + 0.5,
-      baseAlpha: Math.random() * 0.6 + 0.2,
-      phase: Math.random() * Math.PI * 2
-    }));
+    // Create 1200 high-density stars with varying depth, size, brightness, and colors
+    const stars = Array.from({ length: 1200 }).map(() => {
+      const z = Math.random() * 3.5 + 0.5;
+      const isBright = Math.random() > 0.82;
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        z: z,
+        size: isBright ? z * 0.9 + 0.6 : z * 0.5 + 0.3,
+        baseAlpha: isBright ? Math.random() * 0.5 + 0.5 : Math.random() * 0.4 + 0.35,
+        phase: Math.random() * Math.PI * 2,
+        speed: Math.random() * 0.0015 + 0.0005,
+        color: isBright 
+          ? (Math.random() > 0.5 ? '255, 255, 255' : (Math.random() > 0.5 ? '210, 230, 255' : '255, 245, 230')) 
+          : '255, 255, 255'
+      };
+    });
 
     const handleMouseMove = (e) => {
       targetMouse.x = e.clientX;
@@ -37,7 +45,6 @@ export default function Starfield() {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Smoothly interpolate mouse position for fluid parallax
       mouse.x += (targetMouse.x - mouse.x) * 0.05;
       mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
@@ -45,31 +52,29 @@ export default function Starfield() {
       const centerY = canvas.height / 2;
       
       stars.forEach((star) => {
-        // Deeper parallax based on mouse
-        const offsetX = (mouse.x - centerX) * (star.z * 0.025);
-        const offsetY = (mouse.y - centerY) * (star.z * 0.025);
+        const offsetX = (mouse.x - centerX) * (star.z * 0.02);
+        const offsetY = (mouse.y - centerY) * (star.z * 0.02);
         
         let drawX = star.x - offsetX;
         let drawY = star.y - offsetY;
         
-        // Wrap stars infinitely around the screen
         if (drawX < 0) drawX += canvas.width;
         if (drawX > canvas.width) drawX -= canvas.width;
         if (drawY < 0) drawY += canvas.height;
         if (drawY > canvas.height) drawY -= canvas.height;
 
-        // Slow, elegant twinkle effect
-        const twinkle = Math.sin(Date.now() * 0.0005 + star.phase) * 0.5;
-        const alpha = Math.max(0, Math.min(1, star.baseAlpha + twinkle));
+        const twinkle = Math.sin(Date.now() * star.speed + star.phase) * 0.35;
+        const alpha = Math.max(0.15, Math.min(1, star.baseAlpha + twinkle));
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-        ctx.shadowBlur = star.z * 1.5;
-        ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillStyle = `rgba(${star.color}, ${alpha})`;
+        if (star.size > 1.2) {
+          ctx.shadowBlur = star.z * 2.5;
+          ctx.shadowColor = `rgba(${star.color}, 0.85)`;
+        }
         ctx.beginPath();
-        // Smaller stars (multiplied by 0.4 instead of 0.8)
-        ctx.arc(drawX, drawY, star.z * 0.4, 0, Math.PI * 2);
+        ctx.arc(drawX, drawY, star.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.shadowBlur = 0; // reset for next
+        ctx.shadowBlur = 0;
       });
 
       animationFrameId = requestAnimationFrame(render);
@@ -85,5 +90,5 @@ export default function Starfield() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-80" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none w-full h-full opacity-100" />;
 }

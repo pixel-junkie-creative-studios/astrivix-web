@@ -33,7 +33,7 @@ export default function Layout() {
   ];
 
   return (
-    <div className="w-full max-w-[100vw] min-h-screen bg-transparent text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
+    <div className="w-full max-w-[100vw] min-h-screen bg-[#050508] text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
       <SEOManager />
       <MagneticCursor />
       <CookieConsent />
@@ -41,7 +41,7 @@ export default function Layout() {
       {/* 3D WebGL Space Journey & 2D Canvas Starfield Background */}
       <Starfield />
       <SpaceScene />
-      <div className="pointer-events-none fixed inset-0 z-[1] opacity-30 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,120,120,0.1),rgba(255,255,255,0))]" />
+      <div className="pointer-events-none fixed inset-0 z-[1] opacity-30 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))]" />
 
       {/* KOKONUT UI MORPHIC NAVBAR */}
       <MorphicNavbar navItems={navItems} />
