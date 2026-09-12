@@ -5,7 +5,7 @@ function Counter100() {
   const [count, setCount] = useState(0);
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-30px" });
-  const radius = 62;
+  const radius = 70;
   const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
@@ -36,11 +36,11 @@ function Counter100() {
   return (
     <div ref={ref} className="relative flex flex-col items-center justify-center my-3 group">
       {/* Ambient Radial Glowing Aura */}
-      <div className="absolute w-44 h-44 bg-gradient-to-tr from-white/20 via-zinc-100/10 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 pointer-events-none" />
+      <div className="absolute w-52 h-52 bg-gradient-to-tr from-white/20 via-zinc-100/10 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 pointer-events-none" />
 
-      <div className="relative w-40 h-40 sm:w-44 sm:h-44 flex items-center justify-center">
+      <div className="relative w-48 h-48 sm:w-52 sm:h-52 flex items-center justify-center">
         {/* SVG Circular Loading Ring */}
-        <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]" viewBox="0 0 160 160">
+        <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]" viewBox="0 0 180 180">
           <defs>
             <linearGradient id="ringGradient100" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#ffffff" />
@@ -55,21 +55,21 @@ function Counter100() {
 
           {/* Background Outer Track */}
           <circle
-            cx="80"
-            cy="80"
+            cx="90"
+            cy="90"
             r={radius}
-            stroke="rgba(255, 255, 255, 0.1)"
-            strokeWidth="7"
+            stroke="rgba(255, 255, 255, 0.12)"
+            strokeWidth="6"
             fill="transparent"
           />
 
           {/* Animated Progress Ring */}
           <circle
-            cx="80"
-            cy="80"
+            cx="90"
+            cy="90"
             r={radius}
             stroke="url(#ringGradient100)"
-            strokeWidth="7"
+            strokeWidth="6"
             strokeLinecap="round"
             fill="transparent"
             strokeDasharray={circumference}
@@ -82,11 +82,11 @@ function Counter100() {
         </svg>
 
         {/* Center Percentage Display */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none pointer-events-none">
-          <span className="text-3xl sm:text-4xl md:text-5xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-xl">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none pointer-events-none px-4">
+          <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-xl leading-none">
             {count}%
           </span>
-          <span className="text-[9px] font-mono tracking-[0.25em] text-white/70 uppercase font-bold mt-1">
+          <span className="text-[9px] font-mono tracking-[0.25em] text-white/70 uppercase font-bold mt-1.5">
             {count === 100 ? "OPTIMIZED" : "LOADING..."}
           </span>
         </div>

@@ -289,10 +289,42 @@ export default function FAQSection() {
                   {faq.shortAnswer}
                 </p>
 
-                {/* Mobile Expand Trigger (Visible only on mobile) */}
-                <div className="lg:hidden flex items-center gap-1 mt-4 text-xs font-mono text-cyan-400">
-                  <span>{isSelected ? 'VIEWING DETAILS BELOW' : 'TAP TO VIEW DETAILS'}</span>
-                  <ChevronRight className={`w-4 h-4 transition-transform ${isSelected ? 'rotate-90' : ''}`} />
+                {/* Mobile Accordion Inline Content (Visible only when selected on mobile) */}
+                <AnimatePresence>
+                  {isSelected && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="lg:hidden mt-4 pt-4 border-t border-white/10 text-left"
+                    >
+                      <p className="text-xs text-white/80 leading-relaxed font-light mb-4">
+                        {faq.detailedAnswer}
+                      </p>
+                      <div className="flex flex-col gap-2 mb-4">
+                        {faq.highlights.map((h, i) => (
+                          <div key={i} className="flex items-center gap-2 text-xs font-mono text-white/90">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                            <span>{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <a
+                        href={faq.ctaLink}
+                        className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-white text-black text-xs font-mono font-bold uppercase tracking-widest"
+                      >
+                        <span>{faq.ctaText}</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Desktop/Mobile Status Indicator */}
+                <div className="hidden lg:flex items-center gap-1 mt-4 text-xs font-mono text-cyan-400">
+                  <span>{isSelected ? 'ACTIVE IN SPOTLIGHT PANEL' : 'CLICK TO VIEW DETAILS'}</span>
+                  <ChevronRight className={`w-4 h-4 transition-transform ${isSelected ? 'translate-x-1' : ''}`} />
                 </div>
               </motion.div>
             );
