@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars, Sphere, useTexture } from '@react-three/drei';
+import { Stars, Sphere, useTexture, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Preload planet textures for instant WebGL instantiation
+// Preload planet textures and 3D GLTF Satellite for instant WebGL loading
 try {
   useTexture.preload('/assets/planets/earth.jpg');
   useTexture.preload('/assets/planets/earth_normal.jpg');
@@ -11,8 +11,10 @@ try {
   useTexture.preload('/assets/planets/earth_clouds.png');
   useTexture.preload('/assets/planets/moon.jpg');
   useTexture.preload('/assets/planets/venus.jpg');
+  useTexture.preload('/assets/planets/circle_05.png');
+  useGLTF.preload('/assets/planets/satellite.glb');
 } catch (e) {
-  // Graceful fallback for SSR/Preload environments
+  // Graceful fallback for pre-load environments
 }
 
 // Camera Z Depth Controller based on window scroll progress
@@ -27,7 +29,6 @@ const CameraController = () => {
     const progress = Math.min(1, Math.max(0, scrollY / maxScroll));
 
     // Camera smoothly glides from Z = 0 (Hero) to Z = -25 (Footer)
-    // Earth is at Z = -18, Moon at Z = -26, Mars at Z = -34
     targetZ.current = -progress * 25;
     camera.position.z += (targetZ.current - camera.position.z) * 0.08;
   });
@@ -77,7 +78,6 @@ const DetailedEarth = ({ position, isMobile = false }) => {
 
   return (
     <group position={position} rotation={[0.4, 0, 0.2]}>
-      {/* High-Res Earth Core */}
       <Sphere ref={earthRef} args={[earthRadius, 96, 96]}>
         <meshStandardMaterial 
           map={colorMap} 
@@ -89,7 +89,6 @@ const DetailedEarth = ({ position, isMobile = false }) => {
         />
       </Sphere>
 
-      {/* Volumetric Atmosphere & Clouds */}
       <Sphere ref={cloudsRef} args={[earthRadius + 0.05, 96, 96]}>
         <meshStandardMaterial 
           map={cloudsMap} 
@@ -103,7 +102,7 @@ const DetailedEarth = ({ position, isMobile = false }) => {
   );
 };
 
-// Earth Fallback Mesh while textures load
+// Earth Fallback Mesh
 const EarthFallback = ({ position, isMobile = false }) => {
   const earthRadius = isMobile ? 3.2 : 4.5;
   return (
@@ -208,11 +207,49 @@ const MarsFallback = ({ position, isMobile = false }) => {
   );
 };
 
-// High-Detail Procedural 3D Satellite
-const HighResSatellite = ({ orbitRadius = 7.2, speed = 0.22, yOffset = 1.2, isMobile = false }) => {
+// Ultra-Detailed GLTF 3D Satellite Model (Bigger, Brighter & Crisper)
+const GLTFSatelliteModel = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1.2, isMobile = false }) => {
   const pivotRef = useRef();
   const satRef = useRef();
-  const beaconRef = useRef();
+  const { scene } = useGLTF('/assets/planets/satellite.glb');
+
+  // Clone scene so it can be instantiated safely
+  const clonedScene = useMemo(() => scene.clone(true), [scene]);
+
+  useFrame((state, delta) => {
+    const mult = getSpeedMultiplier();
+    if (pivotRef.current) {
+      pivotRef.current.rotation.y += delta * speed * mult;
+    }
+    if (satRef.current) {
+      satRef.current.rotation.z += delta * 0.25 * mult;
+      satRef.current.rotation.x += delta * 0.12 * mult;
+    }
+  });
+
+  const scale = isMobile ? 1.4 : 2.5; // Scaled up to be larger, clearer, and prominent!
+  const radius = isMobile ? 4.8 : orbitRadius;
+
+  return (
+    <group ref={pivotRef} rotation={[0.3, 0, 0.2]}>
+      <group 
+        ref={satRef} 
+        position={[radius, yOffset, 0]} 
+        scale={[scale, scale, scale]}
+      >
+        {/* Dedicated High-Intensity Lighting Rig for Satellite Specular Highlights */}
+        <directionalLight position={[10, 15, 10]} intensity={5.0} color="#ffffff" />
+        <pointLight position={[0, 4, 4]} intensity={6.0} color="#ffffff" distance={12} />
+        <primitive object={clonedScene} />
+      </group>
+    </group>
+  );
+};
+
+// Procedural Fallback Satellite while GLTF loads
+const HighResSatelliteFallback = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1.2, isMobile = false }) => {
+  const pivotRef = useRef();
+  const satRef = useRef();
 
   useFrame((state, delta) => {
     const mult = getSpeedMultiplier();
@@ -221,14 +258,10 @@ const HighResSatellite = ({ orbitRadius = 7.2, speed = 0.22, yOffset = 1.2, isMo
     }
     if (satRef.current) {
       satRef.current.rotation.z += delta * 0.3 * mult;
-      satRef.current.rotation.x += delta * 0.15 * mult;
-    }
-    if (beaconRef.current) {
-      beaconRef.current.intensity = Math.sin(state.clock.getElapsedTime() * 7) > 0 ? 3.5 : 0.2;
     }
   });
 
-  const scale = isMobile ? 0.6 : 1.0;
+  const scale = isMobile ? 0.7 : 1.2;
   const radius = isMobile ? 4.8 : orbitRadius;
 
   return (
@@ -238,63 +271,17 @@ const HighResSatellite = ({ orbitRadius = 7.2, speed = 0.22, yOffset = 1.2, isMo
         position={[radius, yOffset, 0]} 
         scale={[scale, scale, scale]}
       >
-        {/* Metallic Gold Chassis */}
         <mesh>
-          <boxGeometry args={[0.9, 0.9, 1.3]} />
-          <meshStandardMaterial 
-            color="#e2b857" 
-            metalness={0.95} 
-            roughness={0.15} 
-          />
+          <boxGeometry args={[1.2, 1.2, 1.6]} />
+          <meshStandardMaterial color="#e2b857" metalness={0.95} roughness={0.15} />
         </mesh>
-
-        {/* Core Radiator Cylinder */}
-        <mesh position={[0, 0, 0.75]}>
-          <cylinderGeometry args={[0.35, 0.35, 0.5, 16]} />
-          <meshStandardMaterial color="#1f1f23" metalness={0.9} roughness={0.2} />
+        <mesh position={[-2.5, 0, 0]}>
+          <boxGeometry args={[3.6, 1.0, 0.05]} />
+          <meshStandardMaterial color="#1e3a8a" metalness={0.9} roughness={0.1} />
         </mesh>
-
-        {/* Left Solar Array Wing */}
-        <group position={[-2.2, 0, 0]}>
-          <mesh>
-            <boxGeometry args={[3.2, 0.9, 0.05]} />
-            <meshStandardMaterial color="#0a192f" metalness={0.8} roughness={0.2} />
-          </mesh>
-          <mesh position={[0, 0, 0.03]}>
-            <planeGeometry args={[3.0, 0.8]} />
-            <meshStandardMaterial color="#1e3a8a" roughness={0.1} metalness={0.9} />
-          </mesh>
-          <pointLight ref={beaconRef} position={[-1.6, 0.55, 0]} color="#00ffff" distance={4} />
-        </group>
-
-        {/* Right Solar Array Wing */}
-        <group position={[2.2, 0, 0]}>
-          <mesh>
-            <boxGeometry args={[3.2, 0.9, 0.05]} />
-            <meshStandardMaterial color="#0a192f" metalness={0.8} roughness={0.2} />
-          </mesh>
-          <mesh position={[0, 0, 0.03]}>
-            <planeGeometry args={[3.0, 0.8]} />
-            <meshStandardMaterial color="#1e3a8a" roughness={0.1} metalness={0.9} />
-          </mesh>
-        </group>
-
-        {/* Parabolic Communication Dish */}
-        <group position={[0, 0.65, 0.3]} rotation={[-Math.PI / 4, 0, 0]}>
-          <mesh>
-            <coneGeometry args={[0.65, 0.3, 32, 1, true]} />
-            <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} side={THREE.DoubleSide} />
-          </mesh>
-          <mesh position={[0, 0.25, 0]}>
-            <sphereGeometry args={[0.07, 16, 16]} />
-            <meshStandardMaterial color="#e2b857" metalness={0.95} />
-          </mesh>
-        </group>
-
-        {/* Thruster Nozzle */}
-        <mesh position={[0, 0, -0.75]} rotation={[Math.PI / 2, 0, 0]}>
-          <coneGeometry args={[0.22, 0.35, 16, 1, true]} />
-          <meshStandardMaterial color="#2a2a2a" metalness={0.8} roughness={0.3} side={THREE.DoubleSide} />
+        <mesh position={[2.5, 0, 0]}>
+          <boxGeometry args={[3.6, 1.0, 0.05]} />
+          <meshStandardMaterial color="#1e3a8a" metalness={0.9} roughness={0.1} />
         </mesh>
       </group>
     </group>
@@ -341,12 +328,13 @@ const Comet = () => {
   );
 };
 
-// Galaxy Dust Particle System
+// Galaxy Dust Particle System — Uses circular alpha texture to eliminate all square point artifacts
 const GalaxyDustCloud = ({ isMobile = false }) => {
   const pointsRef = useRef();
+  const circleTexture = useTexture('/assets/planets/circle_05.png');
 
   const [positions, colors] = useMemo(() => {
-    const count = isMobile ? 5000 : 16000;
+    const count = isMobile ? 4000 : 12000;
     const pos = new Float32Array(count * 3);
     const col = new Float32Array(count * 3);
 
@@ -363,7 +351,7 @@ const GalaxyDustCloud = ({ isMobile = false }) => {
       pos[i * 3 + 1] = randomY + (Math.random() - 0.5) * (140 - radius) * 0.2;
       pos[i * 3 + 2] = Math.sin(branchAngle) * radius + randomZ - 45;
 
-      const brightness = 0.7 + Math.random() * 0.3;
+      const brightness = 0.6 + Math.random() * 0.4;
       col[i * 3] = brightness;
       col[i * 3 + 1] = brightness;
       col[i * 3 + 2] = brightness;
@@ -385,13 +373,15 @@ const GalaxyDustCloud = ({ isMobile = false }) => {
         <bufferAttribute attach="attributes-color" args={[colors, 3]} />
       </bufferGeometry>
       <pointsMaterial
-        size={isMobile ? 0.35 : 0.25}
+        map={circleTexture}
+        size={isMobile ? 0.25 : 0.18}
         vertexColors={true}
         transparent={true}
-        opacity={0.85}
+        opacity={0.7}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
+        alphaTest={0.01}
       />
     </points>
   );
@@ -422,9 +412,11 @@ const InteractiveStars = ({ isMobile = false }) => {
 
   return (
     <group ref={groupRef}>
-      <GalaxyDustCloud isMobile={isMobile} />
-      <Stars radius={220} depth={90} count={isMobile ? 6000 : 20000} factor={3.0} saturation={0} fade={false} speed={1.8} />
-      <Stars radius={110} depth={50} count={isMobile ? 3000 : 10000} factor={2.0} saturation={0} fade={false} speed={1.2} />
+      <React.Suspense fallback={null}>
+        <GalaxyDustCloud isMobile={isMobile} />
+      </React.Suspense>
+      <Stars radius={220} depth={90} count={isMobile ? 5000 : 15000} factor={2.5} saturation={0} fade={false} speed={1.5} />
+      <Stars radius={110} depth={50} count={isMobile ? 2500 : 8000} factor={1.8} saturation={0} fade={false} speed={1.0} />
     </group>
   );
 };
@@ -479,12 +471,16 @@ export default function SpaceScene() {
           <InteractiveStars isMobile={isMobile} />
           <Comet />
 
-          {/* EARTH & ORBITING SATELLITE WITH INDEPENDENT SUSPENSE */}
+          {/* EARTH & ULTRA-DETAILED 3D SATELLITE MODEL */}
           <group position={earthPos}>
             <React.Suspense fallback={<EarthFallback position={[0, 0, 0]} isMobile={isMobile} />}>
               <DetailedEarth position={[0, 0, 0]} isMobile={isMobile} />
             </React.Suspense>
-            <HighResSatellite orbitRadius={isMobile ? 4.8 : 7.2} speed={0.22} yOffset={1.2} isMobile={isMobile} />
+            
+            {/* GLTF 3D Satellite Model with High-Resolution Specular Lighting */}
+            <React.Suspense fallback={<HighResSatelliteFallback orbitRadius={isMobile ? 4.8 : 7.5} speed={0.22} yOffset={1.2} isMobile={isMobile} />}>
+              <GLTFSatelliteModel orbitRadius={isMobile ? 4.8 : 7.5} speed={0.22} yOffset={1.2} isMobile={isMobile} />
+            </React.Suspense>
           </group>
 
           {/* MOON WITH INDEPENDENT SUSPENSE */}

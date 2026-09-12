@@ -87,7 +87,7 @@ export default function Layout() {
               <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start w-full">
                 <h2 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h2>
                 <p className="text-white/50 text-sm mb-8 max-w-md leading-relaxed">
-                  Architecting category-defining web applications, native mobile products, bespoke brand architecture, and global growth systems.
+                  Building web applications, native mobile apps, brand identity systems, and global growth strategies.
                 </p>
                 <div className="flex w-full max-w-md bg-white/5 border border-white/10 rounded-full p-1 pl-4 md:pl-6 backdrop-blur-md focus-within:border-white/30 transition-colors">
                   <input type="email" placeholder="ENTER EMAIL ADDRESS" aria-label="Enter Email Address" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
@@ -133,7 +133,7 @@ export default function Layout() {
             {/* Copyright & Tagline Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase text-center font-bold">
               <span>Astrivix Corp © 2026</span>
-              <span>Global Software Engineering & Bespoke Brand Architecture</span>
+              <span>Global Software Engineering & Brand Architecture</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}

@@ -7,7 +7,7 @@ const reviews = [
     role: "CEO & Founder",
     company: "Apex Tech Ventures",
     rating: 5,
-    quote: "Astrivix transformed our entire digital ecosystem. Their 3D WebGL interactions and fluid mobile performance increased our conversion rates by 140% within the first 30 days.",
+    quote: "Astrivix transformed our digital platform. Their 3D WebGL physics and fluid mobile engineering increased our conversion performance by 140% within 30 days.",
     initials: "VS",
     badge: "Verified Client"
   },
