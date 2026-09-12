@@ -47,7 +47,7 @@ const getSpeedMultiplier = () => {
   return inServices ? 0.08 : 1.0;
 };
 
-// Earth Component with Cloud Layer
+// Earth Component with Cloud Layer (Top-Left Backdrop Framing)
 const DetailedEarth = ({ position, isMobile = false }) => {
   const earthRef = useRef();
   const cloudsRef = useRef();
@@ -70,11 +70,11 @@ const DetailedEarth = ({ position, isMobile = false }) => {
 
   useFrame((state, delta) => {
     const mult = getSpeedMultiplier();
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.18 * mult;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22 * mult;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.15 * mult;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.18 * mult;
   });
 
-  const earthRadius = isMobile ? 3.2 : 4.5;
+  const earthRadius = isMobile ? 3.8 : 5.5;
 
   return (
     <group position={position} rotation={[0.4, 0, 0.2]}>
@@ -82,14 +82,14 @@ const DetailedEarth = ({ position, isMobile = false }) => {
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
-          normalScale={new THREE.Vector2(3.0, 3.0)}
+          normalScale={new THREE.Vector2(2.5, 2.5)}
           roughnessMap={specularMap} 
-          roughness={0.25} 
-          metalness={0.2}
+          roughness={0.3} 
+          metalness={0.15}
         />
       </Sphere>
 
-      <Sphere ref={cloudsRef} args={[earthRadius + 0.05, 96, 96]}>
+      <Sphere ref={cloudsRef} args={[earthRadius + 0.06, 96, 96]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
@@ -104,7 +104,7 @@ const DetailedEarth = ({ position, isMobile = false }) => {
 
 // Earth Fallback Mesh
 const EarthFallback = ({ position, isMobile = false }) => {
-  const earthRadius = isMobile ? 3.2 : 4.5;
+  const earthRadius = isMobile ? 3.8 : 5.5;
   return (
     <group position={position}>
       <Sphere args={[earthRadius, 32, 32]}>
@@ -114,7 +114,7 @@ const EarthFallback = ({ position, isMobile = false }) => {
   );
 };
 
-// Moon Component
+// Moon Component (Lower-Right Backdrop Framing)
 const DetailedMoon = ({ position, isMobile = false }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
@@ -128,10 +128,10 @@ const DetailedMoon = ({ position, isMobile = false }) => {
 
   useFrame((state, delta) => {
     const mult = getSpeedMultiplier();
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12 * mult;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.1 * mult;
   });
 
-  const moonRadius = isMobile ? 1.6 : 2.4;
+  const moonRadius = isMobile ? 2.0 : 3.2;
 
   return (
     <group position={position}>
@@ -150,7 +150,7 @@ const DetailedMoon = ({ position, isMobile = false }) => {
 
 // Moon Fallback
 const MoonFallback = ({ position, isMobile = false }) => {
-  const moonRadius = isMobile ? 1.6 : 2.4;
+  const moonRadius = isMobile ? 2.0 : 3.2;
   return (
     <group position={position}>
       <Sphere args={[moonRadius, 32, 32]}>
@@ -160,7 +160,7 @@ const MoonFallback = ({ position, isMobile = false }) => {
   );
 };
 
-// Mars Component
+// Mars Component (Deep Space Top-Right Backdrop)
 const RealisticMars = ({ position, isMobile = false }) => {
   const marsRef = useRef();
   const rockyMap = useTexture('/assets/planets/venus.jpg');
@@ -174,10 +174,10 @@ const RealisticMars = ({ position, isMobile = false }) => {
 
   useFrame((state, delta) => {
     const mult = getSpeedMultiplier();
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2 * mult;
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.15 * mult;
   });
 
-  const marsRadius = isMobile ? 2.4 : 3.8;
+  const marsRadius = isMobile ? 2.2 : 3.8;
 
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
@@ -197,7 +197,7 @@ const RealisticMars = ({ position, isMobile = false }) => {
 
 // Mars Fallback
 const MarsFallback = ({ position, isMobile = false }) => {
-  const marsRadius = isMobile ? 2.4 : 3.8;
+  const marsRadius = isMobile ? 2.2 : 3.8;
   return (
     <group position={position}>
       <Sphere args={[marsRadius, 32, 32]}>
@@ -207,8 +207,8 @@ const MarsFallback = ({ position, isMobile = false }) => {
   );
 };
 
-// Ultra-Detailed GLTF 3D Satellite Model (Bigger, Brighter & Crisper)
-const GLTFSatelliteModel = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1.2, isMobile = false }) => {
+// Ultra-Detailed GLTF 3D Satellite Model (Orbiting Earth in Top-Left Background)
+const GLTFSatelliteModel = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isMobile = false }) => {
   const pivotRef = useRef();
   const satRef = useRef();
   const { scene } = useGLTF('/assets/planets/satellite.glb');
@@ -222,32 +222,32 @@ const GLTFSatelliteModel = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1.2, is
       pivotRef.current.rotation.y += delta * speed * mult;
     }
     if (satRef.current) {
-      satRef.current.rotation.z += delta * 0.25 * mult;
-      satRef.current.rotation.x += delta * 0.12 * mult;
+      satRef.current.rotation.z += delta * 0.2 * mult;
+      satRef.current.rotation.x += delta * 0.1 * mult;
     }
   });
 
-  const scale = isMobile ? 1.4 : 2.5; // Scaled up to be larger, clearer, and prominent!
-  const radius = isMobile ? 4.8 : orbitRadius;
+  const scale = isMobile ? 1.6 : 2.8; // High resolution scale for clear, crisp detail
+  const radius = isMobile ? 7.0 : orbitRadius;
 
   return (
-    <group ref={pivotRef} rotation={[0.3, 0, 0.2]}>
+    <group ref={pivotRef} rotation={[0.35, 0, 0.15]}>
       <group 
         ref={satRef} 
         position={[radius, yOffset, 0]} 
         scale={[scale, scale, scale]}
       >
-        {/* Dedicated High-Intensity Lighting Rig for Satellite Specular Highlights */}
-        <directionalLight position={[10, 15, 10]} intensity={5.0} color="#ffffff" />
-        <pointLight position={[0, 4, 4]} intensity={6.0} color="#ffffff" distance={12} />
+        {/* High-Contrast Solar Specular Lighting Rig */}
+        <directionalLight position={[15, 20, 15]} intensity={6.0} color="#ffffff" />
+        <pointLight position={[0, 5, 5]} intensity={8.0} color="#ffffff" distance={15} />
         <primitive object={clonedScene} />
       </group>
     </group>
   );
 };
 
-// Procedural Fallback Satellite while GLTF loads
-const HighResSatelliteFallback = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1.2, isMobile = false }) => {
+// Fallback Satellite
+const HighResSatelliteFallback = ({ orbitRadius = 11, speed = 0.15, yOffset = 4.5, isMobile = false }) => {
   const pivotRef = useRef();
   const satRef = useRef();
 
@@ -257,30 +257,30 @@ const HighResSatelliteFallback = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1
       pivotRef.current.rotation.y += delta * speed * mult;
     }
     if (satRef.current) {
-      satRef.current.rotation.z += delta * 0.3 * mult;
+      satRef.current.rotation.z += delta * 0.25 * mult;
     }
   });
 
-  const scale = isMobile ? 0.7 : 1.2;
-  const radius = isMobile ? 4.8 : orbitRadius;
+  const scale = isMobile ? 0.8 : 1.4;
+  const radius = isMobile ? 7.0 : orbitRadius;
 
   return (
-    <group ref={pivotRef} rotation={[0.35, 0, 0.2]}>
+    <group ref={pivotRef} rotation={[0.35, 0, 0.15]}>
       <group 
         ref={satRef} 
         position={[radius, yOffset, 0]} 
         scale={[scale, scale, scale]}
       >
         <mesh>
-          <boxGeometry args={[1.2, 1.2, 1.6]} />
+          <boxGeometry args={[1.4, 1.4, 1.8]} />
           <meshStandardMaterial color="#e2b857" metalness={0.95} roughness={0.15} />
         </mesh>
-        <mesh position={[-2.5, 0, 0]}>
-          <boxGeometry args={[3.6, 1.0, 0.05]} />
+        <mesh position={[-2.8, 0, 0]}>
+          <boxGeometry args={[4.0, 1.1, 0.05]} />
           <meshStandardMaterial color="#1e3a8a" metalness={0.9} roughness={0.1} />
         </mesh>
-        <mesh position={[2.5, 0, 0]}>
-          <boxGeometry args={[3.6, 1.0, 0.05]} />
+        <mesh position={[2.8, 0, 0]}>
+          <boxGeometry args={[4.0, 1.1, 0.05]} />
           <meshStandardMaterial color="#1e3a8a" metalness={0.9} roughness={0.1} />
         </mesh>
       </group>
@@ -288,7 +288,7 @@ const HighResSatelliteFallback = ({ orbitRadius = 7.5, speed = 0.22, yOffset = 1
   );
 };
 
-// Shooting Star / Comet
+// Pure Silver Shooting Star / Comet
 const Comet = () => {
   const cometRef = useRef();
   const [active, setActive] = useState(false);
@@ -305,12 +305,12 @@ const Comet = () => {
 
   useFrame((state, delta) => {
     if (active && cometRef.current) {
-      progress.current += delta * 0.5;
+      progress.current += delta * 0.4;
       if (progress.current > 1) {
         setActive(false);
       } else {
-        const start = new THREE.Vector3(120, 80, -180);
-        const end = new THREE.Vector3(-120, -50, -30);
+        const start = new THREE.Vector3(140, 90, -190);
+        const end = new THREE.Vector3(-140, -50, -40);
         cometRef.current.position.lerpVectors(start, end, progress.current);
       }
     }
@@ -321,73 +321,14 @@ const Comet = () => {
   return (
     <group ref={cometRef}>
       <mesh>
-        <sphereGeometry args={[0.8, 16, 16]} />
+        <sphereGeometry args={[0.9, 16, 16]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>
     </group>
   );
 };
 
-// Galaxy Dust Particle System — Uses circular alpha texture to eliminate all square point artifacts
-const GalaxyDustCloud = ({ isMobile = false }) => {
-  const pointsRef = useRef();
-  const circleTexture = useTexture('/assets/planets/circle_05.png');
-
-  const [positions, colors] = useMemo(() => {
-    const count = isMobile ? 4000 : 12000;
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-
-    for (let i = 0; i < count; i++) {
-      const radius = Math.random() * 140 + 8;
-      const spinAngle = radius * 0.05;
-      const branchAngle = ((i % 4) * Math.PI) / 2 + spinAngle;
-
-      const randomX = (Math.random() - 0.5) * 18;
-      const randomY = (Math.random() - 0.5) * 18;
-      const randomZ = (Math.random() - 0.5) * 18;
-
-      pos[i * 3] = Math.cos(branchAngle) * radius + randomX;
-      pos[i * 3 + 1] = randomY + (Math.random() - 0.5) * (140 - radius) * 0.2;
-      pos[i * 3 + 2] = Math.sin(branchAngle) * radius + randomZ - 45;
-
-      const brightness = 0.6 + Math.random() * 0.4;
-      col[i * 3] = brightness;
-      col[i * 3 + 1] = brightness;
-      col[i * 3 + 2] = brightness;
-    }
-    return [pos, col];
-  }, [isMobile]);
-
-  useFrame((state, delta) => {
-    if (pointsRef.current) {
-      const mult = getSpeedMultiplier();
-      pointsRef.current.rotation.y += delta * 0.015 * mult;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
-      </bufferGeometry>
-      <pointsMaterial
-        map={circleTexture}
-        size={isMobile ? 0.25 : 0.18}
-        vertexColors={true}
-        transparent={true}
-        opacity={0.7}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-        sizeAttenuation={true}
-        alphaTest={0.01}
-      />
-    </points>
-  );
-};
-
-// Interactive Background Stars System
+// Interactive Pure Monochrome Deep Space Starfield
 const InteractiveStars = ({ isMobile = false }) => {
   const groupRef = useRef();
   const mouse = useRef({ x: 0, y: 0 });
@@ -397,26 +338,38 @@ const InteractiveStars = ({ isMobile = false }) => {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
+
+    const handleOrientation = (e) => {
+      if (e.beta !== null && e.gamma !== null) {
+        mouse.current.x = Math.max(-1, Math.min(1, e.gamma / 25));
+        mouse.current.y = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (typeof window !== 'undefined') window.removeEventListener('deviceorientation', handleOrientation);
+    };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      const targetX = (mouse.current.y * Math.PI) / 16;
-      const targetY = (mouse.current.x * Math.PI) / 16;
-      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.05;
-      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.05;
+      const targetX = (mouse.current.y * Math.PI) / 14;
+      const targetY = (mouse.current.x * Math.PI) / 14;
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
     }
   });
 
   return (
     <group ref={groupRef}>
-      <React.Suspense fallback={null}>
-        <GalaxyDustCloud isMobile={isMobile} />
-      </React.Suspense>
-      <Stars radius={220} depth={90} count={isMobile ? 5000 : 15000} factor={2.5} saturation={0} fade={false} speed={1.5} />
-      <Stars radius={110} depth={50} count={isMobile ? 2500 : 8000} factor={1.8} saturation={0} fade={false} speed={1.0} />
+      <Stars radius={180} depth={80} count={isMobile ? 4000 : 10000} factor={3.5} saturation={0} fade speed={1.5} />
+      <Stars radius={90} depth={40} count={isMobile ? 2000 : 5000} factor={2.2} saturation={0} fade speed={1.0} />
     </group>
   );
 };
@@ -435,7 +388,7 @@ class WebGLErrorBoundary extends React.Component {
   }
   render() {
     if (this.state.hasError) {
-      return <div className="fixed inset-0 w-full h-full z-0 bg-transparent pointer-events-none" />;
+      return <div className="fixed inset-0 w-full h-full z-0 bg-black pointer-events-none" />;
     }
     return this.props.children;
   }
@@ -444,51 +397,48 @@ class WebGLErrorBoundary extends React.Component {
 export default function SpaceScene() {
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
 
-  // Exact viewport coordinates calibrated for desktop & mobile
-  const earthPos = isMobile ? [0, 4.0, -15] : [5.5, 1.5, -18];
-  const moonPos = isMobile ? [-2.8, -3.2, -22] : [-6.5, -2.5, -26];
-  const marsPos = isMobile ? [2.8, -1.0, -28] : [7.5, -1.5, -34];
+  // Exact backdrop positions from astrivix-bc1neib7z (Earth top-left, Moon lower-right, Mars deep space top-right)
+  const earthPos = isMobile ? [-7.0, 4.5, -28] : [-16.0, 6.5, -34];
+  const moonPos = isMobile ? [6.5, -3.5, -48] : [16.5, -3.5, -68];
+  const marsPos = isMobile ? [12.0, 11.0, -80] : [34.0, 15.0, -120];
 
   return (
     <WebGLErrorBoundary>
       <div 
-        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-transparent overflow-hidden touch-none"
+        className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden touch-none"
         style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}
       >
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 55 }} 
           dpr={[1, isMobile ? 1.25 : 2]} 
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance", precision: isMobile ? "mediump" : "highp" }}
-          onCreated={({ gl }) => {
-            gl.setClearColor(0x000000, 0);
-          }}
+          gl={{ alpha: false, antialias: true, powerPreference: "high-performance", precision: isMobile ? "mediump" : "highp" }}
         >
           {/* High-Contrast Solar Directional & Ambient Lighting */}
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[160, 100, 70]} intensity={isMobile ? 5.5 : 6.5} color="#ffffff" />
-          <directionalLight position={[-160, -70, -100]} intensity={2.0} color="#7799ff" />
+          <ambientLight intensity={0.35} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 5.5 : 6.5} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={2.0} color="#7799ff" />
 
           <InteractiveStars isMobile={isMobile} />
           <Comet />
 
-          {/* EARTH & ULTRA-DETAILED 3D SATELLITE MODEL */}
+          {/* EARTH & ULTRA-DETAILED 3D SATELLITE MODEL IN TOP-LEFT BACKGROUND */}
           <group position={earthPos}>
             <React.Suspense fallback={<EarthFallback position={[0, 0, 0]} isMobile={isMobile} />}>
               <DetailedEarth position={[0, 0, 0]} isMobile={isMobile} />
             </React.Suspense>
             
-            {/* GLTF 3D Satellite Model with High-Resolution Specular Lighting */}
-            <React.Suspense fallback={<HighResSatelliteFallback orbitRadius={isMobile ? 4.8 : 7.5} speed={0.22} yOffset={1.2} isMobile={isMobile} />}>
-              <GLTFSatelliteModel orbitRadius={isMobile ? 4.8 : 7.5} speed={0.22} yOffset={1.2} isMobile={isMobile} />
+            {/* GLTF 3D Satellite Model Orbiting Earth */}
+            <React.Suspense fallback={<HighResSatelliteFallback orbitRadius={isMobile ? 7.0 : 11.0} speed={0.15} yOffset={isMobile ? 3.0 : 4.5} isMobile={isMobile} />}>
+              <GLTFSatelliteModel orbitRadius={isMobile ? 7.0 : 11.0} speed={0.15} yOffset={isMobile ? 3.0 : 4.5} isMobile={isMobile} />
             </React.Suspense>
           </group>
 
-          {/* MOON WITH INDEPENDENT SUSPENSE */}
+          {/* MOON IN LOWER-RIGHT BACKGROUND */}
           <React.Suspense fallback={<MoonFallback position={moonPos} isMobile={isMobile} />}>
             <DetailedMoon position={moonPos} isMobile={isMobile} />
           </React.Suspense>
 
-          {/* MARS WITH INDEPENDENT SUSPENSE */}
+          {/* MARS IN DEEP SPACE TOP-RIGHT BACKGROUND */}
           <React.Suspense fallback={<MarsFallback position={marsPos} isMobile={isMobile} />}>
             <RealisticMars position={marsPos} isMobile={isMobile} />
           </React.Suspense>
