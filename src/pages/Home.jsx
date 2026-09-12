@@ -33,26 +33,26 @@ export default function Home() {
           className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
         >
           {/* ASTRIVIX Particle Text Container (GPU Accelerated with Contrast Halo) */}
-          <div className="w-full h-[220px] sm:h-[280px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
+          <div className="w-full h-[120px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
             <div className="absolute inset-0 bg-black/50 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.2 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 5}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.5 : 2}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
               color="#ffffff"
               highlightColor="#ffffff"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 150}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
               gatherDuration={1400}
               stagger={80}
-              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 50 : 150}
               repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(4.2rem, 18vw, 12rem)" : "clamp(4.2rem, 16vw, 12rem)"}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.0rem, 9.2vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
               fontWeight={900}
             />
           </div>
           
           {/* Subtitle Row - Tight side-by-side alignment directly under ASTRIVIX */}
-          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-2 sm:-mt-8 md:-mt-20 z-20 gpu-layer">
+          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-3 sm:-mt-8 md:-mt-20 z-20 gpu-layer">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
               <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text drop-shadow-md">
@@ -60,13 +60,13 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Right Side: PRODUCT STUDIO */}
+            {/* Right Side: BUSINESS CONSULTANTS */}
             <div className="flex flex-col items-end text-right">
               <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                PRODUCT
+                BUSINESS
               </h3>
               <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                STUDIO
+                CONSULTANTS
               </h3>
             </div>
           </div>
@@ -75,18 +75,17 @@ export default function Home() {
         {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-3 sm:px-6 z-10 gpu-layer"
+          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-2 sm:px-4 z-10 gpu-layer"
         >
-          <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full flex justify-center items-center">
+          <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-            <div className="relative z-10 flex justify-center items-center max-w-full overflow-hidden py-1">
+            <div className="relative z-10 flex justify-center">
               <SplitFlapText
-                words={['BUILDING DIGITAL PRODUCTS', 'PEAK SPEED & PERFORMANCE', 'CUSTOM DESIGN & CODE', 'ENTERPRISE EXCELLENCE']}
-                fontSize="clamp(10px, 2.2vw, 22px)"
-                gap="clamp(2px, 0.4vw, 6px)"
-                padTo={0}
+                words={['BUILDING DIGITAL LEGENDS', 'UNMATCHED PERFORMANCE', 'BESPOKE ENGINEERING', 'DOMINATE DIGITAL']}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
                 tileColor="#050509"
                 textColor="#ffffff"
+                gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
                 stagger={0.05}
               />
             </div>
@@ -101,7 +100,7 @@ export default function Home() {
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           <div className="text-center mb-8 sm:mb-12 relative z-10 px-4">
-            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Selected Clients & Strategic Partners</h3>
+            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Brands & Visionaries We've Had The Pleasure of Building With</h3>
           </div>
           <div className="relative z-10 w-full overflow-hidden mask-edges px-2 sm:px-8">
             <LogoLoop

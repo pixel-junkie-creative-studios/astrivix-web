@@ -40,7 +40,11 @@ export const KokonutCard = ({
         </p>
       </div>
 
-      {/* Bottom Footer Details */}
+      {/* Bottom Corner Brackets (BKLIT / Synthu Aesthetic) */}
+      <div className="absolute top-3 left-3 text-[10px] font-mono text-white/20 pointer-events-none">┌</div>
+      <div className="absolute top-3 right-3 text-[10px] font-mono text-white/20 pointer-events-none">┐</div>
+      <div className="absolute bottom-3 left-3 text-[10px] font-mono text-white/20 pointer-events-none">└</div>
+      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-white/20 pointer-events-none">┘</div>
     </motion.div>
   );
 };

@@ -41,14 +41,17 @@ export const MorphicNavbar = ({ navItems }) => {
         initial={{ opacity: 1, y: -100 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 26 }}
-        className="fixed top-4 md:top-6 inset-x-0 mx-auto w-[92vw] max-w-4xl z-[5000] bg-[#0a0a0f]/85 backdrop-blur-2xl rounded-full p-2 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between"
+        className="fixed top-4 md:top-6 inset-x-0 mx-auto w-[92vw] max-w-4xl z-[5000] glass-metallic rounded-full p-2 border border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between backdrop-blur-3xl"
       >
         {/* Brand Logo */}
-        <a href="#" aria-label="Astrivix Homepage" className="flex items-center gap-2.5 pl-3 pr-2 group">
-          <img 
-            src="/astrivix-logo-sq.png"
-            alt="Astrivix Official Logo" 
-            className="h-9 w-9 object-cover rounded-full border border-white/20 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_12px_rgba(255,255,255,0.15)]"
+        <a href="#" className="flex items-center gap-2 pl-3 pr-2 group">
+          <video 
+            src="/assets/astreivix_nav_bar.mp4"
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="h-9 w-9 object-contain group-hover:scale-110 transition-transform duration-300"
           />
           <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase">
             ASTRIVIX
@@ -67,7 +70,7 @@ export const MorphicNavbar = ({ navItems }) => {
               {activeTab === idx && (
                 <motion.span
                   layoutId="morphicTabIndicator"
-                  className="absolute inset-0 bg-white/15 rounded-full border border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                  className="absolute inset-0 bg-white/20 rounded-full border border-white/30 shadow-lg"
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
@@ -88,7 +91,6 @@ export const MorphicNavbar = ({ navItems }) => {
 
           {/* Mobile Hamburger Button */}
           <button 
-            aria-label="Toggle navigation menu"
             className="md:hidden relative flex flex-col justify-center items-center w-9 h-9 rounded-full bg-white/10 border border-white/20 p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -109,8 +111,8 @@ export const MorphicNavbar = ({ navItems }) => {
             className="fixed inset-x-3 top-16 bottom-24 bg-[#050508]/98 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] p-8 shadow-[0_30px_90px_rgba(0,0,0,0.98)] z-[4900] md:hidden flex flex-col justify-between overflow-y-auto"
           >
             <div className="flex justify-between items-center border-b border-white/10 pb-4">
-              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-white/70 uppercase flex items-center gap-2">
-                <span className="w-2 h-2 bg-white rounded-full animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+              <span className="text-[10px] font-mono font-bold tracking-[0.3em] text-emerald-400 uppercase flex items-center gap-2">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                 AST. // CREATIVE AGENCY
               </span>
               <span className="text-[10px] font-mono text-white/40 uppercase">CLOSE [X]</span>
@@ -122,7 +124,7 @@ export const MorphicNavbar = ({ navItems }) => {
                   key={idx}
                   href={item.link}
                   onClick={(e) => handleScroll(e, item.link, idx)}
-                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-white/70 transition-colors text-left flex items-center justify-between"
+                  className="text-3xl font-black tracking-tighter uppercase text-white hover:text-emerald-400 transition-colors text-left flex items-center justify-between"
                 >
                   <span>{item.name}</span>
                   <span className="text-xs font-mono text-white/30 font-normal">0{idx + 1} →</span>
@@ -136,6 +138,43 @@ export const MorphicNavbar = ({ navItems }) => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Fixed Bottom Glass Pill Dock for Mobile */}
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="md:hidden fixed bottom-6 inset-x-0 mx-auto w-[92vw] max-w-sm z-[5000] glass-metallic rounded-full p-1.5 border border-white/30 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between backdrop-blur-3xl"
+      >
+        <a
+          href="#clients"
+          onClick={(e) => handleScroll(e, '#clients', 0)}
+          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
+        >
+          WORK
+        </a>
+        <a
+          href="#services"
+          onClick={(e) => handleScroll(e, '#services', 1)}
+          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
+        >
+          SERVICES
+        </a>
+        <a
+          href="#about"
+          onClick={(e) => handleScroll(e, '#about', 2)}
+          className="flex items-center justify-center px-3.5 py-2.5 rounded-full text-[10px] font-mono font-bold tracking-wider uppercase text-white/80 hover:text-white hover:bg-white/10 transition-all"
+        >
+          ABOUT
+        </a>
+        <a
+          href="#contact"
+          onClick={(e) => handleScroll(e, '#contact', 4)}
+          className="flex items-center justify-center px-4 py-2.5 rounded-full text-[10px] font-mono font-black tracking-widest uppercase bg-white text-black shadow-lg active:scale-95 transition-transform shrink-0"
+        >
+          CONTACT
+        </a>
+      </motion.div>
     </>
   );
 };

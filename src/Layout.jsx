@@ -1,14 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import { MorphicNavbar } from './components/ui/MorphicNavbar';
-import SEOManager from './components/ui/SEOManager';
-import Breadcrumbs from './components/ui/Breadcrumbs';
-import Testimonials from './components/ui/Testimonials';
-import FAQSection from './components/ui/FAQSection';
-import CookieConsent from './components/ui/CookieConsent';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -29,14 +23,11 @@ export default function Layout() {
     { name: "Portfolio", link: "/portfolio" },
     { name: "About", link: "#about" },
     { name: "Careers", link: "#careers" },
-    { name: "FAQ", link: "#faq" },
   ];
 
   return (
     <div className="w-full max-w-[100vw] min-h-screen bg-transparent text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
-      <SEOManager />
       <MagneticCursor />
-      <CookieConsent />
       
       {/* 3D WebGL Space Journey Background */}
       <SpaceScene />
@@ -45,15 +36,11 @@ export default function Layout() {
       {/* KOKONUT UI MORPHIC NAVBAR */}
       <MorphicNavbar navItems={navItems} />
 
-      <main className="relative z-10 w-full mx-auto flex flex-col items-center">
+      <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
         {/* SPA Sections Stacked Logically */}
         <div id="home" className="w-full">
           <Home />
-        </div>
-
-        <div className="w-full relative z-20 pt-4">
-          <Breadcrumbs />
         </div>
         
         <div className="w-full relative z-20">
@@ -67,10 +54,6 @@ export default function Layout() {
         <div id="careers" className="w-full relative z-20">
           <Careers />
         </div>
-
-        <div className="w-full relative z-20">
-          <FAQSection />
-        </div>
         
         <div id="contact" className="w-full relative z-20">
           <Contact />
@@ -83,13 +66,13 @@ export default function Layout() {
               
               {/* Brand & Newsletter */}
               <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start w-full">
-                <h2 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h2>
+                <h3 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h3>
                 <p className="text-white/50 text-sm mb-8 max-w-md leading-relaxed">
                   Engineering digital perfection. Subscribe to our newsletter to receive the latest updates, case studies, and industry insights.
                 </p>
                 <div className="flex w-full max-w-md bg-white/5 border border-white/10 rounded-full p-1 pl-4 md:pl-6 backdrop-blur-md focus-within:border-white/30 transition-colors">
-                  <input type="email" placeholder="ENTER EMAIL ADDRESS" aria-label="Enter Email Address" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
-                  <button aria-label="Subscribe to Newsletter" className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
+                  <input type="email" placeholder="ENTER EMAIL ADDRESS" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
+                  <button className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
                 </div>
               </div>
 
@@ -100,18 +83,16 @@ export default function Layout() {
                   <a href="#services" className="hover:text-white transition-colors">Services</a>
                   <a href="#about" className="hover:text-white transition-colors">About Us</a>
                   <a href="#careers" className="hover:text-white transition-colors">Careers</a>
-                  <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
                   <a href="#contact" className="hover:text-white transition-colors">Contact</a>
                 </div>
               </div>
 
               {/* Legal & Social */}
               <div className="flex flex-col items-center md:items-start w-full">
-                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Access</h4>
+                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal / Social</h4>
                 <div className="flex flex-col gap-4 text-sm text-white/70">
-                  <Link to="/waitlist" className="hover:text-white transition-colors text-white/70 font-semibold">VIP Waitlist</Link>
-                  <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-                  <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                  <a href="#privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+                  <a href="#terms" className="hover:text-white transition-colors">Terms of Service</a>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">
                     <a href="#twitter" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">X / TWITTER</a>
                     <a href="#linkedin" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">LINKEDIN</a>
@@ -152,7 +133,7 @@ export default function Layout() {
           </div>
         </footer>
 
-      </main>
+      </div>
     </div>
   );
 }

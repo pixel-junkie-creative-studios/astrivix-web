@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Bespoke brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
   { id: '02', title: 'ENTERPRISE WEB DEV', category: 'Zero-Latency Web Apps', color: '#4d79ff', desc: 'Custom, high-performance web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
   { id: '03', title: 'MOBILE APP ENGINEERING', category: '120 FPS Fluidity', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
   { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
@@ -31,10 +31,10 @@ export default function Services() {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: isMobile ? '+=27000' : '+=22000', // Ultra-extended pin scroll distance (~2500px per card) so card flips are super deliberate and deliberate scroll steps
+        end: isMobile ? '+=4800' : '+=1800', // 4800px on mobile for 1-swipe-per-card control
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: isMobile ? 1.2 : 1.0,
+        scrub: isMobile ? 0.8 : 0.1,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,
@@ -155,7 +155,7 @@ export default function Services() {
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 hover:border-white/50 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer transition-colors"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer corner-bracket-tl corner-bracket-tr"
               >
                 {/* Accent Line Header */}
                 <div 
