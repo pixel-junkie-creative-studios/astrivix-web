@@ -22,7 +22,6 @@ import {
 import { Link } from 'react-router-dom';
 
 const categories = [
-  { id: 'all', label: 'ALL FAQS' },
   { id: 'timeline', label: 'DELIVERY & TIMELINE' },
   { id: 'engineering', label: 'CUSTOM CODE' },
   { id: 'ip', label: 'IP & LEGAL' },
@@ -160,13 +159,11 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('timeline');
   const [selectedFaqId, setSelectedFaqId] = useState(faqs[0].id);
 
   // Filter FAQs based on active category
-  const filteredFaqs = faqs.filter(faq => 
-    activeCategory === 'all' ? true : faq.category === activeCategory
-  );
+  const filteredFaqs = faqs.filter(faq => faq.category === activeCategory);
 
   // Get currently selected FAQ object
   const selectedFaq = faqs.find(f => f.id === selectedFaqId) || filteredFaqs[0] || faqs[0];
@@ -220,8 +217,7 @@ export default function FAQSection() {
               key={cat.id}
               onClick={() => {
                 setActiveCategory(cat.id);
-                // Select first FAQ in category if current selection isn't in filtered
-                const nextFaqs = faqs.filter(f => cat.id === 'all' ? true : f.category === cat.id);
+                const nextFaqs = faqs.filter(f => f.category === cat.id);
                 if (nextFaqs.length > 0 && !nextFaqs.some(f => f.id === selectedFaqId)) {
                   setSelectedFaqId(nextFaqs[0].id);
                 }
