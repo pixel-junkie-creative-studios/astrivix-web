@@ -66,10 +66,10 @@ const SplitFlapText = ({
   words = ['LAUNCH READY', 'SYNC ONLINE', 'SIGNAL LIVE'],
   text,
   flipDuration = 0.12,
-  stagger = 0.06,
+  stagger = 0.05,
   cycleDelay = 2400,
   charset = 'alphanumeric',
-  flipsPerChar = 8,
+  flipsPerChar = 6,
   tileColor = '#111827',
   textColor = '#f8fafc',
   tileRadius = 8,
@@ -84,7 +84,6 @@ const SplitFlapText = ({
   const prefersReducedMotion = usePrefersReducedMotion();
   const rafRef = useRef(null);
   const cycleTimerRef = useRef(null);
-  const currentTextRef = useRef('');
 
   const sourceWords = Array.isArray(words) && words.length > 0 ? words : DEFAULT_WORDS;
   const phrasesKey = typeof text === 'string' ? text : sourceWords.map(word => String(word ?? '')).join('\u001f');
@@ -97,6 +96,8 @@ const SplitFlapText = ({
 
   const normalizedPhrases = useMemo(() => phrases.map(phrase => normalizePhrase(phrase, width)), [phrases, width]);
 
+  const currentPhraseIndexRef = useRef(0);
+  const currentTextRef = useRef(normalizedPhrases[0] || '');
   const [tiles, setTiles] = useState(() => createTiles(normalizedPhrases[0] || ''));
 
   useEffect(() => {
@@ -115,6 +116,7 @@ const SplitFlapText = ({
     clearAnimation();
 
     const firstPhrase = normalizedPhrases[0] || '';
+    currentPhraseIndexRef.current = 0;
     currentTextRef.current = firstPhrase;
     setTiles(createTiles(firstPhrase));
 
@@ -122,7 +124,6 @@ const SplitFlapText = ({
       return clearAnimation;
     }
 
-    let phraseIndex = 0;
     let cancelled = false;
 
     const safeFlipMs = Math.max(40, (Number(flipDuration) || 0.12) * 1000);
@@ -140,6 +141,9 @@ const SplitFlapText = ({
 
       const fromPhrase = normalizePhrase(currentTextRef.current, width);
       const targetChars = targetPhrase.split('');
+
+      // Always sync tiles state with fromPhrase at the start of animation to prevent desync
+      setTiles(createTiles(fromPhrase));
 
       const plans = targetChars
         .map((targetChar, index) => {
@@ -234,6 +238,7 @@ const SplitFlapText = ({
           rafRef.current = requestAnimationFrame(tick);
         } else {
           currentTextRef.current = targetPhrase;
+          setTiles(createTiles(targetPhrase));
           rafRef.current = null;
         }
       };
@@ -246,12 +251,12 @@ const SplitFlapText = ({
       cycleTimerRef.current = window.setTimeout(() => {
         if (cancelled) return;
 
-        const nextIndex = phraseIndex + 1;
+        const nextIndex = currentPhraseIndexRef.current + 1;
 
         if (nextIndex >= normalizedPhrases.length && !loop) return;
 
-        phraseIndex = nextIndex % normalizedPhrases.length;
-        const animationDuration = animateTo(normalizedPhrases[phraseIndex]);
+        currentPhraseIndexRef.current = nextIndex % normalizedPhrases.length;
+        const animationDuration = animateTo(normalizedPhrases[currentPhraseIndexRef.current]);
         scheduleNext(safeCycleDelay + animationDuration);
       }, delay);
     };
@@ -287,7 +292,7 @@ const SplitFlapText = ({
       {...props}
     >
       {tiles.map((tile, index) => (
-        <span className="split-flap-text__tile" aria-hidden="true" key={`${index}-${tiles.length}`}>
+        <span className="split-flap-text__tile" aria-hidden="true" key={`tile-slot-${index}`}>
           <span className="split-flap-text__half split-flap-text__half--top">
             <span className="split-flap-text__char">{tile.current === ' ' ? '\u00A0' : tile.current}</span>
           </span>
