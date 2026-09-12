@@ -473,7 +473,10 @@ export default function SpaceScene() {
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
           dpr={[1, isMobile ? 1.25 : 2]} 
-          gl={{ antialias: true, powerPreference: "high-performance", precision: isMobile ? "mediump" : "highp" }}
+          gl={{ alpha: true, antialias: true, powerPreference: "high-performance", precision: isMobile ? "mediump" : "highp" }}
+          onCreated={({ gl }) => {
+            gl.setClearColor(0x000000, 0);
+          }}
         >
           {/* Cinematic High-Contrast Solar Lighting Rig */}
           <ambientLight intensity={0.35} />

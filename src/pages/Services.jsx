@@ -31,10 +31,10 @@ export default function Services() {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: 'top top',
-        end: isMobile ? '+=27000' : '+=22000',
+        end: isMobile ? '+=7200' : '+=6750', // 2 trackpad scroll strokes per card across 9 cards
         pin: pinTargetRef.current,
         pinSpacing: true,
-        scrub: isMobile ? 1.2 : 1.0,
+        scrub: isMobile ? 1.0 : 0.8,
         onUpdate: (self) => {
           const newIndex = Math.min(
             services.length - 1,
