@@ -46,7 +46,7 @@ export default function Layout() {
           <Home />
         </div>
         
-        <div className="w-full relative z-20 gpu-layer">
+        <div className="w-full relative z-20">
           <Services />
         </div>
         

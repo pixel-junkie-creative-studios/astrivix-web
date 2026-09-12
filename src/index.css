@@ -12,7 +12,7 @@
 }
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   background-color: #000;
 }
 @tailwind utilities;
@@ -37,7 +37,7 @@ html, body {
 
 @layer base {
   body {
-    @apply bg-ax-bg text-ax-text antialiased overflow-x-hidden transition-colors duration-500;
+    @apply bg-ax-bg text-ax-text antialiased overflow-x-clip transition-colors duration-500;
   }
 }
 

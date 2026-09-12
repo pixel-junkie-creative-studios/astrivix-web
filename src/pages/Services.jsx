@@ -68,7 +68,7 @@ export default function Services() {
   };
 
   return (
-    <div id="services" ref={containerRef} className="relative z-10 w-full h-[320vh] bg-transparent">
+    <div id="services" ref={containerRef} className="relative z-10 w-full h-[450vh] md:h-[400vh] bg-transparent">
       {/* Native CSS Sticky Stage (Zero GSAP Pin Spacer Overhead) */}
       <div className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10">
         {/* Header section */}
