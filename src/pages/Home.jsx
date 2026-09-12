@@ -20,7 +20,7 @@ export default function Home() {
   const spotlightX = useTransform(scrollYProgress, [0, 1], [0, 1200]);
 
   return (
-    <div className="flex flex-col relative w-full pt-16">
+    <div className="flex flex-col relative w-full pt-16 sm:pt-20">
       <motion.div style={{ x: spotlightX }} className="absolute inset-0 pointer-events-none z-0 opacity-40">
         <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="white" />
       </motion.div>
@@ -30,59 +30,49 @@ export default function Home() {
         {/* Centered Hero Container */}
         <motion.div 
           initial="hidden" animate="visible" variants={fadeUp}
-          className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-2 sm:px-4"
+          className="relative z-10 flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 text-center"
         >
-          {/* ASTRIVIX Particle Text Container (GPU Accelerated with Contrast Halo) */}
-          <div className="w-full h-[120px] sm:h-[260px] md:h-[450px] relative flex justify-center items-center cursor-crosshair gpu-layer">
-            <div className="absolute inset-0 bg-black/50 blur-3xl rounded-full pointer-events-none scale-75" />
+          {/* ASTRIVIX Particle Text Container */}
+          <div className="w-full h-[200px] sm:h-[260px] md:h-[400px] relative flex justify-center items-center cursor-crosshair gpu-layer mb-2">
+            <div className="absolute inset-0 bg-black/60 blur-3xl rounded-full pointer-events-none scale-75" />
             <ParticleText
               text="ASTRIVIX"
-              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.5 : 2}
-              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.2 : 2}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 2 : 5}
               color="#ffffff"
               highlightColor="#ffffff"
-              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 60 : 150}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 150}
               gatherDuration={1400}
               stagger={80}
-              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 50 : 150}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 40 : 150}
               repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 100 : 400}
-              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(2.0rem, 9.2vw, 12rem)" : "clamp(3.8rem, 16vw, 12rem)"}
+              fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? "clamp(4rem, 17vw, 11rem)" : "clamp(4.2rem, 15vw, 11rem)"}
               fontWeight={900}
             />
           </div>
           
-          {/* Subtitle Row - Tight side-by-side alignment directly under ASTRIVIX */}
-          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-3 sm:-mt-8 md:-mt-20 z-20 gpu-layer">
-            {/* Left Side: CORP + Dot */}
-            <div className="flex items-center space-x-1">
-              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-ax-text drop-shadow-md">
-                CORP<span className="text-ax-text text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
-              </h2>
-            </div>
-
-            {/* Right Side: BUSINESS CONSULTANTS */}
-            <div className="flex flex-col items-end text-right">
-              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                BUSINESS
-              </h3>
-              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-ax-text leading-tight drop-shadow-md">
-                CONSULTANTS
-              </h3>
-            </div>
+          {/* Motto-Inspired Executive Bold Tagline */}
+          <div className="max-w-4xl mx-auto px-4 z-20 gpu-layer my-4 sm:my-6">
+            <h2 className="text-xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-white leading-[1.1] drop-shadow-lg">
+              WE BUILD BRANDS & DIGITAL PRODUCTS FOR LEADERS WHO REFUSE TO BE ORDINARY.
+            </h2>
+            <p className="text-xs sm:text-sm font-mono tracking-[0.25em] text-white/60 uppercase font-semibold mt-4">
+              ASTRIVIX CORP — GLOBAL CREATIVE & PRODUCT STUDIO
+            </p>
           </div>
         </motion.div>
           
-        {/* Sleek Mechanical SplitFlap Banner (GPU Accelerated) */}
+        {/* Sleek Mechanical SplitFlap Banner */}
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="w-full flex justify-center mt-8 sm:mt-12 md:mt-24 px-2 sm:px-4 z-10 gpu-layer"
+          className="w-full flex justify-center mt-6 sm:mt-10 md:mt-16 px-3 sm:px-6 z-10 gpu-layer"
         >
           <div className="glass-fast px-4 py-3 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl md:rounded-[2.5rem] border border-white/20 shadow-2xl relative overflow-hidden max-w-full">
             <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
             <div className="relative z-10 flex justify-center">
               <SplitFlapText
                 words={['BRANDING & DESIGN', 'NATIVE MOBILE APPS', 'ENTERPRISE WEB APPS', 'DIGITAL MARKETING', 'STRATEGIC CONSULTING']}
-                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 26}
+                fontSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 16 : 24}
                 tileColor="#050509"
                 textColor="#ffffff"
                 gap={typeof window !== 'undefined' && window.innerWidth < 640 ? 4 : 8}
@@ -93,6 +83,7 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Selected Clients & Partners Carousel */}
       <section id="clients" className="py-12 sm:py-24 relative z-10">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
@@ -100,7 +91,7 @@ export default function Home() {
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           <div className="text-center mb-8 sm:mb-12 relative z-10 px-4">
-            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/40 uppercase">Brands & Visionaries We've Had The Pleasure of Building With</h3>
+            <h3 className="text-[10px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] font-bold text-white/50 uppercase">Selected Clients & Strategic Partners</h3>
           </div>
           <div className="relative z-10 w-full overflow-hidden mask-edges px-2 sm:px-8">
             <LogoLoop
