@@ -34,11 +34,11 @@ export default function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-md z-50 p-6 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-2xl shadow-pink-500/10 text-white"
+          className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-md z-50 p-6 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-2xl text-white"
         >
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 shrink-0">
+              <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 shrink-0">
                 <Cookie className="w-5 h-5" />
               </div>
               <h3 className="font-semibold text-sm tracking-wide">Privacy & Cookie Preferences</h3>
@@ -54,7 +54,7 @@ export default function CookieConsent() {
 
           <p className="text-white/60 text-xs mt-3 leading-relaxed">
             We use essential cookies and analytical tags to optimize site performance, zero-lag WebGL rendering, and secure user browsing. Read our{' '}
-            <Link to="/privacy" className="text-pink-400 underline hover:text-pink-300">
+            <Link to="/privacy" className="text-white underline hover:text-white/80">
               Privacy Policy
             </Link>.
           </p>
@@ -62,7 +62,7 @@ export default function CookieConsent() {
           <div className="flex items-center gap-3 mt-5">
             <button
               onClick={handleAccept}
-              className="flex-1 py-2.5 px-4 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-semibold text-xs rounded-full shadow-lg shadow-pink-500/25 transition-all tracking-wider uppercase"
+              className="flex-1 py-2.5 px-4 bg-white text-black hover:bg-zinc-200 font-bold text-xs rounded-full shadow-lg transition-all tracking-wider uppercase"
             >
               Accept All
             </button>

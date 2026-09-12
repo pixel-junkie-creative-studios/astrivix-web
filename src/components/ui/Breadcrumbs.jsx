@@ -49,16 +49,16 @@ export default function Breadcrumbs({ customCrumbs }) {
               <li key={crumb.path} className="inline-flex items-center">
                 {idx > 0 && <ChevronRight className="w-3.5 h-3.5 mx-1.5 text-white/40" />}
                 {idx === 0 ? (
-                  <Link to="/" className="inline-flex items-center hover:text-pink-400 transition-colors gap-1.5">
-                    <Home className="w-3.5 h-3.5 text-pink-400" />
+                  <Link to="/" className="inline-flex items-center hover:text-white transition-colors gap-1.5">
+                    <Home className="w-3.5 h-3.5 text-white/80" />
                     <span className="hidden sm:inline font-sans font-medium text-white/90">Home</span>
                   </Link>
                 ) : isLast ? (
-                  <span className="text-pink-400 font-semibold uppercase tracking-widest" aria-current="page">
+                  <span className="text-white font-semibold uppercase tracking-widest" aria-current="page">
                     {crumb.name}
                   </span>
                 ) : (
-                  <Link to={crumb.path} className="hover:text-pink-400 transition-colors uppercase">
+                  <Link to={crumb.path} className="hover:text-white transition-colors uppercase">
                     {crumb.name}
                   </Link>
                 )}
