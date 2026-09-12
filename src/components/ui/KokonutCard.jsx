@@ -4,7 +4,7 @@ import { LucideSparkles, LucideTerminal, LucideZap } from 'lucide-react';
 
 export const KokonutCard = ({ 
   title = "HIGH-PERFORMANCE ARCHITECTURE", 
-  subtitle = "Zero-Lag Engineering", 
+  subtitle = "High-Performance Engineering", 
   description = "Engineered with Kokonut UI micro-interactions, motion.dev fluid spring physics, and obsidian liquid glass surfaces.",
   badge = "KOKONUT UI",
   icon: Icon = LucideSparkles

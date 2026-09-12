@@ -7,7 +7,7 @@ Astrivix Corp is a software engineering and digital product studio. We design, b
 
 ### 1. Web & Application Development
 - Stack: React, Next.js, Vite, Tailwind CSS, Framer Motion, Three.js, Node.js, Python, PostgreSQL, Redis.
-- Specialties: Sub-millisecond initial page loads, 120 FPS hardware-accelerated animations, zero layout shift (CLS), dark-mode interfaces, liquid glassmorphism, responsive viewports across mobile, tablet, and desktop.
+- Specialties: Sub-millisecond initial page loads, ultra-smooth hardware-accelerated animations, zero layout shift (CLS), dark-mode interfaces, liquid glassmorphism, responsive viewports across mobile, tablet, and desktop.
 
 ### 2. Cloud Architecture & DevOps
 - Infrastructure: Amazon Web Services (AWS), Google Cloud Platform (GCP), Vercel, Docker, Kubernetes, Terraform, CI/CD automated deployment pipelines.

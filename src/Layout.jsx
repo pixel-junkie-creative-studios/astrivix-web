@@ -124,13 +124,13 @@ export default function Layout() {
             {/* Copyright & Tagline Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase text-center font-bold">
               <span>Astrivix Corp © 2026</span>
-              <span>Engineering Digital Perfection & Zero-Lag Architecture</span>
+              <span>Engineering Digital Perfection & High-Performance Architecture</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
             <div className="sr-only" aria-hidden="true">
               <h2>Astrivix Corp Global Digital Agency & Enterprise Engineering</h2>
-              <p>Astrivix Corp (www.astrivix.in) is an elite global agency specializing in zero-lag enterprise web development, 120 FPS mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and business consulting.</p>
+              <p>Astrivix Corp (www.astrivix.in) is an elite global agency specializing in enterprise web development, native mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and business consulting.</p>
               <ul>
                 <li>Integrated Branding & Logo Architecture</li>
                 <li>Enterprise Web Development & React Engineering</li>
