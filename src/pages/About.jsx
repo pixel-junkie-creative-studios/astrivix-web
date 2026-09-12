@@ -4,20 +4,24 @@ import { motion, useInView } from 'framer-motion';
 function Counter100() {
   const [count, setCount] = useState(0);
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true, margin: "-30px" });
+  const radius = 62;
+  const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
     if (isInView) {
-      let start = 0;
       const end = 100;
-      const duration = 1500;
-      const startTime = performance.now();
+      const duration = 1800;
+      let startTime = null;
 
       const animateCount = (now) => {
+        if (!startTime) startTime = now;
         const elapsed = now - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const current = Math.floor(progress * end);
+        const easeProgress = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(easeProgress * end);
         setCount(current);
+
         if (progress < 1) {
           requestAnimationFrame(animateCount);
         }
@@ -27,10 +31,67 @@ function Counter100() {
     }
   }, [isInView]);
 
+  const dashoffset = circumference - (count / 100) * circumference;
+
   return (
-    <span ref={ref} className="text-5xl sm:text-6xl md:text-5xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-2xl block mb-3 font-mono">
-      {count}%
-    </span>
+    <div ref={ref} className="relative flex flex-col items-center justify-center my-3 group">
+      {/* Ambient Radial Glowing Aura */}
+      <div className="absolute w-44 h-44 bg-gradient-to-tr from-white/20 via-zinc-100/10 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 pointer-events-none" />
+
+      <div className="relative w-40 h-40 sm:w-44 sm:h-44 flex items-center justify-center">
+        {/* SVG Circular Loading Ring */}
+        <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]" viewBox="0 0 160 160">
+          <defs>
+            <linearGradient id="ringGradient100" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="50%" stopColor="#e2e8f0" />
+              <stop offset="100%" stopColor="#a1a1aa" />
+            </linearGradient>
+            <filter id="glow100" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          {/* Background Outer Track */}
+          <circle
+            cx="80"
+            cy="80"
+            r={radius}
+            stroke="rgba(255, 255, 255, 0.1)"
+            strokeWidth="7"
+            fill="transparent"
+          />
+
+          {/* Animated Progress Ring */}
+          <circle
+            cx="80"
+            cy="80"
+            r={radius}
+            stroke="url(#ringGradient100)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={dashoffset}
+            filter="url(#glow100)"
+            style={{
+              transition: 'stroke-dashoffset 40ms linear'
+            }}
+          />
+        </svg>
+
+        {/* Center Percentage Display */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none pointer-events-none">
+          <span className="text-3xl sm:text-4xl md:text-5xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-xl">
+            {count}%
+          </span>
+          <span className="text-[9px] font-mono tracking-[0.25em] text-white/70 uppercase font-bold mt-1">
+            {count === 100 ? "OPTIMIZED" : "LOADING..."}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
