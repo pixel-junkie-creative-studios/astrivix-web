@@ -44,15 +44,11 @@ export const MorphicNavbar = ({ navItems }) => {
         className="fixed top-4 md:top-6 inset-x-0 mx-auto w-[92vw] max-w-4xl z-[5000] bg-[#0a0a0f]/85 backdrop-blur-2xl rounded-full p-2 border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between"
       >
         {/* Brand Logo */}
-        <a href="#" aria-label="Astrivix Homepage" className="flex items-center gap-2 pl-3 pr-2 group">
-          <video 
-            src="/assets/astreivix_nav_bar.mp4"
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            aria-hidden="true"
-            className="h-9 w-9 object-contain group-hover:scale-110 transition-transform duration-300"
+        <a href="#" aria-label="Astrivix Homepage" className="flex items-center gap-2.5 pl-3 pr-2 group">
+          <img 
+            src="/astrivix-logo-sq.png"
+            alt="Astrivix Official Logo" 
+            className="h-9 w-9 object-cover rounded-full border border-pink-500/30 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_12px_rgba(236,72,153,0.3)]"
           />
           <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase">
             ASTRIVIX
