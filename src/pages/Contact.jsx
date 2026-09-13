@@ -231,13 +231,14 @@ export default function Contact() {
                   <input
                     type="number"
                     min="0"
-                    step="100"
+                    step="any"
                     required
                     value={formData.budget}
                     onChange={(e) => setFormData({...formData, budget: e.target.value})}
                     placeholder="Enter amount in USD (e.g. 5000)"
-                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
+
                 </div>
 
                 {/* DYNAMIC FUNNY FEEDBACK BOX */}
