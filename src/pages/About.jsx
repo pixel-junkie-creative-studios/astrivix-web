@@ -5,13 +5,13 @@ function Counter100() {
   const [count, setCount] = useState(0);
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-30px" });
-  const radius = 70;
+  const radius = 72;
   const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
     if (isInView) {
       const end = 100;
-      const duration = 1800;
+      const duration = 1600;
       let startTime = null;
 
       const animateCount = (now) => {
@@ -33,22 +33,28 @@ function Counter100() {
 
   const dashoffset = circumference - (count / 100) * circumference;
 
+  // Calculate tip particle position
+  const angle = (count / 100) * 2 * Math.PI - Math.PI / 2;
+  const tipX = 90 + radius * Math.cos(angle);
+  const tipY = 90 + radius * Math.sin(angle);
+
   return (
     <div ref={ref} className="relative flex flex-col items-center justify-center my-3 group">
       {/* Ambient Radial Glowing Aura */}
-      <div className="absolute w-52 h-52 bg-gradient-to-tr from-white/20 via-zinc-100/10 to-transparent rounded-full blur-2xl group-hover:scale-110 transition-transform duration-700 pointer-events-none" />
+      <div className="absolute w-56 h-56 bg-gradient-to-tr from-emerald-500/20 via-cyan-500/10 to-purple-500/20 rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none" />
 
       <div className="relative w-48 h-48 sm:w-52 sm:h-52 flex items-center justify-center">
         {/* SVG Circular Loading Ring */}
-        <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_18px_rgba(255,255,255,0.4)]" viewBox="0 0 180 180">
+        <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_20px_rgba(52,211,153,0.4)]" viewBox="0 0 180 180">
           <defs>
             <linearGradient id="ringGradient100" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="50%" stopColor="#e2e8f0" />
-              <stop offset="100%" stopColor="#a1a1aa" />
+              <stop offset="0%" stopColor="#34d399" />
+              <stop offset="40%" stopColor="#38bdf8" />
+              <stop offset="80%" stopColor="#a855f7" />
+              <stop offset="100%" stopColor="#ffffff" />
             </linearGradient>
-            <filter id="glow100" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
+            <filter id="glow100" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="4" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
@@ -58,10 +64,30 @@ function Counter100() {
             cx="90"
             cy="90"
             r={radius}
-            stroke="rgba(255, 255, 255, 0.12)"
-            strokeWidth="6"
+            stroke="rgba(255, 255, 255, 0.08)"
+            strokeWidth="5"
             fill="transparent"
           />
+
+          {/* HUD Radial Tick Marks */}
+          {[...Array(12)].map((_, i) => {
+            const tickAngle = (i / 12) * 2 * Math.PI;
+            const x1 = 90 + 82 * Math.cos(tickAngle);
+            const y1 = 90 + 82 * Math.sin(tickAngle);
+            const x2 = 90 + 86 * Math.cos(tickAngle);
+            const y2 = 90 + 86 * Math.sin(tickAngle);
+            return (
+              <line
+                key={i}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke={i % 3 === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.15)"}
+                strokeWidth={i % 3 === 0 ? "1.5" : "1"}
+              />
+            );
+          })}
 
           {/* Animated Progress Ring */}
           <circle
@@ -76,24 +102,40 @@ function Counter100() {
             strokeDashoffset={dashoffset}
             filter="url(#glow100)"
             style={{
-              transition: 'stroke-dashoffset 40ms linear'
+              transition: 'stroke-dashoffset 30ms linear'
             }}
           />
+
+          {/* Orbiting Leading Tip Glow Dot */}
+          {count > 0 && count < 100 && (
+            <circle
+              cx={tipX}
+              cy={tipY}
+              r="4"
+              fill="#ffffff"
+              className="drop-shadow-[0_0_8px_#ffffff]"
+            />
+          )}
         </svg>
 
         {/* Center Percentage Display */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none pointer-events-none px-4">
-          <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white drop-shadow-xl leading-none">
-            {count}%
+          <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] leading-none flex items-baseline justify-center">
+            {count}
+            <span className="text-sm font-bold text-emerald-400 ml-0.5">%</span>
           </span>
-          <span className="text-[9px] font-mono tracking-[0.25em] text-white/70 uppercase font-bold mt-1.5">
-            {count === 100 ? "OPTIMIZED" : "LOADING..."}
-          </span>
+          <div className="mt-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10">
+            <span className={`w-1.5 h-1.5 rounded-full ${count === 100 ? "bg-emerald-400 animate-ping" : "bg-cyan-400 animate-pulse"}`} />
+            <span className="text-[8px] font-mono tracking-[0.25em] text-white/80 uppercase font-bold">
+              {count === 100 ? "OPTIMIZED" : "LOADING..."}
+            </span>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 export default function About() {
   const containerVariants = {
