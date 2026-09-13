@@ -18,33 +18,34 @@ export default function Contact() {
 
     if (num < 100) {
       return {
-        text: "Early-stage allocation. Recommended for initial brand strategy or applying for the pro-bono Astrivix Founders Grant.",
+        text: "Micro allocation — suitable for quick consults or Astrivix Founders Grant applications.",
         style: "text-amber-300 border-amber-500/30 bg-amber-500/10"
       };
     }
     if (num < 1000) {
       return {
-        text: "Foundation tier. Ideal for express landing pages, brand identity systems, and launch collateral (24–72 hr sprint).",
+        text: "Starter scope — custom landing page, brand identity, or rapid sprint build.",
         style: "text-cyan-300 border-cyan-500/30 bg-cyan-500/10"
       };
     }
     if (num < 5000) {
       return {
-        text: "Growth tier. Ideal for high-converting web applications, custom frontend architecture, and interactive motion.",
+        text: "Core scope — full custom website, performant web app, and motion UI.",
         style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
       };
     }
     if (num < 25000) {
       return {
-        text: "Scale tier. Optimal for full custom web platforms, multi-page web applications, and cross-platform mobile apps.",
+        text: "Full platform — multi-page web platform, 3D WebGL experiences, or mobile app.",
         style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
       };
     }
     return {
-      text: "Enterprise tier. Full studio priority, dedicated senior engineering sprint squad, and custom SLA architecture.",
+      text: "Flagship suite — dedicated engineering squad, custom design system, and studio priority.",
       style: "text-purple-300 border-purple-500/30 bg-purple-500/10"
     };
   };
+
 
   const feedback = getBudgetFeedback(formData.budget);
 
