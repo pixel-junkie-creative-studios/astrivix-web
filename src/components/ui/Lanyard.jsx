@@ -40,21 +40,12 @@ function createAstrivixCard() {
   ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
   ctx.fillStyle = '#fff';
-  ctx.beginPath();
-  ctx.moveTo(256, 240);
-  ctx.quadraticCurveTo(256, 320, 336, 320);
-  ctx.quadraticCurveTo(256, 320, 256, 400);
-  ctx.quadraticCurveTo(256, 320, 176, 320);
-  ctx.quadraticCurveTo(256, 320, 256, 240);
-  ctx.fill();
-
-  ctx.fillStyle = '#fff';
   ctx.font = '900 65px sans-serif';
   ctx.textAlign = 'center';
   ctx.letterSpacing = '2px';
-  ctx.fillText('ASTRIVIX', 256, 520);
+  ctx.fillText('ASTRIVIX', 256, 380);
   ctx.font = '300 45px sans-serif';
-  ctx.fillText('CORP.', 256, 590);
+  ctx.fillText('CORP.', 256, 450);
   
   return canvas.toDataURL('image/png');
 }

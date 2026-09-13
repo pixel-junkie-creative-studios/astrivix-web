@@ -45,13 +45,10 @@ export const MorphicNavbar = ({ navItems }) => {
       >
         {/* Brand Logo */}
         <a href="#" className="flex items-center gap-2 pl-3 pr-2 group">
-          <video 
-            src="/assets/astreivix_nav_bar.mp4"
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="h-9 w-9 object-contain group-hover:scale-110 transition-transform duration-300"
+          <img 
+            src="/astrivix-logo-sq.png" 
+            alt="Astrivix Corp Logo"
+            className="h-9 w-9 object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"
           />
           <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase">
             ASTRIVIX

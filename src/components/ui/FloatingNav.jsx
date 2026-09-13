@@ -46,15 +46,15 @@ export const FloatingNav = ({ navItems, className }) => {
         className
       )}
     >
-      <a href="#" className="flex-shrink-0 relative group">
-        <video 
-          src="/assets/astreivix_nav_bar.mp4"
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="h-10 w-10 md:h-12 md:w-12 object-contain hover:scale-110 transition-transform duration-300"
+      <a href="#" className="flex-shrink-0 relative group flex items-center gap-2">
+        <img 
+          src="/astrivix-logo-sq.png" 
+          alt="Astrivix Corp Logo"
+          className="h-9 w-9 md:h-11 md:w-11 object-contain rounded-lg hover:scale-110 transition-transform duration-300"
         />
+        <span className="font-mono font-black text-xs tracking-widest text-white uppercase hidden sm:inline-block">
+          ASTRIVIX
+        </span>
       </a>
 
       {navItems.map((navItem, idx) => (
