@@ -20,15 +20,7 @@ export default async function handler(req, res) {
   }
 
   const gmailUser = process.env.GMAIL_USER || 'business@astrivix.in';
-  const gmailPass = process.env.GMAIL_APP_PASSWORD;
-
-  if (!gmailPass) {
-    console.warn('GMAIL_APP_PASSWORD not configured. Returning success response.');
-    return res.status(200).json({ 
-      success: true, 
-      warning: 'GMAIL_APP_PASSWORD environment variable pending setup in Vercel.' 
-    });
-  }
+  const gmailPass = process.env.GMAIL_APP_PASSWORD || 'jbfqvyqsbabbgrlv';
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
