@@ -6,25 +6,13 @@ import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
-  const targetZ = useRef(0);
-  const isServicesActive = useRef(false);
-
-  useEffect(() => {
-    const el = document.getElementById('services');
-    if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      isServicesActive.current = entry.isIntersecting;
-    }, { threshold: 0.1 });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
-    const dampFactor = isServicesActive.current ? 0.0005 : 0.005;
-    const nextTargetZ = -progress * 4;
-    targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
-    camera.position.z += (targetZ.current - camera.position.z) * 0.005;
+    // Gentle camera orbit on scroll while keeping planets at constant size
+    const targetX = Math.sin(progress * Math.PI * 0.4) * 2;
+    const targetY = -progress * 1.5;
+    camera.position.x += (targetX - camera.position.x) * 0.05;
+    camera.position.y += (targetY - camera.position.y) * 0.05;
   });
 
   return null;
@@ -44,16 +32,16 @@ const DetailedEarth = ({ position, isMobile }) => {
   ]);
 
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.005;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.008;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.25;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.35;
   });
 
   const segments = isMobile ? 48 : 64;
 
   return (
-    <group position={position} rotation={[0.4, 0, 0.2]}>
+    <group position={position} rotation={[0.3, 0, 0.15]}>
       {/* High-Resolution Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[5, segments, segments]}>
+      <Sphere ref={earthRef} args={[4.8, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
@@ -65,7 +53,7 @@ const DetailedEarth = ({ position, isMobile }) => {
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[5.05, segments, segments]}>
+      <Sphere ref={cloudsRef} args={[4.85, segments, segments]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
@@ -83,14 +71,14 @@ const DetailedMoon = ({ position, isMobile }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.008;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.3;
   });
 
   const segments = isMobile ? 32 : 48;
 
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[2.2, segments, segments]}>
+      <Sphere ref={moonRef} args={[1.8, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
@@ -108,15 +96,15 @@ const RealisticMars = ({ position, isMobile }) => {
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.008;
+    if (marsRef.current) marsRef.current.rotation.y += delta * 0.25;
   });
 
   const segments = isMobile ? 48 : 64;
 
   return (
-    <group position={position} rotation={[-0.3, 0, 0.3]}>
+    <group position={position} rotation={[-0.2, 0, 0.2]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[4.2, segments, segments]}>
+      <Sphere ref={marsRef} args={[3.8, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
@@ -139,22 +127,20 @@ const RealisticJupiterRinged = ({ position }) => {
   const ringMap = useTexture('/assets/planets/saturn_ring.png');
 
   useFrame((state, delta) => {
-    // Ultra slow rotating gas giant
-    if (planetRef.current) planetRef.current.rotation.y += delta * 0.01;
-    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.003;
+    if (planetRef.current) planetRef.current.rotation.y += delta * 0.2;
+    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.1;
   });
 
   return (
     <group position={position} rotation={[0.4, 0, -0.2]}>
-      <Sphere ref={planetRef} args={[6, 128, 128]}>
+      <Sphere ref={planetRef} args={[5, 64, 64]}>
         <meshStandardMaterial map={jupiterMap} roughness={1.0} metalness={0.0} />
       </Sphere>
-      {/* Outer Atmospheric Glow */}
-      <Sphere ref={atmosRef} args={[6.35, 64, 64]}>
+      <Sphere ref={atmosRef} args={[5.25, 32, 32]}>
         <meshStandardMaterial color="#faedcd" transparent opacity={0.15} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
       </Sphere>
       <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[7.5, 14, 256]} />
+        <ringGeometry args={[6.2, 11, 128]} />
         <meshStandardMaterial map={ringMap} transparent opacity={0.9} side={THREE.DoubleSide} alphaTest={0.01} />
       </mesh>
     </group>
@@ -163,17 +149,15 @@ const RealisticJupiterRinged = ({ position }) => {
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  // Using the massive 36MB realistic satellite model
   const { scene } = useGLTF('/assets/planets/satellite.glb');
 
   useFrame((state, delta) => {
-    if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * 0.4;
   });
 
   return (
     <group ref={pivotRef}>
       <group position={[orbitRadius, yOffset, 0]}>
-        {/* Scaled up the satellite and adjusted orbit so it hovers cleanly */}
         <primitive object={scene} scale={0.22} rotation={[0.5, Math.PI / 2, 0]} />
       </group>
     </group>
@@ -185,7 +169,6 @@ const Comet = () => {
   const [active, setActive] = useState(false);
   const progress = useRef(0);
 
-  // Load the real, high-quality particle textures we just downloaded
   const [cometMap, coreMap] = useTexture([
     '/assets/planets/trace_01.png',
     '/assets/planets/circle_05.png'
@@ -218,18 +201,12 @@ const Comet = () => {
 
   return (
     <group ref={cometRef}>
-      {/* Genuine Particle Core (Billboarded Sprite) */}
       <sprite scale={[6, 6, 1]}>
         <spriteMaterial map={coreMap} color="#ffffff" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} />
       </sprite>
-      
-      {/* Genuine Particle Core Glow (Billboarded Sprite) */}
       <sprite scale={[12, 12, 1]}>
         <spriteMaterial map={coreMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} opacity={0.8} />
       </sprite>
-
-      {/* Tapered Volumetric Tail (Perfect 3D shape, strictly behind the core) */}
-      {/* Position Z=20 pushes the center 20 units back. Height is 40, so it spans from Z=0 to Z=40 */}
       <mesh position={[0, 0, 20]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[2.5, 0.1, 40, 16, 1, true]} />
         <meshBasicMaterial map={cometMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
@@ -239,12 +216,15 @@ const Comet = () => {
 };
 
 const Planets = ({ isMobile }) => {
-  const earthPos = isMobile ? [-6, 3, -25] : [-15, 5, -30];
-  const moonPos = isMobile ? [6, -2, -50] : [15, -2, -70];
-  const marsPos = isMobile ? [12, 10, -75] : [35, 15, -120];
+  const groupRef = useRef();
+
+  // Position planets cleanly in view: Earth top-left, Moon near Earth mid-left, Red Planet (Mars) right
+  const earthPos = isMobile ? [-5, 4, -22] : [-12, 2, -24];
+  const moonPos = isMobile ? [-1, -1, -16] : [-4, -3, -18];
+  const marsPos = isMobile ? [5, -4, -22] : [11, -1, -24];
 
   return (
-    <>
+    <group ref={groupRef}>
       <Comet />
       <DetailedEarth position={earthPos} isMobile={isMobile} />
       <DetailedMoon position={moonPos} isMobile={isMobile} />
@@ -252,9 +232,9 @@ const Planets = ({ isMobile }) => {
       
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 8 : 12} speed={0.1} yOffset={isMobile ? 4 : 6} />
+        <HighResSatellite orbitRadius={isMobile ? 6 : 9} speed={0.4} yOffset={isMobile ? 3 : 4} />
       </group>
-    </>
+    </group>
   );
 };
 
