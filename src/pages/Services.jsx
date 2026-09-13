@@ -2,15 +2,15 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#E5A93C', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web', color: '#38C7B4', desc: 'Custom web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native Mobile Apps', color: '#E5A93C', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#38C7B4', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#E5A93C', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
-  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#38C7B4', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
-  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#E5A93C', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#38C7B4', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#E5A93C', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#F59E0B', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web', color: '#10B981', desc: 'Custom web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native Mobile Apps', color: '#8B5CF6', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#F43F5E', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#06B6D4', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
+  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#EC4899', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
+  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#6366F1', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#14B8A6', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#EAB308', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
 ];
 
 export default function Services() {
@@ -43,12 +43,12 @@ export default function Services() {
   const prevService = services[prevIndex];
   const nextService = services[nextIndex];
 
-  // 3D Card Flip Variants
+  // 3D Card Flip Spring Variants
   const cardVariants = {
     enter: (dir) => ({
-      x: dir > 0 ? 280 : -280,
-      rotateY: dir > 0 ? 40 : -40,
-      scale: 0.88,
+      x: dir > 0 ? 320 : -320,
+      rotateY: dir > 0 ? 45 : -45,
+      scale: 0.85,
       opacity: 0,
     }),
     center: {
@@ -60,9 +60,9 @@ export default function Services() {
     },
     exit: (dir) => ({
       zIndex: 0,
-      x: dir < 0 ? 280 : -280,
-      rotateY: dir < 0 ? 40 : -40,
-      scale: 0.88,
+      x: dir < 0 ? 320 : -320,
+      rotateY: dir < 0 ? 45 : -45,
+      scale: 0.85,
       opacity: 0,
     }),
   };
@@ -86,6 +86,20 @@ export default function Services() {
           </p>
         </div>
 
+        {/* Dynamic Liquid Floating Glow Orbs */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.25, 1],
+              opacity: [0.25, 0.45, 0.25],
+              rotate: [0, 90, 180]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="w-96 h-96 rounded-full blur-[100px] transition-colors duration-700"
+            style={{ backgroundColor: activeService.color }}
+          />
+        </div>
+
         {/* 3D Card Deck Stage */}
         <div 
           className="relative w-full max-w-6xl mx-auto px-4 flex items-center justify-center h-[420px] md:h-[480px]"
@@ -99,20 +113,20 @@ export default function Services() {
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 shadow-2xl glass-metallic bg-[#08080c]"
+            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-80 transition-all duration-500 border border-white/20 shadow-2xl backdrop-blur-xl bg-[#08080c]/90"
             style={{ 
               transform: 'rotateY(25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top left, ${prevService.color}20, #08080c 75%)`
+              background: `radial-gradient(circle at top left, ${prevService.color}30, #08080c 80%)`
             }}
           >
             <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
               {prevService.id}
             </div>
             <div>
-              <div className="text-[10px] font-bold tracking-widest text-white/40 uppercase mb-1">
+              <div className="text-[10px] font-bold tracking-widest text-white/50 uppercase mb-1">
                 {prevService.category}
               </div>
-              <div className="text-lg md:text-xl font-black text-white/80 line-clamp-2 uppercase">
+              <div className="text-lg md:text-xl font-black text-white/90 line-clamp-2 uppercase">
                 {prevService.title}
               </div>
             </div>
@@ -129,46 +143,51 @@ export default function Services() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  duration: 0.35,
-                  ease: [0.16, 1, 0.3, 1],
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 24,
+                  mass: 0.8
                 }}
                 style={{ 
                   transformStyle: 'preserve-3d',
-                  background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
+                  background: `radial-gradient(circle at top right, ${activeService.color}45, #08080d 85%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/25 shadow-[0_30px_80px_rgba(0,0,0,0.95)] overflow-hidden bg-[#08080d]/90 backdrop-blur-2xl"
               >
+                {/* Metallic Shimmer Surface */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/50 pointer-events-none" />
+
                 {/* Accent Line Header */}
                 <div 
-                  className="absolute top-0 left-0 h-1.5 w-full transition-colors duration-500"
+                  className="absolute top-0 left-0 h-1.5 w-full transition-all duration-500 shadow-[0_0_15px_rgba(255,255,255,0.5)]"
                   style={{ background: `linear-gradient(90deg, ${activeService.color}, transparent)` }}
                 />
 
                 {/* Card Header: Number & Category */}
-                <div className="flex justify-between items-start w-full pt-2">
+                <div className="flex justify-between items-start w-full pt-2 relative z-10">
                   <span className="text-4xl md:text-6xl font-mono tracking-widest font-black text-white drop-shadow-md">
                     {activeService.id}
                   </span>
                   <span 
-                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/30"
-                    style={{ backgroundColor: `${activeService.color}40` }}
+                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/30 backdrop-blur-md shadow-lg"
+                    style={{ backgroundColor: `${activeService.color}50`, borderColor: activeService.color }}
                   >
                     {activeService.category}
                   </span>
                 </div>
 
                 {/* Card Body: Title & Description */}
-                <div className="my-auto pt-2">
+                <div className="my-auto pt-2 relative z-10">
                   <h4 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.95] mb-4">
                     {activeService.title}
                   </h4>
-                  <p className="text-white text-sm md:text-base leading-relaxed font-medium">
+                  <p className="text-white/90 text-sm md:text-base leading-relaxed font-medium">
                     {activeService.desc}
                   </p>
                 </div>
 
                 {/* Card Footer: Progress Bar & Step Count */}
-                <div className="flex justify-between items-center w-full pt-4 border-t border-white/10">
+                <div className="flex justify-between items-center w-full pt-4 border-t border-white/15 relative z-10">
                   <div className="flex items-center gap-2">
                     {services.map((s, idx) => (
                       <div 
@@ -178,7 +197,7 @@ export default function Services() {
                           prevIndexRef.current = idx;
                           setActiveIndex(idx);
                         }}
-                        className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
+                        className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white shadow-[0_0_10px_#ffffff]' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
                       />
                     ))}
                   </div>
@@ -187,7 +206,10 @@ export default function Services() {
                     <span className="text-[10px] md:text-xs font-mono font-bold text-white/50 uppercase tracking-widest hidden sm:inline-block">
                       Scroll to flip
                     </span>
-                    <span className="text-xs md:text-sm font-mono font-black text-white/90 px-3 py-1 rounded-full bg-white/5 border border-white/10">
+                    <span 
+                      className="text-xs md:text-sm font-mono font-black text-white px-3 py-1 rounded-full bg-white/10 border border-white/20 shadow-md"
+                      style={{ borderColor: `${activeService.color}80` }}
+                    >
                       {activeService.id} / 09
                     </span>
                   </div>
