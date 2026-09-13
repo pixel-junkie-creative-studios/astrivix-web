@@ -198,10 +198,8 @@ export default function FAQSection() {
           <HelpCircle className="w-4 h-4 text-cyan-400" />
           <span>KNOWLEDGE BASE & FAQ</span>
         </div>
-        <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 via-pink-400 via-amber-300 to-emerald-400 animate-rainbow-gradient font-black">
-            Clear Answers.
-          </span>
+        <h2 className="text-4xl md:text-6xl font-black tracking-tight text-white font-display">
+          Clear Answers.
         </h2>
         <p className="text-white/60 text-sm md:text-base max-w-2xl mt-4 leading-relaxed font-light">
           Everything you need to know about our engineering workflow, code ownership, project pricing, SLAs, and our CSR Young Founder Grant.

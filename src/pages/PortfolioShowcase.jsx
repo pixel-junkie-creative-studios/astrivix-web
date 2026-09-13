@@ -22,14 +22,14 @@ export default function PortfolioShowcase() {
         
         {/* Header */}
         <div className="mb-24 flex flex-col items-center text-center">
-          <h1 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center gap-4 mb-6">
+          <span className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center gap-4 mb-6 font-mono">
             <span className="w-12 h-px bg-white/20"></span>
             Case Studies
             <span className="w-12 h-px bg-white/20"></span>
-          </h1>
-          <h2 className="text-5xl md:text-[5rem] font-black tracking-tighter uppercase leading-[0.9] text-white drop-shadow-2xl">
+          </span>
+          <h1 className="text-5xl md:text-[5rem] font-black tracking-tighter uppercase leading-[0.9] text-white drop-shadow-2xl font-display">
             The Dossier
-          </h2>
+          </h1>
         </div>
 
         {/* Masonry Grid (Skeuomorphic) */}

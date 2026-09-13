@@ -8,23 +8,26 @@ import { Spotlight } from '../components/ui/Spotlight';
 export default function Home() {
   const clientLogos = Array.from({ length: 24 }, (_, i) => ({
     src: `/assets/logos/${i + 1}.jpg`,
-    alt: `Client ${i + 1}`
+    alt: `Astrivix Client Brand Partner Logo ${i + 1}`
   }));
 
   const fadeUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
   };
 
   const { scrollYProgress } = useScroll();
   const spotlightX = useTransform(scrollYProgress, [0, 1], [0, 1200]);
 
   return (
-    <div className="flex flex-col relative w-full pt-16">
+    <div className="flex flex-col relative w-full pt-16 font-sans">
       <motion.div style={{ x: spotlightX }} className="absolute inset-0 pointer-events-none z-0 opacity-40">
         <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="white" />
       </motion.div>
       
+      {/* Semantic Primary H1 Tag for SEO */}
+      <h1 className="sr-only">Astrivix Corp — Global Digital Agency & Enterprise Software Studio</h1>
+
       {/* Hero Section */}
       <section id="hero" className="min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center relative z-10 px-4 sm:px-6">
         {/* Centered Hero Container */}

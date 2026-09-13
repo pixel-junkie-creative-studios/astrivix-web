@@ -78,9 +78,9 @@ export default function Services() {
             What We Do
             <span className="w-8 h-px bg-white/20"></span>
           </h2>
-          <h3 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter uppercase text-white leading-none font-display">
             OUR SERVICES
-          </h3>
+          </h1>
           <p className="text-xs md:text-sm text-white/50 font-mono mt-2 uppercase tracking-widest">
             Scroll down to flip cards
           </p>

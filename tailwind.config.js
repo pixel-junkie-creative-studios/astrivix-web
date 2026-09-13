@@ -27,7 +27,9 @@ export default {
         'ax-text': 'var(--color-text)',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'], // Or whichever loud font the user prefers
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       }
     },
   },

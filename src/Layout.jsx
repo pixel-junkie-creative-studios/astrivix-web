@@ -116,9 +116,9 @@ export default function Layout() {
 
             {/* Massive Typography Watermark */}
             <div className="w-full flex justify-center items-center border-t border-white/10 pt-10 md:pt-16 pb-8 overflow-hidden">
-              <h1 className="text-[20vw] md:text-[14vw] leading-[0.8] font-bold tracking-tighter text-white/5 select-none pointer-events-none">
+              <div className="text-[20vw] md:text-[14vw] leading-[0.8] font-bold tracking-tighter text-white/5 select-none pointer-events-none font-display">
                 ASTRIVIX
-              </h1>
+              </div>
             </div>
             
             {/* Copyright & Tagline Row */}

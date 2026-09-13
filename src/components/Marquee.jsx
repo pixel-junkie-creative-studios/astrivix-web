@@ -13,7 +13,7 @@ export default function Marquee({ images }) {
           <div key={i} className="marquee-item">
             <img 
               src={src} 
-              alt="Client Logo" 
+              alt={`Astrivix Client Partner Logo ${i + 1}`} 
               loading="lazy"
             />
           </div>

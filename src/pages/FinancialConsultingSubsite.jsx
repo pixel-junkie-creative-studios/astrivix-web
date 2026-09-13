@@ -13,6 +13,7 @@ export default function FinancialConsultingSubsite() {
         >
           <span>← Back to Astrivix</span>
         </a>
+        <h1 className="sr-only">Astrivix Financial Consulting & Capital Advisory</h1>
         <span className="text-xs font-mono font-bold tracking-[0.2em] text-white/50 uppercase">
           Astrivix Financial Consulting
         </span>

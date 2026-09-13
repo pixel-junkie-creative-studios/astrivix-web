@@ -18,12 +18,12 @@ export default function Careers() {
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           {/* Left Column: Text */}
           <div className="relative z-10">
-            <h1 className="text-xs sm:text-sm tracking-[0.4em] font-bold text-white/70 mb-4 uppercase border-b border-white/10 pb-3 inline-block">
-              Careers
+            <span className="text-xs sm:text-sm tracking-[0.4em] font-bold text-white/70 mb-4 uppercase border-b border-white/10 pb-3 inline-block font-mono">
+              // CAREERS
+            </span>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 tracking-tight uppercase leading-[0.95] text-white font-display">
+              JOIN ASTRIVIX.
             </h1>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black mb-4 sm:mb-6 tracking-tight uppercase leading-[0.95] text-white">
-              Join <br /> Astrivix.
-            </h2>
             <p className="text-white text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-sm font-medium">
               We are seeking elite engineers, designers, and strategists driven by craftsmanship, speed, and continuous digital innovation.
             </p>
