@@ -230,16 +230,17 @@ export default function Contact() {
                 <div className="relative flex items-center">
                   <span className="absolute left-4 text-white/50 text-base font-mono font-bold">$</span>
                   <input
-                    type="number"
-                    min="0"
-                    step="any"
+                    type="text"
+                    inputMode="numeric"
                     required
                     value={formData.budget}
-                    onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/[^0-9.]/g, '');
+                      setFormData({...formData, budget: val});
+                    }}
                     placeholder="Enter amount in USD (e.g. 5000)"
-                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
                   />
-
                 </div>
 
                 {/* DYNAMIC FUNNY FEEDBACK BOX */}
