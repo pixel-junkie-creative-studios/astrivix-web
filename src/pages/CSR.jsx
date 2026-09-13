@@ -28,54 +28,39 @@ export default function CSR() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const payload = {
+      name: formData.name,
+      age: formData.age,
+      email: formData.email,
+      projectName: formData.projectName,
+      supportType: formData.supportType,
+      description: formData.description,
+      _subject: `🏆 Astrivix Founders Grant Application: ${formData.projectName} (${formData.name})`,
+      _template: "table",
+      _captcha: "false"
+    };
+
     try {
-      // 1. Primary: Vercel Serverless Function (/api/csr)
-      try {
-        const res = await fetch("/api/csr", {
+      await Promise.allSettled([
+        fetch("/api/csr", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
-        });
-        if (res.ok) {
-          setSubmitted(true);
-          return;
-        }
-      } catch (err) {
-        console.warn("CSR Vercel API error:", err);
-      }
-
-      // 2. Client-side FormSubmit AJAX Endpoint
-      try {
-        const resFormSubmit = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+          body: JSON.stringify(payload)
+        }),
+        fetch("https://formsubmit.co/ajax/business@astrivix.in", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
           },
-          body: JSON.stringify({
-            name: formData.name,
-            age: formData.age,
-            email: formData.email,
-            projectName: formData.projectName,
-            supportType: formData.supportType,
-            description: formData.description,
-            _subject: `🏆 Astrivix Founders Grant Application: ${formData.projectName} (${formData.name})`,
-            _template: "table",
-            _captcha: "false"
-          })
-        });
+          body: JSON.stringify(payload)
+        })
+      ]);
 
-        if (resFormSubmit.ok) {
-          setSubmitted(true);
-          return;
-        }
-      } catch (fsErr) {
-        console.warn("CSR FormSubmit client error:", fsErr);
-      }
-
-      // 3. Final Fallback: Direct mailto trigger
-      const mailtoUrl = `mailto:business@astrivix.in?subject=Astrivix%20Founders%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
-      window.location.href = mailtoUrl;
+      setSubmitted(true);
+    } catch (err) {
+      console.warn("CSR dispatch error:", err);
       setSubmitted(true);
     } finally {
       setLoading(false);
