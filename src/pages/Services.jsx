@@ -99,7 +99,7 @@ export default function Services() {
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 border-t-white/40 shadow-2xl glass-metallic bg-[#08080c]"
+            className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 shadow-2xl glass-metallic bg-[#08080c]"
             style={{ 
               transform: 'rotateY(25deg) translateZ(-60px)',
               background: `radial-gradient(circle at top left, ${prevService.color}20, #08080c 75%)`
@@ -136,8 +136,7 @@ export default function Services() {
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}35, #0a0a0f 80%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/30 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
-
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/20 shadow-[0_25px_60px_rgba(0,0,0,0.8)] overflow-hidden bg-[#0a0a0f] glass-fast gpu-layer"
               >
                 {/* Accent Line Header */}
                 <div 
@@ -205,7 +204,8 @@ export default function Services() {
               prevIndexRef.current = idx;
               setActiveIndex(idx);
             }}
-            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 border-t-white/40 shadow-2xl glass-metallic bg-[#08080c]"
+            className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 shadow-2xl glass-metallic bg-[#08080c]"
+
             style={{ 
               transform: 'rotateY(-25deg) translateZ(-60px)',
               background: `radial-gradient(circle at top right, ${nextService.color}20, #08080c 75%)`
