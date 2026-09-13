@@ -66,20 +66,41 @@ export default function Contact() {
 
     try {
       // 1. Primary: Vercel Serverless Function (/api/contact)
-      const resVercel = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
+      try {
+        const resVercel = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-      if (resVercel.ok) {
-        setSubmitted(true);
-      } else {
-        // Direct mailto client fallback
-        window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
-        setSubmitted(true);
+        if (resVercel.ok) {
+          setSubmitted(true);
+          return;
+        }
+      } catch (err) {
+        console.warn("Vercel API error:", err);
       }
-    } catch (err) {
+
+      // 2. Client-side FormSubmit AJAX Endpoint
+      try {
+        const resFormSubmit = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (resFormSubmit.ok) {
+          setSubmitted(true);
+          return;
+        }
+      } catch (fsErr) {
+        console.warn("FormSubmit client error:", fsErr);
+      }
+
+      // 3. Final Fallback: Direct mailto trigger
       window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
       setSubmitted(true);
     } finally {
