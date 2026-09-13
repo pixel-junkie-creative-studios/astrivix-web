@@ -75,23 +75,9 @@ export default function Contact() {
       if (resVercel.ok) {
         setSubmitted(true);
       } else {
-        // 2. Secondary Fallback: FormSubmit AJAX Endpoint
-        const resFormSubmit = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (resFormSubmit.ok) {
-          setSubmitted(true);
-        } else {
-          // 3. Final Fallback: Direct mailto client trigger
-          window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
-          setSubmitted(true);
-        }
+        // Direct mailto client fallback
+        window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+        setSubmitted(true);
       }
     } catch (err) {
       window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
