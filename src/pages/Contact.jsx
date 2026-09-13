@@ -76,32 +76,35 @@ export default function Contact() {
     };
 
     try {
-      // Direct FormSubmit AJAX Endpoint with Captcha Disabled
-      const res1 = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+      // 1. Primary: Vercel Serverless Function (/api/contact)
+      const resVercel = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
 
-      if (res1.ok) {
+      if (resVercel.ok) {
         setSubmitted(true);
       } else {
-        // Fallback: Post via FormData to FormSubmit standard endpoint
-        const bodyForm = new FormData();
-        Object.entries(payload).forEach(([k, v]) => bodyForm.append(k, v));
-        
-        await fetch("https://formsubmit.co/business@astrivix.in", {
+        // 2. Secondary Fallback: FormSubmit AJAX Endpoint
+        const resFormSubmit = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
           method: "POST",
-          mode: "no-cors",
-          body: bodyForm
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload)
         });
-        setSubmitted(true);
+
+        if (resFormSubmit.ok) {
+          setSubmitted(true);
+        } else {
+          // 3. Final Fallback: Direct mailto client trigger
+          window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
+          setSubmitted(true);
+        }
       }
     } catch (err) {
-      // Final Fallback: Open mailto client
       window.location.href = `mailto:business@astrivix.in?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`;
       setSubmitted(true);
     } finally {

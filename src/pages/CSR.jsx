@@ -23,11 +23,31 @@ export default function CSR() {
     description: ''
   });
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:business@astrivix.in?subject=Astrivix%20Founders%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
-    window.location.href = mailtoUrl;
-    setSubmitted(true);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/csr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const mailtoUrl = `mailto:business@astrivix.in?subject=Astrivix%20Founders%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
+        window.location.href = mailtoUrl;
+        setSubmitted(true);
+      }
+    } catch (err) {
+      const mailtoUrl = `mailto:business@astrivix.in?subject=Astrivix%20Founders%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
+      window.location.href = mailtoUrl;
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
