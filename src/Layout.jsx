@@ -41,7 +41,7 @@ export default function Layout() {
       <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
         {/* SPA Sections Stacked Logically */}
-        <div id="home" className="w-full gpu-layer">
+        <div id="home" className="w-full relative z-10">
           <Home />
         </div>
         
@@ -49,22 +49,23 @@ export default function Layout() {
           <Services />
         </div>
         
-        <div id="about" className="w-full relative z-20 gpu-layer render-defer">
+        <div id="about" className="w-full relative z-20">
           <About />
         </div>
 
-        <div id="careers" className="w-full relative z-20 gpu-layer render-defer">
+        <div id="careers" className="w-full relative z-20">
           <Careers />
         </div>
         
-        <div id="contact" className="w-full relative z-20 gpu-layer render-defer">
+        <div id="contact" className="w-full relative z-20">
           <Contact />
         </div>
 
         {/* FAQ Section Positioned Right Before Footer */}
-        <div id="faq" className="w-full relative z-20 gpu-layer render-defer">
+        <div id="faq" className="w-full relative z-20">
           <FAQSection />
         </div>
+
 
         {/* FOOTER */}
         <footer className="w-full relative z-20 mt-16 md:mt-32 bg-[#0B0B10]/95 border-t border-white/10 overflow-hidden rounded-t-[3rem] pb-24 md:pb-0 text-center md:text-left">
