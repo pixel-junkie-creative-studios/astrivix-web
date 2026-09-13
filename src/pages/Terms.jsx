@@ -37,7 +37,7 @@ export default function Terms() {
         {/* Human-written content */}
         <div className="space-y-8 text-white/80 text-sm md:text-base leading-relaxed font-light">
           
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <div className="p-6 rounded-2xl bg-[#0E0E16] border border-white/10">
             <h2 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-emerald-400" />
               <span>100% Code & IP Ownership</span>

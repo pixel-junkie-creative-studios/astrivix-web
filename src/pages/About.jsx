@@ -173,7 +173,7 @@ export default function About() {
             <div className="absolute w-40 h-40 bg-white/10 blur-3xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
             <div className="relative z-10 text-center flex flex-col items-center w-full px-2">
               <Counter100 />
-              <span className="text-[10px] sm:text-xs uppercase tracking-[0.18em] font-mono font-bold text-white bg-white/15 px-3 py-2 rounded-2xl border border-white/30 backdrop-blur-md max-w-full leading-normal shadow-lg block text-center">
+              <span className="text-[10px] sm:text-xs uppercase tracking-[0.18em] font-mono font-bold text-white bg-[#0E0E16] px-3 py-2 rounded-2xl border border-white/30 max-w-full leading-normal shadow-lg block text-center">
                 CUSTOM ARCHITECTURE & PERFORMANCE
               </span>
             </div>

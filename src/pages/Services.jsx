@@ -150,7 +150,7 @@ export default function Services() {
                     {activeService.id}
                   </span>
                   <span 
-                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/30 backdrop-blur-md"
+                    className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-white px-4 py-2 rounded-full border border-white/30"
                     style={{ backgroundColor: `${activeService.color}40` }}
                   >
                     {activeService.category}

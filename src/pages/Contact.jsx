@@ -127,7 +127,7 @@ export default function Contact() {
               href="https://wa.me/917736387794" 
               target="_blank" 
               rel="noreferrer"
-              className="inline-flex items-center gap-4 glass-metallic hover:border-white/50 rounded-xl px-6 py-4 transition-all duration-200 shadow-2xl group active:scale-95 border border-white/20 max-w-md"
+              className="inline-flex items-center gap-4 bg-[#0E0E16] hover:border-white/50 rounded-xl px-6 py-4 transition-all duration-200 shadow-2xl group active:scale-95 border border-white/20 max-w-md"
             >
               <div className="w-10 h-10 rounded-full bg-[#25D366]/20 border border-[#25D366]/40 flex items-center justify-center text-[#25D366] shrink-0">
                 <MessageSquare className="w-5 h-5" />
@@ -140,7 +140,7 @@ export default function Contact() {
 
             <a 
               href="mailto:business@astrivix.in" 
-              className="inline-flex items-center gap-4 glass-metallic hover:border-white/50 rounded-xl px-6 py-4 transition-all duration-200 shadow-2xl group active:scale-95 border border-white/20 max-w-md"
+              className="inline-flex items-center gap-4 bg-[#0E0E16] hover:border-white/50 rounded-xl px-6 py-4 transition-all duration-200 shadow-2xl group active:scale-95 border border-white/20 max-w-md"
             >
               <div className="w-10 h-10 rounded-full bg-white/10 border border-white/30 flex items-center justify-center text-white shrink-0">
                 <Mail className="w-5 h-5" />
@@ -152,7 +152,7 @@ export default function Contact() {
             </a>
           </div>
 
-          <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 max-w-md backdrop-blur-md">
+          <div className="mt-12 p-6 rounded-2xl bg-[#0E0E16] border border-white/10 max-w-md">
             <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
               <span>STUDIO RESPONSE TIME</span>
@@ -164,7 +164,7 @@ export default function Contact() {
         </div>
 
         {/* Right Column: Inquiry Form */}
-        <div className="bg-white/5 backdrop-blur-2xl p-8 sm:p-12 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
+        <div className="bg-[#0B0B10]/95 p-8 sm:p-12 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
           
           {submitted ? (
             <div className="py-16 text-center flex flex-col items-center justify-center">

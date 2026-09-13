@@ -54,7 +54,7 @@ export default function PortfolioShowcase() {
               {/* Content */}
               <div className="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end">
                 <div className="mb-4">
-                  <span className="inline-block bg-white/10 backdrop-blur-md border border-white/10 shadow-inner px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/80">
+                  <span className="inline-block bg-[#0E0E16] border border-white/10 shadow-inner px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-white/80">
                     {item.category}
                   </span>
                 </div>

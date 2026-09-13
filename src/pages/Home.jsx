@@ -98,7 +98,7 @@ export default function Home() {
       <section id="clients" className="py-12 sm:py-24 relative z-10">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeUp}
-          className="w-full rounded-[2.5rem] bg-white/5 backdrop-blur-xl shadow-liquid-glass py-10 sm:py-16 border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden"
+          className="w-full rounded-[2.5rem] bg-[#0B0B10]/90 shadow-liquid-glass py-10 sm:py-16 border-t border-l border-white/20 border-b border-r border-black/80 relative overflow-hidden"
         >
           <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/40 to-transparent opacity-50" />
           <div className="text-center mb-8 sm:mb-12 relative z-10 px-4">

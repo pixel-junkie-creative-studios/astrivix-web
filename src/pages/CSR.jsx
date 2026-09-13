@@ -56,7 +56,7 @@ export default function CSR() {
         {/* What We Offer — 3 Grant Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:border-rose-400/40 transition-all duration-300 group">
+          <div className="p-6 rounded-2xl bg-[#0E0E16] border border-white/10 hover:border-rose-400/40 transition-all duration-300 group">
             <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-4 group-hover:scale-110 transition-transform">
               <Palette className="w-5 h-5" />
             </div>
@@ -70,7 +70,7 @@ export default function CSR() {
             </ul>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:border-cyan-400/40 transition-all duration-300 group">
+          <div className="p-6 rounded-2xl bg-[#0E0E16] border border-white/10 hover:border-cyan-400/40 transition-all duration-300 group">
             <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
               <Code2 className="w-5 h-5" />
             </div>
@@ -84,7 +84,7 @@ export default function CSR() {
             </ul>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl hover:border-amber-400/40 transition-all duration-300 group">
+          <div className="p-6 rounded-2xl bg-[#0E0E16] border border-white/10 hover:border-amber-400/40 transition-all duration-300 group">
             <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-4 group-hover:scale-110 transition-transform">
               <Megaphone className="w-5 h-5" />
             </div>
@@ -101,7 +101,7 @@ export default function CSR() {
         </div>
 
         {/* Eligibility Criteria Box */}
-        <div className="p-6 md:p-8 rounded-2xl bg-gradient-to-r from-rose-900/20 via-black to-amber-900/20 border border-white/15 mb-16 flex flex-col md:flex-row items-center justify-between gap-6 backdrop-blur-2xl">
+        <div className="p-6 md:p-8 rounded-2xl bg-[#0B0B10]/95 border border-white/15 mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-mono tracking-widest uppercase mb-3">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
@@ -120,7 +120,7 @@ export default function CSR() {
         </div>
 
         {/* Application Form */}
-        <div className="max-w-2xl mx-auto p-6 md:p-10 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-2xl">
+        <div className="max-w-2xl mx-auto p-6 md:p-10 rounded-3xl bg-[#0B0B10]/95 border border-white/10">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-1">Apply for the Founder Grant</h2>
             <p className="text-white/50 text-xs font-mono">Tell us about what you're building!</p>

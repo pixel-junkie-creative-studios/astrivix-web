@@ -21,10 +21,10 @@ const CameraController = ({ scrollYProgress }) => {
 
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
-    const dampFactor = isServicesActive.current ? 0.05 : 1;
-    const nextTargetZ = -progress * 100;
+    const dampFactor = isServicesActive.current ? 0.005 : 0.15;
+    const nextTargetZ = -progress * 20;
     targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
-    camera.position.z += (targetZ.current - camera.position.z) * 0.08;
+    camera.position.z += (targetZ.current - camera.position.z) * 0.02;
   });
 
   return null;
@@ -44,8 +44,8 @@ const DetailedEarth = ({ position, isMobile }) => {
   ]);
 
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.18;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.22;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.04;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.05;
   });
 
   const segments = isMobile ? 48 : 64;

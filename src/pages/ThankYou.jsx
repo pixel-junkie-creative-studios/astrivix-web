@@ -17,7 +17,7 @@ export default function ThankYou() {
       <header className="relative z-10 w-full max-w-7xl mx-auto flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:border-white/30 text-xs font-mono tracking-wider text-white/80 hover:text-white transition-all backdrop-blur-md"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0E0E16] border border-white/10 hover:border-white/30 text-xs font-mono tracking-wider text-white/80 hover:text-white transition-all"
         >
           <Home className="w-4 h-4 text-white/80" />
           <span>RETURN HOME</span>
@@ -31,7 +31,7 @@ export default function ThankYou() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-2xl shadow-2xl flex flex-col items-center"
+          className="bg-[#0B0B10]/95 border border-white/10 p-8 md:p-12 rounded-3xl shadow-2xl flex flex-col items-center"
         >
           <div className="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white/90 mb-6 shadow-xl">
             <CheckCircle2 className="w-10 h-10" />

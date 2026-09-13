@@ -34,7 +34,7 @@ export default function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-md z-50 p-6 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-3xl shadow-2xl text-white"
+          className="fixed bottom-6 left-6 right-6 md:left-auto md:right-8 md:max-w-md z-50 p-6 bg-[#0B0B10] border border-white/15 rounded-3xl shadow-2xl text-white"
         >
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">

@@ -42,7 +42,7 @@ export default function Breadcrumbs({ customCrumbs }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <nav aria-label="Breadcrumb" className="w-full max-w-7xl mx-auto px-6 py-4">
-        <ol className="inline-flex items-center space-x-2 bg-white/5 dark:bg-black/40 backdrop-blur-md border border-white/10 dark:border-white/15 px-4 py-2 rounded-full text-xs font-mono tracking-wider text-white/70">
+        <ol className="inline-flex items-center space-x-2 bg-[#0E0E16] border border-white/10 dark:border-white/15 px-4 py-2 rounded-full text-xs font-mono tracking-wider text-white/70">
           {crumbs.map((crumb, idx) => {
             const isLast = idx === crumbs.length - 1;
             return (

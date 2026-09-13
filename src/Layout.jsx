@@ -67,7 +67,7 @@ export default function Layout() {
         </div>
 
         {/* FOOTER */}
-        <footer className="w-full relative z-20 mt-16 md:mt-32 bg-white/5 backdrop-blur-xl border-t border-white/10 overflow-hidden rounded-t-[3rem] pb-24 md:pb-0 text-center md:text-left">
+        <footer className="w-full relative z-20 mt-16 md:mt-32 bg-[#0B0B10]/95 border-t border-white/10 overflow-hidden rounded-t-[3rem] pb-24 md:pb-0 text-center md:text-left">
           <div className="max-w-[1440px] mx-auto px-6 md:px-16 pt-16 md:pt-24 pb-8 relative z-10">
             <div className="flex flex-col md:grid md:grid-cols-4 gap-12 md:gap-8 mb-16 md:mb-24 items-center md:items-start">
               
@@ -77,7 +77,7 @@ export default function Layout() {
                 <p className="text-white/50 text-sm mb-8 max-w-md leading-relaxed">
                   Engineering digital perfection. Subscribe to our newsletter to receive the latest updates, case studies, and industry insights.
                 </p>
-                <div className="flex w-full max-w-md bg-white/5 border border-white/10 rounded-full p-1 pl-4 md:pl-6 backdrop-blur-md focus-within:border-white/30 transition-colors">
+                <div className="flex w-full max-w-md bg-[#0E0E16] border border-white/10 rounded-full p-1 pl-4 md:pl-6 focus-within:border-white/30 transition-colors">
                   <input type="email" placeholder="ENTER EMAIL ADDRESS" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
                   <button className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
                 </div>

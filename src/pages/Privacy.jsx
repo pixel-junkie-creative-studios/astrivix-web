@@ -37,7 +37,7 @@ export default function Privacy() {
         {/* Human-written content */}
         <div className="space-y-8 text-white/80 text-sm md:text-base leading-relaxed font-light">
           
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+          <div className="p-6 rounded-2xl bg-[#0E0E16] border border-white/10">
             <h2 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
               <Eye className="w-4 h-4 text-cyan-400" />
               <span>The Short Version</span>
