@@ -44,8 +44,8 @@ export default function CSR() {
             <span>ASTRA FOUNDER GRANT // PRO-BONO INITIATIVE</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight">
-            Building Dreams For <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-rose-300 via-amber-200 to-white">Next-Gen Visionaries.</span>
+          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight font-display">
+            Building Dreams For Next-Gen Visionaries.
           </h1>
 
           <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mt-4 leading-relaxed font-light">

@@ -101,14 +101,11 @@ export default function MagneticCursor() {
           pointer-events: none;
           z-index: 99999;
           mix-blend-mode: difference;
-          transition: width 0.14s cubic-bezier(0.16, 1, 0.3, 1), height 0.14s cubic-bezier(0.16, 1, 0.3, 1), top 0.14s cubic-bezier(0.16, 1, 0.3, 1), left 0.14s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.14s;
+          transition: transform 0.14s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.14s, background-color 0.14s;
           will-change: transform;
         }
         .custom-cursor-ring.hovering {
-          width: 44px;
-          height: 44px;
-          top: -22px;
-          left: -22px;
+          transform: scale(1.8);
           background-color: rgba(255, 255, 255, 0.15);
           border-color: rgba(255, 255, 255, 0.95);
           box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);

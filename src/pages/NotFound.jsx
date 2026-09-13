@@ -8,7 +8,7 @@ export default function NotFound() {
       <div className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(40,40,40,0.4),rgba(0,0,0,1))] mix-blend-screen" />
       
       <div className="relative z-10 max-w-2xl">
-        <h1 className="text-8xl md:text-[12rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white/80 to-purple-500/20 mb-4">
+        <h1 className="text-8xl md:text-[12rem] font-black tracking-tighter text-white drop-shadow-2xl mb-4 font-display">
           404
         </h1>
         <h2 className="text-3xl md:text-5xl font-bold mb-6">Lost in Space</h2>

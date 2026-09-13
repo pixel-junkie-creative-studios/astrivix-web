@@ -83,7 +83,7 @@ function Counter100() {
 
         {/* Center Percentage Display */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center select-none pointer-events-none px-4">
-          <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-100 to-zinc-300 drop-shadow-xl leading-none">
+          <span className="text-3xl sm:text-4xl font-black font-mono tracking-tight text-white drop-shadow-xl leading-none">
             {count}%
           </span>
           <span className="text-[9px] font-mono tracking-[0.25em] text-white/70 uppercase font-bold mt-1.5">
@@ -115,7 +115,7 @@ export default function About() {
   };
 
   return (
-    <div id="about" className="py-16 sm:py-24 relative z-10 w-full min-h-screen flex flex-col justify-center">
+    <div id="about" className="py-16 sm:py-24 relative z-10 w-full min-h-screen flex flex-col justify-center font-sans">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
         
         {/* Section Header */}
@@ -127,10 +127,10 @@ export default function About() {
           className="mb-8 sm:mb-12 text-left"
         >
           <div className="flex items-center gap-4 mb-3">
-            <h1 className="text-3xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white skeuo-engraved">
+            <h1 className="text-3xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white skeuo-engraved font-display">
               About Us.
             </h1>
-            <div className="flex-grow h-[2px] bg-gradient-to-r from-white/40 via-white/10 to-transparent mt-2"></div>
+            <div className="flex-grow h-[2px] bg-white/20 mt-2"></div>
           </div>
           <p className="text-[10px] sm:text-sm font-mono tracking-[0.25em] text-white/70 uppercase font-semibold">
             ENGINEERING HIGH-PERFORMANCE DIGITAL INFRASTRUCTURE & ADVANCED DESIGN
@@ -155,9 +155,9 @@ export default function About() {
             
             <div className="relative z-10 my-auto">
               <span className="text-[10px] tracking-[0.3em] font-mono font-bold text-white/70 uppercase block mb-4">01 // CORE MANIFESTO</span>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-md">
+              <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-white drop-shadow-md font-display">
                 We build next-generation digital products <br className="hidden sm:inline" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-zinc-300">
+                <span className="text-white">
                   that set new global benchmarks for performance and design.
                 </span>
               </h2>

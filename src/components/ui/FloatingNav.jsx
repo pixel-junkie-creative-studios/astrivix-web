@@ -84,7 +84,7 @@ export const FloatingNav = ({ navItems, className }) => {
       <div className="flex items-center space-x-4">
         <button 
           onClick={() => window.dispatchEvent(new Event('make-a-wish'))}
-          className="hidden md:block relative text-xs font-bold uppercase tracking-[0.2em] text-white px-6 py-3 rounded-full bg-gradient-to-r from-purple-600/50 to-blue-600/50 hover:from-purple-500 hover:to-blue-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] hover:shadow-[0_0_30px_rgba(168,85,247,0.8)] border border-white/20 transition-all duration-300 active:scale-95 ml-4"
+          className="hidden md:block relative text-xs font-bold uppercase tracking-[0.2em] text-white px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all duration-300 active:scale-95 ml-4 font-mono"
         >
           Make a Wish
         </button>
