@@ -15,7 +15,7 @@ export default function CSR() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mailtoUrl = `mailto:business@astrivix.in?subject=CSR%20Young%20Founder%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
+    const mailtoUrl = `mailto:business@astrivix.in?subject=Astrivix%20Founders%20Grant%20Application%20-%20${encodeURIComponent(formData.projectName)}&body=Name:%20${encodeURIComponent(formData.name)}%0AAge:%20${encodeURIComponent(formData.age)}%0AEmail:%20${encodeURIComponent(formData.email)}%0ASupport:%20${encodeURIComponent(formData.supportType)}%0A%0AProject%20Description:%0A${encodeURIComponent(formData.description)}`;
     window.location.href = mailtoUrl;
     setSubmitted(true);
   };
@@ -41,7 +41,7 @@ export default function CSR() {
         <div className="text-center border-b border-white/10 pb-12 mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono tracking-widest uppercase mb-4 shadow-inner">
             <HeartHandshake className="w-4 h-4" />
-            <span>ASTRA FOUNDER GRANT // PRO-BONO INITIATIVE</span>
+            <span>ASTRIVIX FOUNDERS GRANT // PRO-BONO INITIATIVE</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight font-display">
@@ -122,7 +122,7 @@ export default function CSR() {
         {/* Application Form */}
         <div className="max-w-2xl mx-auto p-6 md:p-10 rounded-3xl bg-[#0B0B10]/95 border border-white/10">
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white mb-1">Apply for the Founder Grant</h2>
+            <h2 className="text-2xl font-bold text-white mb-1">Apply for the Astrivix Founders Grant</h2>
             <p className="text-white/50 text-xs font-mono">Tell us about what you're building!</p>
           </div>
 

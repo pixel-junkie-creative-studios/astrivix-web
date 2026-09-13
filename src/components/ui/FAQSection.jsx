@@ -27,7 +27,7 @@ const categories = [
   { id: 'engineering', label: 'CUSTOM CODE' },
   { id: 'ip', label: 'IP & LEGAL' },
   { id: 'pricing', label: 'PRICING & RETENTION' },
-  { id: 'csr', label: 'ASTRA FOUNDER GRANT' },
+  { id: 'csr', label: 'ASTRIVIX FOUNDERS GRANT' },
 ];
 
 const faqs = [
@@ -142,12 +142,12 @@ const faqs = [
   {
     id: "csr-grant",
     category: "csr",
-    categoryLabel: "CSR FOUNDER GRANT",
+    categoryLabel: "ASTRIVIX FOUNDERS GRANT",
     icon: HeartHandshake,
     badge: "100% FREE GRANT",
-    question: "What is the Astrivix CSR & Young Founder Grant?",
+    question: "What is the Astrivix Founders Grant?",
     shortAnswer: "Pro-bono branding, web development, and strategy support for young founders under 22.",
-    detailedAnswer: "Through our CSR initiative, Astrivix awards 100% free pro-bono brand design, web engineering, and launch strategy to ambitious young founders and student entrepreneurs under 22 to help turn great ideas into real businesses.",
+    detailedAnswer: "Through the Astrivix Founders Grant, we award 100% free pro-bono brand design, web engineering, and launch strategy to ambitious young founders and student entrepreneurs under 22 to help turn great ideas into real businesses.",
     highlights: [
       "100% Free Pro-Bono Engineering & Design",
       "Custom Brand Identity & Web Platform",
@@ -202,7 +202,7 @@ export default function FAQSection() {
           Clear Answers.
         </h2>
         <p className="text-white/60 text-sm md:text-base max-w-2xl mt-4 leading-relaxed font-light">
-          Everything you need to know about our engineering workflow, code ownership, project pricing, SLAs, and our CSR Young Founder Grant.
+          Everything you need to know about our engineering workflow, code ownership, project pricing, SLAs, and our Astrivix Founders Grant.
         </p>
       </div>
 
@@ -355,7 +355,7 @@ export default function FAQSection() {
             to="/csr"
             className="flex-1 sm:flex-none px-5 py-3 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 hover:bg-rose-500 hover:text-white text-xs font-mono font-bold tracking-widest uppercase transition-all text-center"
           >
-            CSR GRANT
+            FOUNDERS GRANT
           </Link>
         </div>
       </div>

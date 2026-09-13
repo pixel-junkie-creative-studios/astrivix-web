@@ -18,7 +18,7 @@ export default function Contact() {
 
     if (num < 5) {
       return {
-        text: "If your budget is under $5, we will pray for your soul 🙏 (Check out our free CSR Founder Grant below!)",
+        text: "If your budget is under $5, we will pray for your soul 🙏 (Check out our free Astrivix Founders Grant below!)",
         style: "text-amber-300 border-amber-500/30 bg-amber-500/10"
       };
     }
@@ -36,7 +36,7 @@ export default function Contact() {
     }
     if (num < 500) {
       return {
-        text: "Scrappy founder energy! Ideal for micro-sprints, brand tokens, or applying for our 100% free CSR Grant.",
+        text: "Scrappy founder energy! Ideal for micro-sprints, brand tokens, or applying for our 100% free Astrivix Founders Grant.",
         style: "text-cyan-300 border-cyan-500/30 bg-cyan-500/10"
       };
     }

@@ -103,7 +103,7 @@ export default function Layout() {
                   <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                   <Link to="/terms#disclaimer" className="hover:text-white transition-colors">Legal Disclaimer</Link>
                   <Link to="/csr" className="hover:text-rose-400 font-semibold text-rose-300/90 transition-colors flex items-center gap-1.5">
-                    <span>CSR Founder Grant</span>
+                    <span>Astrivix Founders Grant</span>
                   </Link>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">
                     <a href="https://wa.me/917736387794" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">WHATSAPP</a>
