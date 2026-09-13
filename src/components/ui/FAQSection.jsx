@@ -11,12 +11,12 @@ import {
   Zap, 
   ArrowRight, 
   CheckCircle2, 
-  MessageSquare
+  MessageSquare,
+  ChevronDown
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const categories = [
-  { id: 'all', label: 'ALL QUESTIONS' },
   { id: 'timeline', label: 'DELIVERY & TIMELINE' },
   { id: 'engineering', label: 'CUSTOM CODE' },
   { id: 'ip', label: 'IP & LEGAL' },
@@ -154,12 +154,10 @@ const faqs = [
 ];
 
 export default function FAQSection() {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('timeline');
   const [openFaqId, setOpenFaqId] = useState(faqs[0].id);
 
-  const filteredFaqs = activeCategory === 'all' 
-    ? faqs 
-    : faqs.filter(faq => faq.category === activeCategory);
+  const filteredFaqs = faqs.filter(faq => faq.category === activeCategory);
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -204,7 +202,7 @@ export default function FAQSection() {
               key={cat.id}
               onClick={() => {
                 setActiveCategory(cat.id);
-                const nextFaqs = cat.id === 'all' ? faqs : faqs.filter(f => f.category === cat.id);
+                const nextFaqs = faqs.filter(f => f.category === cat.id);
                 if (nextFaqs.length > 0) {
                   setOpenFaqId(nextFaqs[0].id);
                 }
@@ -263,10 +261,10 @@ export default function FAQSection() {
                   </div>
                 </div>
 
-                <div className={`w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white shrink-0 transition-all duration-300 ${
-                  isOpen ? 'bg-white text-black rotate-45 border-white' : 'bg-white/5 hover:bg-white/15'
+                <div className={`w-9 h-9 rounded-full bg-white/5 border border-white/15 flex items-center justify-center shrink-0 transition-all duration-300 ${
+                  isOpen ? 'rotate-180 bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'hover:bg-white/10 hover:border-white/30 text-white/70'
                 }`}>
-                  <span className="text-lg font-bold leading-none">+</span>
+                  <ChevronDown className="w-4 h-4 transition-transform duration-300" />
                 </div>
               </div>
 
