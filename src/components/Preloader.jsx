@@ -58,10 +58,13 @@ export default function Preloader() {
                 transition={{ duration: 0.4, ease: "easeOut" }}
                 className="w-24 h-24 rounded-2xl border border-white/20 flex items-center justify-center bg-[#08080E] overflow-hidden shadow-2xl relative"
               >
-                <img 
-                  src="/astrivix-logo-sq.png" 
-                  alt="Astrivix Corp Logo"
-                  className="w-full h-full object-contain p-2 rounded-xl"
+                <video 
+                  src="/assets/astreivix_nav_bar.mp4"
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline 
+                  className="w-full h-full object-cover mix-blend-screen scale-125"
                 />
               </motion.div>
             </div>
