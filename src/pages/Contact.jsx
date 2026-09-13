@@ -16,44 +16,32 @@ export default function Contact() {
     const num = parseFloat(val);
     if (isNaN(num)) return null;
 
-    if (num < 5) {
+    if (num < 100) {
       return {
-        text: "If your budget is under $5, we will pray for your soul 🙏 (Check out our free Astrivix Founders Grant below!)",
+        text: "Early-stage allocation. Recommended for initial brand strategy or applying for the pro-bono Astrivix Founders Grant.",
         style: "text-amber-300 border-amber-500/30 bg-amber-500/10"
       };
     }
-    if (num < 10) {
+    if (num < 1000) {
       return {
-        text: "We respect the hustle! For $5, we'll get it done—but you gotta pledge 10% equity of your business! 🤝",
-        style: "text-rose-300 border-rose-500/30 bg-rose-500/10"
-      };
-    }
-    if (num < 50) {
-      return {
-        text: "Hmm, $10 to $50 is low... but guess what? We'll get it done! Just pledge 10% of your business equity to Astrivix! 🚀",
-        style: "text-purple-300 border-purple-500/30 bg-purple-500/10"
-      };
-    }
-    if (num < 500) {
-      return {
-        text: "Scrappy founder energy! Ideal for micro-sprints, brand tokens, or applying for our 100% free Astrivix Founders Grant.",
+        text: "Foundation tier. Ideal for express landing pages, brand identity systems, and launch collateral (24–72 hr sprint).",
         style: "text-cyan-300 border-cyan-500/30 bg-cyan-500/10"
       };
     }
     if (num < 5000) {
       return {
-        text: "Solid start! Ideal for express landing pages, custom logo suites & brand identity kits (24-72 hrs).",
+        text: "Growth tier. Ideal for high-converting web applications, custom frontend architecture, and interactive motion.",
         style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
       };
     }
     if (num < 25000) {
       return {
-        text: "Sweet spot! Perfect for full custom web platforms, interactive animations & mobile applications.",
+        text: "Scale tier. Optimal for full custom web platforms, multi-page web applications, and cross-platform mobile apps.",
         style: "text-emerald-300 border-emerald-500/30 bg-emerald-500/10"
       };
     }
     return {
-      text: "Legendary status unlocked 🚀 Full studio priority + dedicated sprint squad activated!",
+      text: "Enterprise tier. Full studio priority, dedicated senior engineering sprint squad, and custom SLA architecture.",
       style: "text-purple-300 border-purple-500/30 bg-purple-500/10"
     };
   };
