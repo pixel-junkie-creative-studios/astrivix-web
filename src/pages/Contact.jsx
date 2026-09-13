@@ -167,7 +167,7 @@ export default function Contact() {
         </div>
 
         {/* Right Column: Inquiry Form */}
-        <div className="bg-[#0B0B10]/95 p-8 sm:p-12 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative">
+        <div className="bg-[#0B0B10] p-8 sm:p-12 rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.9)] relative overflow-hidden z-20">
           
           {submitted ? (
             <div className="py-16 text-center flex flex-col items-center justify-center">
@@ -190,7 +190,7 @@ export default function Contact() {
                 </a>
                 <a
                   href={`mailto:business@astrivix.in?subject=${encodeURIComponent(`Project Inquiry: ${formData.name} ($${formData.budget})`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nBudget: $${formData.budget}\n\nMessage:\n${formData.message}`)}`}
-                  className="px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono font-bold uppercase tracking-widest hover:bg-white/20 transition-all text-center flex items-center justify-center gap-2"
+                  className="px-5 py-3 rounded-full bg-[#0E0E16] border border-white/20 text-white text-xs font-mono font-bold uppercase tracking-widest hover:bg-white/20 transition-all text-center flex items-center justify-center gap-2"
                 >
                   <Mail className="w-4 h-4" />
                   <span>EMAIL DIRECTLY</span>
@@ -198,7 +198,7 @@ export default function Contact() {
               </div>
               <button
                 onClick={() => setSubmitted(false)}
-                className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-white/60 text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"
+                className="px-6 py-2.5 rounded-full bg-[#0E0E16] border border-white/10 text-white/60 text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-colors"
               >
                 SEND ANOTHER INQUIRY
               </button>
@@ -217,7 +217,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="e.g. Sarah Jenkins"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                  className="w-full bg-[#050508] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
                 />
               </div>
 
@@ -229,7 +229,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="sarah@company.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                  className="w-full bg-[#050508] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
                 />
               </div>
 
@@ -248,7 +248,7 @@ export default function Contact() {
                     value={formData.budget}
                     onChange={(e) => setFormData({...formData, budget: e.target.value})}
                     placeholder="Enter amount in USD (e.g. 5000)"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
                   />
                 </div>
 
@@ -269,7 +269,7 @@ export default function Contact() {
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
                   placeholder="Tell us about your brand, scope, and timeline requirements..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
+                  className="w-full bg-[#050508] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
                 ></textarea>
               </div>
 

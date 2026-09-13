@@ -21,10 +21,10 @@ const CameraController = ({ scrollYProgress }) => {
 
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
-    const dampFactor = isServicesActive.current ? 0.005 : 0.15;
-    const nextTargetZ = -progress * 20;
+    const dampFactor = isServicesActive.current ? 0.0005 : 0.005;
+    const nextTargetZ = -progress * 4;
     targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
-    camera.position.z += (targetZ.current - camera.position.z) * 0.02;
+    camera.position.z += (targetZ.current - camera.position.z) * 0.005;
   });
 
   return null;
@@ -44,8 +44,8 @@ const DetailedEarth = ({ position, isMobile }) => {
   ]);
 
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.04;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.05;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.005;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.008;
   });
 
   const segments = isMobile ? 48 : 64;
@@ -83,7 +83,7 @@ const DetailedMoon = ({ position, isMobile }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.008;
   });
 
   const segments = isMobile ? 32 : 48;
@@ -108,7 +108,7 @@ const RealisticMars = ({ position, isMobile }) => {
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.2;
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.008;
   });
 
   const segments = isMobile ? 48 : 64;
@@ -139,9 +139,9 @@ const RealisticJupiterRinged = ({ position }) => {
   const ringMap = useTexture('/assets/planets/saturn_ring.png');
 
   useFrame((state, delta) => {
-    // Visibly rotating gas giant
-    if (planetRef.current) planetRef.current.rotation.y += delta * 0.25;
-    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.1;
+    // Ultra slow rotating gas giant
+    if (planetRef.current) planetRef.current.rotation.y += delta * 0.01;
+    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.003;
   });
 
   return (

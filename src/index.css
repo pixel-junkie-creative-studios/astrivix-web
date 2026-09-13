@@ -68,13 +68,10 @@ html.lenis { height: auto; }
 
 /* High-Contrast Liquid Obsidian Glassmorphism (Mobile-First Ultra-Legible Surface) */
 .glass-fast, .glass-metallic {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(20, 20, 28, 0.92) 40%, rgba(12, 12, 18, 0.96) 100%);
-  backdrop-filter: blur(12px) saturate(160%);
-  -webkit-backdrop-filter: blur(12px) saturate(160%);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.3), inset 0 -1px 1px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #0E0E16;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   isolation: isolate;
-  contain: paint;
 }
 
 /* BKLIT / Kokonut UI Corner Bracket Accents */
