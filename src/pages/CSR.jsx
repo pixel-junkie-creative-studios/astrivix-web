@@ -42,21 +42,11 @@ export default function CSR() {
     };
 
     try {
-      await Promise.allSettled([
-        fetch("/api/csr", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        }),
-        fetch("https://formsubmit.co/ajax/business@astrivix.in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(payload)
-        })
-      ]);
+      await fetch("/api/csr", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
       setSubmitted(true);
     } catch (err) {

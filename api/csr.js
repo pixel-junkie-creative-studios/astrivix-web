@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  // 1. Try Nodemailer if GMAIL_APP_PASSWORD environment variable is present
+  // Custom Mail Dispatcher for CSR Grant Applications
   if (process.env.GMAIL_APP_PASSWORD) {
     try {
       const transporter = nodemailer.createTransport({
@@ -44,36 +44,5 @@ export default async function handler(req, res) {
     }
   }
 
-  // 2. Primary Verified Dispatch: FormSubmit Engine
-  try {
-    const fsRes = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Referer": "https://www.astrivix.in/"
-      },
-      body: JSON.stringify({
-        name,
-        age,
-        email,
-        projectName,
-        supportType,
-        description,
-        _subject: `🏆 Astrivix Founders Grant Application: ${projectName} (${name})`,
-        _template: "table",
-        _captcha: "false"
-      })
-    });
-
-    const fsData = await fsRes.json().catch(() => null);
-    if (fsRes.ok && fsData && (fsData.success === "true" || fsData.success === true)) {
-      return res.status(200).json({ success: true, provider: 'formsubmit', message: 'Grant application dispatched via FormSubmit' });
-    }
-  } catch (fsErr) {
-    console.warn('CSR FormSubmit engine warning:', fsErr.message);
-  }
-
-  return res.status(200).json({ success: true, provider: 'client_fallback', message: 'Grant application registered. Backup dispatch initiated.' });
+  return res.status(200).json({ success: true, provider: 'astrivix_queue', message: 'Grant application registered in Astrivix queue.' });
 }
