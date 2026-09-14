@@ -236,7 +236,9 @@ const Planets = ({ isMobile }) => {
       
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 3.5 : 9} speed={0.4} yOffset={isMobile ? 1.5 : 4} />
+        <React.Suspense fallback={null}>
+          <HighResSatellite orbitRadius={isMobile ? 3.5 : 9} speed={0.4} yOffset={isMobile ? 1.5 : 4} />
+        </React.Suspense>
       </group>
     </group>
   );

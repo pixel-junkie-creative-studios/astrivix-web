@@ -16,16 +16,21 @@ class RootErrorBoundary extends Component {
   }
   render() {
     if (this.state.hasError) {
-      // Auto-retry reset after 1.5 seconds if transient error occurs
-      setTimeout(() => {
-        this.setState({ hasError: false, error: null });
-      }, 1500);
-
       return (
         <div className="w-full min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-8 text-center">
-          <div className="w-12 h-12 rounded-full border-2 border-white/20 border-t-white animate-spin mb-6" />
-          <h1 className="text-xl font-mono tracking-widest uppercase mb-2">ASTRIVIX CORP</h1>
-          <p className="text-white/40 text-xs font-mono tracking-wider">Optimizing experience...</p>
+          <h1 className="text-2xl font-mono tracking-widest uppercase mb-4">ASTRIVIX CORP</h1>
+          <p className="text-white/60 text-sm max-w-md mb-6 leading-relaxed">
+            {this.state.error?.message || "An unexpected rendering glitch occurred."}
+          </p>
+          <button 
+            onClick={() => {
+              this.setState({ hasError: false, error: null });
+              window.location.reload();
+            }} 
+            className="px-6 py-3 bg-white text-black font-bold text-xs tracking-widest uppercase rounded-full hover:bg-zinc-200 transition-colors"
+          >
+            Reset Experience
+          </button>
         </div>
       );
     }
