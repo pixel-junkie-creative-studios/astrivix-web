@@ -1,43 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useSpring, useTransform, animate } from 'framer-motion';
 
 function Counter100() {
-  const [count, setCount] = useState(0);
+  const [displayCount, setDisplayCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-30px" });
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
 
+  const countValue = useSpring(0, {
+    stiffness: 45,
+    damping: 16,
+    restDelta: 0.001
+  });
+
+  const strokeDashoffset = useTransform(countValue, [0, 100], [circumference, 0]);
+
   useEffect(() => {
     if (isInView) {
-      const end = 100;
-      const duration = 1800;
-      let startTime = null;
-
-      const animateCount = (now) => {
-        if (!startTime) startTime = now;
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = 1 - Math.pow(1 - progress, 4); // Quartic ease out
-        const currentCount = Math.floor(easeProgress * end);
-        setCount(currentCount);
-
-        if (progress < 1) {
-          requestAnimationFrame(animateCount);
-        } else {
-          setCount(100);
+      countValue.set(100);
+      const unsubscribe = countValue.on("change", (latest) => {
+        const val = Math.floor(latest);
+        setDisplayCount(val);
+        if (val >= 100 && !isCompleted) {
           setIsCompleted(true);
         }
-      };
-
-      requestAnimationFrame(animateCount);
+      });
+      return () => unsubscribe();
     }
-  }, [isInView]);
+  }, [isInView, countValue, isCompleted]);
 
-  const strokeDashoffset = circumference - (count / 100) * circumference;
-  const angle = (count / 100) * 360 - 90;
+  // Orbital light dot calculation
+  const angle = (displayCount / 100) * 360 - 90;
   const angleRad = (angle * Math.PI) / 180;
   const dotX = 64 + radius * Math.cos(angleRad);
   const dotY = 64 + radius * Math.sin(angleRad);
@@ -45,20 +40,24 @@ function Counter100() {
   return (
     <div ref={ref} className="relative flex flex-col items-center justify-center my-2 select-none group/metric">
       {/* SVG Radial Circular Gauge */}
-      <div className="relative w-36 h-36 sm:w-40 sm:h-40 flex items-center justify-center">
+      <div className="relative w-36 h-36 sm:w-44 sm:h-44 flex items-center justify-center">
         {/* Glow backdrop behind gauge */}
-        <div className="absolute inset-0 rounded-full bg-emerald-500/10 blur-xl group-hover/metric:bg-emerald-400/20 transition-all duration-500" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/20 via-cyan-500/20 to-purple-500/20 blur-2xl group-hover/metric:scale-110 transition-transform duration-700" />
         
         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
           <defs>
             <linearGradient id="metricGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#10B981" />
-              <stop offset="50%" stopColor="#06B6D4" />
+              <stop offset="40%" stopColor="#06B6D4" />
+              <stop offset="80%" stopColor="#A855F7" />
               <stop offset="100%" stopColor="#3B82F6" />
             </linearGradient>
-            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
             </filter>
           </defs>
 
@@ -68,41 +67,42 @@ function Counter100() {
             cy="64"
             r={radius}
             className="stroke-white/10"
-            strokeWidth="7"
+            strokeWidth="6"
             fill="transparent"
           />
 
           {/* Animated Progress Circle */}
-          <circle
+          <motion.circle
             cx="64"
             cy="64"
             r={radius}
             stroke="url(#metricGradient)"
-            strokeWidth="7"
+            strokeWidth="7.5"
             strokeLinecap="round"
             fill="transparent"
             strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            className="transition-all duration-75 ease-out"
-            style={{ filter: "drop-shadow(0 0 8px rgba(16,185,129,0.7))" }}
+            style={{ 
+              strokeDashoffset,
+              filter: "url(#neonGlow)"
+            }}
           />
 
-          {/* Traveling Orbital Light Dot */}
+          {/* Traveling Orbital Light Particle */}
           <circle
             cx={dotX}
             cy={dotY}
-            r="4"
+            r="4.5"
             fill="#6EE7B7"
-            className="transform rotate-90 origin-center transition-all duration-75"
-            style={{ filter: "drop-shadow(0 0 10px #10B981)" }}
+            className="transform rotate-90 origin-center"
+            style={{ filter: "drop-shadow(0 0 12px #10B981) drop-shadow(0 0 4px #6EE7B7)" }}
           />
         </svg>
 
         {/* Center Number Counter */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
           <div className="flex items-baseline justify-center">
-            <span className="text-4xl sm:text-5xl font-black font-display tracking-tight bg-gradient-to-br from-white via-slate-100 to-emerald-300 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-              {count}
+            <span className="text-4xl sm:text-5xl font-black font-display tracking-tight bg-gradient-to-br from-white via-emerald-100 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(16,185,129,0.4)]">
+              {displayCount}
             </span>
             <span className="text-lg sm:text-xl font-mono font-bold text-emerald-400 ml-0.5 animate-pulse">
               %
@@ -111,17 +111,25 @@ function Counter100() {
 
           {/* Shockwave Aura Flash on 100% Completion */}
           {isCompleted && (
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0.8 }}
-              animate={{ scale: 1.4, opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="absolute inset-2 rounded-full border-2 border-emerald-400 pointer-events-none"
-            />
+            <>
+              <motion.div
+                initial={{ scale: 0.7, opacity: 0.9 }}
+                animate={{ scale: 1.55, opacity: 0 }}
+                transition={{ duration: 1.0, ease: "easeOut" }}
+                className="absolute inset-0 rounded-full border-2 border-emerald-400/80 pointer-events-none"
+              />
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0.6 }}
+                animate={{ scale: 1.8, opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+                className="absolute inset-0 rounded-full border border-cyan-400/60 pointer-events-none"
+              />
+            </>
           )}
         </div>
       </div>
 
-      <div className="w-12 h-[2px] bg-gradient-to-r from-emerald-500/20 via-emerald-400/80 to-cyan-500/20 my-3 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+      <div className="w-16 h-[2px] bg-gradient-to-r from-emerald-500/20 via-emerald-400 to-cyan-500/20 my-3 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.9)]" />
       <span className="text-[10px] font-mono tracking-[0.25em] text-emerald-300/90 uppercase font-bold text-center">
         PERFORMANCE & CODE METRIC
       </span>
