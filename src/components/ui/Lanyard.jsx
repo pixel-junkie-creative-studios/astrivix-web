@@ -233,25 +233,34 @@ function Band({
 
   const cardMap = useMemo(() => {
     const baseMap = materials?.base?.map;
-    const baseImg = baseMap?.image;
-    if (!baseMap || !baseImg) return baseMap || null;
-    const W = Math.max(2048, baseImg.width || 2048);
-    const H = Math.max(2048, baseImg.height || 2048);
+    const W = 2048;
+    const H = 2048;
     const canvas = document.createElement('canvas');
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return baseMap;
-    
+    if (!ctx) return baseMap || null;
+
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(baseImg, 0, 0, W, H);
+
+    // Base background fallback: always dark obsidian #08080a
+    ctx.fillStyle = '#08080a';
+    ctx.fillRect(0, 0, W, H);
+
+    const baseImg = baseMap?.image;
+    if (baseImg && baseImg.width) {
+      try {
+        ctx.drawImage(baseImg, 0, 0, W, H);
+      } catch (e) {}
+    }
 
     ctx.fillStyle = '#08080a';
     ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
     ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
 
     const drawFitted = (img, rect) => {
+      if (!img || !img.width) return;
       const rx = rect.x * W;
       const ry = rect.y * H;
       const rw = rect.w * W;
@@ -275,13 +284,13 @@ function Band({
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
-    composite.flipY = baseMap.flipY;
+    if (baseMap) composite.flipY = baseMap.flipY;
     composite.anisotropy = 16;
     composite.minFilter = THREE.LinearFilter;
     composite.magFilter = THREE.LinearFilter;
     composite.needsUpdate = true;
     return composite;
-  }, [actualFront, actualBack, imageFit, frontTex, backTex, materials?.base?.map]);
+  }, [actualFront, actualBack, imageFit, frontTex, backTex, frontTex?.image, backTex?.image, materials?.base?.map, materials?.base?.map?.image]);
 
   const [curve] = useState(
     () =>

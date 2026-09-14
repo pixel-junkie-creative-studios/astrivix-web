@@ -191,7 +191,17 @@ try {
 
 const SatelliteGLB = () => {
   const { scene } = useGLTF(SATELLITE_GLB_URL);
-  const clonedScene = useMemo(() => scene.clone(), [scene]);
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material = child.material.clone();
+        child.material.toneMapped = true;
+        child.material.needsUpdate = true;
+      }
+    });
+    return clone;
+  }, [scene]);
   return <primitive object={clonedScene} scale={0.6} />;
 };
 
@@ -488,10 +498,10 @@ export default function SpaceScene() {
             }
           }}
         >
-          {/* Cinematic Solar Lighting Rig */}
-          <ambientLight intensity={isMobile ? 0.6 : 0.3} />
-          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 7.0 : 6.0} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={3.0} color="#88aaff" />
+          {/* Balanced Cinematic Space Lighting Rig */}
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[120, 80, 60]} intensity={1.8} color="#fff5ea" castShadow={false} />
+          <directionalLight position={[-120, -60, -80]} intensity={0.6} color="#6688cc" />
           
           <InteractiveGyroGroup>
             <Stars 
