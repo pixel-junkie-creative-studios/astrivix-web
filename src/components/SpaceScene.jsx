@@ -322,9 +322,25 @@ class WebGLErrorBoundary extends React.Component {
   }
 }
 
+const starCircleTexture = (() => {
+  if (typeof document === 'undefined') return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = 64;
+  canvas.height = 64;
+  const ctx = canvas.getContext('2d');
+  const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.7)');
+  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.15)');
+  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(canvas);
+})();
+
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 800 : 400;
+  const count = isMobile ? 600 : 250;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -344,8 +360,8 @@ const BrightShimmerStars = ({ isMobile }) => {
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.04;
-      pointsRef.current.rotation.x += delta * 0.02;
+      pointsRef.current.rotation.y += delta * 0.03;
+      pointsRef.current.rotation.x += delta * 0.015;
     }
   });
 
@@ -360,10 +376,11 @@ const BrightShimmerStars = ({ isMobile }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={isMobile ? 2.8 : 1.8}
+        map={starCircleTexture}
+        size={isMobile ? 1.5 : 1.0}
         color="#ffffff"
         transparent={true}
-        opacity={isMobile ? 0.95 : 0.75}
+        opacity={isMobile ? 0.9 : 0.6}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
