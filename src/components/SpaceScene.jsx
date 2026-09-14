@@ -385,7 +385,7 @@ const starCircleTexture = (() => {
 
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 800 : 400;
+  const count = isMobile ? 300 : 600;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -422,10 +422,10 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 0.6 : 0.8}
+        size={isMobile ? 0.5 : 0.8}
         color="#ffffff"
         transparent={true}
-        opacity={isMobile ? 0.85 : 0.65}
+        opacity={isMobile ? 0.75 : 0.65}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
@@ -437,17 +437,25 @@ const BrightShimmerStars = ({ isMobile }) => {
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
-  const dpr = typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio || 2, 2)] : [1, 2];
+  const canvasDpr = isMobile ? 1 : (typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 2, 2) : 1);
 
   return (
     <WebGLErrorBoundary>
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
-          dpr={dpr} 
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", precision: "highp", stencil: false }}
+          dpr={canvasDpr} 
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", stencil: false, failIfMajorPerformanceCaveat: false }}
+          onCreated={({ gl }) => {
+            if (gl.domElement) {
+              gl.domElement.addEventListener('webglcontextlost', (e) => {
+                e.preventDefault();
+                console.warn('SpaceScene WebGL context lost handled smoothly.');
+              }, false);
+            }
+          }}
         >
-          {/* Cinematic High-Contrast Solar Lighting Rig */}
+          {/* Cinematic Solar Lighting Rig */}
           <ambientLight intensity={isMobile ? 0.5 : 0.3} />
           <directionalLight position={[180, 120, 80]} intensity={isMobile ? 6.5 : 6.0} color="#ffffff" castShadow={false} />
           <directionalLight position={[-180, -80, -120]} intensity={2.5} color="#88aaff" />
@@ -456,11 +464,11 @@ export default function SpaceScene() {
             <Stars 
               radius={100} 
               depth={60} 
-              count={isMobile ? 9000 : 6000} 
-              factor={isMobile ? 2.2 : 3.0} 
+              count={isMobile ? 2500 : 5000} 
+              factor={isMobile ? 2.0 : 3.0} 
               saturation={0} 
               fade 
-              speed={isMobile ? 2.5 : 2} 
+              speed={isMobile ? 1.5 : 2} 
             />
             <BrightShimmerStars isMobile={isMobile} />
           </InteractiveGyroGroup>

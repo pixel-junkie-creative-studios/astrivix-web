@@ -16,16 +16,16 @@ class RootErrorBoundary extends Component {
   }
   render() {
     if (this.state.hasError) {
+      // Auto-retry reset after 1.5 seconds if transient error occurs
+      setTimeout(() => {
+        this.setState({ hasError: false, error: null });
+      }, 1500);
+
       return (
         <div className="w-full min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-8 text-center">
-          <h1 className="text-4xl font-bold mb-4">ASTRIVIX CORP</h1>
-          <p className="text-white/60 mb-6">Reloading core engine...</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-6 py-3 bg-white text-black font-bold rounded-full"
-          >
-            Refresh Page
-          </button>
+          <div className="w-12 h-12 rounded-full border-2 border-white/20 border-t-white animate-spin mb-6" />
+          <h1 className="text-xl font-mono tracking-widest uppercase mb-2">ASTRIVIX CORP</h1>
+          <p className="text-white/40 text-xs font-mono tracking-wider">Optimizing experience...</p>
         </div>
       );
     }
@@ -34,9 +34,7 @@ class RootErrorBoundary extends Component {
 }
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <RootErrorBoundary>
-      <App />
-    </RootErrorBoundary>
-  </React.StrictMode>,
+  <RootErrorBoundary>
+    <App />
+  </RootErrorBoundary>
 )

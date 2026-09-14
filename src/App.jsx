@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     // Force browser to ALWAYS start at the top of the page (Hero Section) on refresh or reload
-    if ('scrollRestoration' in window.history) {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
@@ -38,25 +38,6 @@ function App() {
         lenisRef.current.lenis.scrollTo(0, { immediate: true });
       }
     }, 100);
-
-    // Sync Lenis with GSAP ScrollTrigger
-    const lenis = lenisRef.current?.lenis;
-    if (lenis) {
-      lenis.on('scroll', ScrollTrigger.update);
-      
-      const updateTicker = (time) => {
-        lenis.raf(time * 1000);
-      };
-
-      gsap.ticker.add(updateTicker);
-      gsap.ticker.lagSmoothing(0);
-
-      return () => {
-        clearTimeout(timer);
-        gsap.ticker.remove(updateTicker);
-        lenis.off('scroll', ScrollTrigger.update);
-      };
-    }
 
     return () => clearTimeout(timer);
   }, []);
