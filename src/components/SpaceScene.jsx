@@ -242,49 +242,65 @@ const Planets = ({ isMobile }) => {
   );
 };
 
-const InteractiveStars = () => {
+const InteractiveGyroGroup = ({ children }) => {
   const groupRef = useRef();
-  const mouse = useRef({ x: 0, y: 0 });
+  const targetRotation = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    // 1. Mouse movement (Desktop)
     const handleMouseMove = (e) => {
-      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
-      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+      const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+      targetRotation.current.x = mouseY * (Math.PI / 16);
+      targetRotation.current.y = mouseX * (Math.PI / 16);
     };
 
+    // 2. Gyroscope / Device Orientation (Mobile Phone Tilt)
     const handleOrientation = (e) => {
       if (e.gamma !== null && e.beta !== null) {
-        mouse.current.x = Math.max(-1, Math.min(1, e.gamma / 25));
-        mouse.current.y = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+        // e.gamma: left (-90) / right (+90) tilt
+        // e.beta: back (-180) / forward (+180) tilt (normally ~40 deg when holding phone)
+        const normGamma = Math.max(-1, Math.min(1, e.gamma / 30));
+        const normBeta = Math.max(-1, Math.min(1, (e.beta - 40) / 30));
+        
+        // Correct natural 3D gyroscope tilt direction synced with device motion
+        targetRotation.current.x = normBeta * (Math.PI / 12);
+        targetRotation.current.y = normGamma * (Math.PI / 12);
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+    // Request iOS Gyroscope Permission if required by browser
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+          }
+        })
+        .catch(console.warn);
+    } else if (typeof window !== 'undefined') {
       window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     }
 
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (typeof window !== 'undefined') window.removeEventListener('deviceorientation', handleOrientation);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('deviceorientation', handleOrientation);
+      }
     };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      const targetX = (mouse.current.y * Math.PI) / 12;
-      const targetY = (mouse.current.x * Math.PI) / 12;
-      
-      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
-      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
+      // Hardware-accelerated 240Hz lerp smooth gyro rotation
+      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.06;
+      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.06;
     }
   });
 
-  return (
-    <group ref={groupRef}>
-      <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
-    </group>
-  );
+  return <group ref={groupRef}>{children}</group>;
 };
 
 class WebGLErrorBoundary extends React.Component {
@@ -324,10 +340,13 @@ export default function SpaceScene() {
           <directionalLight position={[180, 120, 80]} intensity={isMobile ? 5.5 : 6.0} color="#ffffff" castShadow={false} />
           <directionalLight position={[-180, -80, -120]} intensity={2.0} color="#88aaff" />
           
-          <InteractiveStars />
-          <React.Suspense fallback={null}>
-            <Planets isMobile={isMobile} />
-          </React.Suspense>
+          <InteractiveGyroGroup>
+            <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
+            <React.Suspense fallback={null}>
+              <Planets isMobile={isMobile} />
+            </React.Suspense>
+          </InteractiveGyroGroup>
+          
           <CameraController scrollYProgress={scrollYProgress} />
         </Canvas>
       </div>
