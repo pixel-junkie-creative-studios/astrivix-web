@@ -255,16 +255,11 @@ const InteractiveGyroGroup = ({ children }) => {
     const handleMouseMove = (e) => {
       const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-      targetRotation.current.x = mouseY * (Math.PI / 16);
-      targetRotation.current.y = mouseX * (Math.PI / 16);
+      targetRotation.current.x = mouseY * (Math.PI / 24);
+      targetRotation.current.y = mouseX * (Math.PI / 24);
     };
 
-    // Auto-center baseline calibration when user touches screen
-    const calibrateCenter = () => {
-      baselineGyro.current = null;
-    };
-
-    // 2. Gyroscope / Device Orientation (Mobile Phone Game Gyro)
+    // 2. Gyroscope / Device Orientation (Mobile)
     const handleOrientation = (e) => {
       if (e.gamma === null || e.beta === null) return;
 
@@ -286,7 +281,7 @@ const InteractiveGyroGroup = ({ children }) => {
         rawBeta = -rawBeta;
       }
 
-      // Initialize initial baseline holding angle ONCE on first event
+      // Initialize baseline angle ONCE on first orientation event
       if (!baselineGyro.current) {
         baselineGyro.current = {
           gamma: rawGamma,
@@ -294,27 +289,24 @@ const InteractiveGyroGroup = ({ children }) => {
         };
       }
 
-      // Calculate exact relative delta tilt from calibrated center
-      const deltaGamma = Math.max(-45, Math.min(45, rawGamma - baselineGyro.current.gamma));
-      const deltaBeta = Math.max(-45, Math.min(45, rawBeta - baselineGyro.current.beta));
+      // Calculate relative delta tilt from initial baseline angle
+      const deltaGamma = Math.max(-35, Math.min(35, rawGamma - baselineGyro.current.gamma));
+      const deltaBeta = Math.max(-35, Math.min(35, rawBeta - baselineGyro.current.beta));
 
-      // Low-pass exponential smoothing filter for 120 FPS zero-jitter tracking
-      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.15;
-      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.15;
+      // Low-pass exponential smoothing filter for zero-jitter 120 FPS tracking
+      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.08;
+      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.08;
 
-      const normGamma = smoothedGyro.current.gamma / 30;
-      const normBeta = smoothedGyro.current.beta / 30;
+      const normGamma = smoothedGyro.current.gamma / 35;
+      const normBeta = smoothedGyro.current.beta / 35;
 
-      // True 3D Game Gyro Motion:
-      // Tilting top of phone DOWN (beta > baseline) -> pitches view down (+normBeta)
-      // Tilting right side DOWN (gamma > baseline) -> rotates view right (+normGamma)
-      targetRotation.current.x = normBeta * (Math.PI / 16);
-      targetRotation.current.y = normGamma * (Math.PI / 16);
+      // Same Axis Motion: Tilting phone right moves background right, tilting down moves down
+      targetRotation.current.y = normGamma * (Math.PI / 20);
+      targetRotation.current.x = -normBeta * (Math.PI / 20);
     };
 
-    // iOS 13+ permission request on user gesture
+    // iOS 13+ permission request on first user touch gesture
     const handleTouchStart = () => {
-      calibrateCenter();
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
           .then(permissionState => {
@@ -326,8 +318,7 @@ const InteractiveGyroGroup = ({ children }) => {
       }
     };
 
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('pointerdown', calibrateCenter, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true, once: true });
     window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
@@ -335,15 +326,14 @@ const InteractiveGyroGroup = ({ children }) => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('deviceorientation', handleOrientation);
       window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('pointerdown', calibrateCenter);
     };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      // Hardware-accelerated 120Hz/240Hz lerp smooth gyro rotation
-      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.10;
-      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.10;
+      // Smooth lerp rotation without jumping or glitching
+      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.06;
+      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.06;
     }
   });
 
@@ -377,8 +367,8 @@ const starCircleTexture = (() => {
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
   gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.7)');
-  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.15)');
+  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
+  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.2)');
   gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 64, 64);
@@ -387,13 +377,13 @@ const starCircleTexture = (() => {
 
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 300 : 600;
+  const count = isMobile ? 1000 : 800;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
-      const radius = 30 + Math.random() * 80;
+      const radius = 25 + Math.random() * 95;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -407,8 +397,8 @@ const BrightShimmerStars = ({ isMobile }) => {
 
   useFrame((state, delta) => {
     if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.03;
-      pointsRef.current.rotation.x += delta * 0.015;
+      pointsRef.current.rotation.y += delta * 0.02;
+      pointsRef.current.rotation.x += delta * 0.01;
     }
   });
 
@@ -424,10 +414,10 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 0.5 : 0.8}
+        size={isMobile ? 0.45 : 0.75}
         color="#ffffff"
         transparent={true}
-        opacity={isMobile ? 0.75 : 0.65}
+        opacity={isMobile ? 0.9 : 0.75}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
@@ -466,8 +456,8 @@ export default function SpaceScene() {
             <Stars 
               radius={100} 
               depth={60} 
-              count={isMobile ? 2500 : 5000} 
-              factor={isMobile ? 2.0 : 3.0} 
+              count={isMobile ? 4500 : 6000} 
+              factor={isMobile ? 2.5 : 3.0} 
               saturation={0} 
               fade 
               speed={isMobile ? 1.5 : 2} 
