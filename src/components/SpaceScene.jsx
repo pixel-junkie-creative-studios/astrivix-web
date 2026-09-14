@@ -245,6 +245,8 @@ const Planets = ({ isMobile }) => {
 const InteractiveGyroGroup = ({ children }) => {
   const groupRef = useRef();
   const targetRotation = useRef({ x: 0, y: 0 });
+  const smoothedGyro = useRef({ gamma: 0, beta: 0 });
+  const baselineGyro = useRef(null);
 
   useEffect(() => {
     // 1. Mouse movement (Desktop)
@@ -255,48 +257,94 @@ const InteractiveGyroGroup = ({ children }) => {
       targetRotation.current.y = mouseX * (Math.PI / 16);
     };
 
-    // 2. Gyroscope / Device Orientation (Mobile Phone Tilt)
+    // 2. Gyroscope / Device Orientation (Mobile Phone Game Gyro)
     const handleOrientation = (e) => {
-      if (e.gamma !== null && e.beta !== null) {
-        // e.gamma: left (-90) / right (+90) tilt
-        // e.beta: back (-180) / forward (+180) tilt (normally ~40 deg when holding phone)
-        const normGamma = Math.max(-1, Math.min(1, e.gamma / 30));
-        const normBeta = Math.max(-1, Math.min(1, (e.beta - 40) / 30));
-        
-        // Correct natural 3D gyroscope tilt direction synced with device motion
-        targetRotation.current.x = -normBeta * (Math.PI / 12);
-        targetRotation.current.y = -normGamma * (Math.PI / 12);
+      if (e.gamma === null || e.beta === null) return;
+
+      let rawGamma = e.gamma;
+      let rawBeta = e.beta;
+
+      // Handle screen orientation (portrait vs landscape)
+      const screenAngle = window.screen?.orientation?.angle ?? window.orientation ?? 0;
+      if (screenAngle === 90) {
+        const tmp = rawGamma;
+        rawGamma = rawBeta;
+        rawBeta = -tmp;
+      } else if (screenAngle === -90 || screenAngle === 270) {
+        const tmp = rawGamma;
+        rawGamma = -rawBeta;
+        rawBeta = tmp;
+      } else if (screenAngle === 180) {
+        rawGamma = -rawGamma;
+        rawBeta = -rawBeta;
+      }
+
+      // Initialize initial baseline holding angle on first event
+      if (!baselineGyro.current) {
+        baselineGyro.current = {
+          gamma: rawGamma,
+          beta: rawBeta || 40
+        };
+      }
+
+      // Slowly adapt baseline to avoid drift over time
+      baselineGyro.current.gamma += (rawGamma - baselineGyro.current.gamma) * 0.005;
+      baselineGyro.current.beta += (rawBeta - baselineGyro.current.beta) * 0.005;
+
+      // Calculate relative delta tilt from baseline
+      const deltaGamma = Math.max(-40, Math.min(40, rawGamma - baselineGyro.current.gamma));
+      const deltaBeta = Math.max(-40, Math.min(40, rawBeta - baselineGyro.current.beta));
+
+      // Low-pass exponential smoothing filter to eliminate sensor jitter ("glithvin")
+      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.12;
+      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.12;
+
+      // Normalized target values (-1 to +1)
+      const normGamma = smoothedGyro.current.gamma / 30;
+      const normBeta = smoothedGyro.current.beta / 30;
+
+      // True 3D Game Gyro Motion:
+      // Tilting phone right (normGamma > 0) -> rotates scene right (+Y rotation, synced with mouse right)
+      // Tilting phone down (normBeta > 0) -> pitches scene down (-X rotation, synced with mouse down)
+      targetRotation.current.x = -normBeta * (Math.PI / 16);
+      targetRotation.current.y = normGamma * (Math.PI / 16);
+    };
+
+    // iOS 13+ permission request on user gesture
+    const requestIOSPermission = () => {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+            }
+          })
+          .catch(() => {});
       }
     };
 
-    // Request iOS Gyroscope Permission if required by browser
     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', handleOrientation, { passive: true });
-          }
-        })
-        .catch(console.warn);
-    } else if (typeof window !== 'undefined') {
-      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+      window.addEventListener('touchstart', requestIOSPermission, { once: true, passive: true });
+      window.addEventListener('pointerdown', requestIOSPermission, { once: true, passive: true });
     }
 
+    // Attach standard deviceorientation listener for Android & standard mobile browsers
+    window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('deviceorientation', handleOrientation);
-      }
+      window.removeEventListener('deviceorientation', handleOrientation);
+      window.removeEventListener('touchstart', requestIOSPermission);
+      window.removeEventListener('pointerdown', requestIOSPermission);
     };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      // Hardware-accelerated 240Hz lerp smooth gyro rotation
-      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.06;
-      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.06;
+      // Hardware-accelerated 120Hz/240Hz lerp smooth gyro rotation
+      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.08;
+      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.08;
     }
   });
 
