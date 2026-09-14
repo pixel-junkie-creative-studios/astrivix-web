@@ -5,6 +5,8 @@ import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import StaggeredMenu from './components/ui/StaggeredMenu';
 
+import LenisSectionWrapper from './components/ui/LenisSectionWrapper';
+
 // Import all sections for SPA
 import Home from './pages/Home';
 import Services from './pages/Services';
@@ -53,31 +55,31 @@ export default function Layout() {
 
       <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
-        {/* SPA Sections Stacked Logically */}
-        <div id="home" className="w-full relative z-10">
+        {/* SPA Sections Stacked Logically with Lenis Velocity Skew & Fluid Parallax */}
+        <LenisSectionWrapper id="home" className="z-10" enableParallax={false} delay={0.05}>
           <Home />
-        </div>
-        
-        <div className="w-full relative z-20">
-          <Services />
-        </div>
-        
-        <div id="about" className="w-full relative z-20">
-          <About />
-        </div>
+        </LenisSectionWrapper>
 
-        <div id="careers" className="w-full relative z-20">
+        <LenisSectionWrapper id="services" className="z-20" enableParallax={false} delay={0.05}>
+          <Services />
+        </LenisSectionWrapper>
+
+        <LenisSectionWrapper id="about" className="z-20" parallaxDistance={30} delay={0.05}>
+          <About />
+        </LenisSectionWrapper>
+
+        <LenisSectionWrapper id="careers" className="z-20" parallaxDistance={25} delay={0.05}>
           <Careers />
-        </div>
-        
-        <div id="contact" className="w-full relative z-20">
+        </LenisSectionWrapper>
+
+        <LenisSectionWrapper id="contact" className="z-20" parallaxDistance={20} delay={0.05}>
           <Contact />
-        </div>
+        </LenisSectionWrapper>
 
         {/* FAQ Section Positioned Right Before Footer */}
-        <div id="faq" className="w-full relative z-20">
+        <LenisSectionWrapper id="faq" className="z-20" parallaxDistance={20} delay={0.05}>
           <FAQSection />
-        </div>
+        </LenisSectionWrapper>
 
 
         {/* FOOTER */}
