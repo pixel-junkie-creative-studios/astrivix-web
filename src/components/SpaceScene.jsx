@@ -463,10 +463,11 @@ export default function SpaceScene() {
               speed={isMobile ? 2.5 : 2} 
             />
             <BrightShimmerStars isMobile={isMobile} />
-            <React.Suspense fallback={null}>
-              <Planets isMobile={isMobile} />
-            </React.Suspense>
           </InteractiveGyroGroup>
+
+          <React.Suspense fallback={null}>
+            <Planets isMobile={isMobile} />
+          </React.Suspense>
           
           <CameraController scrollYProgress={scrollYProgress} />
         </Canvas>
