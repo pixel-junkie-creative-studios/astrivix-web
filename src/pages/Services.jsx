@@ -2,15 +2,15 @@ import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const services = [
-  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#ff4d4d', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
-  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web', color: '#4d79ff', desc: 'Custom web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
-  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native Mobile Apps', color: '#4dff88', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
-  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#ff4dff', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
-  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#ffff4d', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
-  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#ff884d', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
-  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#4dffff', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
-  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#b34dff', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
-  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#4dffb3', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
+  { id: '01', title: 'INTEGRATED BRANDING', category: 'Brand Architecture', color: '#10B981', desc: 'Custom brand identities, typography systems, and visual guidelines engineered to establish instant market authority.' },
+  { id: '02', title: 'ENTERPRISE WEB DEV', category: 'High-Performance Web', color: '#06B6D4', desc: 'Custom web applications built with modern frontend frameworks, 3D WebGL physics, and clean architecture.' },
+  { id: '03', title: 'MOBILE APP ENGINEERING', category: 'Native Mobile Apps', color: '#3B82F6', desc: 'Native iOS and Android mobile platforms featuring fluid gesture physics, offline synchronization, and intuitive user experiences.' },
+  { id: '04', title: 'DIGITAL MARKETING', category: 'Targeted Acquisition', color: '#8B5CF6', desc: 'Data-driven performance campaigns, programmatic growth engines, and high-ROI client acquisition strategies.' },
+  { id: '05', title: 'CONVERSION OPTIMIZATION', category: 'Frictionless Growth', color: '#F59E0B', desc: 'Rigorous user flow analysis, checkout optimization, and A/B testing designed to maximize customer lifetime value.' },
+  { id: '06', title: 'GRAPHIC & UI/UX DESIGN', category: 'Executive Systems', color: '#F43F5E', desc: 'Comprehensive design systems, liquid glass UI components, and accessible interfaces tailored for modern enterprises.' },
+  { id: '07', title: 'MOTION & VIDEO PRODUCTION', category: 'Visual Storytelling', color: '#14B8A6', desc: 'High-impact 3D animation, brand films, and motion graphics that capture attention and elevate your digital narrative.' },
+  { id: '08', title: 'BUSINESS CONSULTING', category: 'Strategic Execution', color: '#6366F1', desc: 'Streamlining operational workflows, eliminating process bottlenecks, and scaling enterprise delivery mechanisms.' },
+  { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#34D399', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
 ];
 
 export default function Services() {
@@ -86,16 +86,16 @@ export default function Services() {
           </p>
         </div>
 
-        {/* Dynamic Liquid Floating Glow Orbs */}
+        {/* Dynamic Muted Ambient Background Glow (Subtle & Elegant) */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
           <motion.div 
             animate={{ 
-              scale: [1, 1.25, 1],
-              opacity: [0.25, 0.45, 0.25],
+              scale: [1, 1.15, 1],
+              opacity: [0.05, 0.12, 0.05],
               rotate: [0, 90, 180]
             }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="w-96 h-96 rounded-full blur-[100px] transition-colors duration-700"
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="w-72 h-72 rounded-full blur-[140px] transition-colors duration-700 pointer-events-none"
             style={{ backgroundColor: activeService.color }}
           />
         </div>
@@ -116,7 +116,7 @@ export default function Services() {
             className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-80 transition-all duration-500 border border-white/20 shadow-2xl backdrop-blur-xl bg-[#08080c]/90"
             style={{ 
               transform: 'rotateY(25deg) translateZ(-60px)',
-              background: `radial-gradient(circle at top left, ${prevService.color}30, #08080c 80%)`
+              background: `radial-gradient(circle at top left, ${prevService.color}15, #08080c 85%)`
             }}
           >
             <div className="text-5xl md:text-7xl font-mono font-black text-white/80">
@@ -150,7 +150,7 @@ export default function Services() {
                 }}
                 style={{ 
                   transformStyle: 'preserve-3d',
-                  background: `radial-gradient(circle at top right, ${activeService.color}45, #08080d 85%)`
+                  background: `radial-gradient(circle at top right, ${activeService.color}18, #08080d 85%)`
                 }}
                 className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/25 shadow-[0_30px_80px_rgba(0,0,0,0.95)] overflow-hidden bg-[#08080d]/90 backdrop-blur-2xl"
               >
