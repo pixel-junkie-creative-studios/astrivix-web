@@ -32,7 +32,6 @@ function App() {
     }
     window.scrollTo(0, 0);
 
-    // Force Lenis to scroll to top immediately on mount
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
       if (lenisRef.current?.lenis) {
@@ -40,8 +39,24 @@ function App() {
       }
     }, 100);
 
-    // Enable standard GSAP lag smoothing to eliminate visual frame drops
-    gsap.ticker.lagSmoothing(500, 33);
+    // Sync Lenis with GSAP ScrollTrigger
+    const lenis = lenisRef.current?.lenis;
+    if (lenis) {
+      lenis.on('scroll', ScrollTrigger.update);
+      
+      const updateTicker = (time) => {
+        lenis.raf(time * 1000);
+      };
+
+      gsap.ticker.add(updateTicker);
+      gsap.ticker.lagSmoothing(0);
+
+      return () => {
+        clearTimeout(timer);
+        gsap.ticker.remove(updateTicker);
+        lenis.off('scroll', ScrollTrigger.update);
+      };
+    }
 
     return () => clearTimeout(timer);
   }, []);
@@ -51,12 +66,14 @@ function App() {
       root
       ref={lenisRef}
       options={{
-        lerp: 0.12,
-        duration: 0.7,
+        lerp: 0.1,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         wheelMultiplier: 1.0,
-        touchMultiplier: 1.0,
-        syncTouch: false
+        touchMultiplier: 1.5,
+        syncTouch: true,
+        autoResize: true,
       }}
     >
       <BrowserRouter>
