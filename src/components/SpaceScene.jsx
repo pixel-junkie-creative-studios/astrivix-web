@@ -333,9 +333,9 @@ const InteractiveGyroGroup = ({ children }) => {
       const normGamma = Math.max(-1, Math.min(1, rawGamma / 35));
       const normBeta = Math.max(-1, Math.min(1, (rawBeta - 40) / 35));
 
-      // Same Axis Motion: Tilting phone right moves background right, tilting down moves down
-      targetRotation.current.y = normGamma * (Math.PI / 18);
-      targetRotation.current.x = normBeta * (Math.PI / 18);
+      // High-sensitivity Same Axis Motion for mobile: Tilting phone right moves background right, tilting down moves down
+      targetRotation.current.y = normGamma * (Math.PI / 8);
+      targetRotation.current.x = normBeta * (Math.PI / 8);
     };
 
     // Request iOS 13+ permission & attach listeners
@@ -372,8 +372,8 @@ const InteractiveGyroGroup = ({ children }) => {
   useFrame(() => {
     if (groupRef.current) {
       // Smooth lerp rotation without jumping or glitching
-      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.06;
-      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.06;
+      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.08;
+      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.08;
     }
   });
 
@@ -407,8 +407,8 @@ const starCircleTexture = (() => {
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
   gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
-  gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.2)');
+  gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.95)');
+  gradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.4)');
   gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
   ctx.fillStyle = gradient;
   ctx.fillRect(0, 0, 64, 64);
@@ -417,7 +417,7 @@ const starCircleTexture = (() => {
 
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 1000 : 800;
+  const count = isMobile ? 1800 : 1000;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -454,10 +454,10 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 0.45 : 0.75}
+        size={isMobile ? 2.2 : 1.2}
         color="#ffffff"
         transparent={true}
-        opacity={isMobile ? 0.9 : 0.75}
+        opacity={1.0}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
@@ -477,7 +477,8 @@ export default function SpaceScene() {
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
           dpr={canvasDpr} 
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", stencil: false, failIfMajorPerformanceCaveat: false }}
+          performance={{ min: 0.5 }}
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", stencil: false, depth: true, precision: "highp" }}
           onCreated={({ gl }) => {
             if (gl.domElement) {
               gl.domElement.addEventListener('webglcontextlost', (e) => {
@@ -488,19 +489,19 @@ export default function SpaceScene() {
           }}
         >
           {/* Cinematic Solar Lighting Rig */}
-          <ambientLight intensity={isMobile ? 0.5 : 0.3} />
-          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 6.5 : 6.0} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={2.5} color="#88aaff" />
+          <ambientLight intensity={isMobile ? 0.6 : 0.3} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 7.0 : 6.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={3.0} color="#88aaff" />
           
           <InteractiveGyroGroup>
             <Stars 
               radius={100} 
               depth={60} 
-              count={isMobile ? 4500 : 6000} 
-              factor={isMobile ? 2.5 : 3.0} 
+              count={isMobile ? 8500 : 6000} 
+              factor={isMobile ? 6.5 : 4.0} 
               saturation={0} 
               fade 
-              speed={isMobile ? 1.5 : 2} 
+              speed={isMobile ? 2.0 : 2} 
             />
             <BrightShimmerStars isMobile={isMobile} />
           </InteractiveGyroGroup>
