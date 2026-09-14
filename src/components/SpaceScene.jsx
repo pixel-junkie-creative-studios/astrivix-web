@@ -222,10 +222,10 @@ const Comet = () => {
 const Planets = ({ isMobile }) => {
   const groupRef = useRef();
 
-  // Clean, elegant planet positions framing the mobile screen perfectly
-  const earthPos = isMobile ? [-3.0, 5.2, -28] : [-12, 2, -24];
-  const moonPos = isMobile ? [-0.6, -1.2, -20] : [-4, -3, -18];
-  const marsPos = isMobile ? [3.2, -5.5, -28] : [11, -1, -24];
+  // Clean, elegant planet positions framing the mobile screen perfectly without overlapping text
+  const earthPos = isMobile ? [-3.2, 7.8, -28] : [-12, 2, -24];
+  const moonPos = isMobile ? [-3.8, -3.2, -22] : [-4, -3, -18];
+  const marsPos = isMobile ? [3.5, -7.2, -28] : [11, -1, -24];
 
   return (
     <group ref={groupRef}>

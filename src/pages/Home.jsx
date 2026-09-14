@@ -47,26 +47,26 @@ export default function Home() {
               stagger={100}
               pointerRepel={150}
               repelRadius={400}
-              fontSize="clamp(3.8rem, 16vw, 12rem)"
+              fontSize="clamp(3.2rem, 15vw, 12rem)"
               fontWeight={900}
             />
           </div>
           
-          {/* Subtitle Row - Tight side-by-side alignment directly under ASTRIVIX */}
-          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-4 sm:px-12 md:px-16 -mt-6 sm:-mt-8 md:-mt-20 z-20">
+          {/* Subtitle Row - Clean side-by-side alignment directly under ASTRIVIX */}
+          <div className="flex flex-row items-center justify-between w-full max-w-4xl px-6 sm:px-12 md:px-16 mt-2 sm:-mt-8 md:-mt-20 z-20">
             {/* Left Side: CORP + Dot */}
             <div className="flex items-center space-x-1">
-              <h2 className="text-xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-white drop-shadow-md">
-                CORP<span className="text-white text-2xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
+              <h2 className="text-2xl sm:text-4xl md:text-6xl font-light uppercase tracking-widest text-white drop-shadow-md">
+                CORP<span className="text-white text-3xl sm:text-5xl md:text-7xl leading-none font-bold">.</span>
               </h2>
             </div>
 
             {/* Right Side: BUSINESS CONSULTANTS */}
             <div className="flex flex-col items-end text-right">
-              <h3 className="text-[10px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
+              <h3 className="text-[11px] sm:text-sm md:text-2xl font-medium uppercase tracking-[0.2em] text-white/90 leading-tight drop-shadow-md">
                 BUSINESS
               </h3>
-              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-white leading-tight drop-shadow-md">
+              <h3 className="text-xs sm:text-xl md:text-2xl font-medium uppercase tracking-[0.2em] text-white/90 leading-tight drop-shadow-md">
                 CONSULTANTS
               </h3>
             </div>
