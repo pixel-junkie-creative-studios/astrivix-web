@@ -1,4 +1,5 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { useLenis } from 'lenis/react';
 import './StaggeredMenu.css';
@@ -7,11 +8,12 @@ export const StaggeredMenu = ({
   position = 'right',
   colors = ['#0A0A10', '#12121A', '#050508'],
   items = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '#hero' },
-    { label: 'Work', ariaLabel: 'View our work', link: '#clients' },
+    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
     { label: 'Services', ariaLabel: 'View our services', link: '#services' },
+    { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
+    { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
     { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
-    { label: 'Careers', ariaLabel: 'View careers', link: '/careers' },
+    { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
   ],
   socialItems = [],
@@ -29,6 +31,8 @@ export const StaggeredMenu = ({
   onMenuClose
 }) => {
   const [open, setOpen] = useState(false);
+  const [activeCenterTab, setActiveCenterTab] = useState(0);
+  const [hoveredTab, setHoveredTab] = useState(null);
   const openRef = useRef(false);
   const panelRef = useRef(null);
   const preLayersRef = useRef(null);
@@ -418,29 +422,34 @@ export const StaggeredMenu = ({
           </span>
         </a>
 
-        {/* Center Desktop Navigation Tabs: ABOUT, SERVICES, CONTACT */}
+        {/* Center Desktop Navigation Tabs: HOME, ABOUT, SERVICES */}
         <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative mx-2">
-          <a
-            href="#about"
-            onClick={(e) => handleItemClick(e, '#about')}
-            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
-          >
-            ABOUT
-          </a>
-          <a
-            href="#services"
-            onClick={(e) => handleItemClick(e, '#services')}
-            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
-          >
-            SERVICES
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => handleItemClick(e, '#contact')}
-            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
-          >
-            CONTACT
-          </a>
+          {[
+            { name: 'HOME', link: '#home' },
+            { name: 'ABOUT', link: '#about' },
+            { name: 'SERVICES', link: '#services' }
+          ].map((tab, idx) => (
+            <a
+              key={tab.name}
+              href={tab.link}
+              onClick={(e) => {
+                setActiveCenterTab(idx);
+                handleItemClick(e, tab.link);
+              }}
+              onMouseEnter={() => setHoveredTab(idx)}
+              onMouseLeave={() => setHoveredTab(null)}
+              className="relative px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors z-10"
+            >
+              {(activeCenterTab === idx || hoveredTab === idx) && (
+                <motion.span
+                  layoutId="navbarCenterActiveTab"
+                  className="absolute inset-0 bg-white/15 rounded-full border border-white/25 shadow-md pointer-events-none"
+                  transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                />
+              )}
+              <span className="relative z-10">{tab.name}</span>
+            </a>
+          ))}
         </div>
 
         {/* Right Controls Area: CONTACT Button + MENU Toggle Button */}
