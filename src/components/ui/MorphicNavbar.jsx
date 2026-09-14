@@ -3,7 +3,13 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 import StaggeredMenu from './StaggeredMenu';
 
-export const MorphicNavbar = ({ navItems }) => {
+export const MorphicNavbar = ({
+  navItems = [
+    { name: 'ABOUT', link: '#about' },
+    { name: 'SERVICES', link: '#services' },
+    { name: 'CONTACT', link: '#contact' }
+  ]
+}) => {
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
@@ -40,25 +46,18 @@ export const MorphicNavbar = ({ navItems }) => {
   };
 
   const staggeredItems = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '#hero' },
+    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
     { label: 'Services', ariaLabel: 'View our services', link: '#services' },
-    { label: 'Portfolio', ariaLabel: 'View portfolio showcase', link: '/portfolio' },
-    { label: 'Financial', ariaLabel: 'Financial consulting', link: '/financial-consulting' },
+    { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
+    { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
     { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
     { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
   ];
 
-  const staggeredSocials = [
-    { label: 'WhatsApp', link: 'https://wa.me/917736387794' },
-    { label: 'Email', link: 'mailto:business@astrivix.in' },
-    { label: 'GitHub', link: 'https://github.com/pixel-junkie-creative-studios/astrivix-web' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' }
-  ];
-
   return (
     <>
-      {/* Desktop Glass Morphic Navbar */}
+      {/* Desktop Glass Morphic Navbar Pill */}
       <motion.div
         initial={{ opacity: 1, y: -100 }}
         animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
@@ -80,7 +79,7 @@ export const MorphicNavbar = ({ navItems }) => {
           </span>
         </a>
 
-        {/* Morphic Desktop Nav Tabs */}
+        {/* Morphic Desktop Nav Tabs: ABOUT, SERVICES, CONTACT */}
         <div className="flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative">
           {navItems.map((item, idx) => (
             <a
@@ -105,7 +104,7 @@ export const MorphicNavbar = ({ navItems }) => {
         <div className="flex items-center gap-3 pr-1">
           <a
             href="#contact"
-            onClick={(e) => handleScroll(e, '#contact', 4)}
+            onClick={(e) => handleScroll(e, '#contact', 2)}
             className="skeuo-button text-black text-[10px] font-mono font-black tracking-widest uppercase px-5 py-2.5 rounded-full shadow-lg active:scale-95 transition-transform"
           >
             CONTACT →
@@ -113,23 +112,21 @@ export const MorphicNavbar = ({ navItems }) => {
         </div>
       </motion.div>
 
-      {/* Mobile & Small Screen StaggeredMenu Integration (React Bits Component) */}
-      <div className="md:hidden">
-        <StaggeredMenu
-          position="right"
-          colors={['#0A0A10', '#12121A', '#050508']}
-          accentColor="#10B981"
-          menuButtonColor="#ffffff"
-          openMenuButtonColor="#10B981"
-          changeMenuColorOnOpen={true}
-          displaySocials={true}
-          displayItemNumbering={true}
-          logoUrl="/assets/astreivix_nav_bar.mp4"
-          items={staggeredItems}
-          socialItems={staggeredSocials}
-          isFixed={true}
-        />
-      </div>
+      {/* Global StaggeredMenu (React Bits Drawer - available on all screens, no socials) */}
+      <StaggeredMenu
+        position="right"
+        colors={['#0A0A10', '#12121A', '#050508']}
+        accentColor="#10B981"
+        menuButtonColor="#ffffff"
+        openMenuButtonColor="#10B981"
+        changeMenuColorOnOpen={true}
+        displaySocials={false}
+        displayItemNumbering={true}
+        logoUrl="/assets/astreivix_nav_bar.mp4"
+        items={staggeredItems}
+        socialItems={[]}
+        isFixed={true}
+      />
 
       {/* Fixed Bottom Glass Pill Dock for Mobile */}
       <motion.div

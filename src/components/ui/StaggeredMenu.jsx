@@ -14,13 +14,8 @@ export const StaggeredMenu = ({
     { label: 'Careers', ariaLabel: 'View careers', link: '/careers' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
   ],
-  socialItems = [
-    { label: 'GitHub', link: 'https://github.com/pixel-junkie-creative-studios/astrivix-web' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' },
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'Instagram', link: 'https://instagram.com' }
-  ],
-  displaySocials = true,
+  socialItems = [],
+  displaySocials = false,
   displayItemNumbering = true,
   className,
   logoUrl = '/assets/astreivix_nav_bar.mp4',
