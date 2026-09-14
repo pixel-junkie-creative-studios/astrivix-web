@@ -322,6 +322,56 @@ class WebGLErrorBoundary extends React.Component {
   }
 }
 
+const BrightShimmerStars = ({ isMobile }) => {
+  const pointsRef = useRef();
+  const count = isMobile ? 800 : 400;
+
+  const [positions] = React.useMemo(() => {
+    const posArr = new Float32Array(count * 3);
+
+    for (let i = 0; i < count; i++) {
+      const radius = 30 + Math.random() * 80;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+
+      posArr[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      posArr[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      posArr[i * 3 + 2] = radius * Math.cos(phi);
+    }
+
+    return [posArr];
+  }, [count]);
+
+  useFrame((state, delta) => {
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y += delta * 0.04;
+      pointsRef.current.rotation.x += delta * 0.02;
+    }
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={count}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={isMobile ? 2.8 : 1.8}
+        color="#ffffff"
+        transparent={true}
+        opacity={isMobile ? 0.95 : 0.75}
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        sizeAttenuation={true}
+      />
+    </points>
+  );
+};
+
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
@@ -336,12 +386,21 @@ export default function SpaceScene() {
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance", precision: "highp", stencil: false }}
         >
           {/* Cinematic High-Contrast Solar Lighting Rig */}
-          <ambientLight intensity={0.3} />
-          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 5.5 : 6.0} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={2.0} color="#88aaff" />
+          <ambientLight intensity={isMobile ? 0.5 : 0.3} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 6.5 : 6.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={2.5} color="#88aaff" />
           
           <InteractiveGyroGroup>
-            <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
+            <Stars 
+              radius={100} 
+              depth={60} 
+              count={isMobile ? 7000 : 4000} 
+              factor={isMobile ? 8.5 : 4.5} 
+              saturation={0} 
+              fade 
+              speed={isMobile ? 3 : 2} 
+            />
+            <BrightShimmerStars isMobile={isMobile} />
             <React.Suspense fallback={null}>
               <Planets isMobile={isMobile} />
             </React.Suspense>
