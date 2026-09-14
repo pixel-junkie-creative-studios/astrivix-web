@@ -33,6 +33,19 @@ function App() {
     }
     window.scrollTo(0, 0);
 
+    // Disable GSAP lag smoothing for instant frame synchronization
+    gsap.ticker.lagSmoothing(0);
+
+    const lenis = lenisRef.current?.lenis;
+    let updateGsapTicker;
+    if (lenis) {
+      lenis.on('scroll', ScrollTrigger.update);
+      updateGsapTicker = (time) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(updateGsapTicker);
+    }
+
     const timer = setTimeout(() => {
       window.scrollTo(0, 0);
       if (lenisRef.current?.lenis) {
@@ -40,7 +53,11 @@ function App() {
       }
     }, 100);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      if (updateGsapTicker) gsap.ticker.remove(updateGsapTicker);
+      if (lenis) lenis.off('scroll', ScrollTrigger.update);
+    };
   }, []);
 
   return (
@@ -48,14 +65,15 @@ function App() {
       root
       ref={lenisRef}
       options={{
-        lerp: 0.1,
-        duration: 1.2,
+        lerp: 0.12,
+        duration: 0.8,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 1.5,
+        wheelMultiplier: 1.1,
+        touchMultiplier: 1.8,
         syncTouch: true,
         autoResize: true,
+        allowNestedScroll: true,
       }}
     >
       <BrowserRouter>

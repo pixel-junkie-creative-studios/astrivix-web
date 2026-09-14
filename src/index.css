@@ -169,4 +169,17 @@ input[type="number"] {
   appearance: textfield;
 }
 
+/* ULTRA-PERFORMANCE GPU COMPOSITING & HYPER-FPS RENDER OPTIMIZATIONS */
+.gpu-layer, canvas, video, img {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
 
