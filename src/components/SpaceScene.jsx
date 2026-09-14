@@ -36,12 +36,14 @@ const DetailedEarth = ({ position, isMobile }) => {
     if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.35;
   });
 
-  const segments = isMobile ? 48 : 64;
+  const radius = isMobile ? 2.2 : 4.8;
+  const cloudRadius = isMobile ? 2.23 : 4.85;
+  const segments = 64;
 
   return (
     <group position={position} rotation={[0.3, 0, 0.15]}>
       {/* High-Resolution Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[4.8, segments, segments]}>
+      <Sphere ref={earthRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
@@ -53,7 +55,7 @@ const DetailedEarth = ({ position, isMobile }) => {
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[4.85, segments, segments]}>
+      <Sphere ref={cloudsRef} args={[cloudRadius, segments, segments]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
@@ -74,11 +76,12 @@ const DetailedMoon = ({ position, isMobile }) => {
     if (moonRef.current) moonRef.current.rotation.y += delta * 0.3;
   });
 
-  const segments = isMobile ? 32 : 48;
+  const radius = isMobile ? 0.8 : 1.8;
+  const segments = 48;
 
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[1.8, segments, segments]}>
+      <Sphere ref={moonRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
@@ -99,12 +102,13 @@ const RealisticMars = ({ position, isMobile }) => {
     if (marsRef.current) marsRef.current.rotation.y += delta * 0.25;
   });
 
-  const segments = isMobile ? 48 : 64;
+  const radius = isMobile ? 1.7 : 3.8;
+  const segments = 64;
 
   return (
     <group position={position} rotation={[-0.2, 0, 0.2]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[3.8, segments, segments]}>
+      <Sphere ref={marsRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
@@ -218,10 +222,10 @@ const Comet = () => {
 const Planets = ({ isMobile }) => {
   const groupRef = useRef();
 
-  // Position planets cleanly in view: Earth top-left, Moon near Earth mid-left, Red Planet (Mars) right
-  const earthPos = isMobile ? [-5, 4, -22] : [-12, 2, -24];
-  const moonPos = isMobile ? [-1, -1, -16] : [-4, -3, -18];
-  const marsPos = isMobile ? [5, -4, -22] : [11, -1, -24];
+  // Clean, elegant planet positions framing the mobile screen perfectly
+  const earthPos = isMobile ? [-3.0, 5.2, -28] : [-12, 2, -24];
+  const moonPos = isMobile ? [-0.6, -1.2, -20] : [-4, -3, -18];
+  const marsPos = isMobile ? [3.2, -5.5, -28] : [11, -1, -24];
 
   return (
     <group ref={groupRef}>
@@ -232,7 +236,7 @@ const Planets = ({ isMobile }) => {
       
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 6 : 9} speed={0.4} yOffset={isMobile ? 3 : 4} />
+        <HighResSatellite orbitRadius={isMobile ? 3.5 : 9} speed={0.4} yOffset={isMobile ? 1.5 : 4} />
       </group>
     </group>
   );
@@ -305,15 +309,31 @@ class WebGLErrorBoundary extends React.Component {
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
+  const dpr = typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio || 2, 2)] : [1, 2];
 
   return (
     <WebGLErrorBoundary>
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
-          camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
-          dpr={isMobile ? 1 : [1, 1.5]} 
-          gl={{ antialias: false, powerPreference: "high-performance" }}
+          camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
+          dpr={dpr} 
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", precision: "highp", stencil: false }}
         >
+          {/* Cinematic High-Contrast Solar Lighting Rig */}
+          <ambientLight intensity={0.3} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 5.5 : 6.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={2.0} color="#88aaff" />
+          
+          <InteractiveStars />
+          <React.Suspense fallback={null}>
+            <Planets isMobile={isMobile} />
+          </React.Suspense>
+          <CameraController scrollYProgress={scrollYProgress} />
+        </Canvas>
+      </div>
+    </WebGLErrorBoundary>
+  );
+}
           {/* Cinematic High-Contrast Solar Lighting Rig */}
           <ambientLight intensity={0.2} />
           <directionalLight position={[180, 120, 80]} intensity={isMobile ? 4.5 : 6.0} color="#ffffff" castShadow={false} />
