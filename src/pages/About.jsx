@@ -53,12 +53,12 @@ function Counter100() {
             />
           </div>
 
-          {/* Simple, High-Impact Elegant Wording Below 100% */}
+          {/* High-Impact Clean Wording Below 100% */}
           <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.25em] text-white/90 uppercase text-center mt-2 skeuo-engraved">
-            CREATIVE TECH PRECISION
+            ENGINEERING PRECISION
           </span>
           <span className="text-[10px] font-mono tracking-[0.2em] text-emerald-400/80 uppercase text-center mt-1">
-            GUARANTEED EXCELLENCE
+            CLIENT SATISFACTION
           </span>
 
         </div>
