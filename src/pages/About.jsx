@@ -3,205 +3,86 @@ import { motion, useInView, useSpring, useTransform, animate } from 'framer-moti
 
 function Counter100() {
   const [displayCount, setDisplayCount] = useState(0);
-  const [isCompleted, setIsCompleted] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
-  const radius = 54;
-  const circumference = 2 * Math.PI * radius;
-
   const countValue = useSpring(0, {
-    stiffness: 35,
-    damping: 14,
+    stiffness: 40,
+    damping: 18,
     restDelta: 0.001
   });
-
-  const strokeDashoffset = useTransform(countValue, [0, 100], [circumference, 0]);
 
   useEffect(() => {
     if (isInView) {
       countValue.set(100);
       const unsubscribe = countValue.on("change", (latest) => {
-        const val = Math.floor(latest);
-        setDisplayCount(val);
-        if (val >= 100 && !isCompleted) {
-          setIsCompleted(true);
-        }
+        setDisplayCount(Math.floor(latest));
       });
       return () => unsubscribe();
     }
-  }, [isInView, countValue, isCompleted]);
-
-  // Traveling particle calculations
-  const angle = (displayCount / 100) * 360 - 90;
-  const angleRad = (angle * Math.PI) / 180;
-  const dotX = 64 + radius * Math.cos(angleRad);
-  const dotY = 64 + radius * Math.sin(angleRad);
-
-  // 24 mechanical perimeter ticks
-  const ticks = Array.from({ length: 24 }, (_, i) => {
-    const tickAngle = (i / 24) * 360 - 90;
-    const rad = (tickAngle * Math.PI) / 180;
-    const innerR = 45;
-    const outerR = 49;
-    const active = displayCount >= Math.round(((i + 1) / 24) * 100);
-    return {
-      x1: 64 + innerR * Math.cos(rad),
-      y1: 64 + innerR * Math.sin(rad),
-      x2: 64 + outerR * Math.cos(rad),
-      y2: 64 + outerR * Math.sin(rad),
-      active
-    };
-  });
+  }, [isInView, countValue]);
 
   return (
-    <div ref={ref} className="relative flex flex-col items-center justify-center my-2 select-none w-full max-w-sm group/hud">
-      {/* Outer Obsidian Glass HUD Capsule */}
-      <div className="relative w-full bg-[#07070E]/90 backdrop-blur-xl border border-white/15 rounded-3xl p-6 flex flex-col items-center shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden">
+    <div ref={ref} className="relative flex flex-col items-center justify-center my-4 select-none w-full max-w-md">
+      {/* Sleek Minimalist Luxury Bento Card */}
+      <div className="relative w-full bg-[#0E0E16] backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col shadow-2xl overflow-hidden group">
         
-        {/* Corner HUD Bracket Accents */}
-        <span className="absolute top-2.5 left-3 text-[9px] font-mono text-emerald-400/60 select-none">+</span>
-        <span className="absolute top-2.5 right-3 text-[9px] font-mono text-emerald-400/60 select-none">+</span>
-        <span className="absolute bottom-2.5 left-3 text-[9px] font-mono text-emerald-400/60 select-none">+</span>
-        <span className="absolute bottom-2.5 right-3 text-[9px] font-mono text-emerald-400/60 select-none">+</span>
+        {/* Subtle Background Grid Texture */}
+        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
 
-        {/* Header Telemetry Status Bar */}
-        <div className="flex items-center justify-between w-full mb-4 px-1 border-b border-white/10 pb-2">
+        {/* Card Header Tag */}
+        <div className="flex items-center justify-between w-full mb-8 relative z-10">
           <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span className="w-2 h-2 rounded-full bg-emerald-400 absolute" />
-            <span className="text-[9px] font-mono tracking-[0.2em] text-emerald-300 font-bold uppercase">
-              SYSTEM OPTIMAL
+            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="text-xs font-mono tracking-widest text-white/70 font-semibold uppercase">
+              PERFORMANCE ARCHITECTURE
             </span>
           </div>
-          <span className="text-[9px] font-mono tracking-widest text-white/50 font-bold">
-            100/100 SCORE
+          <span className="text-[10px] font-mono tracking-widest text-white/40 uppercase">
+            AUDIT VERIFIED
           </span>
         </div>
 
-        {/* SVG Radial Gauge */}
-        <div className="relative w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center my-2">
-          {/* Ambient Glow Backdrop */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/30 via-cyan-500/20 to-purple-600/30 blur-3xl group-hover/hud:scale-125 transition-transform duration-700 pointer-events-none" />
-          
-          <svg className="w-full h-full transform -rotate-90 relative z-10" viewBox="0 0 128 128">
-            <defs>
-              <linearGradient id="godTierGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#10B981" />
-                <stop offset="35%" stopColor="#06B6D4" />
-                <stop offset="70%" stopColor="#A855F7" />
-                <stop offset="100%" stopColor="#3B82F6" />
-              </linearGradient>
-              <filter id="godGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="4.5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-            </defs>
+        {/* Massive Minimalist Numeric Counter */}
+        <div className="flex items-baseline space-x-1 relative z-10 my-2">
+          <span className="text-6xl sm:text-7xl font-bold font-mono tracking-tighter text-white">
+            {displayCount}
+          </span>
+          <span className="text-3xl font-mono font-light text-emerald-400">
+            %
+          </span>
+        </div>
 
-            {/* Perimeter Mechanical Micro-Ticks */}
-            {ticks.map((t, idx) => (
-              <line
-                key={idx}
-                x1={t.x1}
-                y1={t.y1}
-                x2={t.x2}
-                y2={t.y2}
-                stroke={t.active ? '#10B981' : 'rgba(255,255,255,0.12)'}
-                strokeWidth={t.active ? '1.8' : '1'}
-                className="transition-colors duration-300"
-              />
-            ))}
+        <p className="text-xs text-white/60 font-mono tracking-wide uppercase mt-1 mb-6 relative z-10">
+          LIGHTHOUSE PERFORMANCE & OPTIMIZATION GUARANTEE
+        </p>
 
-            {/* Base Background Track Circle */}
-            <circle
-              cx="64"
-              cy="64"
-              r={radius}
-              className="stroke-white/10"
-              strokeWidth="5.5"
-              fill="transparent"
-            />
+        {/* Minimalist Precision Progress Bar */}
+        <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden relative z-10 mb-6">
+          <motion.div 
+            className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-white rounded-full"
+            initial={{ width: "0%" }}
+            animate={{ width: `${displayCount}%` }}
+            transition={{ duration: 0.1, ease: "linear" }}
+          />
+        </div>
 
-            {/* Animated Liquid Progress Circle */}
-            <motion.circle
-              cx="64"
-              cy="64"
-              r={radius}
-              stroke="url(#godTierGradient)"
-              strokeWidth="7"
-              strokeLinecap="round"
-              fill="transparent"
-              strokeDasharray={circumference}
-              style={{ 
-                strokeDashoffset,
-                filter: "url(#godGlow)"
-              }}
-            />
-
-            {/* Traveling Orbital Light Particle */}
-            <circle
-              cx={dotX}
-              cy={dotY}
-              r="4.5"
-              fill="#6EE7B7"
-              className="transform rotate-90 origin-center"
-              style={{ filter: "drop-shadow(0 0 10px #10B981) drop-shadow(0 0 4px #6EE7B7)" }}
-            />
-          </svg>
-
-          {/* Center Digital Counter display */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-20">
-            <div className="flex items-baseline justify-center">
-              <span className="text-4xl sm:text-5xl font-black font-mono tracking-tighter bg-gradient-to-br from-white via-emerald-100 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(16,185,129,0.5)]">
-                {displayCount}
-              </span>
-              <span className="text-xl font-mono font-black text-emerald-400 ml-0.5 animate-pulse">
-                %
-              </span>
-            </div>
-
-            <span className="text-[9px] font-mono tracking-[0.25em] text-white/60 uppercase font-bold mt-1">
-              PERFECT SCORE
-            </span>
-
-            {/* Shockwave Aura Flash on 100% Completion */}
-            {isCompleted && (
-              <>
-                <motion.div
-                  initial={{ scale: 0.7, opacity: 0.9 }}
-                  animate={{ scale: 1.6, opacity: 0 }}
-                  transition={{ duration: 1.0, ease: "easeOut" }}
-                  className="absolute inset-0 rounded-full border-2 border-emerald-400/80 pointer-events-none"
-                />
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0.6 }}
-                  animate={{ scale: 1.85, opacity: 0 }}
-                  transition={{ duration: 1.3, ease: "easeOut", delay: 0.1 }}
-                  className="absolute inset-0 rounded-full border border-cyan-400/60 pointer-events-none"
-                />
-              </>
-            )}
+        {/* Clean Metrics Row */}
+        <div className="grid grid-cols-3 gap-3 w-full relative z-10 pt-4 border-t border-white/10 text-center font-mono">
+          <div>
+            <div className="text-[9px] text-white/40 uppercase tracking-widest">PERFORMANCE</div>
+            <div className="text-xs font-bold text-white mt-1">100 / 100</div>
+          </div>
+          <div>
+            <div className="text-[9px] text-white/40 uppercase tracking-widest">STRUCTURED SEO</div>
+            <div className="text-xs font-bold text-emerald-400 mt-1">100 / 100</div>
+          </div>
+          <div>
+            <div className="text-[9px] text-white/40 uppercase tracking-widest">WEB Vitals</div>
+            <div className="text-xs font-bold text-white mt-1">PASS</div>
           </div>
         </div>
 
-        {/* Sub-Metrics Telemetry Grid */}
-        <div className="grid grid-cols-3 gap-2 w-full mt-4 pt-3 border-t border-white/10 text-center">
-          <div className="flex flex-col items-center bg-white/5 rounded-xl p-2 border border-white/10">
-            <span className="text-[8px] font-mono tracking-wider text-white/50 uppercase">PERF</span>
-            <span className="text-xs font-mono font-bold text-emerald-400">100/100</span>
-          </div>
-          <div className="flex flex-col items-center bg-white/5 rounded-xl p-2 border border-white/10">
-            <span className="text-[8px] font-mono tracking-wider text-white/50 uppercase">SEO</span>
-            <span className="text-xs font-mono font-bold text-cyan-400">100/100</span>
-          </div>
-          <div className="flex flex-col items-center bg-white/5 rounded-xl p-2 border border-white/10">
-            <span className="text-[8px] font-mono tracking-wider text-white/50 uppercase">VITAL</span>
-            <span className="text-xs font-mono font-bold text-purple-400">100/100</span>
-          </div>
-        </div>
       </div>
     </div>
   );
