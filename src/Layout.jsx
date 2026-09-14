@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
-import { MorphicNavbar } from './components/ui/MorphicNavbar';
+import StaggeredMenu from './components/ui/StaggeredMenu';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -19,12 +19,21 @@ export default function Layout() {
     window.scrollTo(0, 0);
   }, []);
 
-  const navItems = [
-    { name: "Services", link: "#services" },
-    { name: "Financial Consulting", link: "/financial-consulting" },
-    { name: "Portfolio", link: "/portfolio" },
-    { name: "About", link: "#about" },
-    { name: "Careers", link: "#careers" },
+  const menuItems = [
+    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
+    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
+    { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
+    { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
+    { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
+    { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+  ];
+
+  const socialItems = [
+    { label: 'GitHub', link: 'https://github.com/pixel-junkie-creative-studios/astrivix-web' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' },
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'Instagram', link: 'https://instagram.com' }
   ];
 
   return (
@@ -35,8 +44,18 @@ export default function Layout() {
       <SpaceScene />
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,120,120,0.1),rgba(255,255,255,0))]" />
 
-      {/* KOKONUT UI MORPHIC NAVBAR */}
-      <MorphicNavbar navItems={navItems} />
+      {/* FLOATING OVAL GLASSMORPHISM HEADER & STAGGERED MENU WITH (+) TO (X) GSAP ANIMATED TOGGLE */}
+      <StaggeredMenu
+        position="right"
+        items={menuItems}
+        socialItems={socialItems}
+        displaySocials={true}
+        displayItemNumbering={true}
+        menuButtonColor="#ffffff"
+        openMenuButtonColor="#10B981"
+        accentColor="#10B981"
+        changeMenuColorOnOpen={true}
+      />
 
       <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
