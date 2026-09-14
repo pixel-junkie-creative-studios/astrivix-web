@@ -257,6 +257,11 @@ const InteractiveGyroGroup = ({ children }) => {
       targetRotation.current.y = mouseX * (Math.PI / 16);
     };
 
+    // Auto-center baseline calibration when user touches screen
+    const calibrateCenter = () => {
+      baselineGyro.current = null;
+    };
+
     // 2. Gyroscope / Device Orientation (Mobile Phone Game Gyro)
     const handleOrientation = (e) => {
       if (e.gamma === null || e.beta === null) return;
@@ -279,39 +284,35 @@ const InteractiveGyroGroup = ({ children }) => {
         rawBeta = -rawBeta;
       }
 
-      // Initialize initial baseline holding angle on first event
+      // Initialize initial baseline holding angle ONCE on first event
       if (!baselineGyro.current) {
         baselineGyro.current = {
           gamma: rawGamma,
-          beta: rawBeta || 40
+          beta: rawBeta
         };
       }
 
-      // Slowly adapt baseline to avoid drift over time
-      baselineGyro.current.gamma += (rawGamma - baselineGyro.current.gamma) * 0.005;
-      baselineGyro.current.beta += (rawBeta - baselineGyro.current.beta) * 0.005;
+      // Calculate exact relative delta tilt from calibrated center
+      const deltaGamma = Math.max(-45, Math.min(45, rawGamma - baselineGyro.current.gamma));
+      const deltaBeta = Math.max(-45, Math.min(45, rawBeta - baselineGyro.current.beta));
 
-      // Calculate relative delta tilt from baseline
-      const deltaGamma = Math.max(-40, Math.min(40, rawGamma - baselineGyro.current.gamma));
-      const deltaBeta = Math.max(-40, Math.min(40, rawBeta - baselineGyro.current.beta));
+      // Low-pass exponential smoothing filter for 120 FPS zero-jitter tracking
+      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.15;
+      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.15;
 
-      // Low-pass exponential smoothing filter to eliminate sensor jitter ("glithvin")
-      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.12;
-      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.12;
-
-      // Normalized target values (-1 to +1)
       const normGamma = smoothedGyro.current.gamma / 30;
       const normBeta = smoothedGyro.current.beta / 30;
 
       // True 3D Game Gyro Motion:
-      // Tilting phone right (normGamma > 0) -> rotates scene right (+Y rotation, synced with mouse right)
-      // Tilting phone down (normBeta > 0) -> pitches scene down (-X rotation, synced with mouse down)
-      targetRotation.current.x = -normBeta * (Math.PI / 16);
+      // Tilting top of phone DOWN (beta > baseline) -> pitches view down (+normBeta)
+      // Tilting right side DOWN (gamma > baseline) -> rotates view right (+normGamma)
+      targetRotation.current.x = normBeta * (Math.PI / 16);
       targetRotation.current.y = normGamma * (Math.PI / 16);
     };
 
     // iOS 13+ permission request on user gesture
-    const requestIOSPermission = () => {
+    const handleTouchStart = () => {
+      calibrateCenter();
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
           .then(permissionState => {
@@ -323,28 +324,24 @@ const InteractiveGyroGroup = ({ children }) => {
       }
     };
 
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      window.addEventListener('touchstart', requestIOSPermission, { once: true, passive: true });
-      window.addEventListener('pointerdown', requestIOSPermission, { once: true, passive: true });
-    }
-
-    // Attach standard deviceorientation listener for Android & standard mobile browsers
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('pointerdown', calibrateCenter, { passive: true });
     window.addEventListener('deviceorientation', handleOrientation, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('deviceorientation', handleOrientation);
-      window.removeEventListener('touchstart', requestIOSPermission);
-      window.removeEventListener('pointerdown', requestIOSPermission);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('pointerdown', calibrateCenter);
     };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
       // Hardware-accelerated 120Hz/240Hz lerp smooth gyro rotation
-      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.08;
-      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.08;
+      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.10;
+      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.10;
     }
   });
 
@@ -388,7 +385,7 @@ const starCircleTexture = (() => {
 
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 600 : 250;
+  const count = isMobile ? 800 : 400;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -425,10 +422,10 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 1.5 : 1.0}
+        size={isMobile ? 0.6 : 0.8}
         color="#ffffff"
         transparent={true}
-        opacity={isMobile ? 0.9 : 0.6}
+        opacity={isMobile ? 0.85 : 0.65}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
@@ -459,11 +456,11 @@ export default function SpaceScene() {
             <Stars 
               radius={100} 
               depth={60} 
-              count={isMobile ? 7000 : 4000} 
-              factor={isMobile ? 8.5 : 4.5} 
+              count={isMobile ? 9000 : 6000} 
+              factor={isMobile ? 2.2 : 3.0} 
               saturation={0} 
               fade 
-              speed={isMobile ? 3 : 2} 
+              speed={isMobile ? 2.5 : 2} 
             />
             <BrightShimmerStars isMobile={isMobile} />
             <React.Suspense fallback={null}>

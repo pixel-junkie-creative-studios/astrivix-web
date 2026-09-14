@@ -127,7 +127,8 @@ const ParticleText = ({
     };
 
     const drawParticle = particle => {
-      const radius = Math.max(0.75, particle.size / 2);
+      const isMobile = width < 768;
+      const radius = isMobile ? Math.max(0.6, particle.size / 2.5) : Math.max(0.75, particle.size / 2);
       ctx.fillStyle = particle.color;
       ctx.beginPath();
       ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
@@ -271,14 +272,15 @@ const ParticleText = ({
       offCtx.fillStyle = '#ffffff';
       offCtx.fillText(content, padding - left, padding + ascent);
 
+      const isMobile = width < 768 || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches);
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets = [];
-      const step = Math.max(1, Math.floor(density / 2));
+      const step = isMobile ? Math.max(3, Math.floor(density * 1.4)) : Math.max(2, Math.floor(density));
 
       for (let y = 0; y < offscreen.height; y += step) {
         for (let x = 0; x < offscreen.width; x += step) {
           const alpha = imageData.data[(y * offscreen.width + x) * 4 + 3];
-          if (alpha > 30) {
+          if (alpha > 45) {
             targets.push({
               x: width / 2 - offscreen.width / 2 + x,
               y: height / 2 - offscreen.height / 2 + y,
@@ -288,7 +290,10 @@ const ParticleText = ({
         }
       }
 
-      const maxParticles = Math.max(2500, Math.min(4500, Math.floor((width * height) / 40)));
+      const maxParticles = isMobile 
+        ? Math.min(900, Math.max(400, Math.floor((width * height) / 380)))
+        : Math.max(1800, Math.min(3500, Math.floor((width * height) / 120)));
+
       const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
       const baseRgb = hexToRgb(color);
       const highlightRgb = hexToRgb(highlightColor);
