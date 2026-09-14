@@ -392,7 +392,8 @@ export const StaggeredMenu = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
+        {/* Brand Logo */}
+        <a href="#" onClick={(e) => handleItemClick(e, '#home')} className="sm-logo" aria-label="Logo">
           {logoUrl && logoUrl.endsWith('.mp4') ? (
             <video 
               src={logoUrl} 
@@ -412,33 +413,70 @@ export const StaggeredMenu = ({
               height={32}
             />
           )}
-          <span className="hidden sm:inline font-mono font-black text-xs tracking-widest text-white uppercase ml-1">
+          <span className="font-mono font-black text-xs tracking-widest text-white uppercase ml-1">
             ASTRIVIX
           </span>
+        </a>
+
+        {/* Center Desktop Navigation Tabs: ABOUT, SERVICES, CONTACT */}
+        <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative mx-2">
+          <a
+            href="#about"
+            onClick={(e) => handleItemClick(e, '#about')}
+            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
+          >
+            ABOUT
+          </a>
+          <a
+            href="#services"
+            onClick={(e) => handleItemClick(e, '#services')}
+            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
+          >
+            SERVICES
+          </a>
+          <a
+            href="#contact"
+            onClick={(e) => handleItemClick(e, '#contact')}
+            className="px-4 py-1.5 text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-white/70 hover:text-white transition-colors"
+          >
+            CONTACT
+          </a>
         </div>
-        <button
-          ref={toggleBtnRef}
-          className="sm-toggle"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="staggered-menu-panel"
-          onClick={toggleMenu}
-          type="button"
-        >
-          <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
-            <span ref={textInnerRef} className="sm-toggle-textInner">
-              {textLines.map((l, i) => (
-                <span className="sm-toggle-line" key={i}>
-                  {l}
-                </span>
-              ))}
+
+        {/* Right Controls Area: CONTACT Button + MENU Toggle Button */}
+        <div className="flex items-center gap-3">
+          <a
+            href="#contact"
+            onClick={(e) => handleItemClick(e, '#contact')}
+            className="hidden sm:inline-block skeuo-button text-black text-[10px] font-mono font-black tracking-widest uppercase px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
+          >
+            CONTACT →
+          </a>
+
+          <button
+            ref={toggleBtnRef}
+            className="sm-toggle"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="staggered-menu-panel"
+            onClick={toggleMenu}
+            type="button"
+          >
+            <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
+              <span ref={textInnerRef} className="sm-toggle-textInner">
+                {textLines.map((l, i) => (
+                  <span className="sm-toggle-line" key={i}>
+                    {l}
+                  </span>
+                ))}
+              </span>
             </span>
-          </span>
-          <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
-          </span>
-        </button>
+            <span ref={iconRef} className="sm-icon" aria-hidden="true">
+              <span ref={plusHRef} className="sm-icon-line" />
+              <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+            </span>
+          </button>
+        </div>
       </header>
 
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>

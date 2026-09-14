@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
-import MorphicNavbar from './components/ui/MorphicNavbar';
+import StaggeredMenu from './components/ui/StaggeredMenu';
 
 // Import all sections for SPA
 import Home from './pages/Home';
@@ -19,7 +19,15 @@ export default function Layout() {
     window.scrollTo(0, 0);
   }, []);
 
-
+  const menuItems = [
+    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
+    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
+    { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
+    { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
+    { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
+    { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
+    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+  ];
 
   return (
     <div className="w-full max-w-[100vw] min-h-screen bg-zinc-50 dark:bg-[#050505] text-zinc-900 dark:text-white font-sans selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-500 relative">
@@ -29,8 +37,19 @@ export default function Layout() {
       <SpaceScene />
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,120,120,0.1),rgba(255,255,255,0))]" />
 
-      {/* FLOATING GLASSMORPHISM HEADER & STAGGERED MENU DRAWER */}
-      <MorphicNavbar />
+      {/* SINGLE UNIFIED GLASSMORPHISM FLOATING NAVBAR HEADER */}
+      <StaggeredMenu
+        position="right"
+        items={menuItems}
+        socialItems={[]}
+        displaySocials={false}
+        displayItemNumbering={true}
+        menuButtonColor="#ffffff"
+        openMenuButtonColor="#10B981"
+        accentColor="#10B981"
+        changeMenuColorOnOpen={true}
+        logoUrl="/assets/astreivix_nav_bar.mp4"
+      />
 
       <div className="relative z-10 w-full mx-auto flex flex-col items-center">
         
