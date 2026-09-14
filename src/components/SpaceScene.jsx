@@ -334,18 +334,3 @@ export default function SpaceScene() {
     </WebGLErrorBoundary>
   );
 }
-          {/* Cinematic High-Contrast Solar Lighting Rig */}
-          <ambientLight intensity={0.2} />
-          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 4.5 : 6.0} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={1.8} color="#88aaff" />
-          
-          <InteractiveStars />
-          <React.Suspense fallback={null}>
-            <Planets isMobile={isMobile} />
-          </React.Suspense>
-          <CameraController scrollYProgress={scrollYProgress} />
-        </Canvas>
-      </div>
-    </WebGLErrorBoundary>
-  );
-}
