@@ -7,8 +7,8 @@ function Counter100() {
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   const countValue = useSpring(0, {
-    stiffness: 40,
-    damping: 18,
+    stiffness: 35,
+    damping: 16,
     restDelta: 0.001
   });
 
@@ -23,64 +23,44 @@ function Counter100() {
   }, [isInView, countValue]);
 
   return (
-    <div ref={ref} className="relative flex flex-col items-center justify-center my-4 select-none w-full max-w-md">
-      {/* Sleek Minimalist Luxury Bento Card */}
-      <div className="relative w-full bg-[#0E0E16] backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col shadow-2xl overflow-hidden group">
+    <div ref={ref} className="relative flex flex-col items-center justify-center my-4 select-none w-full max-w-sm">
+      {/* Extruded Neumorphic Dark Bevel Card */}
+      <div className="relative w-full bg-[#0A0A10] rounded-3xl p-8 sm:p-10 flex flex-col items-center justify-center shadow-[12px_12px_30px_rgba(0,0,0,0.95),-6px_-6px_20px_rgba(255,255,255,0.05)] border border-white/10 overflow-hidden group transition-all duration-300">
         
-        {/* Subtle Background Grid Texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
+        {/* Skeuomorphic Glass Reflection Sheen Arc */}
+        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 via-white/5 to-transparent pointer-events-none rounded-t-3xl" />
 
-        {/* Card Header Tag */}
-        <div className="flex items-center justify-between w-full mb-8 relative z-10">
-          <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span className="text-xs font-mono tracking-widest text-white/70 font-semibold uppercase">
-              PERFORMANCE ARCHITECTURE
+        {/* Debossed Inset Numerical Well */}
+        <div className="w-full bg-[#050508] rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-[inset_4px_4px_12px_rgba(0,0,0,0.9),inset_-2px_-2px_8px_rgba(255,255,255,0.05)] border border-white/5 relative z-10">
+          
+          {/* Main 100% Extruded / Engraved Counter */}
+          <div className="flex items-baseline justify-center space-x-1 mb-2">
+            <span className="text-6xl sm:text-7xl font-black font-mono tracking-tighter text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] skeuo-engraved">
+              {displayCount}
+            </span>
+            <span className="text-3xl font-mono font-bold text-emerald-400 drop-shadow-[0_0_12px_rgba(16,185,129,0.5)]">
+              %
             </span>
           </div>
-          <span className="text-[10px] font-mono tracking-widest text-white/40 uppercase">
-            AUDIT VERIFIED
-          </span>
-        </div>
 
-        {/* Massive Minimalist Numeric Counter */}
-        <div className="flex items-baseline space-x-1 relative z-10 my-2">
-          <span className="text-6xl sm:text-7xl font-bold font-mono tracking-tighter text-white">
-            {displayCount}
-          </span>
-          <span className="text-3xl font-mono font-light text-emerald-400">
-            %
-          </span>
-        </div>
-
-        <p className="text-xs text-white/60 font-mono tracking-wide uppercase mt-1 mb-6 relative z-10">
-          LIGHTHOUSE PERFORMANCE & OPTIMIZATION GUARANTEE
-        </p>
-
-        {/* Minimalist Precision Progress Bar */}
-        <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden relative z-10 mb-6">
-          <motion.div 
-            className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-white rounded-full"
-            initial={{ width: "0%" }}
-            animate={{ width: `${displayCount}%` }}
-            transition={{ duration: 0.1, ease: "linear" }}
-          />
-        </div>
-
-        {/* Clean Metrics Row */}
-        <div className="grid grid-cols-3 gap-3 w-full relative z-10 pt-4 border-t border-white/10 text-center font-mono">
-          <div>
-            <div className="text-[9px] text-white/40 uppercase tracking-widest">PERFORMANCE</div>
-            <div className="text-xs font-bold text-white mt-1">100 / 100</div>
+          {/* Sleek Liquid Neumorphic Progress Bar */}
+          <div className="w-full max-w-[200px] bg-[#020204] h-2 rounded-full overflow-hidden p-0.5 shadow-[inset_1px_1px_4px_rgba(0,0,0,0.9),inset_-1px_-1px_2px_rgba(255,255,255,0.05)] border border-white/10 my-3">
+            <motion.div 
+              className="h-full bg-gradient-to-r from-emerald-500 via-cyan-400 to-white rounded-full shadow-[0_0_10px_rgba(16,185,129,0.8)]"
+              initial={{ width: "0%" }}
+              animate={{ width: `${displayCount}%` }}
+              transition={{ duration: 0.1, ease: "linear" }}
+            />
           </div>
-          <div>
-            <div className="text-[9px] text-white/40 uppercase tracking-widest">STRUCTURED SEO</div>
-            <div className="text-xs font-bold text-emerald-400 mt-1">100 / 100</div>
-          </div>
-          <div>
-            <div className="text-[9px] text-white/40 uppercase tracking-widest">WEB Vitals</div>
-            <div className="text-xs font-bold text-white mt-1">PASS</div>
-          </div>
+
+          {/* Simple, High-Impact Elegant Wording Below 100% */}
+          <span className="text-xs sm:text-sm font-mono font-bold tracking-[0.25em] text-white/90 uppercase text-center mt-2 skeuo-engraved">
+            CREATIVE TECH PRECISION
+          </span>
+          <span className="text-[10px] font-mono tracking-[0.2em] text-emerald-400/80 uppercase text-center mt-1">
+            GUARANTEED EXCELLENCE
+          </span>
+
         </div>
 
       </div>
