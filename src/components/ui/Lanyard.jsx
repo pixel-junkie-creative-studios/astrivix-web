@@ -226,10 +226,11 @@ function Band({
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
   const cardMap = useMemo(() => {
-    const baseMap = materials.base.map;
-    const baseImg = baseMap.image;
-    const W = Math.max(2048, baseImg.width);
-    const H = Math.max(2048, baseImg.height);
+    const baseMap = materials?.base?.map;
+    const baseImg = baseMap?.image;
+    if (!baseMap || !baseImg) return baseMap || null;
+    const W = Math.max(2048, baseImg.width || 2048);
+    const H = Math.max(2048, baseImg.height || 2048);
     const canvas = document.createElement('canvas');
     canvas.width = W;
     canvas.height = H;

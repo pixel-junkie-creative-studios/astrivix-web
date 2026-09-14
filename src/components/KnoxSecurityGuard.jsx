@@ -8,15 +8,11 @@ import React, { useEffect } from 'react';
  */
 export default function KnoxSecurityGuard() {
   useEffect(() => {
-    // 1. Console Threat Monitoring Telemetry
+    // 1. Silent Client Security Initialization
     if (typeof window !== 'undefined' && console) {
       console.log(
-        '%c 🔒 ASTRIVIX KNOX SHIELD v4.0 ACTIVE ',
-        'background: #000000; color: #34d399; font-size: 14px; font-weight: bold; padding: 8px 16px; border: 1px solid #34d399; border-radius: 6px; font-family: monospace;'
-      );
-      console.log(
-        '%c ENTERPRISE-GRADE ENCRYPTION & REAL-TIME THREAT MONITORING ENABLED. \n Astrivix Corp & Astrivix Business Consultants (www.astrivix.in) — Global Headquarters. ',
-        'color: #38bdf8; font-size: 11px; font-family: monospace;'
+        '%c ASTRIVIX SECURITY ENGINE ACTIVE ',
+        'background: #000000; color: #34d399; font-size: 12px; font-weight: bold; padding: 6px 12px; border: 1px solid #34d399; border-radius: 4px; font-family: monospace;'
       );
     }
 
