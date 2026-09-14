@@ -273,12 +273,12 @@ const ParticleText = ({
 
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets = [];
-      const step = Math.max(2, Math.floor(density));
+      const step = Math.max(1, Math.floor(density / 2));
 
       for (let y = 0; y < offscreen.height; y += step) {
         for (let x = 0; x < offscreen.width; x += step) {
           const alpha = imageData.data[(y * offscreen.width + x) * 4 + 3];
-          if (alpha > 40) {
+          if (alpha > 30) {
             targets.push({
               x: width / 2 - offscreen.width / 2 + x,
               y: height / 2 - offscreen.height / 2 + y,
@@ -288,7 +288,7 @@ const ParticleText = ({
         }
       }
 
-      const maxParticles = Math.max(800, Math.min(2400, Math.floor((width * height) / 140)));
+      const maxParticles = Math.max(2500, Math.min(4500, Math.floor((width * height) / 40)));
       const stride = Math.max(1, Math.ceil(targets.length / maxParticles));
       const baseRgb = hexToRgb(color);
       const highlightRgb = hexToRgb(highlightColor);
