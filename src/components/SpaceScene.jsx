@@ -402,22 +402,22 @@ class WebGLErrorBoundary extends React.Component {
 const starCircleTexture = (() => {
   if (typeof document === 'undefined') return null;
   const canvas = document.createElement('canvas');
-  canvas.width = 64;
-  canvas.height = 64;
+  canvas.width = 32;
+  canvas.height = 32;
   const ctx = canvas.getContext('2d');
-  const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
   gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.95)');
-  gradient.addColorStop(0.8, 'rgba(255, 255, 255, 0.4)');
+  gradient.addColorStop(0.15, 'rgba(255, 255, 255, 0.7)');
+  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0)');
   gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
   ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 64, 64);
+  ctx.fillRect(0, 0, 32, 32);
   return new THREE.CanvasTexture(canvas);
 })();
 
 const BrightShimmerStars = ({ isMobile }) => {
   const pointsRef = useRef();
-  const count = isMobile ? 1800 : 1000;
+  const count = isMobile ? 2500 : 1500;
 
   const [positions] = React.useMemo(() => {
     const posArr = new Float32Array(count * 3);
@@ -454,10 +454,10 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 2.2 : 1.2}
+        size={isMobile ? 0.4 : 0.5}
         color="#ffffff"
         transparent={true}
-        opacity={1.0}
+        opacity={0.85}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
         sizeAttenuation={true}
@@ -497,8 +497,8 @@ export default function SpaceScene() {
             <Stars 
               radius={100} 
               depth={60} 
-              count={isMobile ? 8500 : 6000} 
-              factor={isMobile ? 6.5 : 4.0} 
+              count={isMobile ? 12000 : 9000} 
+              factor={isMobile ? 2.5 : 2.5} 
               saturation={0} 
               fade 
               speed={isMobile ? 2.0 : 2} 
