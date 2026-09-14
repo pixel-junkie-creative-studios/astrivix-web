@@ -110,6 +110,7 @@ function createAstrivixBandTexture() {
   return tex;
 }
 
+const defaultFrontImg = createAstrivixCard();
 const defaultBackImg = createAstrivixBack();
 
 export default function Lanyard({
@@ -117,7 +118,7 @@ export default function Lanyard({
   gravity = [0, -90, 0],
   fov = 20,
   transparent = true,
-  frontImage = '/assets/lanyard-logo.png',
+  frontImage = defaultFrontImg,
   backImage = defaultBackImg,
   imageFit = 'contain',
   lanyardWidth = 2
@@ -222,8 +223,13 @@ function Band({
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
   
-  const frontTex = useTexture(frontImage || BLANK_PIXEL);
-  const backTex = useTexture(backImage || BLANK_PIXEL);
+  const defaultFront = useMemo(() => createAstrivixCard(), []);
+  const defaultBack = useMemo(() => createAstrivixBack(), []);
+  const actualFront = frontImage || defaultFront;
+  const actualBack = backImage || defaultBack;
+
+  const frontTex = useTexture(actualFront);
+  const backTex = useTexture(actualBack);
 
   const cardMap = useMemo(() => {
     const baseMap = materials?.base?.map;
@@ -264,8 +270,8 @@ function Band({
       ctx.restore();
     };
 
-    if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
-    if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
+    if (frontTex && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
+    if (backTex && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
@@ -275,7 +281,7 @@ function Band({
     composite.magFilter = THREE.LinearFilter;
     composite.needsUpdate = true;
     return composite;
-  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
+  }, [actualFront, actualBack, imageFit, frontTex, backTex, materials?.base?.map]);
 
   const [curve] = useState(
     () =>
