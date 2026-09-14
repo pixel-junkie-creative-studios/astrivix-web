@@ -280,8 +280,6 @@ const Planets = ({ isMobile }) => {
 const InteractiveGyroGroup = ({ children }) => {
   const groupRef = useRef();
   const targetRotation = useRef({ x: 0, y: 0 });
-  const smoothedGyro = useRef({ gamma: 0, beta: 0 });
-  const baselineGyro = useRef(null);
 
   useEffect(() => {
     // 1. Mouse movement (Desktop)
@@ -292,15 +290,16 @@ const InteractiveGyroGroup = ({ children }) => {
       targetRotation.current.y = mouseX * (Math.PI / 24);
     };
 
-    // 2. Gyroscope / Device Orientation (Mobile)
+    // 2. Mobile Gyroscope Tracking (iOS + Android)
     const handleOrientation = (e) => {
-      if (e.gamma === null || e.beta === null) return;
-
-      let rawGamma = e.gamma;
-      let rawBeta = e.beta;
+      const gamma = e.gamma ?? 0;
+      const beta = e.beta ?? 0;
 
       // Handle screen orientation (portrait vs landscape)
       const screenAngle = window.screen?.orientation?.angle ?? window.orientation ?? 0;
+      let rawGamma = gamma;
+      let rawBeta = beta;
+
       if (screenAngle === 90) {
         const tmp = rawGamma;
         rawGamma = rawBeta;
@@ -309,56 +308,45 @@ const InteractiveGyroGroup = ({ children }) => {
         const tmp = rawGamma;
         rawGamma = -rawBeta;
         rawBeta = tmp;
-      } else if (screenAngle === 180) {
-        rawGamma = -rawGamma;
-        rawBeta = -rawBeta;
       }
 
-      // Initialize baseline angle ONCE on first orientation event
-      if (!baselineGyro.current) {
-        baselineGyro.current = {
-          gamma: rawGamma,
-          beta: rawBeta
-        };
-      }
-
-      // Calculate relative delta tilt from initial baseline angle
-      const deltaGamma = Math.max(-35, Math.min(35, rawGamma - baselineGyro.current.gamma));
-      const deltaBeta = Math.max(-35, Math.min(35, rawBeta - baselineGyro.current.beta));
-
-      // Low-pass exponential smoothing filter for zero-jitter 120 FPS tracking
-      smoothedGyro.current.gamma += (deltaGamma - smoothedGyro.current.gamma) * 0.08;
-      smoothedGyro.current.beta += (deltaBeta - smoothedGyro.current.beta) * 0.08;
-
-      const normGamma = smoothedGyro.current.gamma / 35;
-      const normBeta = smoothedGyro.current.beta / 35;
+      // Normalized tilt relative to natural 45-degree mobile holding angle
+      const normGamma = Math.max(-1, Math.min(1, rawGamma / 35));
+      const normBeta = Math.max(-1, Math.min(1, (rawBeta - 40) / 35));
 
       // Same Axis Motion: Tilting phone right moves background right, tilting down moves down
-      targetRotation.current.y = normGamma * (Math.PI / 20);
-      targetRotation.current.x = -normBeta * (Math.PI / 20);
+      targetRotation.current.y = normGamma * (Math.PI / 18);
+      targetRotation.current.x = normBeta * (Math.PI / 18);
     };
 
-    // iOS 13+ permission request on first user touch gesture
-    const handleTouchStart = () => {
+    // Request iOS 13+ permission & attach listeners
+    const enableGyro = () => {
       if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
         DeviceOrientationEvent.requestPermission()
           .then(permissionState => {
             if (permissionState === 'granted') {
-              window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+              window.addEventListener('deviceorientation', handleOrientation, true);
+              window.addEventListener('deviceorientationabsolute', handleOrientation, true);
             }
           })
           .catch(() => {});
+      } else {
+        window.addEventListener('deviceorientation', handleOrientation, true);
+        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
       }
     };
 
-    window.addEventListener('touchstart', handleTouchStart, { passive: true, once: true });
-    window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+    enableGyro();
+    window.addEventListener('touchstart', enableGyro, { passive: true });
+    window.addEventListener('click', enableGyro, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('deviceorientation', handleOrientation);
-      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('deviceorientationabsolute', handleOrientation);
+      window.removeEventListener('touchstart', enableGyro);
+      window.removeEventListener('click', enableGyro);
     };
   }, []);
 

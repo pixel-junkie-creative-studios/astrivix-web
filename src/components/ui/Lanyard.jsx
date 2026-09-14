@@ -14,6 +14,9 @@ import * as THREE from 'three';
 import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
+try {
+  useGLTF.preload(cardGLB);
+} catch (e) {}
 
 // 1x1 transparent pixel — lets useTexture be called unconditionally when a
 // front/back image isn't supplied.
@@ -143,13 +146,12 @@ export default function Lanyard({
 
   return (
     <div ref={wrapperRef} className="lanyard-wrapper">
-      {isVisible && (
-        <Canvas
-          camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
-          dpr={dpr}
-          gl={{ alpha: transparent, antialias: true, powerPreference: "high-performance", precision: "highp" }}
-          onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
-        >
+      <Canvas
+        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
+        dpr={dpr}
+        gl={{ alpha: transparent, antialias: true, powerPreference: "high-performance", precision: "highp" }}
+        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+      >
           <ambientLight intensity={Math.PI} />
           <Physics gravity={gravity} timeStep={1 / 120} interpolate={true}>
             <Band
@@ -191,7 +193,6 @@ export default function Lanyard({
             />
           </Environment>
         </Canvas>
-      )}
     </div>
   );
 }
