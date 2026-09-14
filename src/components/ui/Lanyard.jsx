@@ -284,7 +284,7 @@ function Band({
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
-    if (baseMap) composite.flipY = baseMap.flipY;
+    composite.flipY = true;
     composite.anisotropy = 16;
     composite.minFilter = THREE.LinearFilter;
     composite.magFilter = THREE.LinearFilter;

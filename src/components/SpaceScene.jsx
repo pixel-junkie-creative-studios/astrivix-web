@@ -196,6 +196,9 @@ const SatelliteGLB = () => {
     clone.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material = child.material.clone();
+        // GLTF material has emissiveFactor [1,1,1] which causes flat white blowout. Reset emissive to black.
+        child.material.emissive = new THREE.Color(0x000000);
+        child.material.emissiveIntensity = 0;
         child.material.toneMapped = true;
         child.material.needsUpdate = true;
       }
