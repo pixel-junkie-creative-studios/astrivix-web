@@ -382,9 +382,10 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshStandardMaterial
                 map={cardMap}
-                roughness={0.35}
+                color="#08080a"
+                roughness={0.5}
                 metalness={0.1}
-                envMapIntensity={1.0}
+                envMapIntensity={0.5}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.2} />
