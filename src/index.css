@@ -63,71 +63,82 @@ html.lenis { height: auto; }
   backface-visibility: hidden;
 }
 
-/* High-Contrast Liquid Obsidian Glassmorphism (Mobile-First Ultra-Legible Surface) */
-.glass-fast, .glass-metallic {
-  background: #0E0E16;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+/* ==========================================================================
+   DARK NEOMORPHISM DESIGN SYSTEM (SOFT PHYSICAL TACTILE UI)
+   ========================================================================== */
+
+:root {
+  --neu-bg: #050508;
+  --neu-surface: #0e0e16;
+  --neu-shadow-dark: #030305;
+  --neu-shadow-light: #171724;
 }
 
-
-/* Corner Bracket Accents Disabled */
-.corner-bracket-tl::before,
-.corner-bracket-tr::after {
-  display: none !important;
-  content: none !important;
-}
-
-
-/* Tactile Skeuomorphic Physical Metallic Bevels & Buttons */
-.skeuo-button {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(210, 210, 220, 0.85) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+/* 1. Neomorphic Soft Physical Elevation (Cards, Panels, Containers) */
+.neu-flat, .glass-fast, .glass-metallic {
+  background: #0e0e16 !important;
   box-shadow: 
-    0 4px 14px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
-  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    12px 12px 28px #040406,
+    -12px -12px 28px #181826,
+    inset 1px 1px 0px rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px);
 }
-.skeuo-button:hover {
-  background: linear-gradient(180deg, #ffffff 0%, #e2e2e8 100%);
+
+/* 2. Neomorphic Debossed Inset Sockets (Inputs, Textareas, Active Fields) */
+.neu-inset, input, textarea, select {
+  background: #07070b !important;
   box-shadow: 
-    0 6px 20px rgba(255, 255, 255, 0.25),
-    0 4px 14px rgba(0, 0, 0, 0.7),
-    inset 0 1px 0 #ffffff,
-    inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+    inset 6px 6px 14px #030305,
+    inset -6px -6px 14px #12121c,
+    0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 3. Neomorphic Soft Physical Pill Buttons & Actions */
+.neu-button, .skeuo-button {
+  background: linear-gradient(145deg, #141420, #0a0a10) !important;
+  box-shadow: 
+    6px 6px 16px #040407,
+    -6px -6px 16px #1a1a29,
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.neu-button:hover, .skeuo-button:hover {
+  background: linear-gradient(145deg, #181826, #0e0e16) !important;
+  box-shadow: 
+    8px 8px 22px #030305,
+    -8px -8px 22px #202033,
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
   transform: translateY(-1px);
 }
-.skeuo-button:active {
-  transform: translateY(1px);
+
+.neu-button:active, .skeuo-button:active {
+  background: #09090d !important;
   box-shadow: 
-    0 2px 5px rgba(0, 0, 0, 0.8),
-    inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    inset 4px 4px 10px #030305,
+    inset -4px -4px 10px #151522 !important;
+  transform: translateY(1px);
 }
 
-/* Tactile Skeuomorphic Metallic Screw Accent */
-.skeuo-screw {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #e0e0e0, #444444 80%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.8);
-  position: relative;
-}
-.skeuo-screw::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 5px;
-  height: 1px;
-  background: #111;
-  transform: translate(-50%, -50%) rotate(45deg);
+/* 4. Neomorphic Soft Convex Pill Badges */
+.neu-badge {
+  background: #0e0e16 !important;
+  box-shadow: 
+    4px 4px 10px #040406,
+    -4px -4px 10px #181826,
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-/* Debossed Engraved Skeuomorphic Typography */
-.skeuo-engraved {
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.25), 0 -1px 2px rgba(0, 0, 0, 0.9);
+/* 5. Debossed Engraved Neomorphic Typography */
+.neu-text-engraved, .skeuo-engraved {
+  text-shadow: 
+    2px 2px 4px #000000,
+    -1px -1px 2px rgba(255, 255, 255, 0.15);
 }
 
 /* Defer rendering fallback */

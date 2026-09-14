@@ -264,8 +264,8 @@ const InteractiveGyroGroup = ({ children }) => {
         const normBeta = Math.max(-1, Math.min(1, (e.beta - 40) / 30));
         
         // Correct natural 3D gyroscope tilt direction synced with device motion
-        targetRotation.current.x = normBeta * (Math.PI / 12);
-        targetRotation.current.y = normGamma * (Math.PI / 12);
+        targetRotation.current.x = -normBeta * (Math.PI / 12);
+        targetRotation.current.y = -normGamma * (Math.PI / 12);
       }
     };
 
