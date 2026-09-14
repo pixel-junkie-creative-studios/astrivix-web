@@ -1,9 +1,10 @@
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useSpring, useTransform, animate } from 'framer-motion';
 
 function Counter100() {
   const [displayCount, setDisplayCount] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   const radius = 54;
