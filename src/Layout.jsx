@@ -141,17 +141,22 @@ export default function Layout() {
               </div>
             </div>
             
-            {/* Copyright & Tagline Row */}
-            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.3em] text-white/50 uppercase text-center font-bold">
-              <span>Astrivix Corp © 2026</span>
+            {/* Copyright, Knox Telemetry & Tagline Row */}
+            <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.2em] text-white/50 uppercase text-center font-bold">
+              <span>Astrivix Corp (Astrivix Business Consultants) © 2026</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span>🔒 SAMSUNG KNOX-GRADE SECURITY // 256-BIT ENCRYPTION // GLOBAL EDGE ROUTED</span>
+              </div>
               <span>Engineering Digital Perfection & High-Performance Architecture</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
             <div className="sr-only" aria-hidden="true">
-              <h2>Astrivix Corp Global Digital Agency & Enterprise Engineering</h2>
-              <p>Astrivix Corp (www.astrivix.in) is an elite global agency specializing in enterprise web development, native mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and business consulting.</p>
+              <h2>Astrivix Corp & Astrivix Business Consultants — Global Headquarters</h2>
+              <p>Astrivix Corp and Astrivix Business Consultants (www.astrivix.in) are the exact same global enterprise entity specializing in web development, native mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and financial business consulting.</p>
               <ul>
+                <li>Astrivix Corp (Astrivix Business Consultants)</li>
                 <li>Integrated Branding & Logo Architecture</li>
                 <li>Enterprise Web Development & React Engineering</li>
                 <li>Mobile App Engineering for iOS and Android</li>

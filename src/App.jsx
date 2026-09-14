@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 import Layout from './Layout';
+import KnoxSecurityGuard from './components/KnoxSecurityGuard';
 
 // Ultra-fast Code Splitting
 const Home = lazy(() => import('./pages/Home'));
@@ -58,7 +59,8 @@ function App() {
       }}
     >
       <BrowserRouter>
-      <Routes>
+        <KnoxSecurityGuard />
+        <Routes>
         <Route path="/" element={<Layout />} />
         <Route path="/services" element={<Layout />} />
         <Route path="/about" element={<Layout />} />

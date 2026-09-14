@@ -1,9 +1,20 @@
 import nodemailer from 'nodemailer';
 
+function sanitizeInput(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/javascript:/gi, '')
+    .replace(/onerror\s*=/gi, '')
+    .replace(/onload\s*=/gi, '')
+    .trim();
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -13,7 +24,13 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, age, email, projectName, supportType, description } = req.body || {};
+  const rawBody = req.body || {};
+  const name = sanitizeInput(rawBody.name);
+  const age = sanitizeInput(rawBody.age);
+  const email = sanitizeInput(rawBody.email);
+  const projectName = sanitizeInput(rawBody.projectName);
+  const supportType = sanitizeInput(rawBody.supportType);
+  const description = sanitizeInput(rawBody.description);
 
   if (!name || !email || !projectName || !description) {
     return res.status(400).json({ error: 'Missing required fields' });
