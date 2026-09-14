@@ -31,14 +31,23 @@ const DetailedEarth = ({ position, isMobile }) => {
     '/assets/planets/earth_clouds.png'
   ]);
 
+  useEffect(() => {
+    [colorMap, normalMap, specularMap, cloudsMap].forEach(texture => {
+      if (texture) {
+        texture.anisotropy = 16;
+        texture.needsUpdate = true;
+      }
+    });
+  }, [colorMap, normalMap, specularMap, cloudsMap]);
+
   useFrame((state, delta) => {
     if (earthRef.current) earthRef.current.rotation.y += delta * 0.25;
     if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.35;
   });
 
-  const radius = isMobile ? 2.2 : 4.8;
-  const cloudRadius = isMobile ? 2.23 : 4.85;
-  const segments = 64;
+  const radius = isMobile ? 2.8 : 4.8;
+  const cloudRadius = isMobile ? 2.84 : 4.85;
+  const segments = isMobile ? 80 : 96;
 
   return (
     <group position={position} rotation={[0.3, 0, 0.15]}>
@@ -49,9 +58,14 @@ const DetailedEarth = ({ position, isMobile }) => {
           normalMap={normalMap} 
           normalScale={NORMAL_SCALE_EARTH}
           roughnessMap={specularMap} 
-          roughness={0.25} 
-          metalness={0.2}
+          roughness={0.2} 
+          metalness={0.25}
         />
+      </Sphere>
+
+      {/* Volumetric Atmosphere Rim Halo */}
+      <Sphere args={[radius * 1.05, 64, 64]}>
+        <meshStandardMaterial color="#38bdf8" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
@@ -59,7 +73,7 @@ const DetailedEarth = ({ position, isMobile }) => {
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
-          opacity={0.82} 
+          opacity={0.85} 
           depthWrite={false} 
           roughness={0.9}
         />
@@ -72,12 +86,19 @@ const DetailedMoon = ({ position, isMobile }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
+  useEffect(() => {
+    if (colorMap) {
+      colorMap.anisotropy = 16;
+      colorMap.needsUpdate = true;
+    }
+  }, [colorMap]);
+
   useFrame((state, delta) => {
     if (moonRef.current) moonRef.current.rotation.y += delta * 0.3;
   });
 
-  const radius = isMobile ? 0.8 : 1.8;
-  const segments = 48;
+  const radius = isMobile ? 1.0 : 1.8;
+  const segments = isMobile ? 64 : 80;
 
   return (
     <group position={position}>
@@ -85,8 +106,8 @@ const DetailedMoon = ({ position, isMobile }) => {
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
-          bumpScale={0.35} 
-          roughness={0.85} 
+          bumpScale={0.45} 
+          roughness={0.8} 
           metalness={0.05} 
         />
       </Sphere>
@@ -98,12 +119,19 @@ const RealisticMars = ({ position, isMobile }) => {
   const marsRef = useRef();
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
+  useEffect(() => {
+    if (rockyMap) {
+      rockyMap.anisotropy = 16;
+      rockyMap.needsUpdate = true;
+    }
+  }, [rockyMap]);
+
   useFrame((state, delta) => {
     if (marsRef.current) marsRef.current.rotation.y += delta * 0.25;
   });
 
-  const radius = isMobile ? 1.7 : 3.8;
-  const segments = 64;
+  const radius = isMobile ? 2.2 : 3.8;
+  const segments = isMobile ? 80 : 96;
 
   return (
     <group position={position} rotation={[-0.2, 0, 0.2]}>
@@ -113,10 +141,15 @@ const RealisticMars = ({ position, isMobile }) => {
           map={rockyMap} 
           color="#d64c24" 
           bumpMap={rockyMap} 
-          bumpScale={0.3} 
-          roughness={0.8} 
-          metalness={0.1}
+          bumpScale={0.4} 
+          roughness={0.75} 
+          metalness={0.15}
         />
+      </Sphere>
+
+      {/* Martian Dust Atmosphere Rim Halo */}
+      <Sphere args={[radius * 1.04, 64, 64]}>
+        <meshStandardMaterial color="#f97316" transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
       </Sphere>
     </group>
   );
@@ -429,7 +462,7 @@ const BrightShimmerStars = ({ isMobile }) => {
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
-  const canvasDpr = isMobile ? 1 : (typeof window !== 'undefined' ? Math.min(window.devicePixelRatio || 2, 2) : 1);
+  const canvasDpr = typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio || 2, 2)] : [1, 2];
 
   return (
     <WebGLErrorBoundary>
