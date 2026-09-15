@@ -212,7 +212,7 @@ const SatelliteGLB = () => {
     });
     return clone;
   }, [scene]);
-  return <primitive object={clonedScene} scale={0.25} rotation={[0.5, Math.PI / 2, 0]} />;
+  return <primitive object={clonedScene} scale={0.08} rotation={[0.5, Math.PI / 2, 0]} />;
 };
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
