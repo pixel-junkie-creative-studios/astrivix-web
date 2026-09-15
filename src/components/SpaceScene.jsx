@@ -196,13 +196,13 @@ const SatelliteGLB = () => {
     clone.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material = child.material.clone();
-        // Clear emissive blowout so satellite colors and gold textures show in full rich PBR detail
+        // Clear emissive blowout so satellite colors and textures show in rich PBR detail
         child.material.emissiveMap = null;
         child.material.emissive = new THREE.Color(0x000000);
         child.material.emissiveIntensity = 0;
-        child.material.roughness = 0.7;
-        child.material.metalness = 0.2;
-        child.material.envMapIntensity = 0.3;
+        child.material.roughness = 0.5;
+        child.material.metalness = 0.1;
+        child.material.envMapIntensity = 0.2;
         child.material.transparent = false;
         child.material.depthWrite = true;
         child.material.depthTest = true;
@@ -212,7 +212,7 @@ const SatelliteGLB = () => {
     });
     return clone;
   }, [scene]);
-  return <primitive object={clonedScene} scale={0.08} rotation={[0.5, Math.PI / 2, 0]} />;
+  return <primitive object={clonedScene} scale={0.035} rotation={[0.5, Math.PI / 2, 0]} />;
 };
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
