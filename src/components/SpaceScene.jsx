@@ -196,13 +196,13 @@ const SatelliteGLB = () => {
     clone.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material = child.material.clone();
-        // Clear emissiveMap blowout while preserving PBR baseColorTexture & metallicNormal maps
+        // Clear emissive blowout so satellite colors and gold textures show in full rich PBR detail
         child.material.emissiveMap = null;
         child.material.emissive = new THREE.Color(0x000000);
         child.material.emissiveIntensity = 0;
-        child.material.roughness = 0.75;
-        child.material.metalness = 0.25;
-        child.material.envMapIntensity = 0.3;
+        child.material.roughness = 0.45;
+        child.material.metalness = 0.6;
+        child.material.envMapIntensity = 1.0;
         child.material.transparent = false;
         child.material.depthWrite = true;
         child.material.depthTest = true;
@@ -212,29 +212,22 @@ const SatelliteGLB = () => {
     });
     return clone;
   }, [scene]);
-  return <primitive object={clonedScene} scale={0.6} rotation={[0.2, 0.5, 0.1]} />;
+  return <primitive object={clonedScene} scale={0.25} rotation={[0.5, Math.PI / 2, 0]} />;
 };
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  const satelliteRef = useRef();
 
   useFrame((state, delta) => {
-    if (pivotRef.current) pivotRef.current.rotation.y += delta * (speed || 0.4);
-    if (satelliteRef.current) {
-      satelliteRef.current.rotation.y += delta * 0.25;
-      satelliteRef.current.rotation.z += delta * 0.1;
-    }
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * (speed || 0.15);
   });
 
   return (
     <group ref={pivotRef}>
       <group position={[orbitRadius, yOffset, 0]}>
-        <group ref={satelliteRef}>
-          <React.Suspense fallback={null}>
-            <SatelliteGLB />
-          </React.Suspense>
-        </group>
+        <React.Suspense fallback={null}>
+          <SatelliteGLB />
+        </React.Suspense>
       </group>
     </group>
   );
@@ -309,7 +302,7 @@ const Planets = ({ isMobile }) => {
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
         <React.Suspense fallback={null}>
-          <HighResSatellite orbitRadius={isMobile ? 3.5 : 9} speed={0.4} yOffset={isMobile ? 1.5 : 4} />
+          <HighResSatellite orbitRadius={isMobile ? 5.5 : 10.5} speed={0.18} yOffset={isMobile ? 2.5 : 4.5} />
         </React.Suspense>
       </group>
     </group>

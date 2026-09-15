@@ -74,27 +74,27 @@ export default function Contact() {
 
   // Email format validation check
   const validateEmail = (emailStr) => {
-    if (!emailStr) return "WRONG MAIL ID: Email address is required.";
+    if (!emailStr) return "Email address is required.";
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(emailStr.trim())) {
-      return "WRONG MAIL ID: Please enter a valid email address (e.g. name@domain.com)";
+      return "Please enter a valid email address (e.g. name@domain.com)";
     }
     return null;
   };
 
-  // Mobile number exact length validation check
+  // Mobile number length validation check
   const validatePhone = (phoneStr, countryObj) => {
     const digitsOnly = phoneStr.replace(/[^0-9]/g, '');
     if (!digitsOnly) {
-      return `WRONG MOBILE NUMBER: Mobile number is required.`;
+      return `Mobile number is required.`;
     }
     if (countryObj.len) {
       if (digitsOnly.length !== countryObj.len) {
-        return `WRONG MOBILE NUMBER: ${countryObj.code} (${countryObj.name}) requires exactly ${countryObj.len} digits (you entered ${digitsOnly.length} digits).`;
+        return `Please enter a valid ${countryObj.len}-digit mobile number for ${countryObj.name}.`;
       }
     } else if (countryObj.minLen && countryObj.maxLen) {
       if (digitsOnly.length < countryObj.minLen || digitsOnly.length > countryObj.maxLen) {
-        return `WRONG MOBILE NUMBER: International phone number must be between ${countryObj.minLen} and ${countryObj.maxLen} digits (you entered ${digitsOnly.length} digits).`;
+        return `Please enter between ${countryObj.minLen} and ${countryObj.maxLen} digits.`;
       }
     }
     return null;
@@ -222,12 +222,12 @@ export default function Contact() {
           </div>
 
           <div className="mt-12 p-6 rounded-2xl bg-[#0E0E16] border border-white/10 max-w-md">
-            <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase mb-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span>CUSTOM DISPATCH & AUTO-RESPONSE ENGINE</span>
+            <div className="flex items-center gap-2 text-white/80 font-mono text-xs font-bold uppercase mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span>Direct Partner Response</span>
             </div>
-            <p className="text-xs text-white/70 font-mono leading-relaxed">
-              All inquiries trigger an immediate automated email confirmation receipt to your inbox and a personalized technical proposal from our partner team within 2 hours.
+            <p className="text-xs text-white/60 font-mono leading-relaxed">
+              All inquiries receive an immediate automated email confirmation receipt and a personalized technical proposal from our partner team within 2 hours.
             </p>
           </div>
         </div>
@@ -286,14 +286,10 @@ export default function Contact() {
                 className="sr-only opacity-0 absolute pointer-events-none h-0 w-0"
               />
 
-              <div className="flex items-center justify-between mb-1">
+              <div className="mb-1">
                 <h3 className="text-2xl font-light text-white tracking-tight uppercase">
                   Project Inquiry
                 </h3>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-wider">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>SPOOF-PROOF ENGINE</span>
-                </div>
               </div>
 
               {/* YOUR NAME */}
@@ -335,16 +331,11 @@ export default function Contact() {
                 )}
               </div>
 
-              {/* MOBILE NUMBER WITH COUNTRY CODE SELECTOR & EXACT DIGIT LIMIT */}
+              {/* MOBILE NUMBER WITH COUNTRY CODE SELECTOR */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-xs font-mono tracking-widest text-white/60 uppercase">
-                    Mobile Phone Number <span className="text-rose-400">*</span>
-                  </label>
-                  <span className="text-[10px] font-mono text-cyan-400">
-                    {activeCountry.len ? `REQ: EXACTLY ${activeCountry.len} DIGITS` : `REQ: 7-15 DIGITS`}
-                  </span>
-                </div>
+                <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">
+                  Mobile Phone Number <span className="text-rose-400">*</span>
+                </label>
 
                 <div className="grid grid-cols-12 gap-2.5 items-center">
                   {/* Country Selector Dropdown */}
