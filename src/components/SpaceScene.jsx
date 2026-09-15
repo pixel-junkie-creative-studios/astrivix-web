@@ -184,111 +184,42 @@ const RealisticJupiterRinged = ({ position }) => {
   );
 };
 
-const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
+const GLTFSatelliteModel = ({ orbitRadius = 10.5, speed = 0.18, yOffset = 4.0, isMobile = false }) => {
   const pivotRef = useRef();
-  const satelliteRef = useRef();
-  const beaconRef = useRef();
+  const satRef = useRef();
+  const { scene } = useGLTF('/assets/planets/satellite.glb');
+
+  // Clone scene so it can be instantiated safely
+  const clonedScene = useMemo(() => {
+    const clone = scene.clone(true);
+    clone.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material = child.material.clone();
+        child.material.toneMapped = true;
+        child.material.needsUpdate = true;
+      }
+    });
+    return clone;
+  }, [scene]);
 
   useFrame((state, delta) => {
-    if (pivotRef.current) pivotRef.current.rotation.y += delta * (speed || 0.4);
-    if (satelliteRef.current) satelliteRef.current.rotation.z += delta * 0.2;
-    if (beaconRef.current) {
-      beaconRef.current.material.opacity = (Math.sin(state.clock.elapsedTime * 6) + 1) / 2;
+    if (pivotRef.current) {
+      pivotRef.current.rotation.y += delta * speed;
     }
   });
 
+  const scale = isMobile ? 0.16 : 0.24;
+  const radius = isMobile ? 6.5 : orbitRadius;
+
   return (
-    <group ref={pivotRef}>
-      <group position={[orbitRadius, yOffset, 0]}>
-        <group ref={satelliteRef} scale={0.4} rotation={[0.4, 0.8, 0.2]}>
-          
-          {/* 1. Main Satellite Bus (Gold Foil Thermal Insulation) */}
-          <mesh castShadow receiveShadow>
-            <boxGeometry args={[1.2, 1.8, 1.2]} />
-            <meshStandardMaterial 
-              color="#EAB308" 
-              metalness={0.9} 
-              roughness={0.25} 
-            />
-          </mesh>
-
-          {/* Core Octagonal Instrumentation Collar */}
-          <mesh position={[0, 0.95, 0]}>
-            <cylinderGeometry args={[0.6, 0.6, 0.3, 8]} />
-            <meshStandardMaterial color="#334155" metalness={0.9} roughness={0.2} />
-          </mesh>
-
-          {/* 2. High-Gain Parabolic Communications Dish Antenna */}
-          <group position={[0, 1.2, 0]} rotation={[-0.5, 0.4, 0]}>
-            {/* Dish Boom Arm */}
-            <mesh position={[0, 0.3, 0]}>
-              <cylinderGeometry args={[0.04, 0.04, 0.6, 8]} />
-              <meshStandardMaterial color="#64748B" metalness={0.95} roughness={0.1} />
-            </mesh>
-            {/* Parabolic Dish (Chrome Silver) */}
-            <mesh position={[0, 0.6, 0]} rotation={[Math.PI, 0, 0]}>
-              <coneGeometry args={[0.9, 0.35, 32, 1, true]} />
-              <meshStandardMaterial color="#F1F5F9" metalness={0.95} roughness={0.15} side={THREE.DoubleSide} />
-            </mesh>
-            {/* Sub-Reflector Feed Horn */}
-            <mesh position={[0, 0.45, 0]}>
-              <sphereGeometry args={[0.1, 16, 16]} />
-              <meshStandardMaterial color="#38BDF8" metalness={0.8} roughness={0.2} />
-            </mesh>
-          </group>
-
-          {/* 3. Left Solar Array Wing */}
-          <group position={[-2.8, 0, 0]}>
-            {/* Solar Panel Connecting Yoke Bar */}
-            <mesh position={[1.5, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-              <cylinderGeometry args={[0.05, 0.05, 1.5, 8]} />
-              <meshStandardMaterial color="#475569" metalness={0.9} roughness={0.2} />
-            </mesh>
-            {/* Deep Blue Solar Cell Modules */}
-            <mesh castShadow>
-              <boxGeometry args={[2.8, 1.3, 0.06]} />
-              <meshStandardMaterial color="#0A192F" metalness={0.85} roughness={0.15} />
-            </mesh>
-            {/* Solar Cell Grid Lines / Frame Borders */}
-            <mesh position={[0, 0, 0.04]}>
-              <planeGeometry args={[2.7, 1.2]} />
-              <meshBasicMaterial color="#38BDF8" wireframe opacity={0.35} transparent />
-            </mesh>
-          </group>
-
-          {/* 4. Right Solar Array Wing */}
-          <group position={[2.8, 0, 0]}>
-            {/* Solar Panel Connecting Yoke Bar */}
-            <mesh position={[-1.5, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-              <cylinderGeometry args={[0.05, 0.05, 1.5, 8]} />
-              <meshStandardMaterial color="#475569" metalness={0.9} roughness={0.2} />
-            </mesh>
-            {/* Deep Blue Solar Cell Modules */}
-            <mesh castShadow>
-              <boxGeometry args={[2.8, 1.3, 0.06]} />
-              <meshStandardMaterial color="#0A192F" metalness={0.85} roughness={0.15} />
-            </mesh>
-            {/* Solar Cell Grid Lines / Frame Borders */}
-            <mesh position={[0, 0, 0.04]}>
-              <planeGeometry args={[2.7, 1.2]} />
-              <meshBasicMaterial color="#38BDF8" wireframe opacity={0.35} transparent />
-            </mesh>
-          </group>
-
-          {/* 5. Thruster Nozzles & Optical Payload Sensors */}
-          <mesh position={[0, -1.0, 0]}>
-            <cylinderGeometry args={[0.25, 0.4, 0.4, 16]} />
-            <meshStandardMaterial color="#1E293B" metalness={0.9} roughness={0.2} />
-          </mesh>
-
-          {/* 6. Active Telemetry Beacon LED */}
-          <mesh ref={beaconRef} position={[0, 1.1, 0.6]}>
-            <sphereGeometry args={[0.08, 16, 16]} />
-            <meshBasicMaterial color="#10B981" transparent opacity={0.9} />
-          </mesh>
-          <pointLight position={[0, 1.1, 0.6]} color="#10B981" intensity={2} distance={3} />
-
-        </group>
+    <group ref={pivotRef} rotation={[0.3, 0, 0.1]}>
+      <group 
+        ref={satRef} 
+        position={[radius, yOffset, 0]} 
+        scale={[scale, scale, scale]}
+        rotation={[0.5, Math.PI / 2, 0]}
+      >
+        <primitive object={clonedScene} />
       </group>
     </group>
   );
@@ -363,7 +294,7 @@ const Planets = ({ isMobile }) => {
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
         <React.Suspense fallback={null}>
-          <HighResSatellite orbitRadius={isMobile ? 3.5 : 9} speed={0.4} yOffset={isMobile ? 1.5 : 4} />
+          <GLTFSatelliteModel orbitRadius={isMobile ? 6.5 : 10.5} speed={0.18} yOffset={isMobile ? 2.5 : 4.0} isMobile={isMobile} />
         </React.Suspense>
       </group>
     </group>
