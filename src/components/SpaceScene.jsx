@@ -200,6 +200,9 @@ const SatelliteGLB = () => {
         child.material.emissiveMap = null;
         child.material.emissive = new THREE.Color(0x000000);
         child.material.emissiveIntensity = 0;
+        child.material.roughness = 0.75;
+        child.material.metalness = 0.25;
+        child.material.envMapIntensity = 0.3;
         child.material.transparent = false;
         child.material.depthWrite = true;
         child.material.depthTest = true;
