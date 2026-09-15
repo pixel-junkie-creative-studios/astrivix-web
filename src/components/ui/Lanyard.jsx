@@ -9,7 +9,6 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 // replace with your own imports, see the usage snippet for details
 import cardGLB from '../../assets/lanyard/card.glb';
 import lanyard from '../../assets/lanyard/lanyard.png';
-import astrivixLogoFront from '../../assets/lanyard/astrivix_logo_actual.jpg';
 
 import * as THREE from 'three';
 import './Lanyard.css';
@@ -69,11 +68,11 @@ function createAstrivixBack() {
   ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 160px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.font = '900 150px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('C R E A T I V E', 1024, 1200);
-  ctx.fillText('M I N D S   @', 1024, 1500);
+  ctx.fillText('M I N D S   A T', 1024, 1500);
   ctx.fillText('A S T R I V I X', 1024, 1800);
   
   return canvas.toDataURL('image/png');
@@ -111,7 +110,7 @@ function createAstrivixBandTexture() {
   return tex;
 }
 
-const defaultFrontImg = astrivixLogoFront;
+const defaultFrontImg = createAstrivixCard();
 const defaultBackImg = createAstrivixBack();
 
 export default function Lanyard({
@@ -232,7 +231,57 @@ function Band({
   const frontTex = useTexture(actualFront);
   const backTex = useTexture(actualBack);
 
-  const cardMap = materials?.base?.map;
+  const cardMap = useMemo(() => {
+    const baseMap = materials?.base?.map;
+    const baseImg = baseMap?.image;
+    if (!baseMap || !baseImg) return baseMap || null;
+    const W = Math.max(2048, baseImg.width || 2048);
+    const H = Math.max(2048, baseImg.height || 2048);
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return baseMap;
+    
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(baseImg, 0, 0, W, H);
+
+    ctx.fillStyle = '#08080a';
+    ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
+    ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
+
+    const drawFitted = (img, rect) => {
+      const rx = rect.x * W;
+      const ry = rect.y * H;
+      const rw = rect.w * W;
+      const rh = rect.h * H;
+      const pick = imageFit === 'contain' ? Math.min : Math.max;
+      const scale = pick(rw / img.width, rh / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+      const dx = rx + (rw - dw) / 2;
+      const dy = ry + (rh - dh) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rx, ry, rw, rh);
+      ctx.clip();
+      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.restore();
+    };
+
+    if (frontTex && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
+    if (backTex && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
+
+    const composite = new THREE.CanvasTexture(canvas);
+    composite.colorSpace = THREE.SRGBColorSpace;
+    composite.flipY = baseMap.flipY;
+    composite.anisotropy = 16;
+    composite.minFilter = THREE.LinearFilter;
+    composite.magFilter = THREE.LinearFilter;
+    composite.needsUpdate = true;
+    return composite;
+  }, [actualFront, actualBack, imageFit, frontTex, backTex, materials?.base?.map]);
 
   const [curve] = useState(
     () =>
@@ -324,10 +373,10 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshStandardMaterial
                 map={cardMap}
-                color="#ffffff"
+                color="#aaaaaa"
                 roughness={0.25}
-                metalness={0.1}
-                envMapIntensity={0.8}
+                metalness={0.85}
+                envMapIntensity={2.5}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.2} />
