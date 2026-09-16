@@ -251,26 +251,29 @@ function Band({
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
-  // Composite the front/back images into the card's texture atlas (front = left
-  // half, back = right half). Each image is drawn aspect-preserving (no stretch).
+  // Composite the front/back images into the card's texture atlas.
+  // IMPORTANT: materials.base.map.image can be null on first render (GLB texture not decoded yet).
+  // We use a 1024x1024 fallback canvas so the logo ALWAYS renders regardless of baseImg state.
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map;
-    // Guard: baseMap.image is null until the GLB texture finishes decoding.
-    // Return baseMap for now — useMemo re-runs when frontTex/backTex update.
     const baseImg = baseMap?.image;
-    if (!baseImg || !baseImg.width || !baseImg.height) return baseMap;
 
-    const W = baseImg.width;
-    const H = baseImg.height;
+    // Use baseImg dimensions if decoded, otherwise fall back to 1024×1024
+    const W = (baseImg && baseImg.width > 0) ? baseImg.width : 1024;
+    const H = (baseImg && baseImg.height > 0) ? baseImg.height : 1024;
+
     const canvas = document.createElement('canvas');
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d');
     if (!ctx) return baseMap;
-    // Keep the original baked atlas for the card edges and any untouched face.
-    ctx.drawImage(baseImg, 0, 0, W, H);
 
-    // Matte Black Overlay for the front and back faces!
+    // Draw base atlas if decoded (preserves card edge/border details), else plain dark bg
+    if (baseImg && baseImg.width > 0) {
+      ctx.drawImage(baseImg, 0, 0, W, H);
+    }
+
+    // Matte Black overlay for both card faces
     ctx.fillStyle = '#111111';
     ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
     ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
@@ -300,7 +303,7 @@ function Band({
 
     const composite = new THREE.CanvasTexture(canvas);
     composite.colorSpace = THREE.SRGBColorSpace;
-    composite.flipY = baseMap.flipY;
+    composite.flipY = baseMap?.flipY ?? false;
     composite.anisotropy = 16;
     composite.needsUpdate = true;
     return composite;

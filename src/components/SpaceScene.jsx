@@ -194,11 +194,12 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
       if (child.isMesh && child.material) {
         const mats = Array.isArray(child.material) ? child.material : [child.material];
         mats.forEach((mat) => {
+          // Zero out ALL glow and ALL specular reflection
           mat.emissive = new THREE.Color(0x000000);
           mat.emissiveIntensity = 0;
-          // Bring roughness/metalness into a realistic PBR range
-          mat.roughness = Math.min(mat.roughness, 0.5);
-          mat.metalness = Math.min(mat.metalness, 0.85);
+          // roughness=1 = fully matte (zero specular), metalness=0 = shows raw texture colors
+          mat.roughness = 1.0;
+          mat.metalness = 0.0;
           mat.needsUpdate = true;
         });
       }
@@ -213,8 +214,8 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   return (
     <group ref={pivotRef}>
       <group position={[orbitRadius, yOffset, 0]}>
-        {/* Prominent scale and close orbit hugging Earth */}
-        <primitive object={scene} scale={0.32} rotation={[0.5, Math.PI / 2, 0]} />
+        {/* Slightly smaller scale */}
+        <primitive object={scene} scale={0.24} rotation={[0.5, Math.PI / 2, 0]} />
       </group>
     </group>
   );
