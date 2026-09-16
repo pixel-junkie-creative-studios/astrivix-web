@@ -44,8 +44,8 @@ const DetailedEarth = ({ position, isMobile }) => {
   ]);
 
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.005;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.008;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.03;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.04;
   });
 
   const segments = isMobile ? 48 : 64;
@@ -83,14 +83,15 @@ const DetailedMoon = ({ position, isMobile }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.008;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.04;
   });
 
   const segments = isMobile ? 32 : 48;
+  const radius = isMobile ? 3.4 : 4.2;
 
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[2.2, segments, segments]}>
+      <Sphere ref={moonRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
@@ -108,15 +109,16 @@ const RealisticMars = ({ position, isMobile }) => {
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.008;
+    if (marsRef.current) marsRef.current.rotation.y += delta * 0.035;
   });
 
   const segments = isMobile ? 48 : 64;
+  const radius = isMobile ? 6.2 : 8.0;
 
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[4.2, segments, segments]}>
+      <Sphere ref={marsRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
@@ -239,9 +241,9 @@ const Comet = () => {
 };
 
 const Planets = ({ isMobile }) => {
-  const earthPos = isMobile ? [-6, 3, -25] : [-15, 5, -30];
-  const moonPos = isMobile ? [6, -2, -50] : [15, -2, -70];
-  const marsPos = isMobile ? [12, 10, -75] : [35, 15, -120];
+  const earthPos = isMobile ? [-5, 3, -25] : [-13, 4, -28];
+  const moonPos = isMobile ? [5.5, -2, -42] : [14, -2, -55];
+  const marsPos = isMobile ? [10, 8, -60] : [26, 11, -85];
 
   return (
     <>
@@ -250,9 +252,9 @@ const Planets = ({ isMobile }) => {
       <DetailedMoon position={moonPos} isMobile={isMobile} />
       <RealisticMars position={marsPos} isMobile={isMobile} />
       
-      {/* High Quality Satellite orbiting the Earth */}
+      {/* High Quality Satellite orbiting close to the Earth */}
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 8 : 12} speed={0.1} yOffset={isMobile ? 4 : 6} />
+        <HighResSatellite orbitRadius={isMobile ? 6.2 : 7.8} speed={0.16} yOffset={isMobile ? 2.5 : 3.2} />
       </group>
     </>
   );
