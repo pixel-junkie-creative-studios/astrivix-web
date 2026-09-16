@@ -184,24 +184,27 @@ const RealisticJupiterRinged = ({ position }) => {
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
   // Using the realistic 36MB satellite model
-  const { scene } = useGLTF('/assets/planets/satellite.glb');
+  const { scene: rawScene } = useGLTF('/assets/planets/satellite.glb');
 
-  // Fix material properties: the GLTF had emissiveFactor [1,1,1] causing white blowout
-  useEffect(() => {
-    if (scene) {
-      scene.traverse((child) => {
-        if (child.isMesh && child.material) {
-          child.material.emissive = new THREE.Color(0x000000);
-          child.material.emissiveIntensity = 0;
-          if (child.material.roughness === 1.0 && child.material.metalness === 1.0) {
-            child.material.roughness = 0.4;
-            child.material.metalness = 0.8;
-          }
-          child.material.needsUpdate = true;
-        }
-      });
-    }
-  }, [scene]);
+  // Clone the scene so we get our own isolated copy (useGLTF returns a shared singleton).
+  // Apply material fixes inline — emissiveFactor [1,1,1] in the GLTF causes white blowout.
+  const scene = React.useMemo(() => {
+    const cloned = rawScene.clone(true);
+    cloned.traverse((child) => {
+      if (child.isMesh && child.material) {
+        const mats = Array.isArray(child.material) ? child.material : [child.material];
+        mats.forEach((mat) => {
+          mat.emissive = new THREE.Color(0x000000);
+          mat.emissiveIntensity = 0;
+          // Bring roughness/metalness into a realistic PBR range
+          mat.roughness = Math.min(mat.roughness, 0.5);
+          mat.metalness = Math.min(mat.metalness, 0.85);
+          mat.needsUpdate = true;
+        });
+      }
+    });
+    return cloned;
+  }, [rawScene]);
 
   useFrame((state, delta) => {
     if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
@@ -370,10 +373,12 @@ export default function SpaceScene() {
           dpr={isMobile ? [1, 1.5] : [1, 2]} 
           gl={{ antialias: true, powerPreference: "high-performance" }}
         >
-          {/* Cinematic High-Contrast Solar Lighting Rig */}
-          <ambientLight intensity={0.2} />
-          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 4.5 : 6.0} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={1.8} color="#88aaff" />
+          {/* Cinematic Multi-Angle Solar Lighting Rig — no single-direction blowout */}
+          <ambientLight intensity={0.4} />
+          <directionalLight position={[180, 120, 80]}  intensity={isMobile ? 2.0 : 2.5} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={1.2} color="#88aaff" />
+          <directionalLight position={[0, -100, 100]}   intensity={0.8} color="#aaccff" />
+          <directionalLight position={[-100, 100, -80]}  intensity={0.6} color="#ffffff" />
           
           <InteractiveStars />
           <React.Suspense fallback={null}>
