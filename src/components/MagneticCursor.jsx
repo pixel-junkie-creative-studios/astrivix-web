@@ -128,8 +128,7 @@ export default function MagneticCursor() {
           pointer-events: none;
           z-index: 100000;
           mix-blend-mode: difference;
-          will-change: transform;
-          transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease-out;
+          transition: width 0.15s ease-out, height 0.15s ease-out, top 0.15s ease-out, left 0.15s ease-out, opacity 0.15s ease-out;
         }
 
         /* Hovering State */
@@ -143,8 +142,11 @@ export default function MagneticCursor() {
           box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
         }
         .magnetic-cursor-dot.cursor-hover {
-          opacity: 0.4;
-          transform: scale(1.4) !important;
+          opacity: 0.5;
+          width: 8px;
+          height: 8px;
+          top: -4px;
+          left: -4px;
         }
 
         /* Clicking State */
@@ -157,7 +159,11 @@ export default function MagneticCursor() {
           box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
         }
         .magnetic-cursor-dot.cursor-click {
-          transform: scale(0.6) !important;
+          opacity: 0.8;
+          width: 4px;
+          height: 4px;
+          top: -2px;
+          left: -2px;
         }
       `}</style>
 

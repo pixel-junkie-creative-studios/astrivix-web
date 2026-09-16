@@ -30,29 +30,10 @@ const BLANK_PIXEL =
 const FRONT_UV_RECT = { x: 0, y: 0, w: 0.5, h: 0.755 };
 const BACK_UV_RECT = { x: 0.5, y: 0, w: 0.5, h: 0.757 };
 
+import astrivixLogoFront from '../../assets/lanyard/astrivix_logo_actual.jpg';
+
 function createAstrivixCard() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 2048;
-  canvas.height = 3072; 
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#08080a';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 24;
-  ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 210px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('A S T R I V I X', 1024, 1350);
-
-  ctx.fillStyle = 'rgba(255,255,255,0.75)';
-  ctx.font = '500 140px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-  ctx.fillText('C O R P .', 1024, 1680);
-  
-  return canvas.toDataURL('image/png');
+  return astrivixLogoFront;
 }
 
 function createAstrivixBack() {
@@ -72,7 +53,7 @@ function createAstrivixBack() {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText('C R E A T I V E', 1024, 1200);
-  ctx.fillText('M I N D S   A T', 1024, 1500);
+  ctx.fillText('M I N D S   @', 1024, 1500);
   ctx.fillText('A S T R I V I X', 1024, 1800);
   
   return canvas.toDataURL('image/png');
@@ -110,7 +91,7 @@ function createAstrivixBandTexture() {
   return tex;
 }
 
-const defaultFrontImg = createAstrivixCard();
+const defaultFrontImg = astrivixLogoFront;
 const defaultBackImg = createAstrivixBack();
 
 export default function Lanyard({
@@ -373,10 +354,10 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshStandardMaterial
                 map={cardMap}
-                color="#aaaaaa"
+                color="#ffffff"
                 roughness={0.25}
-                metalness={0.85}
-                envMapIntensity={2.5}
+                metalness={0.1}
+                envMapIntensity={1.2}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.2} />
