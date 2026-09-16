@@ -183,33 +183,7 @@ const RealisticJupiterRinged = ({ position }) => {
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  // Using the realistic 36MB satellite model
-  const { scene: rawScene } = useGLTF('/assets/planets/satellite.glb');
-
-  // Clone the scene so we get our own isolated copy (useGLTF returns a shared singleton).
-  const scene = React.useMemo(() => {
-    const cloned = rawScene.clone(true);
-    cloned.traverse((child) => {
-      if (child.isMesh && child.material) {
-        const mats = Array.isArray(child.material) ? child.material : [child.material];
-        const newMats = mats.map((mat) => {
-          // MeshBasicMaterial is 100% unaffected by any scene light.
-          // The satellite's colors live in emissiveMap (gold foil, panels, etc).
-          // Use that as the texture — guarantees correct colors at every rotation angle.
-          const tex = mat.emissiveMap || mat.map || null;
-          return new THREE.MeshBasicMaterial({
-            map: tex,
-            color: tex ? new THREE.Color(1, 1, 1) : new THREE.Color(0.6, 0.65, 0.7),
-            side: mat.side,
-            transparent: mat.transparent ?? false,
-            alphaTest: mat.alphaTest ?? 0,
-          });
-        });
-        child.material = Array.isArray(child.material) ? newMats : newMats[0];
-      }
-    });
-    return cloned;
-  }, [rawScene]);
+  const { scene } = useGLTF('/assets/planets/satellite.glb');
 
   useFrame((state, delta) => {
     if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
@@ -218,7 +192,6 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   return (
     <group ref={pivotRef}>
       <group position={[orbitRadius, yOffset, 0]}>
-        {/* Slightly smaller scale */}
         <primitive object={scene} scale={0.24} rotation={[0.5, Math.PI / 2, 0]} />
       </group>
     </group>

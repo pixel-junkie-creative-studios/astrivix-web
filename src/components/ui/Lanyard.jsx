@@ -167,9 +167,7 @@ function LanyardInner({
           gl={{ alpha: transparent, powerPreference: "high-performance" }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
         >
-          <ambientLight intensity={3.0} />
-          <directionalLight position={[0, 0, 10]} intensity={2.5} color="#ffffff" />
-          <directionalLight position={[0, 0, -10]} intensity={1.5} color="#ffffff" />
+          <ambientLight intensity={1.5} />
           <Physics gravity={gravity} timeStep={1 / 60} interpolate={true}>
             <Band
               isMobile={isMobile}
@@ -277,13 +275,12 @@ function Band({
     const ctx = canvas.getContext('2d');
     if (!ctx) return baseMap;
 
-    // Draw base atlas if decoded (preserves card edge/border details), else plain dark bg
-    if (baseImg && baseImg.width > 0) {
-      ctx.drawImage(baseImg, 0, 0, W, H);
-    }
+    // Paint ENTIRE canvas black first — no white from base atlas ever bleeds through
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, W, H);
 
-    // Matte Black overlay for both card faces
-    ctx.fillStyle = '#111111';
+    // Slightly lighter face for the front and back to distinguish from edges
+    ctx.fillStyle = '#111118';
     ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
     ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
 
