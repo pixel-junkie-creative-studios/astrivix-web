@@ -27,6 +27,8 @@ const BLANK_PIXEL =
 const FRONT_UV_RECT = { x: 0, y: 0, w: 0.5, h: 0.755 };
 const BACK_UV_RECT = { x: 0.5, y: 0, w: 0.5, h: 0.757 };
 
+import astrivixLogoFront from '../../assets/lanyard/astrivix_logo_actual.jpg';
+
 function createAstrivixCard() {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
@@ -118,7 +120,7 @@ export default function Lanyard({
   gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
-  frontImage = '/assets/lanyard-logo.png',
+  frontImage = astrivixLogoFront,
   backImage = defaultBackImg,
   imageFit = 'contain',
   lanyardWidth = 2
