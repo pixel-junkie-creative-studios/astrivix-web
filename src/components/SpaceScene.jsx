@@ -449,7 +449,7 @@ const BrightShimmerStars = ({ isMobile }) => {
       </bufferGeometry>
       <pointsMaterial
         map={starCircleTexture}
-        size={isMobile ? 0.4 : 0.5}
+        size={isMobile ? 0.65 : 0.75}
         color="#ffffff"
         transparent={true}
         opacity={0.85}
@@ -493,7 +493,7 @@ export default function SpaceScene() {
               radius={100} 
               depth={60} 
               count={isMobile ? 12000 : 9000} 
-              factor={isMobile ? 2.5 : 2.5} 
+              factor={isMobile ? 3.6 : 3.6} 
               saturation={0} 
               fade 
               speed={isMobile ? 2.0 : 2} 
