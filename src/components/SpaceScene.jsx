@@ -192,15 +192,20 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
     cloned.traverse((child) => {
       if (child.isMesh && child.material) {
         const mats = Array.isArray(child.material) ? child.material : [child.material];
-        mats.forEach((mat) => {
-          // The satellite's COLORS come from its emissive texture (gold foil, panels etc).
-          // Keep partial emissive so colors show — but NOT 1.0 which causes white blowout.
-          mat.emissiveIntensity = 0.55;
-          // Fully matte + non-metallic = zero specular glare at any angle
-          mat.roughness = 0.9;
-          mat.metalness = 0.05;
-          mat.needsUpdate = true;
+        const newMats = mats.map((mat) => {
+          // MeshBasicMaterial is 100% unaffected by any scene light.
+          // The satellite's colors live in emissiveMap (gold foil, panels, etc).
+          // Use that as the texture — guarantees correct colors at every rotation angle.
+          const tex = mat.emissiveMap || mat.map || null;
+          return new THREE.MeshBasicMaterial({
+            map: tex,
+            color: tex ? new THREE.Color(1, 1, 1) : new THREE.Color(0.6, 0.65, 0.7),
+            side: mat.side,
+            transparent: mat.transparent ?? false,
+            alphaTest: mat.alphaTest ?? 0,
+          });
         });
+        child.material = Array.isArray(child.material) ? newMats : newMats[0];
       }
     });
     return cloned;
