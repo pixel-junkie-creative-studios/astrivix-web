@@ -14,9 +14,6 @@ import * as THREE from 'three';
 import './Lanyard.css';
 
 extend({ MeshLineGeometry, MeshLineMaterial });
-try {
-  useGLTF.preload(cardGLB);
-} catch (e) {}
 
 // 1x1 transparent pixel — lets useTexture be called unconditionally when a
 // front/back image isn't supplied.
@@ -30,76 +27,98 @@ const BLANK_PIXEL =
 const FRONT_UV_RECT = { x: 0, y: 0, w: 0.5, h: 0.755 };
 const BACK_UV_RECT = { x: 0.5, y: 0, w: 0.5, h: 0.757 };
 
-import astrivixLogoFront from '../../assets/lanyard/astrivix_logo_actual.jpg';
-
 function createAstrivixCard() {
-  return astrivixLogoFront;
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 768; 
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#050505';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 12;
+  ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.moveTo(256, 240);
+  ctx.quadraticCurveTo(256, 320, 336, 320);
+  ctx.quadraticCurveTo(256, 320, 256, 400);
+  ctx.quadraticCurveTo(256, 320, 176, 320);
+  ctx.quadraticCurveTo(256, 320, 256, 240);
+  ctx.fill();
+
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 65px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '2px';
+  ctx.fillText('ASTRIVIX', 256, 520);
+  ctx.font = '300 45px sans-serif';
+  ctx.fillText('CORP.', 256, 590);
+  
+  return canvas.toDataURL('image/png');
 }
 
 function createAstrivixBack() {
   const canvas = document.createElement('canvas');
-  canvas.width = 2048;
-  canvas.height = 3072; 
+  canvas.width = 512;
+  canvas.height = 768; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#08080a';
+  ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth = 24;
-  ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
+  ctx.strokeStyle = '#222';
+  ctx.lineWidth = 12;
+  ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '900 150px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.fillStyle = '#fff';
+  ctx.font = '900 48px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('C R E A T I V E', 1024, 1200);
-  ctx.fillText('M I N D S   @', 1024, 1500);
-  ctx.fillText('A S T R I V I X', 1024, 1800);
+  ctx.letterSpacing = '2px';
+  ctx.fillText('CREATIVE', 256, 320);
+  ctx.fillText('MINDS @', 256, 400);
+  ctx.fillText('ASTRIVIX', 256, 480);
   
   return canvas.toDataURL('image/png');
 }
 
 function createAstrivixBandTexture() {
   const canvas = document.createElement('canvas');
-  canvas.width = 4096; 
-  canvas.height = 256; 
+  canvas.width = 2048; 
+  canvas.height = 128; 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#050508';
+  ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 68px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+  ctx.font = '900 36px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  ctx.letterSpacing = '3px';
   
   // Flip context to counteract the MeshLine's reversed UV mapping
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  const text = 'A S T R I V I X   C O R P .          A S T R I V I X   C O R P .          A S T R I V I X   C O R P .          A S T R I V I X   C O R P .';
-  ctx.fillText(text, 2048, 128);
+  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
   tex.repeat.set(4, 1);
-  tex.anisotropy = 16;
-  tex.generateMipmaps = true;
-  tex.minFilter = THREE.LinearMipmapLinearFilter;
-  tex.magFilter = THREE.LinearFilter;
   return tex;
 }
 
-const defaultFrontImg = astrivixLogoFront;
 const defaultBackImg = createAstrivixBack();
 
 export default function Lanyard({
   position = [0, 0, 30],
-  gravity = [0, -90, 0],
+  gravity = [0, -40, 0],
   fov = 20,
   transparent = true,
-  frontImage = defaultFrontImg,
+  frontImage = '/assets/lanyard-logo.png',
   backImage = defaultBackImg,
   imageFit = 'contain',
   lanyardWidth = 2
@@ -124,64 +143,63 @@ export default function Lanyard({
     return () => observer.disconnect();
   }, []);
 
-  const dpr = typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio || 2, 2)] : [1, 2];
-
   return (
     <div ref={wrapperRef} className="lanyard-wrapper">
-      <Canvas
-        camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
-        dpr={dpr}
-        gl={{ alpha: transparent, antialias: true, powerPreference: "high-performance", precision: "highp" }}
-        onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
-      >
+      {isVisible && (
+        <Canvas
+          camera={{ position: [0, 0, isMobile ? 36 : 28], fov: isMobile ? 26 : fov }}
+          dpr={[1, isMobile ? 1.25 : 1.5]}
+          gl={{ alpha: transparent, powerPreference: "high-performance" }}
+          onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
+        >
           <ambientLight intensity={Math.PI} />
-          <Physics gravity={gravity} timeStep={1 / 120} interpolate={true}>
+          <Physics gravity={gravity} timeStep={1 / 60} interpolate={true}>
             <Band
               isMobile={isMobile}
-              frontImage={frontImage}
-              backImage={backImage}
-              imageFit={imageFit}
-              lanyardWidth={lanyardWidth}
-            />
-          </Physics>
-          <Environment blur={0.75}>
-            <Lightformer
-              intensity={2}
-              color="white"
-              position={[0, -1, 5]}
-              rotation={[0, 0, Math.PI / 3]}
-              scale={[100, 0.1, 1]}
-            />
-            <Lightformer
-              intensity={3}
-              color="white"
-              position={[-1, -1, 1]}
-              rotation={[0, 0, Math.PI / 3]}
-              scale={[100, 0.1, 1]}
-            />
-            <Lightformer
-              intensity={3}
-              color="white"
-              position={[1, 1, 1]}
-              rotation={[0, 0, Math.PI / 3]}
-              scale={[100, 0.1, 1]}
-            />
-            <Lightformer
-              intensity={10}
-              color="white"
-              position={[-10, 0, 14]}
-              rotation={[0, Math.PI / 2, Math.PI / 3]}
-              scale={[100, 10, 1]}
-            />
-          </Environment>
-        </Canvas>
+            frontImage={frontImage}
+            backImage={backImage}
+            imageFit={imageFit}
+            lanyardWidth={lanyardWidth}
+          />
+        </Physics>
+        <Environment blur={0.75}>
+          <Lightformer
+            intensity={2}
+            color="white"
+            position={[0, -1, 5]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={3}
+            color="white"
+            position={[-1, -1, 1]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={3}
+            color="white"
+            position={[1, 1, 1]}
+            rotation={[0, 0, Math.PI / 3]}
+            scale={[100, 0.1, 1]}
+          />
+          <Lightformer
+            intensity={10}
+            color="white"
+            position={[-10, 0, 14]}
+            rotation={[0, Math.PI / 2, Math.PI / 3]}
+            scale={[100, 10, 1]}
+          />
+        </Environment>
+      </Canvas>
+      )}
     </div>
   );
 }
-
 function Band({
-  maxSpeed = 80,
-  minSpeed = 10,
+  maxSpeed = 50,
+  minSpeed = 0,
   isMobile = false,
   frontImage = null,
   backImage = null,
@@ -199,19 +217,65 @@ function Band({
     rot = new THREE.Vector3(),
     dir = new THREE.Vector3();
   const { width, height } = useThree((state) => state.size);
-  const segmentProps = { type: 'dynamic', canSleep: false, colliders: false, angularDamping: 1.5, linearDamping: 1.5, ccd: true };
+  const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 6.0, linearDamping: 6.0, ccd: true };
   const { nodes, materials } = useGLTF(cardGLB);
   
   const bandTexture = useMemo(() => createAstrivixBandTexture(), []);
   
-  // Direct baked Astrivix card texture with both front logo & back CREATIVE MINDS @ ASTRIVIX
-  const cardMap = useTexture('/assets/lanyard/astrivix_card_texture.png');
-  if (cardMap) {
-    cardMap.colorSpace = THREE.SRGBColorSpace;
-    cardMap.anisotropy = 16;
-    cardMap.flipY = false;
-  }
+  // useTexture must be called unconditionally; use a blank pixel when an image
+  // isn't supplied for a given face, then skip compositing it below.
+  const frontTex = useTexture(frontImage || BLANK_PIXEL);
+  const backTex = useTexture(backImage || BLANK_PIXEL);
 
+  // Composite the front/back images into the card's texture atlas (front = left
+  // half, back = right half). Each image is drawn aspect-preserving (no stretch).
+  const cardMap = useMemo(() => {
+    const baseMap = materials.base.map;
+    const baseImg = baseMap.image;
+    const W = baseImg.width;
+    const H = baseImg.height;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return baseMap;
+    // Keep the original baked atlas for the card edges and any untouched face.
+    ctx.drawImage(baseImg, 0, 0, W, H);
+
+    // Matte Black Overlay for the front and back faces!
+    ctx.fillStyle = '#111111';
+    ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
+    ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
+
+    const drawFitted = (img, rect) => {
+      const rx = rect.x * W;
+      const ry = rect.y * H;
+      const rw = rect.w * W;
+      const rh = rect.h * H;
+      const pick = imageFit === 'contain' ? Math.min : Math.max;
+      const scale = pick(rw / img.width, rh / img.height);
+      const dw = img.width * scale;
+      const dh = img.height * scale;
+      const dx = rx + (rw - dw) / 2;
+      const dy = ry + (rh - dh) / 2;
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(rx, ry, rw, rh);
+      ctx.clip();
+      ctx.drawImage(img, dx, dy, dw, dh);
+      ctx.restore();
+    };
+
+    if (frontImage && frontTex.image) drawFitted(frontTex.image, FRONT_UV_RECT);
+    if (backImage && backTex.image) drawFitted(backTex.image, BACK_UV_RECT);
+
+    const composite = new THREE.CanvasTexture(canvas);
+    composite.colorSpace = THREE.SRGBColorSpace;
+    composite.flipY = baseMap.flipY;
+    composite.anisotropy = 16;
+    composite.needsUpdate = true;
+    return composite;
+  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])
@@ -256,17 +320,18 @@ function Band({
       curve.points[1].copy(j2.current.lerped);
       curve.points[2].copy(j1.current.lerped);
       curve.points[3].copy(fixed.current.translation());
-      band.current.geometry.setPoints(curve.getPoints(isMobile ? 24 : 48));
+      band.current.geometry.setPoints(curve.getPoints(isMobile ? 16 : 32));
       ang.copy(card.current.angvel());
       rot.copy(card.current.rotation());
       card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z });
       
+      // Apply a subtle, gentle micro-movement so it doesn't swing wildly
       if (!dragged && card.current) {
         const time = state.clock.getElapsedTime();
         card.current.applyImpulse({ 
-          x: Math.sin(time * 1.2) * 0.012, 
+          x: Math.sin(time * 0.8) * 0.008, 
           y: 0, 
-          z: Math.cos(time * 0.8) * 0.006 
+          z: Math.cos(time * 0.5) * 0.004 
         }, true);
       }
     }
@@ -277,16 +342,16 @@ function Band({
     <>
       <group position={[0, isMobile ? 2.6 : 3.6, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={[0, -0.4, 0]} ref={j1} {...segmentProps}>
+        <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -0.8, 0]} ref={j2} {...segmentProps}>
+        <RigidBody position={[1, 0, 0]} ref={j2} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.2, 0]} ref={j3} {...segmentProps}>
+        <RigidBody position={[1.5, 0, 0]} ref={j3} {...segmentProps}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={[0, -1.6, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
+        <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
             scale={2.25}
@@ -302,12 +367,13 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshStandardMaterial
                 map={cardMap}
+                color="#999999"
                 roughness={0.4}
-                metalness={0.15}
-                envMapIntensity={0.6}
+                metalness={0.9}
+                envMapIntensity={2}
               />
             </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.2} />
+            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>

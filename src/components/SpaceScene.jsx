@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars, Sphere, useTexture, useGLTF } from '@react-three/drei';
 import { useScroll } from 'framer-motion';
@@ -6,13 +6,25 @@ import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
 const CameraController = ({ scrollYProgress }) => {
+  const targetZ = useRef(0);
+  const isServicesActive = useRef(false);
+
+  useEffect(() => {
+    const el = document.getElementById('services');
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      isServicesActive.current = entry.isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useFrame(({ camera }) => {
     const progress = scrollYProgress.get();
-    // Gentle camera orbit on scroll while keeping planets at constant size
-    const targetX = Math.sin(progress * Math.PI * 0.4) * 2;
-    const targetY = -progress * 1.5;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.y += (targetY - camera.position.y) * 0.05;
+    const dampFactor = isServicesActive.current ? 0.0005 : 0.005;
+    const nextTargetZ = -progress * 4;
+    targetZ.current += (nextTargetZ - targetZ.current) * dampFactor;
+    camera.position.z += (targetZ.current - camera.position.z) * 0.005;
   });
 
   return null;
@@ -31,44 +43,33 @@ const DetailedEarth = ({ position, isMobile }) => {
     '/assets/planets/earth_clouds.png'
   ]);
 
-  useEffect(() => {
-    [colorMap, normalMap, specularMap, cloudsMap].forEach(texture => {
-      if (texture) {
-        texture.anisotropy = 16;
-        texture.needsUpdate = true;
-      }
-    });
-  }, [colorMap, normalMap, specularMap, cloudsMap]);
-
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.25;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.35;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.005;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.008;
   });
 
-  const radius = isMobile ? 2.8 : 4.8;
-  const cloudRadius = isMobile ? 2.84 : 4.85;
-  const segments = isMobile ? 80 : 96;
+  const segments = isMobile ? 48 : 64;
 
   return (
-    <group position={position} rotation={[0.3, 0, 0.15]}>
+    <group position={position} rotation={[0.4, 0, 0.2]}>
       {/* High-Resolution Earth Core Sphere */}
-      <Sphere ref={earthRef} args={[radius, segments, segments]}>
+      <Sphere ref={earthRef} args={[5, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           normalMap={normalMap} 
           normalScale={NORMAL_SCALE_EARTH}
           roughnessMap={specularMap} 
-          roughness={0.2} 
-          metalness={0.25}
+          roughness={0.25} 
+          metalness={0.2}
         />
       </Sphere>
 
       {/* Realistic Volumetric Cloud Layer */}
-      <Sphere ref={cloudsRef} args={[cloudRadius, segments, segments]}>
+      <Sphere ref={cloudsRef} args={[5.05, segments, segments]}>
         <meshStandardMaterial 
           map={cloudsMap} 
           transparent={true} 
-          opacity={0.85} 
+          opacity={0.82} 
           depthWrite={false} 
           roughness={0.9}
         />
@@ -81,28 +82,20 @@ const DetailedMoon = ({ position, isMobile }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
-  useEffect(() => {
-    if (colorMap) {
-      colorMap.anisotropy = 16;
-      colorMap.needsUpdate = true;
-    }
-  }, [colorMap]);
-
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.3;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.008;
   });
 
-  const radius = isMobile ? 1.0 : 1.8;
-  const segments = isMobile ? 64 : 80;
+  const segments = isMobile ? 32 : 48;
 
   return (
     <group position={position}>
-      <Sphere ref={moonRef} args={[radius, segments, segments]}>
+      <Sphere ref={moonRef} args={[2.2, segments, segments]}>
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
-          bumpScale={0.45} 
-          roughness={0.8} 
+          bumpScale={0.35} 
+          roughness={0.85} 
           metalness={0.05} 
         />
       </Sphere>
@@ -114,31 +107,23 @@ const RealisticMars = ({ position, isMobile }) => {
   const marsRef = useRef();
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
-  useEffect(() => {
-    if (rockyMap) {
-      rockyMap.anisotropy = 16;
-      rockyMap.needsUpdate = true;
-    }
-  }, [rockyMap]);
-
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y += delta * 0.25;
+    if (marsRef.current) marsRef.current.rotation.y -= delta * 0.008;
   });
 
-  const radius = isMobile ? 2.2 : 3.8;
-  const segments = isMobile ? 80 : 96;
+  const segments = isMobile ? 48 : 64;
 
   return (
-    <group position={position} rotation={[-0.2, 0, 0.2]}>
+    <group position={position} rotation={[-0.3, 0, 0.3]}>
       {/* High-Contrast Martian Topography Core */}
-      <Sphere ref={marsRef} args={[radius, segments, segments]}>
+      <Sphere ref={marsRef} args={[4.2, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
           color="#d64c24" 
           bumpMap={rockyMap} 
-          bumpScale={0.4} 
-          roughness={0.75} 
-          metalness={0.15}
+          bumpScale={0.3} 
+          roughness={0.8} 
+          metalness={0.1}
         />
       </Sphere>
     </group>
@@ -154,68 +139,42 @@ const RealisticJupiterRinged = ({ position }) => {
   const ringMap = useTexture('/assets/planets/saturn_ring.png');
 
   useFrame((state, delta) => {
-    if (planetRef.current) planetRef.current.rotation.y += delta * 0.2;
-    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.1;
+    // Ultra slow rotating gas giant
+    if (planetRef.current) planetRef.current.rotation.y += delta * 0.01;
+    if (ringRef.current) ringRef.current.rotation.z -= delta * 0.003;
   });
 
   return (
     <group position={position} rotation={[0.4, 0, -0.2]}>
-      <Sphere ref={planetRef} args={[5, 64, 64]}>
+      <Sphere ref={planetRef} args={[6, 128, 128]}>
         <meshStandardMaterial map={jupiterMap} roughness={1.0} metalness={0.0} />
       </Sphere>
-      <Sphere ref={atmosRef} args={[5.25, 32, 32]}>
+      {/* Outer Atmospheric Glow */}
+      <Sphere ref={atmosRef} args={[6.35, 64, 64]}>
         <meshStandardMaterial color="#faedcd" transparent opacity={0.15} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
       </Sphere>
       <mesh ref={ringRef} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[6.2, 11, 128]} />
+        <ringGeometry args={[7.5, 14, 256]} />
         <meshStandardMaterial map={ringMap} transparent opacity={0.9} side={THREE.DoubleSide} alphaTest={0.01} />
       </mesh>
     </group>
   );
 };
 
-const GLTFSatelliteModel = ({ orbitRadius = 10.5, speed = 0.18, yOffset = 4.0, isMobile = false }) => {
+const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  const satRef = useRef();
+  // Using the massive 36MB realistic satellite model
   const { scene } = useGLTF('/assets/planets/satellite.glb');
 
-  // Clone scene so it can be instantiated safely
-  const clonedScene = useMemo(() => {
-    const clone = scene.clone(true);
-    clone.traverse((child) => {
-      if (child.isMesh && child.material) {
-        child.material = child.material.clone();
-        // CRITICAL: Eliminate pure-white emissive blowout from GLTF material
-        child.material.emissive = new THREE.Color(0x000000);
-        child.material.emissiveIntensity = 0;
-        child.material.emissiveMap = null;
-        child.material.roughness = 0.45;
-        child.material.metalness = 0.65;
-        child.material.toneMapped = true;
-        child.material.needsUpdate = true;
-      }
-    });
-    return clone;
-  }, [scene]);
-
   useFrame((state, delta) => {
-    if (pivotRef.current) {
-      pivotRef.current.rotation.y += delta * speed;
-    }
+    if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
   });
 
-  const scale = isMobile ? 0.16 : 0.24;
-  const radius = isMobile ? 6.5 : orbitRadius;
-
   return (
-    <group ref={pivotRef} rotation={[0.3, 0, 0.1]}>
-      <group 
-        ref={satRef} 
-        position={[radius, yOffset, 0]} 
-        scale={[scale, scale, scale]}
-        rotation={[0.5, Math.PI / 2, 0]}
-      >
-        <primitive object={clonedScene} />
+    <group ref={pivotRef}>
+      <group position={[orbitRadius, yOffset, 0]}>
+        {/* Scaled up the satellite and adjusted orbit so it hovers cleanly */}
+        <primitive object={scene} scale={0.22} rotation={[0.5, Math.PI / 2, 0]} />
       </group>
     </group>
   );
@@ -226,6 +185,7 @@ const Comet = () => {
   const [active, setActive] = useState(false);
   const progress = useRef(0);
 
+  // Load the real, high-quality particle textures we just downloaded
   const [cometMap, coreMap] = useTexture([
     '/assets/planets/trace_01.png',
     '/assets/planets/circle_05.png'
@@ -258,12 +218,18 @@ const Comet = () => {
 
   return (
     <group ref={cometRef}>
+      {/* Genuine Particle Core (Billboarded Sprite) */}
       <sprite scale={[6, 6, 1]}>
         <spriteMaterial map={coreMap} color="#ffffff" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} />
       </sprite>
+      
+      {/* Genuine Particle Core Glow (Billboarded Sprite) */}
       <sprite scale={[12, 12, 1]}>
         <spriteMaterial map={coreMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} opacity={0.8} />
       </sprite>
+
+      {/* Tapered Volumetric Tail (Perfect 3D shape, strictly behind the core) */}
+      {/* Position Z=20 pushes the center 20 units back. Height is 40, so it spans from Z=0 to Z=40 */}
       <mesh position={[0, 0, 20]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[2.5, 0.1, 40, 16, 1, true]} />
         <meshBasicMaterial map={cometMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
@@ -273,15 +239,12 @@ const Comet = () => {
 };
 
 const Planets = ({ isMobile }) => {
-  const groupRef = useRef();
-
-  // Clean, elegant planet positions framing the mobile screen perfectly without overlapping text
-  const earthPos = isMobile ? [-3.2, 7.8, -28] : [-12, 2, -24];
-  const moonPos = isMobile ? [-3.8, -3.2, -22] : [-4, -3, -18];
-  const marsPos = isMobile ? [3.5, -7.2, -28] : [11, -1, -24];
+  const earthPos = isMobile ? [-6, 3, -25] : [-15, 5, -30];
+  const moonPos = isMobile ? [6, -2, -50] : [15, -2, -70];
+  const marsPos = isMobile ? [12, 10, -75] : [35, 15, -120];
 
   return (
-    <group ref={groupRef}>
+    <>
       <Comet />
       <DetailedEarth position={earthPos} isMobile={isMobile} />
       <DetailedMoon position={moonPos} isMobile={isMobile} />
@@ -289,96 +252,55 @@ const Planets = ({ isMobile }) => {
       
       {/* High Quality Satellite orbiting the Earth */}
       <group position={earthPos}>
-        <React.Suspense fallback={null}>
-          <GLTFSatelliteModel orbitRadius={isMobile ? 6.5 : 10.5} speed={0.18} yOffset={isMobile ? 2.5 : 4.0} isMobile={isMobile} />
-        </React.Suspense>
+        <HighResSatellite orbitRadius={isMobile ? 8 : 12} speed={0.1} yOffset={isMobile ? 4 : 6} />
       </group>
-    </group>
+    </>
   );
 };
 
-const InteractiveGyroGroup = ({ children }) => {
+const InteractiveStars = () => {
   const groupRef = useRef();
-  const targetRotation = useRef({ x: 0, y: 0 });
+  const mouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    // 1. Mouse movement (Desktop)
     const handleMouseMove = (e) => {
-      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-      targetRotation.current.x = mouseY * (Math.PI / 24);
-      targetRotation.current.y = mouseX * (Math.PI / 24);
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
 
-    // 2. Mobile Gyroscope Tracking (iOS + Android)
     const handleOrientation = (e) => {
-      const gamma = e.gamma ?? 0;
-      const beta = e.beta ?? 0;
-
-      // Handle screen orientation (portrait vs landscape)
-      const screenAngle = window.screen?.orientation?.angle ?? window.orientation ?? 0;
-      let rawGamma = gamma;
-      let rawBeta = beta;
-
-      if (screenAngle === 90) {
-        const tmp = rawGamma;
-        rawGamma = rawBeta;
-        rawBeta = -tmp;
-      } else if (screenAngle === -90 || screenAngle === 270) {
-        const tmp = rawGamma;
-        rawGamma = -rawBeta;
-        rawBeta = tmp;
-      }
-
-      // Normalized tilt relative to natural 45-degree mobile holding angle
-      const normGamma = Math.max(-1, Math.min(1, rawGamma / 35));
-      const normBeta = Math.max(-1, Math.min(1, (rawBeta - 40) / 35));
-
-      // High-sensitivity Same Axis Motion for mobile: Tilting phone right moves background right, tilting down moves down
-      targetRotation.current.y = normGamma * (Math.PI / 8);
-      targetRotation.current.x = normBeta * (Math.PI / 8);
-    };
-
-    // Request iOS 13+ permission & attach listeners
-    const enableGyro = () => {
-      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-          .then(permissionState => {
-            if (permissionState === 'granted') {
-              window.addEventListener('deviceorientation', handleOrientation, true);
-              window.addEventListener('deviceorientationabsolute', handleOrientation, true);
-            }
-          })
-          .catch(() => {});
-      } else {
-        window.addEventListener('deviceorientation', handleOrientation, true);
-        window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+      if (e.gamma !== null && e.beta !== null) {
+        mouse.current.x = Math.max(-1, Math.min(1, e.gamma / 25));
+        mouse.current.y = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
       }
     };
 
-    enableGyro();
-    window.addEventListener('touchstart', enableGyro, { passive: true });
-    window.addEventListener('click', enableGyro, { passive: true });
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    if (typeof window !== 'undefined' && window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+    }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('deviceorientation', handleOrientation);
-      window.removeEventListener('deviceorientationabsolute', handleOrientation);
-      window.removeEventListener('touchstart', enableGyro);
-      window.removeEventListener('click', enableGyro);
+      if (typeof window !== 'undefined') window.removeEventListener('deviceorientation', handleOrientation);
     };
   }, []);
 
   useFrame(() => {
     if (groupRef.current) {
-      // Smooth lerp rotation without jumping or glitching
-      groupRef.current.rotation.x += (targetRotation.current.x - groupRef.current.rotation.x) * 0.08;
-      groupRef.current.rotation.y += (targetRotation.current.y - groupRef.current.rotation.y) * 0.08;
+      const targetX = (mouse.current.y * Math.PI) / 12;
+      const targetY = (mouse.current.x * Math.PI) / 12;
+      
+      groupRef.current.rotation.x += (targetX - groupRef.current.rotation.x) * 0.04;
+      groupRef.current.rotation.y += (targetY - groupRef.current.rotation.y) * 0.04;
     }
   });
 
-  return <group ref={groupRef}>{children}</group>;
+  return (
+    <group ref={groupRef}>
+      <Stars radius={100} depth={50} count={4000} factor={4} saturation={0} fade speed={2} />
+    </group>
+  );
 };
 
 class WebGLErrorBoundary extends React.Component {
@@ -400,117 +322,27 @@ class WebGLErrorBoundary extends React.Component {
   }
 }
 
-const starCircleTexture = (() => {
-  if (typeof document === 'undefined') return null;
-  const canvas = document.createElement('canvas');
-  canvas.width = 32;
-  canvas.height = 32;
-  const ctx = canvas.getContext('2d');
-  const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-  gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-  gradient.addColorStop(0.15, 'rgba(255, 255, 255, 0.7)');
-  gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0)');
-  gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, 32, 32);
-  return new THREE.CanvasTexture(canvas);
-})();
-
-const BrightShimmerStars = ({ isMobile }) => {
-  const pointsRef = useRef();
-  const count = isMobile ? 2500 : 1500;
-
-  const [positions] = React.useMemo(() => {
-    const posArr = new Float32Array(count * 3);
-
-    for (let i = 0; i < count; i++) {
-      const radius = 25 + Math.random() * 95;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-
-      posArr[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      posArr[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      posArr[i * 3 + 2] = radius * Math.cos(phi);
-    }
-
-    return [posArr];
-  }, [count]);
-
-  useFrame((state, delta) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * 0.02;
-      pointsRef.current.rotation.x += delta * 0.01;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        map={starCircleTexture}
-        size={isMobile ? 0.65 : 0.75}
-        color="#ffffff"
-        transparent={true}
-        opacity={0.85}
-        blending={THREE.AdditiveBlending}
-        depthWrite={false}
-        sizeAttenuation={true}
-      />
-    </points>
-  );
-};
-
 export default function SpaceScene() {
   const { scrollYProgress } = useScroll();
   const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || window.matchMedia('(pointer: coarse)').matches);
-  const canvasDpr = typeof window !== 'undefined' ? [1, Math.min(window.devicePixelRatio || 2, 2)] : [1, 2];
 
   return (
     <WebGLErrorBoundary>
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
-          camera={{ position: [0, 0, 0], fov: isMobile ? 65 : 60 }} 
-          dpr={canvasDpr} 
-          performance={{ min: 0.5 }}
-          gl={{ antialias: true, alpha: true, powerPreference: "high-performance", stencil: false, depth: true, precision: "highp" }}
-          onCreated={({ gl }) => {
-            if (gl.domElement) {
-              gl.domElement.addEventListener('webglcontextlost', (e) => {
-                e.preventDefault();
-                console.warn('SpaceScene WebGL context lost handled smoothly.');
-              }, false);
-            }
-          }}
+          camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
+          dpr={isMobile ? 1 : [1, 1.5]} 
+          gl={{ antialias: false, powerPreference: "high-performance" }}
         >
-          {/* Balanced Cinematic Space Lighting Rig */}
-          <ambientLight intensity={0.8} />
-          <directionalLight position={[120, 80, 60]} intensity={1.8} color="#fff5ea" castShadow={false} />
-          <directionalLight position={[-120, -60, -80]} intensity={0.6} color="#6688cc" />
+          {/* Cinematic High-Contrast Solar Lighting Rig */}
+          <ambientLight intensity={0.2} />
+          <directionalLight position={[180, 120, 80]} intensity={isMobile ? 4.5 : 6.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={1.8} color="#88aaff" />
           
-          <InteractiveGyroGroup>
-            <Stars 
-              radius={100} 
-              depth={60} 
-              count={isMobile ? 12000 : 9000} 
-              factor={isMobile ? 3.6 : 3.6} 
-              saturation={0} 
-              fade 
-              speed={isMobile ? 2.0 : 2} 
-            />
-            <BrightShimmerStars isMobile={isMobile} />
-          </InteractiveGyroGroup>
-
+          <InteractiveStars />
           <React.Suspense fallback={null}>
             <Planets isMobile={isMobile} />
           </React.Suspense>
-          
           <CameraController scrollYProgress={scrollYProgress} />
         </Canvas>
       </div>
