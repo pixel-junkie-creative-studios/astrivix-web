@@ -83,11 +83,11 @@ const DetailedMoon = ({ position, isMobile }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.08;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.05;
   });
 
   const segments = isMobile ? 32 : 48;
-  const radius = isMobile ? 4.8 : 6.0;
+  const radius = isMobile ? 1.8 : 2.4;
 
   return (
     <group position={position}>
@@ -109,11 +109,11 @@ const RealisticMars = ({ position, isMobile }) => {
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y += delta * 0.08;
+    if (marsRef.current) marsRef.current.rotation.y += delta * 0.04;
   });
 
   const segments = isMobile ? 48 : 64;
-  const radius = isMobile ? 8.5 : 12.0;
+  const radius = isMobile ? 3.2 : 4.4;
 
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
@@ -241,8 +241,8 @@ const Comet = () => {
 
 const Planets = ({ isMobile }) => {
   const earthPos = isMobile ? [-5, 3, -25] : [-13, 4, -28];
-  const moonPos = isMobile ? [5, -2, -36] : [13, -2, -45];
-  const marsPos = isMobile ? [9, 7, -50] : [22, 9, -68];
+  const moonPos = isMobile ? [5.5, -2.5, -42] : [14, -2.5, -55];
+  const marsPos = isMobile ? [10, 8, -60] : [26, 11, -85];
 
   return (
     <>
