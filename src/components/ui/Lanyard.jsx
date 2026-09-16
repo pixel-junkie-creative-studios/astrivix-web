@@ -88,28 +88,28 @@ function createAstrivixBack() {
 function createAstrivixBandTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 2048; 
-  canvas.height = 128; 
+  canvas.height = 256; 
   const ctx = canvas.getContext('2d');
   ctx.fillStyle = '#050505';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
   ctx.fillStyle = '#ffffff';
-  ctx.font = '900 36px sans-serif';
+  ctx.font = '900 52px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.letterSpacing = '3px';
+  ctx.letterSpacing = '8px';
   
-  // Flip context to counteract the MeshLine's reversed UV mapping
+  // Flip context to counteract MeshLine's reversed UV mapping
   ctx.save();
   ctx.translate(canvas.width, 0);
   ctx.scale(-1, 1);
-  ctx.fillText('ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.   ASTRIVIX CORP.', 1024, 64);
+  ctx.fillText('ASTRIVIX CORP.           ASTRIVIX CORP.', 1024, 128);
   ctx.restore();
   
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-  tex.repeat.set(4, 1);
+  tex.repeat.set(2, 1);
   return tex;
 }
 
@@ -378,7 +378,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, isMobile ? 2.6 : 3.6, 0]}>
+      <group position={[0, isMobile ? 3.4 : 4.8, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0.5, 0, 0]} ref={j1} {...segmentProps}>
           <BallCollider args={[0.1]} />
