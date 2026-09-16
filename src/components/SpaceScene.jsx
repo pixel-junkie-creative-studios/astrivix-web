@@ -385,3 +385,5 @@ export default function SpaceScene() {
     </WebGLErrorBoundary>
   );
 }
+
+useGLTF.preload('/assets/planets/satellite.glb');
