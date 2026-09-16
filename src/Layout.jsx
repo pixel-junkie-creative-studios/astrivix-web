@@ -58,7 +58,7 @@ export default function Layout() {
           <Home />
         </div>
 
-        <div id="services" className="w-full relative z-20">
+        <div className="w-full relative z-20">
           <Services />
         </div>
 

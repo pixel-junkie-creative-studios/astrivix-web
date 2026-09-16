@@ -28,6 +28,50 @@ export default function Services() {
     offset: ["start start", "end end"]
   });
 
+  // Touch swipe support for mobile
+  const touchStartXRef = useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartXRef.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartXRef.current - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        goToService(activeIndex + 1);
+      } else {
+        goToService(activeIndex - 1);
+      }
+    }
+    touchStartXRef.current = null;
+  };
+
+  // Wheel event listener when hovered over the sticky deck to step through cards cleanly
+  const lastWheelTimeRef = useRef(0);
+  const handleWheel = (e) => {
+    const now = Date.now();
+    // Throttle wheel flips to 380ms so every card flip is seen smoothly
+    if (now - lastWheelTimeRef.current < 380) return;
+
+    if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
+      const isDown = e.deltaY > 0 || e.deltaX > 0;
+      if (isDown) {
+        if (activeIndex < services.length - 1) {
+          goToService(activeIndex + 1);
+          lastWheelTimeRef.current = now;
+        }
+      } else {
+        if (activeIndex > 0) {
+          goToService(activeIndex - 1);
+          lastWheelTimeRef.current = now;
+        }
+      }
+    }
+  };
+
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (isClickingRef.current) return;
     const newIndex = Math.min(
@@ -43,6 +87,7 @@ export default function Services() {
 
   const goToService = (targetIndex) => {
     const clampedIndex = Math.max(0, Math.min(services.length - 1, targetIndex));
+    if (clampedIndex === activeIndex) return;
     setDirection(clampedIndex >= activeIndex ? 1 : -1);
     prevIndexRef.current = clampedIndex;
     setActiveIndex(clampedIndex);
@@ -106,7 +151,12 @@ export default function Services() {
   return (
     <div id="services" ref={containerRef} className="relative z-10 w-full h-[450vh] md:h-[400vh] bg-transparent">
       {/* Native CSS Sticky Stage (Zero GSAP Pin Spacer Overhead) */}
-      <div className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10">
+      <div 
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10"
+      >
         {/* Header section */}
         <div className="text-center mb-4 md:mb-8 z-30 pointer-events-none">
           <h2 className="text-xs tracking-[0.4em] font-bold text-white/40 uppercase flex items-center justify-center gap-4 mb-2">
