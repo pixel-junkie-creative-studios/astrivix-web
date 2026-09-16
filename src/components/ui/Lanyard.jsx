@@ -167,7 +167,9 @@ function LanyardInner({
           gl={{ alpha: transparent, powerPreference: "high-performance" }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
         >
-          <ambientLight intensity={0.8} />
+          <ambientLight intensity={3.0} />
+          <directionalLight position={[0, 0, 10]} intensity={2.5} color="#ffffff" />
+          <directionalLight position={[0, 0, -10]} intensity={1.5} color="#ffffff" />
           <Physics gravity={gravity} timeStep={1 / 60} interpolate={true}>
             <Band
               isMobile={isMobile}
@@ -251,6 +253,13 @@ function Band({
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
   const backTex = useTexture(backImage || BLANK_PIXEL);
 
+  // Force cardMap recompute after 300ms — by then all image bitmaps are decoded
+  const [texReady, setTexReady] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setTexReady(n => n + 1), 300);
+    return () => clearTimeout(t);
+  }, [frontTex, backTex, materials.base.map]);
+
   // Composite the front/back images into the card's texture atlas.
   // IMPORTANT: materials.base.map.image can be null on first render (GLB texture not decoded yet).
   // We use a 1024x1024 fallback canvas so the logo ALWAYS renders regardless of baseImg state.
@@ -307,7 +316,7 @@ function Band({
     composite.anisotropy = 16;
     composite.needsUpdate = true;
     return composite;
-  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map]);
+  }, [frontImage, backImage, imageFit, frontTex, backTex, materials.base.map, texReady]);
   const [curve] = useState(
     () =>
       new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()])

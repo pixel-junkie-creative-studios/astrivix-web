@@ -187,19 +187,18 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const { scene: rawScene } = useGLTF('/assets/planets/satellite.glb');
 
   // Clone the scene so we get our own isolated copy (useGLTF returns a shared singleton).
-  // Apply material fixes inline — emissiveFactor [1,1,1] in the GLTF causes white blowout.
   const scene = React.useMemo(() => {
     const cloned = rawScene.clone(true);
     cloned.traverse((child) => {
       if (child.isMesh && child.material) {
         const mats = Array.isArray(child.material) ? child.material : [child.material];
         mats.forEach((mat) => {
-          // Zero out ALL glow and ALL specular reflection
-          mat.emissive = new THREE.Color(0x000000);
-          mat.emissiveIntensity = 0;
-          // roughness=1 = fully matte (zero specular), metalness=0 = shows raw texture colors
-          mat.roughness = 1.0;
-          mat.metalness = 0.0;
+          // The satellite's COLORS come from its emissive texture (gold foil, panels etc).
+          // Keep partial emissive so colors show — but NOT 1.0 which causes white blowout.
+          mat.emissiveIntensity = 0.55;
+          // Fully matte + non-metallic = zero specular glare at any angle
+          mat.roughness = 0.9;
+          mat.metalness = 0.05;
           mat.needsUpdate = true;
         });
       }
@@ -374,12 +373,12 @@ export default function SpaceScene() {
           dpr={isMobile ? [1, 1.5] : [1, 2]} 
           gl={{ antialias: true, powerPreference: "high-performance" }}
         >
-          {/* Cinematic Multi-Angle Solar Lighting Rig — no single-direction blowout */}
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[180, 120, 80]}  intensity={isMobile ? 2.0 : 2.5} color="#ffffff" castShadow={false} />
-          <directionalLight position={[-180, -80, -120]} intensity={1.2} color="#88aaff" />
-          <directionalLight position={[0, -100, 100]}   intensity={0.8} color="#aaccff" />
-          <directionalLight position={[-100, 100, -80]}  intensity={0.6} color="#ffffff" />
+          {/* Soft multi-angle lighting — emissive texture provides the colors */}
+          <ambientLight intensity={0.25} />
+          <directionalLight position={[180, 120, 80]}  intensity={isMobile ? 0.8 : 1.0} color="#ffffff" castShadow={false} />
+          <directionalLight position={[-180, -80, -120]} intensity={0.5} color="#88aaff" />
+          <directionalLight position={[0, -100, 100]}   intensity={0.3} color="#aaccff" />
+          <directionalLight position={[-100, 100, -80]}  intensity={0.25} color="#ffffff" />
           
           <InteractiveStars />
           <React.Suspense fallback={null}>
