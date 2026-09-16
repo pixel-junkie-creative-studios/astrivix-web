@@ -63,11 +63,6 @@ const DetailedEarth = ({ position, isMobile }) => {
         />
       </Sphere>
 
-      {/* Volumetric Atmosphere Rim Halo */}
-      <Sphere args={[radius * 1.05, 64, 64]}>
-        <meshStandardMaterial color="#38bdf8" transparent opacity={0.18} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
-      </Sphere>
-
       {/* Realistic Volumetric Cloud Layer */}
       <Sphere ref={cloudsRef} args={[cloudRadius, segments, segments]}>
         <meshStandardMaterial 
@@ -145,11 +140,6 @@ const RealisticMars = ({ position, isMobile }) => {
           roughness={0.75} 
           metalness={0.15}
         />
-      </Sphere>
-
-      {/* Martian Dust Atmosphere Rim Halo */}
-      <Sphere args={[radius * 1.04, 64, 64]}>
-        <meshStandardMaterial color="#f97316" transparent opacity={0.16} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.BackSide} />
       </Sphere>
     </group>
   );

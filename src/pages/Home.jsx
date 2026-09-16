@@ -45,8 +45,8 @@ export default function Home() {
               scatter={150}
               gatherDuration={1500}
               stagger={100}
-              pointerRepel={150}
-              repelRadius={400}
+              pointerRepel={35}
+              repelRadius={100}
               fontSize="clamp(3.2rem, 15vw, 12rem)"
               fontWeight={900}
             />
