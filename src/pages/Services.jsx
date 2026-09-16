@@ -13,11 +13,15 @@ const services = [
   { id: '09', title: 'FINANCE CONSULTING', category: 'Capital Architecture', color: '#34D399', desc: 'Financial modeling, revenue optimization, and capital allocation frameworks designed for sustainable enterprise expansion.' }
 ];
 
+import { useLenis } from 'lenis/react';
+
 export default function Services() {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const prevIndexRef = useRef(0);
+  const isClickingRef = useRef(false);
+  const lenis = useLenis();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,6 +29,7 @@ export default function Services() {
   });
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (isClickingRef.current) return;
     const newIndex = Math.min(
       services.length - 1,
       Math.floor(latest * services.length)
@@ -35,6 +40,37 @@ export default function Services() {
       setActiveIndex(newIndex);
     }
   });
+
+  const goToService = (targetIndex) => {
+    const clampedIndex = Math.max(0, Math.min(services.length - 1, targetIndex));
+    setDirection(clampedIndex >= activeIndex ? 1 : -1);
+    prevIndexRef.current = clampedIndex;
+    setActiveIndex(clampedIndex);
+
+    // Synchronize page scroll to match the selected card so continuing scroll proceeds smoothly
+    if (containerRef.current) {
+      const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
+      const scrollableDist = containerRef.current.offsetHeight - window.innerHeight;
+      if (scrollableDist > 0) {
+        const targetScrollY = containerTop + (clampedIndex / (services.length - 1)) * scrollableDist;
+        isClickingRef.current = true;
+        if (lenis) {
+          lenis.scrollTo(targetScrollY, {
+            immediate: false,
+            duration: 0.6,
+            onComplete: () => {
+              isClickingRef.current = false;
+            }
+          });
+        } else {
+          window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+          setTimeout(() => {
+            isClickingRef.current = false;
+          }, 600);
+        }
+      }
+    }
+  };
 
   const prevIndex = (activeIndex - 1 + services.length) % services.length;
   const nextIndex = (activeIndex + 1) % services.length;
@@ -107,12 +143,7 @@ export default function Services() {
         >
           {/* LEFT PEEK CARD */}
           <div 
-            onClick={() => {
-              setDirection(-1);
-              const idx = Math.max(0, activeIndex - 1);
-              prevIndexRef.current = idx;
-              setActiveIndex(idx);
-            }}
+            onClick={() => goToService(activeIndex - 1)}
             className="hidden sm:flex absolute left-2 lg:left-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-80 transition-all duration-500 border border-white/20 shadow-2xl backdrop-blur-xl bg-[#08080c]/90"
             style={{ 
               transform: 'rotateY(25deg) translateZ(-60px)',
@@ -192,11 +223,7 @@ export default function Services() {
                     {services.map((s, idx) => (
                       <div 
                         key={s.id}
-                        onClick={() => {
-                          setDirection(idx > activeIndex ? 1 : -1);
-                          prevIndexRef.current = idx;
-                          setActiveIndex(idx);
-                        }}
+                        onClick={() => goToService(idx)}
                         className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${idx === activeIndex ? 'w-8 bg-white shadow-[0_0_10px_#ffffff]' : 'w-1.5 bg-white/20 hover:bg-white/40'}`}
                       />
                     ))}
@@ -220,12 +247,7 @@ export default function Services() {
 
           {/* RIGHT PEEK CARD */}
           <div 
-            onClick={() => {
-              setDirection(1);
-              const idx = Math.min(services.length - 1, activeIndex + 1);
-              prevIndexRef.current = idx;
-              setActiveIndex(idx);
-            }}
+            onClick={() => goToService(activeIndex + 1)}
             className="hidden sm:flex absolute right-2 lg:right-8 z-10 w-[220px] md:w-[280px] h-[340px] md:h-[400px] rounded-3xl p-6 flex-col justify-between cursor-pointer opacity-40 hover:opacity-75 transition-all duration-500 border border-white/20 shadow-2xl glass-metallic bg-[#08080c]"
 
             style={{ 
@@ -250,12 +272,7 @@ export default function Services() {
         {/* Mobile Controls */}
         <div className="flex sm:hidden items-center justify-center gap-6 mt-6 z-30">
           <button
-            onClick={() => {
-              setDirection(-1);
-              const idx = Math.max(0, activeIndex - 1);
-              prevIndexRef.current = idx;
-              setActiveIndex(idx);
-            }}
+            onClick={() => goToService(activeIndex - 1)}
             className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
           >
             ←
@@ -264,12 +281,7 @@ export default function Services() {
             {activeService.id} / 09
           </span>
           <button
-            onClick={() => {
-              setDirection(1);
-              const idx = Math.min(services.length - 1, activeIndex + 1);
-              prevIndexRef.current = idx;
-              setActiveIndex(idx);
-            }}
+            onClick={() => goToService(activeIndex + 1)}
             className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white active:scale-95 text-lg"
           >
             →
