@@ -183,7 +183,24 @@ const RealisticJupiterRinged = ({ position }) => {
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  const { scene } = useGLTF('/assets/planets/satellite.glb');
+  const { scene: rawScene } = useGLTF('/assets/planets/satellite.glb');
+
+  const scene = React.useMemo(() => {
+    const cloned = rawScene.clone(true);
+    cloned.traverse((child) => {
+      if (child.isMesh && child.material) {
+        const mats = Array.isArray(child.material) ? child.material : [child.material];
+        mats.forEach((mat) => {
+          mat.emissive = new THREE.Color(0x000000);
+          mat.emissiveIntensity = 0;
+          mat.metalness = 0.1;
+          mat.roughness = 0.6;
+          mat.needsUpdate = true;
+        });
+      }
+    });
+    return cloned;
+  }, [rawScene]);
 
   useFrame((state, delta) => {
     if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
