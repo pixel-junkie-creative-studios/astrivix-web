@@ -6,8 +6,8 @@ import React, { useEffect } from 'react';
  * OpenGraph, Twitter Cards, and Rich Schema.org LD+JSON Structured Data.
  */
 export default function SEOManager({
-  title = "Astrivix Corp | #1 Global Web Development, Branding & Mobile App Engineering Agency",
-  description = "Astrivix Corp (www.astrivix.in) is an elite global agency specializing in enterprise web development, native mobile app engineering, custom branding, and high-ROI digital marketing.",
+  title = "Astrivix Corp Business Consultants | Enterprise Digital Consultancy",
+  description = "Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering bespoke software engineering, brand architecture, and strategic digital advisory.",
   canonical = "https://www.astrivix.in/",
   googleSiteVerification = "GSC-VERIFICATION-TOKEN-PLACEHOLDER",
   gaMeasurementId = "G-MEASUREMENT-ID-PLACEHOLDER"

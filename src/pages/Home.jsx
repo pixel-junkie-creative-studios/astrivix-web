@@ -26,7 +26,7 @@ export default function Home() {
       </motion.div>
       
       {/* Semantic Primary H1 Tag for SEO */}
-      <h1 className="sr-only">Astrivix Corp — Global Digital Agency & Enterprise Software Studio</h1>
+      <h1 className="sr-only">Astrivix Corp Business Consultants — Enterprise Digital Consultancy & Bespoke Software Studio</h1>
 
       {/* Hero Section */}
       <section id="hero" className="min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center relative z-10 px-4 sm:px-6">
@@ -42,11 +42,11 @@ export default function Home() {
               particleSize={2.5}
               density={5}
               rainbowMode={true}
-              scatter={150}
+              scatter={160}
               gatherDuration={1500}
               stagger={100}
-              pointerRepel={35}
-              repelRadius={100}
+              pointerRepel={85}
+              repelRadius={180}
               fontSize="clamp(3.2rem, 15vw, 12rem)"
               fontWeight={900}
             />

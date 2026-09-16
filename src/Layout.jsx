@@ -137,24 +137,21 @@ export default function Layout() {
             
             {/* Copyright & Tagline Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.2em] text-white/50 uppercase text-center font-bold">
-              <span>Astrivix Corp (Astrivix Business Consultants) © 2026</span>
-              <span>Engineering Digital Perfection & High-Performance Architecture</span>
+              <span>Astrivix Corp Business Consultants © 2026</span>
+              <span>Engineering Bespoke Digital Architecture & Strategic Advisory</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
             <div className="sr-only" aria-hidden="true">
-              <h2>Astrivix Corp & Astrivix Business Consultants — Global Headquarters</h2>
-              <p>Astrivix Corp and Astrivix Business Consultants (www.astrivix.in) are the exact same global enterprise entity specializing in web development, native mobile app engineering, custom branding systems, conversion rate optimization, digital marketing, graphic design, motion graphics, and financial business consulting.</p>
+              <h2>Astrivix Corp Business Consultants</h2>
+              <p>Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering bespoke software engineering, brand architecture, native mobile applications, conversion optimization, and strategic business advisory worldwide.</p>
               <ul>
-                <li>Astrivix Corp (Astrivix Business Consultants)</li>
-                <li>Integrated Branding & Logo Architecture</li>
-                <li>Enterprise Web Development & React Engineering</li>
-                <li>Mobile App Engineering for iOS and Android</li>
-                <li>Performance Digital Marketing & Programmatic SEO</li>
-                <li>Conversion Rate Optimization & Checkout Perfection</li>
-                <li>Graphic Design & Custom UI UX Systems</li>
-                <li>Motion Graphics & Video Production</li>
-                <li>Enterprise Business & Financial Consulting</li>
+                <li>Astrivix Corp Business Consultants</li>
+                <li>Integrated Brand Architecture</li>
+                <li>Enterprise Software Engineering</li>
+                <li>Mobile Application Development</li>
+                <li>Performance Marketing & Strategic Advisory</li>
+                <li>Conversion Optimization & Design Systems</li>
               </ul>
             </div>
           </div>
