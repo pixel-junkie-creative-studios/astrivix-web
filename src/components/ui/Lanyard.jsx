@@ -275,14 +275,9 @@ function Band({
     const ctx = canvas.getContext('2d');
     if (!ctx) return baseMap;
 
-    // Paint ENTIRE canvas black first — no white from base atlas ever bleeds through
-    ctx.fillStyle = '#0a0a0a';
+    // Fill 100% uniform seamless deep black across the entire card surface — zero color bands or stripes
+    ctx.fillStyle = '#08080a';
     ctx.fillRect(0, 0, W, H);
-
-    // Slightly lighter face for the front and back to distinguish from edges
-    ctx.fillStyle = '#111118';
-    ctx.fillRect(FRONT_UV_RECT.x * W, FRONT_UV_RECT.y * H, FRONT_UV_RECT.w * W, FRONT_UV_RECT.h * H);
-    ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
 
     const drawFitted = (img, rect) => {
       if (!img || !img.width || !img.height) return;
