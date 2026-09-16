@@ -43,9 +43,14 @@ const DetailedEarth = ({ position, isMobile }) => {
     '/assets/planets/earth_clouds.png'
   ]);
 
+  if (colorMap) {
+    colorMap.anisotropy = 16;
+    colorMap.generateMipmaps = true;
+  }
+
   useFrame((state, delta) => {
-    if (earthRef.current) earthRef.current.rotation.y += delta * 0.03;
-    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.04;
+    if (earthRef.current) earthRef.current.rotation.y += delta * 0.08;
+    if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.10;
   });
 
   const segments = isMobile ? 48 : 64;
@@ -81,12 +86,19 @@ const DetailedEarth = ({ position, isMobile }) => {
 const DetailedMoon = ({ position, isMobile }) => {
   const moonRef = useRef();
   const colorMap = useTexture('/assets/planets/moon.jpg');
+  
+  // Ensure crisp texture sampling
+  if (colorMap) {
+    colorMap.anisotropy = 16;
+    colorMap.generateMipmaps = true;
+  }
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.05;
+    // Distinct, clearly perceptible continuous rotation
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.12;
   });
 
-  const segments = isMobile ? 32 : 48;
+  const segments = isMobile ? 48 : 64;
   const radius = isMobile ? 1.8 : 2.4;
 
   return (
@@ -95,8 +107,8 @@ const DetailedMoon = ({ position, isMobile }) => {
         <meshStandardMaterial 
           map={colorMap} 
           bumpMap={colorMap} 
-          bumpScale={0.35} 
-          roughness={0.85} 
+          bumpScale={0.4} 
+          roughness={0.8} 
           metalness={0.05} 
         />
       </Sphere>
@@ -108,11 +120,17 @@ const RealisticMars = ({ position, isMobile }) => {
   const marsRef = useRef();
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
+  if (rockyMap) {
+    rockyMap.anisotropy = 16;
+    rockyMap.generateMipmaps = true;
+  }
+
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y += delta * 0.04;
+    // Distinct, clearly perceptible continuous rotation
+    if (marsRef.current) marsRef.current.rotation.y += delta * 0.10;
   });
 
-  const segments = isMobile ? 48 : 64;
+  const segments = isMobile ? 64 : 96;
   const radius = isMobile ? 3.2 : 4.4;
 
   return (
@@ -121,10 +139,10 @@ const RealisticMars = ({ position, isMobile }) => {
       <Sphere ref={marsRef} args={[radius, segments, segments]}>
         <meshStandardMaterial 
           map={rockyMap} 
-          color="#d64c24" 
+          color="#e0562e" 
           bumpMap={rockyMap} 
-          bumpScale={0.3} 
-          roughness={0.8} 
+          bumpScale={0.35} 
+          roughness={0.75} 
           metalness={0.1} 
         />
       </Sphere>
@@ -332,8 +350,8 @@ export default function SpaceScene() {
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
           camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
-          dpr={isMobile ? 1 : [1, 1.5]} 
-          gl={{ antialias: false, powerPreference: "high-performance" }}
+          dpr={isMobile ? [1, 1.5] : [1, 2]} 
+          gl={{ antialias: true, powerPreference: "high-performance" }}
         >
           {/* Cinematic High-Contrast Solar Lighting Rig */}
           <ambientLight intensity={0.2} />

@@ -49,37 +49,15 @@ export default function Services() {
     touchStartXRef.current = null;
   };
 
-  // Wheel event listener when hovered over the sticky deck to step through cards cleanly
-  const lastWheelTimeRef = useRef(0);
-  const handleWheel = (e) => {
-    const now = Date.now();
-    // Throttle wheel flips to 380ms so every card flip is seen smoothly
-    if (now - lastWheelTimeRef.current < 380) return;
-
-    if (Math.abs(e.deltaY) > 25 || Math.abs(e.deltaX) > 25) {
-      const isDown = e.deltaY > 0 || e.deltaX > 0;
-      if (isDown) {
-        if (activeIndex < services.length - 1) {
-          goToService(activeIndex + 1);
-          lastWheelTimeRef.current = now;
-        }
-      } else {
-        if (activeIndex > 0) {
-          goToService(activeIndex - 1);
-          lastWheelTimeRef.current = now;
-        }
-      }
-    }
-  };
-
+  // Smoothly update card index as user scrolls through the 400vh container
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (isClickingRef.current) return;
+    const rawIndex = latest * services.length;
     const newIndex = Math.min(
       services.length - 1,
-      Math.floor(latest * services.length)
+      Math.floor(rawIndex)
     );
     if (newIndex !== prevIndexRef.current) {
-      setDirection(newIndex > prevIndexRef.current ? 1 : -1);
+      setDirection(newIndex >= prevIndexRef.current ? 1 : -1);
       prevIndexRef.current = newIndex;
       setActiveIndex(newIndex);
     }
@@ -92,26 +70,15 @@ export default function Services() {
     prevIndexRef.current = clampedIndex;
     setActiveIndex(clampedIndex);
 
-    // Synchronize page scroll to match the selected card so continuing scroll proceeds smoothly
     if (containerRef.current) {
       const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
       const scrollableDist = containerRef.current.offsetHeight - window.innerHeight;
       if (scrollableDist > 0) {
         const targetScrollY = containerTop + (clampedIndex / (services.length - 1)) * scrollableDist;
-        isClickingRef.current = true;
         if (lenis) {
-          lenis.scrollTo(targetScrollY, {
-            immediate: false,
-            duration: 0.6,
-            onComplete: () => {
-              isClickingRef.current = false;
-            }
-          });
+          lenis.scrollTo(targetScrollY, { immediate: false, duration: 0.8 });
         } else {
           window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
-          setTimeout(() => {
-            isClickingRef.current = false;
-          }, 600);
         }
       }
     }
@@ -152,7 +119,6 @@ export default function Services() {
     <div id="services" ref={containerRef} className="relative z-10 w-full h-[450vh] md:h-[400vh] bg-transparent">
       {/* Native CSS Sticky Stage (Zero GSAP Pin Spacer Overhead) */}
       <div 
-        onWheel={handleWheel}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10"

@@ -87,14 +87,34 @@ export default function Layout() {
               
               {/* Brand & Newsletter */}
               <div className="col-span-1 md:col-span-2 flex flex-col items-center md:items-start w-full">
-                <h3 className="text-3xl font-light mb-6 tracking-widest uppercase text-white">Astrivix Corp.</h3>
-                <p className="text-white/50 text-sm mb-8 max-w-md leading-relaxed">
-                  Engineering digital perfection. Subscribe to our newsletter to receive the latest updates, case studies, and industry insights.
+                <h3 className="text-3xl font-light mb-4 tracking-widest uppercase text-white font-display">Astrivix Corp.</h3>
+                <p className="text-white/60 text-sm mb-6 max-w-md leading-relaxed">
+                  Join industry leaders receiving strategic insights, technological developments, and executive advisory briefings.
                 </p>
-                <div className="flex w-full max-w-md bg-[#0E0E16] border border-white/10 rounded-full p-1 pl-4 md:pl-6 focus-within:border-white/30 transition-colors">
-                  <input type="email" placeholder="ENTER EMAIL ADDRESS" className="bg-transparent text-[10px] md:text-sm w-full outline-none text-white placeholder-white/30 tracking-widest" />
-                  <button className="px-4 md:px-6 py-3 bg-white text-black text-[10px] md:text-xs font-bold tracking-widest rounded-full hover:bg-zinc-200 transition-colors">SUBSCRIBE</button>
-                </div>
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const input = e.currentTarget.querySelector('input');
+                    if (input && input.value) {
+                      alert(`Thank you for subscribing, ${input.value}. You'll receive our executive briefings.`);
+                      input.value = '';
+                    }
+                  }}
+                  className="w-full max-w-md flex flex-row items-center bg-[#07070b]/90 border border-white/20 rounded-full p-1.5 pl-5 focus-within:border-cyan-400/80 focus-within:shadow-[0_0_20px_rgba(6,182,212,0.25)] transition-all duration-300"
+                >
+                  <input 
+                    type="email" 
+                    required
+                    placeholder="ENTER YOUR WORK EMAIL" 
+                    className="bg-transparent text-xs md:text-sm w-full outline-none text-white placeholder-white/40 tracking-wider font-mono selection:bg-white/20" 
+                  />
+                  <button 
+                    type="submit"
+                    className="px-5 md:px-7 py-2.5 md:py-3 bg-white hover:bg-zinc-200 text-black text-xs font-mono font-bold tracking-widest uppercase rounded-full shadow-[0_0_15px_rgba(255,255,255,0.4)] transition-all duration-300 flex-shrink-0 cursor-pointer active:scale-95"
+                  >
+                    SUBSCRIBE
+                  </button>
+                </form>
               </div>
 
               {/* Links */}
@@ -138,13 +158,13 @@ export default function Layout() {
             {/* Copyright & Tagline Row */}
             <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5 text-[10px] font-mono tracking-[0.2em] text-white/50 uppercase text-center font-bold">
               <span>Astrivix Corp Business Consultants © 2026</span>
-              <span>Engineering Bespoke Digital Architecture & Strategic Advisory</span>
+              <span>Engineering Advanced Digital Architecture & Strategic Advisory</span>
             </div>
 
             {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
             <div className="sr-only" aria-hidden="true">
               <h2>Astrivix Corp Business Consultants</h2>
-              <p>Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering bespoke software engineering, brand architecture, native mobile applications, conversion optimization, and strategic business advisory worldwide.</p>
+              <p>Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering advanced software engineering, brand architecture, native mobile applications, conversion optimization, and strategic business advisory worldwide.</p>
               <ul>
                 <li>Astrivix Corp Business Consultants</li>
                 <li>Integrated Brand Architecture</li>

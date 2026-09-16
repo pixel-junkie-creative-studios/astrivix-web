@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
  */
 export default function SEOManager({
   title = "Astrivix Corp Business Consultants | Enterprise Digital Consultancy",
-  description = "Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering bespoke software engineering, brand architecture, and strategic digital advisory.",
+  description = "Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering advanced software engineering, brand architecture, and strategic digital advisory.",
   canonical = "https://www.astrivix.in/",
   googleSiteVerification = "GSC-VERIFICATION-TOKEN-PLACEHOLDER",
   gaMeasurementId = "G-MEASUREMENT-ID-PLACEHOLDER"
