@@ -83,11 +83,11 @@ const DetailedMoon = ({ position, isMobile }) => {
   const colorMap = useTexture('/assets/planets/moon.jpg');
 
   useFrame((state, delta) => {
-    if (moonRef.current) moonRef.current.rotation.y += delta * 0.04;
+    if (moonRef.current) moonRef.current.rotation.y += delta * 0.08;
   });
 
   const segments = isMobile ? 32 : 48;
-  const radius = isMobile ? 3.4 : 4.2;
+  const radius = isMobile ? 4.8 : 6.0;
 
   return (
     <group position={position}>
@@ -109,11 +109,11 @@ const RealisticMars = ({ position, isMobile }) => {
   const rockyMap = useTexture('/assets/planets/venus.jpg');
 
   useFrame((state, delta) => {
-    if (marsRef.current) marsRef.current.rotation.y += delta * 0.035;
+    if (marsRef.current) marsRef.current.rotation.y += delta * 0.08;
   });
 
   const segments = isMobile ? 48 : 64;
-  const radius = isMobile ? 6.2 : 8.0;
+  const radius = isMobile ? 8.5 : 12.0;
 
   return (
     <group position={position} rotation={[-0.3, 0, 0.3]}>
@@ -125,7 +125,7 @@ const RealisticMars = ({ position, isMobile }) => {
           bumpMap={rockyMap} 
           bumpScale={0.3} 
           roughness={0.8} 
-          metalness={0.1}
+          metalness={0.1} 
         />
       </Sphere>
     </group>
@@ -175,8 +175,8 @@ const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   return (
     <group ref={pivotRef}>
       <group position={[orbitRadius, yOffset, 0]}>
-        {/* Scaled up the satellite and adjusted orbit so it hovers cleanly */}
-        <primitive object={scene} scale={0.22} rotation={[0.5, Math.PI / 2, 0]} />
+        {/* Prominent scale and close orbit hugging Earth */}
+        <primitive object={scene} scale={0.32} rotation={[0.5, Math.PI / 2, 0]} />
       </group>
     </group>
   );
@@ -231,7 +231,6 @@ const Comet = () => {
       </sprite>
 
       {/* Tapered Volumetric Tail (Perfect 3D shape, strictly behind the core) */}
-      {/* Position Z=20 pushes the center 20 units back. Height is 40, so it spans from Z=0 to Z=40 */}
       <mesh position={[0, 0, 20]} rotation={[Math.PI / 2, 0, 0]}>
         <cylinderGeometry args={[2.5, 0.1, 40, 16, 1, true]} />
         <meshBasicMaterial map={cometMap} color="#a855f7" blending={THREE.AdditiveBlending} transparent={true} depthWrite={false} side={THREE.DoubleSide} opacity={0.6} />
@@ -242,8 +241,8 @@ const Comet = () => {
 
 const Planets = ({ isMobile }) => {
   const earthPos = isMobile ? [-5, 3, -25] : [-13, 4, -28];
-  const moonPos = isMobile ? [5.5, -2, -42] : [14, -2, -55];
-  const marsPos = isMobile ? [10, 8, -60] : [26, 11, -85];
+  const moonPos = isMobile ? [5, -2, -36] : [13, -2, -45];
+  const marsPos = isMobile ? [9, 7, -50] : [22, 9, -68];
 
   return (
     <>
@@ -252,9 +251,9 @@ const Planets = ({ isMobile }) => {
       <DetailedMoon position={moonPos} isMobile={isMobile} />
       <RealisticMars position={marsPos} isMobile={isMobile} />
       
-      {/* High Quality Satellite orbiting close to the Earth */}
+      {/* High Quality Satellite orbiting tight and close to Earth */}
       <group position={earthPos}>
-        <HighResSatellite orbitRadius={isMobile ? 6.2 : 7.8} speed={0.16} yOffset={isMobile ? 2.5 : 3.2} />
+        <HighResSatellite orbitRadius={isMobile ? 5.2 : 6.4} speed={0.18} yOffset={isMobile ? 2.0 : 2.6} />
       </group>
     </>
   );
