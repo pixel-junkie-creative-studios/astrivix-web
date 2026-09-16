@@ -154,7 +154,7 @@ export default function Lanyard({
           gl={{ alpha: transparent, powerPreference: "high-performance" }}
           onCreated={({ gl }) => gl.setClearColor(new THREE.Color(0x000000), transparent ? 0 : 1)}
         >
-          <ambientLight intensity={Math.PI} />
+          <ambientLight intensity={0.8} />
           <Physics gravity={gravity} timeStep={1 / 60} interpolate={true}>
             <Band
               isMobile={isMobile}
@@ -166,28 +166,28 @@ export default function Lanyard({
         </Physics>
         <Environment blur={0.75}>
           <Lightformer
-            intensity={2}
+            intensity={1}
             color="white"
             position={[0, -1, 5]}
             rotation={[0, 0, Math.PI / 3]}
             scale={[100, 0.1, 1]}
           />
           <Lightformer
-            intensity={3}
+            intensity={1.5}
             color="white"
             position={[-1, -1, 1]}
             rotation={[0, 0, Math.PI / 3]}
             scale={[100, 0.1, 1]}
           />
           <Lightformer
-            intensity={3}
+            intensity={1.5}
             color="white"
             position={[1, 1, 1]}
             rotation={[0, 0, Math.PI / 3]}
             scale={[100, 0.1, 1]}
           />
           <Lightformer
-            intensity={10}
+            intensity={1.5}
             color="white"
             position={[-10, 0, 14]}
             rotation={[0, Math.PI / 2, Math.PI / 3]}
@@ -369,10 +369,10 @@ function Band({
             <mesh geometry={nodes.card.geometry}>
               <meshStandardMaterial
                 map={cardMap}
-                color="#999999"
-                roughness={0.4}
-                metalness={0.9}
-                envMapIntensity={2}
+                color="#ffffff"
+                roughness={0.6}
+                metalness={0.15}
+                envMapIntensity={0.4}
               />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />

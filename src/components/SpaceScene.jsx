@@ -183,8 +183,25 @@ const RealisticJupiterRinged = ({ position }) => {
 
 const HighResSatellite = ({ orbitRadius, speed, yOffset }) => {
   const pivotRef = useRef();
-  // Using the massive 36MB realistic satellite model
+  // Using the realistic 36MB satellite model
   const { scene } = useGLTF('/assets/planets/satellite.glb');
+
+  // Fix material properties: the GLTF had emissiveFactor [1,1,1] causing white blowout
+  useEffect(() => {
+    if (scene) {
+      scene.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.emissive = new THREE.Color(0x000000);
+          child.material.emissiveIntensity = 0;
+          if (child.material.roughness === 1.0 && child.material.metalness === 1.0) {
+            child.material.roughness = 0.4;
+            child.material.metalness = 0.8;
+          }
+          child.material.needsUpdate = true;
+        }
+      });
+    }
+  }, [scene]);
 
   useFrame((state, delta) => {
     if (pivotRef.current) pivotRef.current.rotation.y += delta * speed;
