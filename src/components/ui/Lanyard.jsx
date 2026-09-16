@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 'use client';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -115,7 +115,20 @@ function createAstrivixBandTexture() {
 
 const defaultBackImg = createAstrivixBack();
 
-export default function Lanyard({
+class LanyardErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(err) { console.warn('[Lanyard] 3D error caught:', err.message); }
+  render() {
+    if (this.state.hasError) return <div className="lanyard-wrapper" />;
+    return this.props.children;
+  }
+}
+
+function LanyardInner({
   position = [0, 0, 30],
   gravity = [0, -40, 0],
   fov = 20,
@@ -194,11 +207,20 @@ export default function Lanyard({
             scale={[100, 10, 1]}
           />
         </Environment>
-      </Canvas>
+        </Canvas>
       )}
     </div>
   );
 }
+
+export default function Lanyard(props) {
+  return (
+    <LanyardErrorBoundary>
+      <LanyardInner {...props} />
+    </LanyardErrorBoundary>
+  );
+}
+
 function Band({
   maxSpeed = 50,
   minSpeed = 0,
@@ -233,7 +255,11 @@ function Band({
   // half, back = right half). Each image is drawn aspect-preserving (no stretch).
   const cardMap = useMemo(() => {
     const baseMap = materials.base.map;
-    const baseImg = baseMap.image;
+    // Guard: baseMap.image is null until the GLB texture finishes decoding.
+    // Return baseMap for now — useMemo re-runs when frontTex/backTex update.
+    const baseImg = baseMap?.image;
+    if (!baseImg || !baseImg.width || !baseImg.height) return baseMap;
+
     const W = baseImg.width;
     const H = baseImg.height;
     const canvas = document.createElement('canvas');
@@ -250,6 +276,7 @@ function Band({
     ctx.fillRect(BACK_UV_RECT.x * W, BACK_UV_RECT.y * H, BACK_UV_RECT.w * W, BACK_UV_RECT.h * H);
 
     const drawFitted = (img, rect) => {
+      if (!img || !img.width || !img.height) return;
       const rx = rect.x * W;
       const ry = rect.y * H;
       const rw = rect.w * W;
