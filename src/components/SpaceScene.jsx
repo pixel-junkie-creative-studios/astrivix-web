@@ -185,6 +185,12 @@ const GLTFSatelliteModel = ({ orbitRadius = 10.5, speed = 0.18, yOffset = 4.0, i
     clone.traverse((child) => {
       if (child.isMesh && child.material) {
         child.material = child.material.clone();
+        // CRITICAL: Eliminate pure-white emissive blowout from GLTF material
+        child.material.emissive = new THREE.Color(0x000000);
+        child.material.emissiveIntensity = 0;
+        child.material.emissiveMap = null;
+        child.material.roughness = 0.45;
+        child.material.metalness = 0.65;
         child.material.toneMapped = true;
         child.material.needsUpdate = true;
       }
