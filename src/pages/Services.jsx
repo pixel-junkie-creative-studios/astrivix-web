@@ -28,28 +28,7 @@ export default function Services() {
     offset: ["start start", "end end"]
   });
 
-  // Touch swipe support for mobile
-  const touchStartXRef = useRef(null);
-
-  const handleTouchStart = (e) => {
-    touchStartXRef.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (touchStartXRef.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartXRef.current - touchEndX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        goToService(activeIndex + 1);
-      } else {
-        goToService(activeIndex - 1);
-      }
-    }
-    touchStartXRef.current = null;
-  };
-
-  // Smoothly update card index as user scrolls through the 400vh container
+  // Update card index smoothly as user scrolls through the container
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const rawIndex = latest * services.length;
     const newIndex = Math.min(
@@ -66,6 +45,7 @@ export default function Services() {
   const goToService = (targetIndex) => {
     const clampedIndex = Math.max(0, Math.min(services.length - 1, targetIndex));
     if (clampedIndex === activeIndex) return;
+
     setDirection(clampedIndex >= activeIndex ? 1 : -1);
     prevIndexRef.current = clampedIndex;
     setActiveIndex(clampedIndex);
@@ -76,7 +56,7 @@ export default function Services() {
       if (scrollableDist > 0) {
         const targetScrollY = containerTop + (clampedIndex / (services.length - 1)) * scrollableDist;
         if (lenis) {
-          lenis.scrollTo(targetScrollY, { immediate: false, duration: 0.8 });
+          lenis.scrollTo(targetScrollY, { immediate: false, duration: 0.5 });
         } else {
           window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
         }
@@ -117,10 +97,8 @@ export default function Services() {
 
   return (
     <div id="services" ref={containerRef} className="relative z-10 w-full h-[450vh] md:h-[400vh] bg-transparent">
-      {/* Native CSS Sticky Stage (Zero GSAP Pin Spacer Overhead) */}
+      {/* Native CSS Sticky Stage */}
       <div 
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
         className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10"
       >
         {/* Header section */}
@@ -181,7 +159,7 @@ export default function Services() {
 
           {/* ACTIVE CENTER CARD WITH 3D FLIP */}
           <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
-            <AnimatePresence initial={false} custom={direction}>
+            <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={activeIndex}
                 custom={direction}
@@ -190,10 +168,8 @@ export default function Services() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  type: "spring",
-                  stiffness: 260,
-                  damping: 24,
-                  mass: 0.8
+                  duration: 0.35,
+                  ease: [0.32, 0.72, 0, 1]
                 }}
                 style={{ 
                   transformStyle: 'preserve-3d',
