@@ -43,6 +43,7 @@ export default function Home() {
               stagger={100}
               pointerRepel={85}
               repelRadius={180}
+              idleDrift={0}
               fontSize="clamp(2.8rem, 14vw, 12rem)"
               fontWeight={900}
             />

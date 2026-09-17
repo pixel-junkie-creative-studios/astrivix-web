@@ -186,7 +186,7 @@ const ParticleText = ({
           }
         }
 
-        const follow = reducedMotion ? 1 : 0.22;
+        const follow = (reducedMotion || !gathering) ? 0.95 : 0.22;
         particle.x += (baseX - particle.x) * follow;
         particle.y += (baseY - particle.y) * follow;
 
