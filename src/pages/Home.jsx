@@ -21,10 +21,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col relative w-full pt-16 font-sans">
-      <motion.div style={{ x: spotlightX }} className="absolute inset-0 pointer-events-none z-0 opacity-40">
-        <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="white" />
-      </motion.div>
-      
       {/* Semantic Primary H1 Tag for SEO */}
       <h1 className="sr-only">Astrivix Corp Business Consultants — Enterprise Digital Consultancy & Software Engineering Studio</h1>
 
@@ -39,15 +35,15 @@ export default function Home() {
           <div className="w-full h-[260px] sm:h-[340px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
             <ParticleText
               text="ASTRIVIX"
-              particleSize={2.5}
-              density={5}
+              particleSize={2.2}
+              density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
               rainbowMode={true}
-              scatter={160}
+              scatter={120}
               gatherDuration={1500}
               stagger={100}
               pointerRepel={85}
               repelRadius={180}
-              fontSize="clamp(3.2rem, 15vw, 12rem)"
+              fontSize="clamp(2.8rem, 14vw, 12rem)"
               fontWeight={900}
             />
           </div>

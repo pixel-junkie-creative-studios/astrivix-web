@@ -276,7 +276,7 @@ const ParticleText = ({
       const isMobile = width < 768 || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches);
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets = [];
-      const step = isMobile ? 2 : Math.max(2, Math.floor(density));
+      const step = Math.max(2, Math.floor(density));
 
       for (let y = 0; y < offscreen.height; y += step) {
         for (let x = 0; x < offscreen.width; x += step) {
