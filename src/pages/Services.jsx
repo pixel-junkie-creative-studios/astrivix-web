@@ -28,13 +28,15 @@ export default function Services() {
     offset: ["start start", "end end"]
   });
 
-  // Update card index smoothly as user scrolls through the container
+  // Update card index smoothly as user scrolls through the container without skipping
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const rawIndex = latest * services.length;
-    const newIndex = Math.min(
+    // Map scroll progress [0, 1] evenly across all services indices [0..services.length - 1]
+    const rawIndex = latest * (services.length - 1);
+    const newIndex = Math.max(0, Math.min(
       services.length - 1,
-      Math.floor(rawIndex)
-    );
+      Math.round(rawIndex)
+    ));
+
     if (newIndex !== prevIndexRef.current) {
       setDirection(newIndex >= prevIndexRef.current ? 1 : -1);
       prevIndexRef.current = newIndex;
@@ -56,7 +58,7 @@ export default function Services() {
       if (scrollableDist > 0) {
         const targetScrollY = containerTop + (clampedIndex / (services.length - 1)) * scrollableDist;
         if (lenis) {
-          lenis.scrollTo(targetScrollY, { immediate: false, duration: 0.5 });
+          lenis.scrollTo(targetScrollY, { immediate: false, duration: 0.4 });
         } else {
           window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
         }
@@ -71,12 +73,12 @@ export default function Services() {
   const prevService = services[prevIndex];
   const nextService = services[nextIndex];
 
-  // 3D Card Flip Spring Variants
+  // High FPS 3D Card Flip Spring Variants (GPU accelerated transform)
   const cardVariants = {
     enter: (dir) => ({
-      x: dir > 0 ? 320 : -320,
-      rotateY: dir > 0 ? 45 : -45,
-      scale: 0.85,
+      x: dir > 0 ? 280 : -280,
+      rotateY: dir > 0 ? 35 : -35,
+      scale: 0.88,
       opacity: 0,
     }),
     center: {
@@ -88,15 +90,15 @@ export default function Services() {
     },
     exit: (dir) => ({
       zIndex: 0,
-      x: dir < 0 ? 320 : -320,
-      rotateY: dir < 0 ? 45 : -45,
-      scale: 0.85,
+      x: dir < 0 ? 280 : -280,
+      rotateY: dir < 0 ? 35 : -35,
+      scale: 0.88,
       opacity: 0,
     }),
   };
 
   return (
-    <div id="services" ref={containerRef} className="relative z-10 w-full h-[900vh] md:h-[600vh] bg-transparent">
+    <div id="services" ref={containerRef} className="relative z-10 w-full h-[1200vh] md:h-[800vh] bg-transparent">
       {/* Native CSS Sticky Stage */}
       <div 
         className="sticky top-0 w-full h-screen flex flex-col justify-center items-center overflow-hidden pt-16 md:pt-20 pb-10"
@@ -159,7 +161,7 @@ export default function Services() {
 
           {/* ACTIVE CENTER CARD WITH 3D FLIP */}
           <div className="relative z-20 w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] h-[400px] md:h-[460px]">
-            <AnimatePresence initial={false} custom={direction} mode="wait">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
               <motion.div
                 key={activeIndex}
                 custom={direction}
@@ -168,14 +170,16 @@ export default function Services() {
                 animate="center"
                 exit="exit"
                 transition={{
-                  duration: 0.35,
-                  ease: [0.32, 0.72, 0, 1]
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 28,
+                  mass: 0.6
                 }}
                 style={{ 
                   transformStyle: 'preserve-3d',
                   background: `radial-gradient(circle at top right, ${activeService.color}18, #08080d 85%)`
                 }}
-                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/25 shadow-[0_30px_80px_rgba(0,0,0,0.95)] overflow-hidden bg-[#08080d]/90 backdrop-blur-2xl"
+                className="absolute inset-0 w-full h-full rounded-[2.5rem] p-7 md:p-10 flex flex-col justify-between border border-white/25 shadow-[0_30px_80px_rgba(0,0,0,0.95)] overflow-hidden bg-[#08080d]/90 backdrop-blur-2xl gpu-layer"
               >
                 {/* Metallic Shimmer Surface */}
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/50 pointer-events-none" />
