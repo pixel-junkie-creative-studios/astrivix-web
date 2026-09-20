@@ -35,7 +35,6 @@ export default function Layout() {
       
       {/* 3D WebGL Space Journey Background */}
       <SpaceScene />
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,0,0,0.05),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,120,120,0.1),rgba(255,255,255,0))]" />
 
       {/* SINGLE UNIFIED GLASSMORPHISM FLOATING NAVBAR HEADER */}
       <StaggeredMenu
