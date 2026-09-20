@@ -364,9 +364,10 @@ export default function SpaceScene() {
     <WebGLErrorBoundary>
       <div className="fixed inset-0 w-full h-full z-0 pointer-events-none bg-black overflow-hidden" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
         <Canvas 
+          frameloop="always"
           camera={{ position: [0, 0, 0], fov: isMobile ? 70 : 60 }} 
-          dpr={isMobile ? [1, 1.5] : [1, 2]} 
-          gl={{ antialias: true, powerPreference: "high-performance" }}
+          dpr={isMobile ? [1, 2] : [1, 2.5]} 
+          gl={{ antialias: true, powerPreference: "high-performance", precision: "highp" }}
         >
           {/* Soft multi-angle lighting — emissive texture provides the colors */}
           <ambientLight intensity={0.25} />
