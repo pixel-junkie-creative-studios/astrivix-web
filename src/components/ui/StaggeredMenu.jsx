@@ -499,6 +499,7 @@ export const StaggeredMenu = ({
                     href={it.link} 
                     aria-label={it.ariaLabel} 
                     data-index={idx + 1}
+                    tabIndex={open ? 0 : -1}
                     onClick={(e) => handleItemClick(e, it.link)}
                   >
                     <span className="sm-panel-itemLabel">{it.label}</span>

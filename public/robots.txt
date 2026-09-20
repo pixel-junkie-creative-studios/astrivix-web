@@ -82,7 +82,6 @@ Allow: /
 User-agent: YouBot
 Allow: /
 
-# Master Sitemap & LLM Discovery Declarations
+# Master Sitemap Declaration
 Sitemap: https://www.astrivix.in/sitemap.xml
-LLM: https://www.astrivix.in/llms.txt
 

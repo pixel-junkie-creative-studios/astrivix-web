@@ -279,6 +279,8 @@ export default function Contact() {
               <input
                 type="text"
                 name="website_hp"
+                aria-hidden="true"
+                aria-label="Do not fill this field"
                 value={formData.website_hp}
                 onChange={(e) => setFormData({...formData, website_hp: e.target.value})}
                 tabIndex={-1}
@@ -343,6 +345,7 @@ export default function Contact() {
                     <select
                       value={formData.countryCode}
                       onChange={handleCountryChange}
+                      aria-label="Country Code"
                       className="w-full bg-[#050508] border border-white/15 rounded-xl px-3 py-3.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-400 transition-colors appearance-none cursor-pointer"
                     >
                       {COUNTRY_CODES.map((c) => (
