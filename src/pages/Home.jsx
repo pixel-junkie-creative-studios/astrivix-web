@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="flex flex-col relative w-full pt-16 font-sans">
       {/* Semantic Primary H1 Tag for SEO */}
-      <h1 className="sr-only">Astrivix Corp Business Consultants — Enterprise Digital Consultancy & Software Engineering Studio</h1>
+      <h1 className="sr-only">Astrivix Corp — Full-Service Digital Agency, Product Engineering & Creative Design Studio</h1>
 
       {/* Hero Section */}
       <section id="hero" className="min-h-[85vh] sm:min-h-[90vh] flex flex-col items-center justify-center relative z-10 px-4 sm:px-6">
