@@ -114,39 +114,11 @@ export async function onRequestPost(context) {
       } catch (e) {}
     }
 
-    // 2. Direct FormSubmit AJAX Dispatch (Admin + Auto-Response)
-    if (!dispatched) {
-      try {
-        const fsRes = await fetch('https://formsubmit.co/ajax/business@astrivix.in', {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json', 
-            'Accept': 'application/json',
-            'Referer': 'https://www.astrivix.in/',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-          },
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            phone: fullPhone,
-            budget: budget,
-            message: message,
-            _subject: `🚀 Web Inquiry [${inquiryRef}] - ${name}`,
-            _autoresponse: `Thank you for reaching out to Astrivix Corp (Ref: ${inquiryRef}). We have received your inquiry. Reach us directly anytime:\n\nEmail: business@astrivix.in\nWebsite: https://www.astrivix.in`,
-            _captcha: 'false'
-          })
-        });
-        resData = await fsRes.json().catch(() => ({}));
-        dispatched = true;
-      } catch (e) {}
-    }
-
     return new Response(JSON.stringify({ 
       success: true, 
       inquiryRef,
       dispatched,
-      data: resData,
-      message: 'Inquiry processed successfully' 
+      message: 'Inquiry and customer confirmation processed directly via Astrivix Custom Engine' 
     }), {
       status: 200,
       headers: corsHeaders
