@@ -189,45 +189,23 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // 1. Primary Dispatch via Web3Forms
-      const req1 = fetch("https://api.web3forms.com/submit", {
+      // Direct call to Astrivix Cloudflare Function Endpoint (/api/contact)
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: "c46399c4-a690-484d-965a-0d9c491f2115",
-          email: "business@astrivix.in",
-          from_name: "Astrivix Web Portal",
-          subject: `🚀 New Project Brief from ${formData.name} ($${formData.budget})`,
           name: formData.name,
-          replyto: formData.email,
-          phone: `${formData.countryCode} ${formData.phone}`,
-          budget: `$${formData.budget}`,
-          message: formData.message
+          email: formData.email,
+          countryCode: formData.countryCode,
+          phone: formData.phone,
+          budget: formData.budget,
+          message: formData.message,
+          website_hp: formData.website_hp
         })
-      }).catch(() => null);
-
-      // 2. Secondary Dispatch via FormSubmit
-      const req2 = fetch("https://formsubmit.co/ajax/business@astrivix.in", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          Name: formData.name,
-          Email: formData.email,
-          Phone: `${formData.countryCode} ${formData.phone}`,
-          Budget: `$${formData.budget}`,
-          Message: formData.message,
-          _subject: `🚀 New Project Brief from ${formData.name} ($${formData.budget})`,
-          _captcha: "false"
-        })
-      }).catch(() => null);
-
-      await Promise.allSettled([req1, req2]);
+      });
       recordSubmission();
     } catch (err) {
-      console.warn("Dispatch attempt finished:", err.message);
+      console.warn("Contact endpoint dispatch error:", err.message);
       recordSubmission();
     } finally {
       setSubmitted(true);
