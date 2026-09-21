@@ -189,8 +189,8 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // 1. Web3Forms Public Access Key Delivery to business@astrivix.in
-      await fetch("https://api.web3forms.com/submit", {
+      // 1. Primary Dispatch via Web3Forms
+      const req1 = fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -204,7 +204,27 @@ export default function Contact() {
           budget: `$${formData.budget}`,
           message: formData.message
         })
-      });
+      }).catch(() => null);
+
+      // 2. Secondary Dispatch via FormSubmit
+      const req2 = fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          Name: formData.name,
+          Email: formData.email,
+          Phone: `${formData.countryCode} ${formData.phone}`,
+          Budget: `$${formData.budget}`,
+          Message: formData.message,
+          _subject: `🚀 New Project Brief from ${formData.name} ($${formData.budget})`,
+          _captcha: "false"
+        })
+      }).catch(() => null);
+
+      await Promise.allSettled([req1, req2]);
       recordSubmission();
     } catch (err) {
       console.warn("Dispatch attempt finished:", err.message);
