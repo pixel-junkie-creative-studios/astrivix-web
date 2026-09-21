@@ -242,10 +242,10 @@ export default function Contact() {
           <div className="mt-12 p-6 rounded-2xl bg-[#0E0E16] border border-white/10 max-w-md">
             <div className="flex items-center gap-2 text-white/80 font-mono text-xs font-bold uppercase mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Direct Partner Response</span>
+              <span>Fast Response Guaranteed</span>
             </div>
             <p className="text-xs text-white/60 font-mono leading-relaxed">
-              All inquiries receive an immediate automated email confirmation receipt and a personalized technical proposal from our partner team within 2 hours.
+              All inquiries get an immediate email confirmation and a personalized response from our team within 2 hours.
             </p>
           </div>
         </div>
@@ -262,8 +262,8 @@ export default function Contact() {
               <p className="text-white/80 text-sm max-w-sm font-mono leading-relaxed mb-4">
                 Thank you, <strong className="text-white">{formData.name}</strong>! We have registered your brief and sent an automated confirmation receipt to <span className="text-cyan-400 font-bold">{formData.email}</span>.
               </p>
-              <p className="text-white/50 text-xs max-w-sm font-mono leading-relaxed mb-8">
-                Our partner engineering team will review your scope ($${formData.budget}) and reach out within 2 hours.
+              <p className="text-white/60 text-xs max-w-sm font-mono leading-relaxed mb-8">
+                Our team will review your project details and budget (${formData.budget}) and get back to you within 2 hours.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-8 w-full max-w-xs justify-center">
                 <a
