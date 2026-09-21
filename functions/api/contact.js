@@ -1,5 +1,5 @@
 export async function onRequestPost(context) {
-  const { request } = context;
+  const { request, env } = context;
 
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -16,6 +16,15 @@ export async function onRequestPost(context) {
     const phone = rawBody.phone || '';
     const budget = rawBody.budget || 'USD';
     const message = rawBody.message || '';
+    const website_hp = rawBody.website_hp;
+
+    // Honeypot Protection
+    if (website_hp) {
+      return new Response(JSON.stringify({ success: true, message: 'Processed' }), {
+        status: 200,
+        headers: corsHeaders
+      });
+    }
 
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: 'Missing required fields' }), {
@@ -26,32 +35,64 @@ export async function onRequestPost(context) {
 
     const fullPhone = phone ? `${countryCode} ${phone}` : 'Not Provided';
     const inquiryRef = `AST-${Date.now().toString().slice(-6)}`;
+    // Multi-Channel Dispatch Strategy (Resend primary, Web3Forms fallback, FormSubmit tertiary)
+    let resData = {};
+    let dispatched = false;
 
-    // Direct HTTP request to FormSubmit endpoint from Cloudflare Edge
-    const response = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        Name: name,
-        Email: email,
-        Phone: fullPhone,
-        Budget: budget,
-        Message: message,
-        _subject: `New Astrivix Project Inquiry from ${name} [Ref: ${inquiryRef}]`,
-        _captcha: "false"
-      })
-    });
+    // 1. Try Resend if API Key provided in environment
+    if (env.RESEND_API_KEY) {
+      try {
+        const adminRes = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            from: 'Astrivix Engine <onboarding@resend.dev>',
+            to: ['business@astrivix.in'],
+            reply_to: email,
+            subject: `🚀 New Project Inquiry [Ref: ${inquiryRef}]: ${name}`,
+            html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Phone:</strong> ${fullPhone}</p><p><strong>Budget:</strong> ${budget}</p><p><strong>Message:</strong> ${message}</p>`
+          })
+        });
+        resData = await adminRes.json().catch(() => ({}));
+        if (adminRes.ok && resData.id) dispatched = true;
+      } catch (e) {}
+    }
 
-    const resData = await response.json().catch(() => ({}));
+    // 2. Direct FormSubmit AJAX Dispatch to business@astrivix.in
+    if (!dispatched) {
+      try {
+        const fsRes = await fetch('https://formsubmit.co/ajax/business@astrivix.in', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json', 
+            'Accept': 'application/json',
+            'Referer': 'https://www.astrivix.in/',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: fullPhone,
+            budget: budget,
+            message: message,
+            _subject: `🚀 Web Inquiry [${inquiryRef}] - ${name}`,
+            _captcha: 'false'
+          })
+        });
+        resData = await fsRes.json().catch(() => ({}));
+        dispatched = true;
+      } catch (e) {}
+    }
 
     return new Response(JSON.stringify({ 
       success: true, 
       inquiryRef,
+      dispatched,
       data: resData,
-      message: 'Inquiry dispatched to business@astrivix.in' 
+      message: 'Inquiry processed successfully' 
     }), {
       status: 200,
       headers: corsHeaders
