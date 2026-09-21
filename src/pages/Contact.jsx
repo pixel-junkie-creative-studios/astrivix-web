@@ -291,23 +291,19 @@ export default function Contact() {
               </button>
             </div>
           ) : (
-            <form 
-              action="https://formsubmit.co/business@astrivix.in" 
-              method="POST"
-              onSubmit={() => setSubmitted(true)}
-              className="flex flex-col gap-5"
-            >
-              {/* FormSubmit Configuration Fields */}
-              <input type="hidden" name="_subject" value={`🚀 New Astrivix Project Inquiry`} />
-              <input type="hidden" name="_template" value="table" />
-              <input type="hidden" name="_captcha" value="false" />
-              <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Astrivix Corp! We have received your project inquiry and will reply within 2 hours." />
-
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              
               {/* Bot Honeypot Field */}
               <input
                 type="text"
-                name="_honey"
-                style={{ display: 'none' }}
+                name="website_hp"
+                aria-hidden="true"
+                aria-label="Do not fill this field"
+                value={formData.website_hp}
+                onChange={(e) => setFormData({...formData, website_hp: e.target.value})}
+                tabIndex={-1}
+                autoComplete="off"
+                className="sr-only opacity-0 absolute pointer-events-none h-0 w-0"
               />
 
               <div className="mb-1">
