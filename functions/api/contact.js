@@ -35,28 +35,27 @@ export async function onRequestPost(context) {
 
     const fullPhone = phone ? `${countryCode} ${phone}` : 'Not Provided';
     const inquiryRef = `AST-${Date.now().toString().slice(-6)}`;
-    // Send Inquiry to business@astrivix.in & Auto-Response to Customer
-    const fsRes = await fetch('https://formsubmit.co/ajax/business@astrivix.in', {
-      method: 'POST',
+    // Pure Direct Web3Forms API Dispatch (Zero FormSubmit, Zero Activation Locks)
+    const w3Res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
       headers: { 
-        'Content-Type': 'application/json', 
-        'Accept': 'application/json',
-        'Referer': 'https://www.astrivix.in/',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        "Content-Type": "application/json",
+        "Accept": "application/json"
       },
       body: JSON.stringify({
+        access_key: env.WEB3FORMS_ACCESS_KEY || "c46399c4-a690-484d-965a-0d9c491f2115",
         name: name,
         email: email,
         phone: fullPhone,
         budget: budget,
         message: message,
-        _subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} (${budget})`,
-        _autoresponse: `Hello ${name},\n\nThank you for reaching out to Astrivix Corp. We have logged your request under Reference ID ${inquiryRef}.\n\nOur team is reviewing your requirements and will reach out with a detailed roadmap shortly.\n\nNeed urgent assistance?\n• Email: business@astrivix.in\n• Website: https://www.astrivix.in\n\nAstrivix Corp. All Rights Reserved.`,
-        _captcha: 'false'
+        subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} (${budget})`,
+        from_name: "Astrivix Custom Web Engine",
+        replyto: email
       })
     });
 
-    const resData = await fsRes.json().catch(() => ({}));
+    const resData = await w3Res.json().catch(() => ({}));
 
     return new Response(JSON.stringify({ 
       success: true, 
