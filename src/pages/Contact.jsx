@@ -130,10 +130,53 @@ export default function Contact() {
     setPhoneError(validatePhone(truncatedDigits, activeCountry));
   };
 
+  const [rateLimitError, setRateLimitError] = useState(null);
+
+  const checkRateLimit = () => {
+    try {
+      const stored = localStorage.getItem('astrivix_submit_tracker');
+      const now = Date.now();
+      const ONE_HOUR = 60 * 60 * 1000;
+
+      let history = stored ? JSON.parse(stored) : [];
+      // Filter out entries older than 1 hour
+      history = history.filter(ts => (now - ts) < ONE_HOUR);
+
+      if (history.length >= 2) {
+        return "Spam protection: Maximum 2 inquiries allowed per hour. Please reach out directly on WhatsApp or Email.";
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
+  const recordSubmission = () => {
+    try {
+      const stored = localStorage.getItem('astrivix_submit_tracker');
+      const now = Date.now();
+      const ONE_HOUR = 60 * 60 * 1000;
+
+      let history = stored ? JSON.parse(stored) : [];
+      history = history.filter(ts => (now - ts) < ONE_HOUR);
+      history.push(now);
+      localStorage.setItem('astrivix_submit_tracker', JSON.stringify(history));
+    } catch {
+      // Ignore storage errors
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Re-verify strict email and phone validation before submitting
+    // 1. Strict Anti-Spam Rate Limit Check (Max 2 submissions per hour)
+    const limitErr = checkRateLimit();
+    if (limitErr) {
+      setRateLimitError(limitErr);
+      return;
+    }
+
+    // 2. Re-verify strict email and phone validation before submitting
     const eErr = validateEmail(formData.email);
     const pErr = validatePhone(formData.phone, activeCountry);
 
@@ -145,19 +188,9 @@ export default function Contact() {
 
     setLoading(true);
 
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      countryCode: formData.countryCode,
-      phone: formData.phone,
-      budget: `$${formData.budget}`,
-      message: formData.message,
-      website_hp: formData.website_hp // Honeypot
-    };
-
     try {
       // Direct high-reliability delivery to business@astrivix.in
-      await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+      const res = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -173,8 +206,15 @@ export default function Contact() {
           _captcha: "false"
         })
       });
+
+      const resData = await res.json().catch(() => ({}));
+      console.log("FormSubmit Dispatch Result:", resData);
+
+      // Record successful inquiry timestamp for rate limit tracking
+      recordSubmission();
     } catch (err) {
       console.warn("Dispatch attempt finished:", err.message);
+      recordSubmission();
     } finally {
       setSubmitted(true);
       setLoading(false);
@@ -440,6 +480,14 @@ export default function Contact() {
                   className="w-full bg-[#050508] border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-white/40 transition-colors placeholder-white/30 font-sans"
                 ></textarea>
               </div>
+
+              {/* Rate Limit Spam Protection Warning Box */}
+              {rateLimitError && (
+                <div className="p-4 rounded-xl border border-amber-500/40 bg-amber-500/10 text-amber-300 text-xs font-mono leading-relaxed flex items-center gap-3">
+                  <ShieldCheck className="w-5 h-5 shrink-0 text-amber-400" />
+                  <span>{rateLimitError}</span>
+                </div>
+              )}
 
               {/* SUBMIT BUTTON */}
               <button
