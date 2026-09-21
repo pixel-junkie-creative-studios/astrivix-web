@@ -189,28 +189,22 @@ export default function Contact() {
     setLoading(true);
 
     try {
-      // Direct high-reliability delivery to business@astrivix.in
-      const res = await fetch("https://formsubmit.co/ajax/business@astrivix.in", {
+      // 1. Web3Forms Public Access Key Delivery to business@astrivix.in
+      await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Name: formData.name,
-          Email: formData.email,
-          Phone: `${formData.countryCode} ${formData.phone}`,
-          Budget: `$${formData.budget}`,
-          Message: formData.message,
-          _subject: `🚀 New Project Brief from ${formData.name} ($${formData.budget})`,
-          _captcha: "false"
+          access_key: "c46399c4-a690-484d-965a-0d9c491f2115",
+          email: "business@astrivix.in",
+          from_name: "Astrivix Web Portal",
+          subject: `🚀 New Project Brief from ${formData.name} ($${formData.budget})`,
+          name: formData.name,
+          replyto: formData.email,
+          phone: `${formData.countryCode} ${formData.phone}`,
+          budget: `$${formData.budget}`,
+          message: formData.message
         })
       });
-
-      const resData = await res.json().catch(() => ({}));
-      console.log("FormSubmit Dispatch Result:", resData);
-
-      // Record successful inquiry timestamp for rate limit tracking
       recordSubmission();
     } catch (err) {
       console.warn("Dispatch attempt finished:", err.message);
