@@ -260,10 +260,10 @@ export default function Contact() {
               </div>
               <h3 className="text-2xl font-bold text-white mb-2 uppercase tracking-wide">Inquiry Dispatched!</h3>
               <p className="text-white/80 text-sm max-w-sm font-mono leading-relaxed mb-4">
-                Thank you, <strong className="text-white">{formData.name}</strong>! We have registered your brief and sent an automated confirmation receipt to <span className="text-cyan-400 font-bold">{formData.email}</span>.
+                Thank you, <strong className="text-white">{formData.name}</strong>! We have received your message and sent a copy to <span className="text-cyan-400 font-bold">{formData.email}</span>.
               </p>
               <p className="text-white/60 text-xs max-w-sm font-mono leading-relaxed mb-8">
-                Our team will review your project details and budget (${formData.budget}) and get back to you within 2 hours.
+                Our team will review your project details and get back to you within 2 hours.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-8 w-full max-w-xs justify-center">
                 <a
@@ -291,19 +291,23 @@ export default function Contact() {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              
+            <form 
+              action="https://formsubmit.co/business@astrivix.in" 
+              method="POST"
+              onSubmit={() => setSubmitted(true)}
+              className="flex flex-col gap-5"
+            >
+              {/* FormSubmit Configuration Fields */}
+              <input type="hidden" name="_subject" value={`🚀 New Astrivix Project Inquiry`} />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_autoresponse" value="Thank you for reaching out to Astrivix Corp! We have received your project inquiry and will reply within 2 hours." />
+
               {/* Bot Honeypot Field */}
               <input
                 type="text"
-                name="website_hp"
-                aria-hidden="true"
-                aria-label="Do not fill this field"
-                value={formData.website_hp}
-                onChange={(e) => setFormData({...formData, website_hp: e.target.value})}
-                tabIndex={-1}
-                autoComplete="off"
-                className="sr-only opacity-0 absolute pointer-events-none h-0 w-0"
+                name="_honey"
+                style={{ display: 'none' }}
               />
 
               <div className="mb-1">
@@ -319,6 +323,7 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
@@ -334,6 +339,7 @@ export default function Contact() {
                 </label>
                 <input
                   type="email"
+                  name="email"
                   required
                   value={formData.email}
                   onChange={handleEmailChange}
@@ -361,6 +367,7 @@ export default function Contact() {
                   {/* Country Selector Dropdown */}
                   <div className="col-span-5 sm:col-span-4 relative">
                     <select
+                      name="countryCode"
                       value={formData.countryCode}
                       onChange={handleCountryChange}
                       aria-label="Country Code"
@@ -381,6 +388,7 @@ export default function Contact() {
                   <div className="col-span-7 sm:col-span-8 relative">
                     <input
                       type="text"
+                      name="phone"
                       inputMode="numeric"
                       required
                       value={formData.phone}
@@ -416,6 +424,7 @@ export default function Contact() {
                   <span className="absolute left-4 text-white/50 text-base font-mono font-bold">$</span>
                   <input
                     type="text"
+                    name="budget"
                     inputMode="numeric"
                     required
                     value={formData.budget}
@@ -442,6 +451,7 @@ export default function Contact() {
                 <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">Project Brief / Goals</label>
                 <textarea
                   rows="4"
+                  name="message"
                   required
                   value={formData.message}
                   onChange={(e) => setFormData({...formData, message: e.target.value})}
