@@ -16,7 +16,9 @@ export async function onRequestPost(context) {
     const email = rawBody.email || '';
     const countryCode = rawBody.countryCode || '+91';
     const phone = rawBody.phone || '';
-    const budget = rawBody.budget || 'USD';
+    const currency = rawBody.currency || 'USD';
+    const currencySymbol = rawBody.currencySymbol || '$';
+    const budget = rawBody.budget || '5000';
     const message = rawBody.message || '';
     const website_hp = rawBody.website_hp;
 
@@ -37,6 +39,7 @@ export async function onRequestPost(context) {
 
     const fullPhone = phone ? `${countryCode} ${phone}` : 'Not Provided';
     const inquiryRef = `AST-${Date.now().toString().slice(-6)}`;
+    const formattedBudget = `${currencySymbol}${budget} ${currency}`;
 
     // Configure Direct Gmail SMTP Transporter (Using pixeljunkiestudios.in@gmail.com with App Password)
     const transporter = nodemailer.createTransport({
@@ -62,7 +65,7 @@ export async function onRequestPost(context) {
             <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8; width: 35%;"><strong>Client Name</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-weight: bold;">${name}</td></tr>
             <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Email Address</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #38bdf8;"><a href="mailto:${email}" style="color: #38bdf8;">${email}</a></td></tr>
             <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Mobile Phone</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff;">${fullPhone}</td></tr>
-            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Estimated Budget</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #10b981; font-weight: bold;">$${budget} USD</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Estimated Budget</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #10b981; font-weight: bold;">${formattedBudget}</td></tr>
           </table>
 
           <div style="margin-top: 24px; background: #050508; padding: 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
@@ -73,7 +76,7 @@ export async function onRequestPost(context) {
           <!-- 1-Click Mailto Confirmation Link (D4 Residency Style) -->
           <div style="margin-top: 32px; text-align: center;">
             <p style="color: #94a3b8; font-size: 12px; margin-bottom: 14px;">Click below to launch an instant confirmation draft back to ${name}:</p>
-            <a href="mailto:${email}?subject=Project%20Inquiry%20Received%20-%20Astrivix%20Corp%20[${inquiryRef}]&body=Hello%20${encodeURIComponent(name)},%0A%0AThank%20you%20for%20reaching%20out%20to%20Astrivix%20Corp.%20We%20have%20reviewed%20your%20project%20brief%20for%20$${encodeURIComponent(budget)}%20USD%20and%20are%20excited%20to%20partner%20with%20you.%0A%0AWe%20would%20like%20to%20schedule%20a%20brief%20strategy%20call.%20Please%20let%20us%20know%20your%20preferred%20time.%0A%0ABest%20regards,%0AAstrivix%20Corp%20Team%0Ahttps://www.astrivix.in" style="display: inline-block; background-color: #0284c7; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px;">
+            <a href="mailto:${email}?subject=Project%20Inquiry%20Received%20-%20Astrivix%20Corp%20[${inquiryRef}]&body=Hello%20${encodeURIComponent(name)},%0A%0AThank%20you%20for%20reaching%20out%20to%20Astrivix%20Corp.%20We%20have%20reviewed%20your%20project%20brief%20for%20${encodeURIComponent(formattedBudget)}%20and%20are%20excited%20to%20partner%20with%20you.%0A%0AWe%20would%20like%20to%20schedule%20a%20brief%20strategy%20call.%20Please%20let%20us%20know%20your%20preferred%20time.%0A%0ABest%20regards,%0AAstrivix%20Corp%20Team%0Ahttps://www.astrivix.in" style="display: inline-block; background-color: #0284c7; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px;">
               ✉️ Send Confirmation Email to Client (${name})
             </a>
           </div>
@@ -95,7 +98,7 @@ export async function onRequestPost(context) {
 
           <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; margin: 24px 0;">
             <h4 style="margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; text-transform: uppercase;">Submission Summary</h4>
-            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Scope / Budget:</strong> $${budget} USD</p>
+            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Scope / Budget:</strong> ${formattedBudget}</p>
             <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Contact Phone:</strong> ${fullPhone}</p>
           </div>
 
@@ -123,7 +126,7 @@ export async function onRequestPost(context) {
       from: '"Astrivix Web Portal" <business@astrivix.in>',
       to: 'business@astrivix.in, pixeljunkiestudios.in@gmail.com',
       replyTo: email,
-      subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
+      subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} (${formattedBudget})`,
       html: adminEmailHtml
     });
 

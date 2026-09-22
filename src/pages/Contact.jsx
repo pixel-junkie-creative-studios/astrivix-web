@@ -15,6 +15,19 @@ const COUNTRY_CODES = [
   { code: '+00', name: 'International', flag: '🌐', minLen: 7, maxLen: 15 }
 ];
 
+const CURRENCIES = [
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'AED', symbol: 'AED', name: 'UAE Dirham' },
+  { code: 'CAD', symbol: '$', name: 'Canadian Dollar' },
+  { code: 'AUD', symbol: '$', name: 'Australian Dollar' },
+  { code: 'SGD', symbol: '$', name: 'Singapore Dollar' },
+  { code: 'SAR', symbol: 'SAR', name: 'Saudi Riyal' },
+  { code: 'QAR', symbol: 'QAR', name: 'Qatari Riyal' }
+];
+
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,6 +37,7 @@ export default function Contact() {
     email: '',
     countryCode: '+91',
     phone: '',
+    currency: 'USD',
     budget: '5000',
     message: '',
     website_hp: '' // Honeypot field for bot spoof prevention
@@ -33,6 +47,7 @@ export default function Contact() {
   const [phoneError, setPhoneError] = useState(null);
 
   const activeCountry = COUNTRY_CODES.find(c => c.code === formData.countryCode) || COUNTRY_CODES[0];
+  const activeCurrency = CURRENCIES.find(c => c.code === formData.currency) || CURRENCIES[0];
 
   // Budget feedback tiers
   const getBudgetFeedback = (val) => {
@@ -198,6 +213,8 @@ export default function Contact() {
           email: formData.email,
           countryCode: formData.countryCode,
           phone: formData.phone,
+          currency: formData.currency,
+          currencySymbol: activeCurrency.symbol,
           budget: formData.budget,
           message: formData.message,
           website_hp: formData.website_hp
@@ -428,26 +445,52 @@ export default function Contact() {
                 )}
               </div>
 
-              {/* NUMERIC BUDGET INPUT WITH DYNAMIC FUNNY FEEDBACK */}
+              {/* DYNAMIC UNIVERSAL CURRENCY SELECTOR & NUMERIC BUDGET INPUT */}
               <div>
                 <label className="block text-xs font-mono tracking-widest text-white/60 uppercase mb-2">
-                  Estimated Budget (USD $)
+                  Estimated Project Budget & Currency <span className="text-rose-400">*</span>
                 </label>
-                <div className="relative flex items-center">
-                  <span className="absolute left-4 text-white/50 text-base font-mono font-bold">$</span>
-                  <input
-                    type="text"
-                    name="budget"
-                    inputMode="numeric"
-                    required
-                    value={formData.budget}
-                    onChange={(e) => {
-                      const val = e.target.value.replace(/[^0-9.]/g, '');
-                      setFormData({...formData, budget: val});
-                    }}
-                    placeholder="Enter amount in USD (e.g. 5000)"
-                    className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-white/40 transition-colors placeholder-white/30"
-                  />
+                
+                <div className="grid grid-cols-12 gap-2.5 items-center">
+                  {/* Currency Selector Dropdown */}
+                  <div className="col-span-5 sm:col-span-4 relative">
+                    <select
+                      name="currency"
+                      value={formData.currency}
+                      onChange={(e) => setFormData({...formData, currency: e.target.value})}
+                      aria-label="Select Currency"
+                      className="w-full bg-[#050508] border border-white/15 rounded-xl px-3 py-3.5 text-xs text-white font-mono focus:outline-none focus:border-cyan-400 transition-colors appearance-none cursor-pointer"
+                    >
+                      {CURRENCIES.map((c) => (
+                        <option key={c.code} value={c.code} className="bg-[#0b0b10] text-white">
+                          {c.symbol} {c.code} ({c.name})
+                        </option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-[10px]">
+                      ▼
+                    </div>
+                  </div>
+
+                  {/* Budget Amount Input with Dynamic Symbol Prefix */}
+                  <div className="col-span-7 sm:col-span-8 relative flex items-center">
+                    <span className="absolute left-3.5 text-cyan-400 font-mono font-bold text-sm">
+                      {activeCurrency.symbol}
+                    </span>
+                    <input
+                      type="text"
+                      name="budget"
+                      inputMode="numeric"
+                      required
+                      value={formData.budget}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/[^0-9.]/g, '');
+                        setFormData({...formData, budget: val});
+                      }}
+                      placeholder={`Enter amount in ${formData.currency} (e.g. 5000)`}
+                      className="w-full bg-[#050508] border border-white/10 rounded-xl pl-9 pr-4 py-3.5 text-sm text-white font-mono focus:outline-none focus:border-cyan-400 transition-colors placeholder-white/30"
+                    />
+                  </div>
                 </div>
 
                 {/* DYNAMIC FUNNY FEEDBACK BOX */}
