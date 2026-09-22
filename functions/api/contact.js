@@ -1,5 +1,7 @@
+import nodemailer from 'nodemailer';
+
 export async function onRequestPost(context) {
-  const { request, env } = context;
+  const { request } = context;
 
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -36,7 +38,16 @@ export async function onRequestPost(context) {
     const fullPhone = phone ? `${countryCode} ${phone}` : 'Not Provided';
     const inquiryRef = `AST-${Date.now().toString().slice(-6)}`;
 
-    // 1. Send Inquiry Email to business@astrivix.in (With 1-Click Mailto Confirmation Link like D4 Residency)
+    // Configure Direct Gmail SMTP Transporter (Using pixeljunkiestudios.in@gmail.com with App Password)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'pixeljunkiestudios.in@gmail.com',
+        pass: 'zmrm yuff wzwx bpkp'
+      }
+    });
+
+    // 1. Email Template for business@astrivix.in (Admin Notification + 1-Click Mailto Confirmation)
     const adminEmailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background-color: #050508; color: #ffffff;">
         <div style="background-color: #0284c7; padding: 24px; text-align: center;">
@@ -70,7 +81,7 @@ export async function onRequestPost(context) {
       </div>
     `;
 
-    // 2. Send Receipt Email directly to Customer
+    // 2. Email Template for Client / Customer (Auto-Responder Receipt)
     const clientEmailHtml = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background-color: #050508; color: #ffffff;">
         <div style="background-color: #050508; padding: 28px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
@@ -107,78 +118,23 @@ export async function onRequestPost(context) {
       </div>
     `;
 
-    // 3. Dispatch Emails via Web3Forms API (Direct custom targets to business@astrivix.in and customer)
-    const web3formsAdminPromise = fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: '5b49ff5e-8557-41fb-8db5-5e6a9ca8bc75',
-        subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
-        from_name: 'Astrivix Web Portal',
-        replyto: email,
-        name: name,
-        email: email,
-        phone: fullPhone,
-        budget: `$${budget}`,
-        message: message,
-        inquiry_reference: inquiryRef
-      })
-    }).catch(() => null);
+    // 1. Send Notification to business@astrivix.in & pixeljunkiestudios.in@gmail.com
+    await transporter.sendMail({
+      from: '"Astrivix Web Portal" <business@astrivix.in>',
+      to: 'business@astrivix.in, pixeljunkiestudios.in@gmail.com',
+      replyTo: email,
+      subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
+      html: adminEmailHtml
+    });
 
-    const web3formsClientPromise = fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: '5b49ff5e-8557-41fb-8db5-5e6a9ca8bc75',
-        subject: `Inquiry Received [Ref: ${inquiryRef}] - Astrivix Corp`,
-        from_name: 'Astrivix Corp',
-        to_email: email,
-        name: name,
-        message: `Hello ${name},\n\nThank you for reaching out to Astrivix Corp. We have logged your request under Reference ID: ${inquiryRef}.\n\nProject Budget: $${budget}\nPhone: ${fullPhone}\n\nOur team will review your requirements and follow up within 2 hours.\n\nWhatsApp Direct: https://wa.me/917736387794\nOfficial Email: business@astrivix.in`
-      })
-    }).catch(() => null);
-
-    // If Resend API Key is available, dispatch full HTML emails to business@astrivix.in and customer
-    let resendAdminPromise = Promise.resolve(null);
-    let resendClientPromise = Promise.resolve(null);
-
-    if (env?.RESEND_API_KEY) {
-      resendAdminPromise = fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'Astrivix Web Portal <onboarding@resend.dev>',
-          to: ['business@astrivix.in'],
-          reply_to: email,
-          subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
-          html: adminEmailHtml
-        })
-      }).catch(() => null);
-
-      resendClientPromise = fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          from: 'Astrivix Corp <onboarding@resend.dev>',
-          to: [email],
-          subject: `Inquiry Received [Ref: ${inquiryRef}] - Astrivix Corp`,
-          html: clientEmailHtml
-        })
-      }).catch(() => null);
-    }
-
-    await Promise.allSettled([
-      web3formsAdminPromise,
-      web3formsClientPromise,
-      resendAdminPromise,
-      resendClientPromise
-    ]);
+    // 2. Send Auto-Responder Receipt to Client
+    await transporter.sendMail({
+      from: '"Astrivix Corp" <business@astrivix.in>',
+      to: email,
+      replyTo: 'business@astrivix.in',
+      subject: `Inquiry Received [Ref: ${inquiryRef}] - Astrivix Corp`,
+      html: clientEmailHtml
+    });
 
     return new Response(JSON.stringify({ 
       success: true, 
@@ -189,6 +145,7 @@ export async function onRequestPost(context) {
       headers: corsHeaders
     });
   } catch (err) {
+    console.error("Nodemailer SMTP dispatch error:", err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
       headers: corsHeaders
