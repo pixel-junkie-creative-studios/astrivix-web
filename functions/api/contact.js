@@ -36,70 +36,85 @@ export async function onRequestPost(context) {
     const fullPhone = phone ? `${countryCode} ${phone}` : 'Not Provided';
     const inquiryRef = `AST-${Date.now().toString().slice(-6)}`;
 
-    // Prepare email HTML template
+    // 1. Send Inquiry Email to business@astrivix.in (With 1-Click Mailto Confirmation Link like D4 Residency)
     const adminEmailHtml = `
-      <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; background: #050508; color: #ffffff; padding: 32px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
-        <h2 style="color: #ffffff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-top: 0;">🚀 NEW PROJECT BRIEF RECEIVED</h2>
-        <p style="font-size: 14px; color: #e4e4e7;"><strong>Ref ID:</strong> <span style="color: #38bdf8;">${inquiryRef}</span></p>
-        <p style="font-size: 14px; color: #e4e4e7;"><strong>Client Name:</strong> ${name}</p>
-        <p style="font-size: 14px; color: #e4e4e7;"><strong>Client Email:</strong> ${email}</p>
-        <p style="font-size: 14px; color: #e4e4e7;"><strong>Phone:</strong> ${fullPhone}</p>
-        <p style="font-size: 14px; color: #e4e4e7;"><strong>Budget (USD):</strong> $${budget}</p>
-        <div style="background: #0e0e16; padding: 18px; border-radius: 12px; margin-top: 16px; border: 1px solid rgba(255,255,255,0.08);">
-          <p style="margin: 0 0 6px 0; font-size: 12px; color: #94a3b8; font-family: monospace;">PROJECT BRIEF:</p>
-          <p style="margin: 0; color: #f4f4f5; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${message}</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background-color: #050508; color: #ffffff;">
+        <div style="background-color: #0284c7; padding: 24px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 22px; letter-spacing: 1px;">🚀 NEW PROJECT BRIEF RECEIVED</h1>
+          <p style="color: #e0f2fe; margin: 6px 0 0 0; font-size: 13px; font-family: monospace;">Ref ID: ${inquiryRef}</p>
         </div>
-        <div style="margin-top: 24px; text-align: center;">
-          <a href="mailto:${email}?subject=Re:%20Astrivix%20Project%20Brief%20[${inquiryRef}]" style="display: inline-block; background: #0284c7; color: #ffffff; font-weight: 600; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px;">
-            Reply to ${name}
-          </a>
+        
+        <div style="padding: 28px; background-color: #0b0b10;">
+          <h3 style="color: #38bdf8; margin-top: 0; font-size: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">Client Information</h3>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px;">
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8; width: 35%;"><strong>Client Name</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-weight: bold;">${name}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Email Address</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #38bdf8;"><a href="mailto:${email}" style="color: #38bdf8;">${email}</a></td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Mobile Phone</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff;">${fullPhone}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Estimated Budget</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #10b981; font-weight: bold;">$${budget} USD</td></tr>
+          </table>
+
+          <div style="margin-top: 24px; background: #050508; padding: 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <p style="margin: 0 0 6px 0; font-size: 11px; color: #94a3b8; font-family: monospace;">PROJECT BRIEF / REQUIREMENTS:</p>
+            <p style="margin: 0; color: #f4f4f5; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${message}</p>
+          </div>
+
+          <!-- 1-Click Mailto Confirmation Link (D4 Residency Style) -->
+          <div style="margin-top: 32px; text-align: center;">
+            <p style="color: #94a3b8; font-size: 12px; margin-bottom: 14px;">Click below to launch an instant confirmation draft back to ${name}:</p>
+            <a href="mailto:${email}?subject=Project%20Inquiry%20Received%20-%20Astrivix%20Corp%20[${inquiryRef}]&body=Hello%20${encodeURIComponent(name)},%0A%0AThank%20you%20for%20reaching%20out%20to%20Astrivix%20Corp.%20We%20have%20reviewed%20your%20project%20brief%20for%20$${encodeURIComponent(budget)}%20USD%20and%20are%20excited%20to%20partner%20with%20you.%0A%0AWe%20would%20like%20to%20schedule%20a%20brief%20strategy%20call.%20Please%20let%20us%20know%20your%20preferred%20time.%0A%0ABest%20regards,%0AAstrivix%20Corp%20Team%0Ahttps://www.astrivix.in" style="display: inline-block; background-color: #0284c7; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 13px;">
+              ✉️ Send Confirmation Email to Client (${name})
+            </a>
+          </div>
         </div>
       </div>
     `;
 
+    // 2. Send Receipt Email directly to Customer
     const clientEmailHtml = `
-      <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; background: #050508; color: #ffffff; padding: 32px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
-        <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; margin-bottom: 24px;">
-          <h1 style="margin: 0; font-size: 24px; color: #ffffff; letter-spacing: 2px;">ASTRIVIX CORP</h1>
-          <p style="margin: 6px 0 0 0; font-size: 13px; color: #38bdf8; font-family: monospace;">INQUIRY RECEIPT</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background-color: #050508; color: #ffffff;">
+        <div style="background-color: #050508; padding: 28px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px;">ASTRIVIX CORP</h1>
+          <p style="color: #38bdf8; margin: 6px 0 0 0; font-size: 13px; font-family: monospace;">INQUIRY CONFIRMATION [REF: ${inquiryRef}]</p>
         </div>
 
-        <p style="font-size: 15px; color: #e4e4e7; line-height: 1.6;">Hello <strong>${name}</strong>,</p>
-        <p style="font-size: 14px; color: #a1a1aa; line-height: 1.6;">Thank you for reaching out to Astrivix Corp. We have logged your request under Reference ID <strong style="color: #38bdf8;">${inquiryRef}</strong>. Our team will review your requirements and reach out shortly.</p>
+        <div style="padding: 32px; background-color: #0b0b10;">
+          <p style="font-size: 15px; color: #e4e4e7; line-height: 1.6;">Hello <strong>${name}</strong>,</p>
+          <p style="font-size: 14px; color: #a1a1aa; line-height: 1.6;">We have successfully received your project request under Reference ID <strong style="color: #38bdf8;">${inquiryRef}</strong>. Our direct team is reviewing your requirements and will reach out shortly.</p>
 
-        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 12px; margin: 24px 0;">
-          <h3 style="margin: 0 0 12px 0; font-size: 13px; color: #94a3b8; text-transform: uppercase;">Submission Summary</h3>
-          <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Scope / Budget:</strong> $${budget}</p>
-          <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Contact Phone:</strong> ${fullPhone}</p>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; margin: 24px 0;">
+            <h4 style="margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; text-transform: uppercase;">Submission Summary</h4>
+            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Scope / Budget:</strong> $${budget} USD</p>
+            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Contact Phone:</strong> ${fullPhone}</p>
+          </div>
+
+          <div style="text-align: center; margin: 32px 0 16px 0;">
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Need urgent assistance or want to talk right away?</p>
+            
+            <a href="https://wa.me/917736387794?text=Hi%20Astrivix%20Team%20(Ref:%20${inquiryRef})" style="display: inline-block; background: #25D366; color: #ffffff; font-weight: bold; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
+              💬 WhatsApp Direct
+            </a>
+            
+            <a href="mailto:business@astrivix.in?subject=Direct%20Follow-up%20[${inquiryRef}]" style="display: inline-block; background: #0284c7; color: #ffffff; font-weight: bold; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
+              ✉️ Reply via Email
+            </a>
+          </div>
         </div>
 
-        <div style="text-align: center; margin: 32px 0 24px 0;">
-          <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Need urgent assistance or want to talk right away?</p>
-          
-          <a href="https://wa.me/917736387794?text=Hi%20Astrivix%20Team%20(Ref:%20${inquiryRef})" style="display: inline-block; background: #25D366; color: #ffffff; font-weight: 600; font-size: 14px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
-            💬 WhatsApp Direct
-          </a>
-          
-          <a href="mailto:business@astrivix.in?subject=Direct%20Follow-up%20[${inquiryRef}]" style="display: inline-block; background: #0284c7; color: #ffffff; font-weight: 600; font-size: 14px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
-            ✉️ Reply via Email
-          </a>
-        </div>
-
-        <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; margin-top: 32px; font-size: 11px; color: #71717a; text-align: center;">
-          Astrivix Corp. All Rights Reserved.<br/>
-          Official Email: business@astrivix.in
+        <div style="background-color: #050508; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: #64748b;">
+          © ${new Date().getFullYear()} Astrivix Corp. Official Email: business@astrivix.in
         </div>
       </div>
     `;
 
-    // Dispatch 1: Web3Forms API to business@astrivix.in
+    // 3. Dispatch Emails via Web3Forms API (Direct custom targets to business@astrivix.in and customer)
     const web3formsAdminPromise = fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         access_key: '5b49ff5e-8557-41fb-8db5-5e6a9ca8bc75',
         subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
-        from_name: 'Astrivix Corp Web Portal',
+        from_name: 'Astrivix Web Portal',
         replyto: email,
         name: name,
         email: email,
@@ -110,7 +125,6 @@ export async function onRequestPost(context) {
       })
     }).catch(() => null);
 
-    // Dispatch 2: Web3Forms API Auto-Responder to Customer Email
     const web3formsClientPromise = fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -124,25 +138,7 @@ export async function onRequestPost(context) {
       })
     }).catch(() => null);
 
-    // Dispatch 3: FormSubmit (Direct Ajax)
-    const formsubmitAdminPromise = fetch('https://formsubmit.co/ajax/business@astrivix.in', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        _subject: `🚀 New Project Brief [Ref: ${inquiryRef}]: ${name} ($${budget})`,
-        _replyto: email,
-        _template: 'table',
-        _captcha: 'false',
-        'Reference ID': inquiryRef,
-        'Client Name': name,
-        'Client Email': email,
-        'Phone Number': fullPhone,
-        'Budget (USD)': `$${budget}`,
-        'Project Brief': message
-      })
-    }).catch(() => null);
-
-    // Dispatch 4: Resend API (If Key Exists)
+    // If Resend API Key is available, dispatch full HTML emails to business@astrivix.in and customer
     let resendAdminPromise = Promise.resolve(null);
     let resendClientPromise = Promise.resolve(null);
 
@@ -180,7 +176,6 @@ export async function onRequestPost(context) {
     await Promise.allSettled([
       web3formsAdminPromise,
       web3formsClientPromise,
-      formsubmitAdminPromise,
       resendAdminPromise,
       resendClientPromise
     ]);
@@ -188,7 +183,7 @@ export async function onRequestPost(context) {
     return new Response(JSON.stringify({ 
       success: true, 
       inquiryRef,
-      message: 'Inquiry dispatched to business@astrivix.in and customer auto-responder sent' 
+      message: 'Inquiry dispatched to business@astrivix.in and customer receipt sent' 
     }), {
       status: 200,
       headers: corsHeaders
