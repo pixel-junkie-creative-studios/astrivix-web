@@ -13,7 +13,14 @@
 
 html, body {
   overflow-x: clip;
-  background-color: #000;
+  background-color: #050508 !important;
+  color-scheme: dark !important;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+#root {
+  background-color: transparent !important;
 }
 @tailwind utilities;
 

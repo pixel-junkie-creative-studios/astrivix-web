@@ -105,7 +105,7 @@ function App() {
           </Suspense>
         } />
         
-        {/* ISOLATED FULL-SCREEN SUBSITE ROUTES */}
+        {/* ISOLATED FULL-SCREEN SUBSITE ROUTES & GOOGLE SITELINK ALIASES */}
         <Route path="/portfolio" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
             <PortfolioSubsite />
@@ -121,6 +121,11 @@ function App() {
             <FinancialConsultingSubsite />
           </Suspense>
         } />
+        <Route path="/full-service-digital-agency" element={<Layout />} />
+        <Route path="/full-service-agency" element={<Layout />} />
+        <Route path="/digital-agency" element={<Layout />} />
+        <Route path="/grow-your-business" element={<Layout />} />
+        <Route path="/build-a-legend" element={<Layout />} />
         <Route path="/portfolio-preview" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
             <PortfolioShowcase />
