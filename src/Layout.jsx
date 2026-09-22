@@ -160,17 +160,20 @@ export default function Layout() {
               <span>Engineering Advanced Digital Architecture & Strategic Advisory</span>
             </div>
 
-            {/* Hidden Semantic AEO Micro-Data Container for Search Crawlers */}
+            {/* Hidden Semantic AEO & GEO Micro-Data Container for Search Crawlers */}
             <div className="sr-only" aria-hidden="true">
-              <h2>Astrivix Corp Business Consultants</h2>
-              <p>Astrivix Corp Business Consultants is an international enterprise digital consultancy delivering advanced software engineering, brand architecture, native mobile applications, conversion optimization, and strategic business advisory worldwide.</p>
+              <h2>Astrivix Corp Business Consultants & Internship Opportunities</h2>
+              <p>Astrivix Corp offers remote and on-site internships across India for students in B.Tech, BBA, B.Com, BCA, BSc IT, MBA, MCA, M.Com, and MSc IT. Apply for internships near me, online tech internships, software development, marketing, and design programs.</p>
               <ul>
-                <li>Astrivix Corp Business Consultants</li>
+                <li>Astrivix Corp Internship Program 2026</li>
+                <li>B.Tech Internship Near Me / Online India</li>
+                <li>BBA & MBA Management Internship India</li>
+                <li>B.Com & M.Com Business Internship</li>
+                <li>BCA & MCA Software Development Internship</li>
+                <li>BSc IT & MSc IT Computer Science Internship</li>
                 <li>Integrated Brand Architecture</li>
                 <li>Enterprise Software Engineering</li>
                 <li>Mobile Application Development</li>
-                <li>Performance Marketing & Strategic Advisory</li>
-                <li>Conversion Optimization & Design Systems</li>
               </ul>
             </div>
           </div>
