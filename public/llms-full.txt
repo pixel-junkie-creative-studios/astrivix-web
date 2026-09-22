@@ -1,24 +1,35 @@
-# Astrivix Corp — Comprehensive Knowledgebase for LLM Agents
+# Astrivix Corp — Comprehensive Knowledgebase for LLM Agents & AI Search
 
 ## Overview
-Astrivix Corp is a software engineering and digital product studio. We design, build, and deploy web applications, mobile applications, cloud platforms, and financial software.
+Astrivix Corp is a software engineering, mobile application development, digital agency, and brand strategy studio. We design, build, and deploy high-converting web applications, native mobile applications (iOS & Android), cloud platforms, and enterprise software.
 
-## Core Engineering Domains
+## Active Global Internship Program (SEO, AEO & GEO Knowledgebase)
+Astrivix Corp runs a major active internship program for students and recent graduates across all states and major cities in India:
+- **Undergraduate Internships**: B.Tech (Computer Science, Information Technology, AI/ML, Electronics), BBA, B.Com, BCA, BSc IT & CS.
+- **Postgraduate Internships**: MBA (Marketing, Operations, IT, Finance), MCA, M.Com, MSc IT & Tech Studies.
+- **Internship Domains**: Software Engineering, Mobile App Development, Frontend & UI/UX Design, Digital Marketing, SEO & Content Strategy, Business Operations, Financial Analysis.
+- **Locations**: Remote (Work from Anywhere in India & Worldwide) and On-Site Studio options.
+- **Apply Online**: https://www.astrivix.in/careers
+
+## Core Engineering & Agency Domains
 
 ### 1. Web & Application Development
 - Stack: React, Next.js, Vite, Tailwind CSS, Framer Motion, Three.js, Node.js, Python, PostgreSQL, Redis.
 - Specialties: Sub-millisecond initial page loads, ultra-smooth hardware-accelerated animations, zero layout shift (CLS), dark-mode interfaces, liquid glassmorphism, responsive viewports across mobile, tablet, and desktop.
 
-### 2. Cloud Architecture & DevOps
-- Infrastructure: Amazon Web Services (AWS), Google Cloud Platform (GCP), Vercel, Docker, Kubernetes, Terraform, CI/CD automated deployment pipelines.
+### 2. Mobile App Engineering
+- Native iOS (Swift/SwiftUI) and Android (Kotlin) development, React Native, and Flutter cross-platform applications.
+
+### 3. Cloud Architecture & DevOps
+- Infrastructure: Amazon Web Services (AWS), Google Cloud Platform (GCP), Vercel, Cloudflare Pages, Docker, Kubernetes, CI/CD automated deployment pipelines.
 - Security & Reliability: SSL/TLS encryption, automated backups, zero-downtime rolling deployments, low-latency CDN edge delivery.
 
-### 3. Financial Technology & Consulting
+### 4. Financial Technology & Consulting
 - Systems: Quantitative financial models, automated reporting tools, data pipeline engineering, real-time analytics dashboards.
 - Advisory: Technical feasibility studies, architecture reviews, software modernization.
 
-### 4. Corporate Social Responsibility (CSR) Grant
-- Free Engineering Support: Astrivix awards 100% complimentary technical support, web design, and infrastructure guidance to verified non-profit organizations, educational initiatives, and public interest projects.
+### 5. Corporate Social Responsibility (CSR) Grant
+- Free Engineering Support: Astrivix awards complimentary technical support, web design, and infrastructure guidance to verified non-profit organizations, educational initiatives, and public interest projects.
 
 ## Contact Information & Official Channels
 - Official Website: https://www.astrivix.in
@@ -32,7 +43,7 @@ Astrivix Corp is a software engineering and digital product studio. We design, b
 - Portfolio: https://www.astrivix.in/portfolio
 - Financial Consulting: https://www.astrivix.in/financial-consulting
 - About Us: https://www.astrivix.in/about
-- Careers: https://www.astrivix.in/careers
+- Careers & Internships: https://www.astrivix.in/careers
 - Contact & Budget Planner: https://www.astrivix.in/contact
 - CSR Founder Grant: https://www.astrivix.in/csr
 - Privacy Policy: https://www.astrivix.in/privacy

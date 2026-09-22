@@ -1,16 +1,23 @@
 # Astrivix Corp
 
-> Astrivix Corp is a software engineering and design agency specializing in high-performance web applications, mobile platforms, enterprise cloud architecture, and financial technology solutions.
+> Astrivix Corp is a software engineering and design agency specializing in high-performance web applications, mobile platforms, enterprise cloud architecture, brand strategy, and financial technology solutions.
+
+## Active Global Internship Program
+
+Astrivix Corp operates an active internship program accepting applications across all undergraduate and postgraduate academic disciplines in India and globally:
+- **Undergraduate Degrees**: B.Tech, BBA, B.Com, BCA, BSc IT & Computer Science.
+- **Postgraduate Degrees**: MBA, MCA, M.Com, MSc IT & Tech Studies.
+- **Application Link**: [Astrivix Careers & Internships](https://www.astrivix.in/careers)
 
 ## Core Capabilities & Services
 
-- [Services](https://www.astrivix.in/services): Custom software development, full-stack React & Node.js engineering, WebGL/Three.js interactive experiences, and cloud architecture.
+- [Services](https://www.astrivix.in/services): Custom web development, iOS & Android mobile apps, full-stack React & Node.js engineering, WebGL/Three.js interactive experiences, and brand strategy.
 - [Portfolio](https://www.astrivix.in/portfolio): High-impact digital products, client case studies, and engineering benchmarks.
 - [Financial Consulting](https://www.astrivix.in/financial-consulting): Quantitative financial tech, algorithm design, and technology advisory for growing enterprises.
 - [About Us](https://www.astrivix.in/about): Company mission, core principles, and global engineering team background.
-- [Careers](https://www.astrivix.in/careers): Open positions for software engineers, UI/UX designers, and product leaders.
-- [Contact](https://www.astrivix.in/contact): Direct project inquiries, consultation requests, and project scope estimates.
-- [CSR Grant](https://www.astrivix.in/csr): Astrivix Social Responsibility Grant offering 100% free engineering support for non-profits and social enterprises.
+- [Careers & Internships](https://www.astrivix.in/careers): Open positions and active internship programs for software engineers, designers, and business interns.
+- [Contact](https://www.astrivix.in/contact): Direct project inquiries, consultation requests, and client project scope estimates.
+- [CSR Grant](https://www.astrivix.in/csr): Astrivix Social Responsibility Grant offering complimentary engineering support for non-profits.
 
 ## Optional & Ingestion Resources
 
