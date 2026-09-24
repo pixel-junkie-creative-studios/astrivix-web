@@ -20,7 +20,22 @@ html, body {
   -webkit-text-size-adjust: 100%;
 }
 #root {
-  background-color: transparent !important;
+  background-color: #050508 !important;
+}
+
+/* Force dark theme overrides for mobile browsers (Samsung Internet Dark Mode / Forced Inversion Fix) */
+@media (prefers-color-scheme: dark) {
+  html, body, #root {
+    background-color: #050508 !important;
+    color: #ffffff !important;
+  }
+}
+
+/* Prevent Samsung Internet Forced Dark Mode Inversion Artifacts & White Glows */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .neu-flat, .neu-button, .skeuo-button, .glass-fast, .glass-metallic, .neu-badge {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  }
 }
 @tailwind utilities;
 

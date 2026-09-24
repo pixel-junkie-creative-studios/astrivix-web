@@ -35,14 +35,14 @@ export default function Home() {
           <div className="w-full h-[260px] sm:h-[340px] md:h-[450px] relative flex justify-center items-center cursor-crosshair">
             <ParticleText
               text="ASTRIVIX"
-              particleSize={2.2}
+              particleSize={typeof window !== 'undefined' && window.innerWidth < 640 ? 1.8 : 2.2}
               density={typeof window !== 'undefined' && window.innerWidth < 640 ? 3 : 5}
               rainbowMode={true}
-              scatter={120}
-              gatherDuration={1500}
-              stagger={100}
-              pointerRepel={85}
-              repelRadius={180}
+              scatter={typeof window !== 'undefined' && window.innerWidth < 640 ? 45 : 120}
+              gatherDuration={1200}
+              stagger={80}
+              pointerRepel={typeof window !== 'undefined' && window.innerWidth < 640 ? 30 : 85}
+              repelRadius={typeof window !== 'undefined' && window.innerWidth < 640 ? 70 : 180}
               idleDrift={0}
               fontSize="clamp(2.8rem, 14vw, 12rem)"
               fontWeight={900}
