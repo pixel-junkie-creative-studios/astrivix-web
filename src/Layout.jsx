@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SpaceScene from './components/SpaceScene';
 import MagneticCursor from './components/MagneticCursor';
 import StaggeredMenu from './components/ui/StaggeredMenu';
@@ -14,10 +14,45 @@ import Contact from './pages/Contact';
 import FAQSection from './components/ui/FAQSection';
 
 export default function Layout() {
+  const location = useLocation();
+
   useEffect(() => {
-    // Ensure homepage layout ALWAYS starts at top (0, 0) Hero section
-    window.scrollTo(0, 0);
-  }, []);
+    // If route or hash targets contact/waitlist/services/etc, scroll to that section
+    const path = location.pathname.toLowerCase();
+    const hash = location.hash.toLowerCase();
+
+    if (path === '/contact' || path === '/waitlist' || hash === '#contact') {
+      setTimeout(() => {
+        const contactElem = document.getElementById('contact');
+        if (contactElem) {
+          contactElem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else if (path === '/services' || hash === '#services') {
+      setTimeout(() => {
+        const servicesElem = document.getElementById('services');
+        if (servicesElem) {
+          servicesElem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else if (path === '/about' || hash === '#about') {
+      setTimeout(() => {
+        const aboutElem = document.getElementById('about');
+        if (aboutElem) {
+          aboutElem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else if (path === '/careers' || hash === '#careers') {
+      setTimeout(() => {
+        const careersElem = document.getElementById('careers');
+        if (careersElem) {
+          careersElem.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
 
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
