@@ -16,8 +16,12 @@ export const StaggeredMenu = ({
     { label: 'Careers', ariaLabel: 'View careers', link: '/careers' },
     { label: 'Contact', ariaLabel: 'Get in touch & client project inquiry form', link: '/contact' }
   ],
-  socialItems = [],
-  displaySocials = false,
+  socialItems = [
+    { label: 'Instagram', link: 'https://www.instagram.com/astrivix.in/' },
+    { label: 'WhatsApp', link: 'https://wa.me/917736387794' },
+    { label: 'Email', link: 'mailto:business@astrivix.in' }
+  ],
+  displaySocials = true,
   displayItemNumbering = true,
   className,
   logoUrl = '/assets/astreivix_nav_bar.mp4',
