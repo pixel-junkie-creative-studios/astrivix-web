@@ -55,13 +55,13 @@ export default function Layout() {
   }, [location]);
 
   const menuItems = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
-    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
     { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
     { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
-    { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
-    { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
+    { label: 'Careers', ariaLabel: 'View careers', link: '/careers' },
+    { label: 'Contact', ariaLabel: 'Get in touch & client project inquiry form', link: '/contact' }
   ];
 
   return (

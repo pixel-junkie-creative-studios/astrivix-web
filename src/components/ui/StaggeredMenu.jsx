@@ -8,13 +8,13 @@ export const StaggeredMenu = ({
   position = 'right',
   colors = ['#0A0A10', '#12121A', '#050508'],
   items = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '#home' },
-    { label: 'Services', ariaLabel: 'View our services', link: '#services' },
+    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'Services', ariaLabel: 'View our services', link: '/services' },
     { label: 'Financial Consulting', ariaLabel: 'Financial Consulting Subsite', link: '/financial-consulting' },
     { label: 'Portfolio', ariaLabel: 'Portfolio Showcase Subsite', link: '/portfolio' },
-    { label: 'About', ariaLabel: 'Learn about us', link: '#about' },
-    { label: 'Careers', ariaLabel: 'View careers', link: '#careers' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '#contact' }
+    { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
+    { label: 'Careers', ariaLabel: 'View careers', link: '/careers' },
+    { label: 'Contact', ariaLabel: 'Get in touch & client project inquiry form', link: '/contact' }
   ],
   socialItems = [],
   displaySocials = false,
@@ -397,7 +397,7 @@ export const StaggeredMenu = ({
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
         {/* Brand Logo */}
-        <a href="#" onClick={(e) => handleItemClick(e, '#home')} className="sm-logo" aria-label="Logo">
+        <a href="/" onClick={(e) => handleItemClick(e, '/')} className="sm-logo" aria-label="Logo">
           {logoUrl && logoUrl.endsWith('.mp4') ? (
             <video 
               src={logoUrl} 
@@ -425,9 +425,9 @@ export const StaggeredMenu = ({
         {/* Center Desktop Navigation Tabs: HOME, ABOUT, SERVICES */}
         <div className="hidden md:flex items-center bg-white/5 rounded-full p-1 border border-white/10 relative mx-2">
           {[
-            { name: 'HOME', link: '#home' },
-            { name: 'ABOUT', link: '#about' },
-            { name: 'SERVICES', link: '#services' }
+            { name: 'HOME', link: '/' },
+            { name: 'ABOUT', link: '/about' },
+            { name: 'SERVICES', link: '/services' }
           ].map((tab, idx) => (
             <a
               key={tab.name}
@@ -455,8 +455,8 @@ export const StaggeredMenu = ({
         {/* Right Controls Area: CONTACT Button + MENU Toggle Button */}
         <div className="flex items-center gap-3">
           <a
-            href="#contact"
-            onClick={(e) => handleItemClick(e, '#contact')}
+            href="/contact"
+            onClick={(e) => handleItemClick(e, '/contact')}
             className="hidden sm:inline-block skeuo-button text-black text-[10px] font-mono font-black tracking-widest uppercase px-4 py-2 rounded-full shadow-lg active:scale-95 transition-transform"
           >
             CONTACT →
