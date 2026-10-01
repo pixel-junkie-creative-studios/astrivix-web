@@ -8,7 +8,9 @@ import { Spotlight } from '../components/ui/Spotlight';
 export default function Home() {
   const clientLogos = Array.from({ length: 24 }, (_, i) => ({
     src: `/assets/logos/${i + 1}.jpg`,
-    alt: `Astrivix Client Brand Partner Logo ${i + 1}`
+    alt: `Astrivix Client Brand Partner Logo ${i + 1}`,
+    width: 160,
+    height: 160
   }));
 
   const fadeUp = {

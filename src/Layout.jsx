@@ -85,7 +85,7 @@ export default function Layout() {
         logoUrl="/assets/astreivix_nav_bar.mp4"
       />
 
-      <div className="relative z-10 w-full mx-auto flex flex-col items-center">
+      <main className="relative z-10 w-full mx-auto flex flex-col items-center">
         
         {/* SPA Sections Stacked Logically */}
         <div id="home" className="w-full relative z-10">
@@ -112,6 +112,7 @@ export default function Layout() {
         <div id="faq" className="w-full relative z-20">
           <FAQSection />
         </div>
+      </main>
 
 
         {/* FOOTER */}
@@ -153,8 +154,8 @@ export default function Layout() {
 
               {/* Links */}
               <div className="flex flex-col items-center md:items-start w-full">
-                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Navigation</h4>
-                <div className="flex flex-col gap-4 text-sm text-white/70">
+                <h4 className="text-xs font-mono tracking-[0.2em] text-white/70 mb-6">Navigation</h4>
+                <div className="flex flex-col gap-4 text-sm text-white/80">
                   <a href="#services" className="hover:text-white transition-colors">Services</a>
                   <a href="#about" className="hover:text-white transition-colors">About Us</a>
                   <a href="#careers" className="hover:text-white transition-colors">Careers</a>
@@ -165,17 +166,17 @@ export default function Layout() {
 
               {/* Legal & Social */}
               <div className="flex flex-col items-center md:items-start w-full">
-                <h4 className="text-xs font-mono tracking-[0.2em] text-white/40 mb-6">Legal & CSR</h4>
-                <div className="flex flex-col gap-4 text-sm text-white/70">
+                <h4 className="text-xs font-mono tracking-[0.2em] text-white/70 mb-6">Legal & CSR</h4>
+                <div className="flex flex-col gap-4 text-sm text-white/80">
                   <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   <Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
                   <Link to="/terms#disclaimer" className="hover:text-white transition-colors">Legal Disclaimer</Link>
-                  <Link to="/csr" className="hover:text-rose-400 font-semibold text-rose-300/90 transition-colors flex items-center gap-1.5">
+                  <Link to="/csr" className="hover:text-rose-400 font-semibold text-rose-300 transition-colors flex items-center gap-1.5">
                     <span>Astrivix Founders Grant</span>
                   </Link>
                   <div className="mt-6 md:mt-4 flex gap-6 md:gap-4 justify-center md:justify-start">
-                    <a href="https://wa.me/917736387794" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">WHATSAPP</a>
-                    <a href="mailto:business@astrivix.in" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest opacity-60 hover:opacity-100">EMAIL</a>
+                    <a href="https://wa.me/917736387794" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest text-white/80 hover:opacity-100">WHATSAPP</a>
+                    <a href="mailto:business@astrivix.in" className="hover:text-white transition-colors text-[10px] md:text-xs font-mono tracking-widest text-white/80 hover:opacity-100">EMAIL</a>
                   </div>
                 </div>
               </div>
@@ -214,7 +215,6 @@ export default function Layout() {
           </div>
         </footer>
 
-      </div>
     </div>
   );
 }
