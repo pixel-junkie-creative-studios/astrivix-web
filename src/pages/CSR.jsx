@@ -11,9 +11,11 @@ import {
   Sparkles
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
 
 export default function CSR() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     age: '',
@@ -22,8 +24,6 @@ export default function CSR() {
     supportType: 'Full Web Platform',
     description: ''
   });
-
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,6 +59,11 @@ export default function CSR() {
 
   return (
     <div className="min-h-screen bg-[#050508] text-white pt-32 pb-24 px-6 md:px-12 relative overflow-hidden font-sans selection:bg-white selection:text-black">
+      <SEOHead 
+        title="Astrivix Founders Grant | CSR Engineering Initiative" 
+        description="Astrivix Corporate Social Responsibility Initiative providing free web and software engineering support." 
+        canonicalUrl="https://www.astrivix.in/csr" 
+      />
       
       <div className="max-w-4xl mx-auto relative z-10">
         

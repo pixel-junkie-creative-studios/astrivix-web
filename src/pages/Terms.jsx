@@ -1,10 +1,16 @@
 import React from 'react';
 import { Scale, ShieldCheck, CheckCircle2, ArrowLeft, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-[#050508] text-white pt-32 pb-24 px-6 md:px-12 relative overflow-hidden font-sans selection:bg-white selection:text-black">
+      <SEOHead 
+        title="Terms of Service | Legal Framework — Astrivix Corp" 
+        description="Astrivix Corp Commercial & Legal Terms of Service." 
+        canonicalUrl="https://www.astrivix.in/terms" 
+      />
       
       <div className="max-w-4xl mx-auto relative z-10">
         

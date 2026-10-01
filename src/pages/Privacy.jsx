@@ -1,10 +1,16 @@
 import React from 'react';
 import { Shield, Lock, Eye, Mail, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-[#050508] text-white pt-32 pb-24 px-6 md:px-12 relative overflow-hidden font-sans selection:bg-white selection:text-black">
+      <SEOHead 
+        title="Privacy Policy | Data Governance — Astrivix Corp" 
+        description="Astrivix Corp Data Governance & Privacy Policy Specification." 
+        canonicalUrl="https://www.astrivix.in/privacy" 
+      />
       
       <div className="max-w-4xl mx-auto relative z-10">
         
