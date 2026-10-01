@@ -20,6 +20,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const Privacy = lazy(() => import('./pages/Privacy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const CSR = lazy(() => import('./pages/CSR'));
+const Waitlist = lazy(() => import('./pages/Waitlist'));
 const PortfolioSubsite = lazy(() => import('./pages/PortfolioSubsite'));
 const FinancialConsultingSubsite = lazy(() => import('./pages/FinancialConsultingSubsite'));
 
@@ -84,7 +85,11 @@ function App() {
         <Route path="/about" element={<Layout />} />
         <Route path="/careers" element={<Layout />} />
         <Route path="/contact" element={<Layout />} />
-        <Route path="/waitlist" element={<Layout />} />
+        <Route path="/waitlist" element={
+          <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
+            <Waitlist />
+          </Suspense>
+        } />
         <Route path="/privacy" element={
           <Suspense fallback={<div className="bg-black w-full h-screen"></div>}>
             <Privacy />

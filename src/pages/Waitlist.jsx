@@ -59,6 +59,24 @@ export default function Waitlist() {
             Be the first to access our upcoming advanced AI design tools, enterprise micro-frameworks, and priority client consulting slots.
           </p>
 
+          {/* Astrivix Young Founders Grant Feature Card */}
+          <div className="mt-6 p-5 rounded-2xl bg-gradient-to-r from-rose-500/10 via-purple-500/10 to-cyan-500/10 border border-white/15 text-left">
+            <div className="flex items-center gap-2 text-rose-400 text-xs font-mono tracking-widest uppercase mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>ASTRIVIX YOUNG FOUNDERS GRANT</span>
+            </div>
+            <h3 className="text-sm font-semibold text-white">Applying for Pro-Bono Engineering?</h3>
+            <p className="text-white/70 text-xs mt-1 leading-relaxed">
+              If you are a student builder or non-profit founder, you can also apply for 100% free engineering, brand design, and web architecture.
+            </p>
+            <Link 
+              to="/csr"
+              className="inline-flex items-center gap-1.5 mt-3 text-xs font-mono font-bold text-rose-400 hover:text-rose-300 tracking-wider uppercase underline underline-offset-4"
+            >
+              <span>APPLY FOR FOUNDERS GRANT →</span>
+            </Link>
+          </div>
+
           {submitted ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
