@@ -84,39 +84,53 @@ export async function onRequestPost(context) {
       </div>
     `;
 
-    // 2. Email Template for Client / Customer (Auto-Responder Receipt)
+    // 2. Email Template for Client / Customer (High-Converting Premium UI/UX Auto-Responder Receipt)
+    const encodedWaMessage = encodeURIComponent(
+      `Hello Astrivix Team,\n\nI just submitted a project brief on your website.\n\n*Reference ID:* ${inquiryRef}\n*Name:* ${name}\n*Email:* ${email}\n*Phone:* ${fullPhone}\n*Budget:* ${formattedBudget}\n*Project Requirements:* ${message}\n\nI would like to discuss my project directly with your engineering lead.`
+    );
+
     const clientEmailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; overflow: hidden; background-color: #050508; color: #ffffff;">
-        <div style="background-color: #050508; padding: 28px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
-          <h1 style="color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px;">ASTRIVIX CORP</h1>
-          <p style="color: #38bdf8; margin: 6px 0 0 0; font-size: 13px; font-family: monospace;">INQUIRY CONFIRMATION [REF: ${inquiryRef}]</p>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 14px; overflow: hidden; background-color: #050508; color: #ffffff;">
+        <!-- Header Banner -->
+        <div style="background-color: #0284c7; padding: 26px; text-align: center;">
+          <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;">🚀 PROJECT BRIEF CONFIRMED</h1>
+          <p style="color: #e0f2fe; margin: 6px 0 0 0; font-size: 13px; font-family: monospace;">Ref ID: ${inquiryRef}</p>
         </div>
 
-        <div style="padding: 32px; background-color: #0b0b10;">
-          <p style="font-size: 15px; color: #e4e4e7; line-height: 1.6;">Hello <strong>${name}</strong>,</p>
-          <p style="font-size: 14px; color: #a1a1aa; line-height: 1.6;">We have successfully received your project request under Reference ID <strong style="color: #38bdf8;">${inquiryRef}</strong>. Our direct team is reviewing your requirements and will reach out shortly.</p>
+        <div style="padding: 28px; background-color: #0b0b10;">
+          <p style="font-size: 15px; color: #ffffff; margin-top: 0;">Hello <strong>${name}</strong>,</p>
+          <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px;">
+            Thank you for reaching out to <strong>Astrivix Corp</strong>. We have logged your project inquiry under Reference ID <strong style="color: #38bdf8;">${inquiryRef}</strong>. Below is the complete summary of your submission:
+          </p>
 
-          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; margin: 24px 0;">
-            <h4 style="margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; text-transform: uppercase;">Submission Summary</h4>
-            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Scope / Budget:</strong> ${formattedBudget}</p>
-            <p style="margin: 4px 0; font-size: 13px; color: #cbd5e1;"><strong>Contact Phone:</strong> ${fullPhone}</p>
+          <!-- Client Submission Details Table -->
+          <h3 style="color: #38bdf8; margin-top: 24px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">Your Submission Details</h3>
+          
+          <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px;">
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8; width: 35%;"><strong>Client Name</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff; font-weight: bold;">${name}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Email Address</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #38bdf8;">${email}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Mobile Phone</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #ffffff;">${fullPhone}</td></tr>
+            <tr><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #94a3b8;"><strong>Estimated Budget</strong></td><td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #10b981; font-weight: bold;">${formattedBudget}</td></tr>
+          </table>
+
+          <div style="margin-top: 20px; background: #050508; padding: 18px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <p style="margin: 0 0 6px 0; font-size: 11px; color: #94a3b8; font-family: monospace;">YOUR PROJECT BRIEF / REQUIREMENTS:</p>
+            <p style="margin: 0; color: #f4f4f5; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${message}</p>
           </div>
 
-          <div style="text-align: center; margin: 32px 0 16px 0;">
-            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 16px;">Need urgent assistance or want to talk right away?</p>
+          <!-- Direct WhatsApp DMs Button with Pre-filled Message -->
+          <div style="margin-top: 32px; text-align: center; background: rgba(37, 211, 102, 0.05); padding: 22px; border-radius: 12px; border: 1px solid rgba(37, 211, 102, 0.2);">
+            <p style="color: #ffffff; font-size: 14px; font-weight: bold; margin: 0 0 6px 0;">Want to connect directly with our engineering team right now?</p>
+            <p style="color: #94a3b8; font-size: 12px; margin: 0 0 16px 0;">Click below to send all your project details directly into our WhatsApp DMs:</p>
             
-            <a href="https://wa.me/917736387794?text=Hi%20Astrivix%20Team%20(Ref:%20${inquiryRef})" style="display: inline-block; background: #25D366; color: #ffffff; font-weight: bold; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
-              💬 WhatsApp Direct
-            </a>
-            
-            <a href="mailto:business@astrivix.in?subject=Direct%20Follow-up%20[${inquiryRef}]" style="display: inline-block; background: #0284c7; color: #ffffff; font-weight: bold; font-size: 13px; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin: 6px;">
-              ✉️ Reply via Email
+            <a href="https://wa.me/917736387794?text=${encodedWaMessage}" style="display: inline-block; background-color: #25D366; color: #ffffff; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 14px; shadow: 0 4px 12px rgba(37, 211, 102, 0.4);">
+              💬 Chat Directly on WhatsApp with Astrivix Lead
             </a>
           </div>
         </div>
 
         <div style="background-color: #050508; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: #64748b;">
-          © ${new Date().getFullYear()} Astrivix Corp. Official Email: business@astrivix.in
+          © ${new Date().getFullYear()} Astrivix Corp. Official Website: <a href="https://www.astrivix.in" style="color: #38bdf8; text-decoration: none;">www.astrivix.in</a> | Email: <a href="mailto:business@astrivix.in" style="color: #38bdf8; text-decoration: none;">business@astrivix.in</a>
         </div>
       </div>
     `;
