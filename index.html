@@ -72,20 +72,42 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": ["Organization", "Corporation", "ProfessionalService"],
+          "@type": ["Organization", "Corporation", "LocalBusiness", "ProfessionalService"],
           "@id": "https://www.astrivix.in/#organization",
           "name": "Astrivix Corp",
           "legalName": "Astrivix Corp",
           "alternateName": [
             "Astrivix",
-            "Astrivix Global"
+            "Astrivix Global",
+            "Astrivix Web Agency"
           ],
           "url": "https://www.astrivix.in/",
           "logo": "https://www.astrivix.in/astrivix-logo-sq.png",
           "image": "https://www.astrivix.in/astrivix-logo-sq.png",
-          "description": "Astrivix Corp builds high-converting custom websites, mobile applications, and strategic brand designs for businesses worldwide.",
-          "disambiguatingDescription": "Astrivix Corp specializes in web development, iOS and Android app engineering, branding, UI/UX design, and business growth.",
-          "priceRange": "$$$$",
+          "description": "Astrivix Corp is a top-rated custom web development agency, iOS/Android mobile app engineering studio, and brand strategy firm serving local and global clients.",
+          "disambiguatingDescription": "Astrivix Corp specializes in web development, custom software, UI/UX design, mobile apps, and affordable website solutions for small businesses.",
+          "telephone": "+91 97782 50608",
+          "email": "business@astrivix.in",
+          "priceRange": "$$",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kollam",
+            "addressRegion": "Kerala",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 8.8932,
+            "longitude": 76.6141
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "00:00",
+              "closes": "23:59"
+            }
+          ],
           "aggregateRating": {
             "@type": "AggregateRating",
             "ratingValue": "5.0",
@@ -129,7 +151,8 @@
             "Mobile App Development",
             "Branding and Design",
             "Digital Marketing",
-            "UI UX Design"
+            "UI UX Design",
+            "Custom Software Engineering"
           ],
           "sameAs": [
             "https://www.astrivix.in",
@@ -138,12 +161,11 @@
           ],
           "areaServed": [
             "Worldwide",
-            "United States",
-            "United Kingdom",
+            "India",
+            "Kerala",
             "United Arab Emirates",
-            "Canada",
-            "Australia",
-            "India"
+            "United States",
+            "United Kingdom"
           ]
         },
         {
